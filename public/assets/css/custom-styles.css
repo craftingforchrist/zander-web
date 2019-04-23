@@ -1,0 +1,92 @@
+/*!
+ * Start Bootstrap - Heroic Features (https://startbootstrap.com/template-overviews/heroic-features)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-heroic-features/blob/master/LICENSE)
+ */
+
+body {
+  padding-top: 54px;
+  min-height: 100%;
+}
+
+.container-main {
+  min-height: 87vh;
+}
+
+.btn a {
+  color: white;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.card-home {
+  height: 100%;
+}
+
+.home-jumbo {
+  background-image: url(../img/backsplash.png);
+  background-size: cover;
+  color: white;
+}
+
+.divider {
+  margin-bottom: 15px;
+}
+
+.thumbnails {
+  list-style: none;
+}
+
+#minecraft {
+  background-image: url("https://i.imgur.com/2UfhnZq.png");
+  font-family: "Minecraft", monospace;
+  color: #fff;
+  font-weight: normal;
+  text-align: center;
+  padding: 80px;
+  font-size: 16px;
+}
+
+#minecraft .form {
+  width: 35%;
+  min-width: 250px;
+  text-align: left;
+  color: #999;
+  margin: 40px auto 30px;
+}
+
+#minecraft .form .form-label {
+  margin: 15px 0;
+}
+
+#minecraft .form .minecraft-ip {
+  color: #fff;
+  background-color: black;
+  outline: none;
+  border: 2px solid #999;
+  width: 100%;
+  padding: 7px 7px 10px;
+}
+
+#minecraft .form .box br {
+  display: none
+}

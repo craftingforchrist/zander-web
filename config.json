@@ -1,0 +1,8 @@
+{
+  "databasehost": "localhost",
+  "databaseuser": "zander",
+  "databasepassword": "Passwordzander321",
+  "databasedatabase": "zander",
+
+  "applicationlistenport": "8080"
+}
