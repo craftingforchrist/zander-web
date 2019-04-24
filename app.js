@@ -43,6 +43,42 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
+//
+// Players
+//
+app.get('/players', function (req, res) {
+  let sql = `SELECT * FROM playerdata`;
+  connection.query (sql, function (err, result) {
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      obj = {objdata: result};
+      console.log(req.body);
+      console.log(result.uuid);
+      res.render('players', obj);
+    }
+  });
+});
+
+
+//
+// Profile
+//
+app.get('/profile/:username', function (req, res) {
+  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'`;
+  connection.query (sql, function (err, result) {
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      obj = {objdata: result};
+      res.render('profile', obj);
+      console.log(req.body);
+    }
+  });
+});
+
 // app.post('/login', urlencodedParser, function (req, res) {
 //   session = req.session;
 //   session.uniqueID = req.body.username;
@@ -57,7 +93,7 @@ app.get('/', function (req, res) {
 //
 // Application Boot
 //
-app.listen(config.applicationlistenport, function() {
+app.listen(process.env.PORT || config.applicationlistenport, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
   console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + config.applicationlistenport);
 });

@@ -1,0 +1,34 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+    <div class="container container-main">
+      <header class="jumbotron my-4 home-jumbo">
+        <h1 class="display-3">Players</h1>
+        <p class="lead">All users on the server.</p>
+      </header>
+
+      <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Username</th>
+          <th scope="col">Joins</th>
+          <th scope="col">Leaves</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+    <% objdata.forEach(function (data) { %>
+      <tbody>
+        <tr>
+          <td><img src="https://crafatar.com/avatars/<%= data.uuid %>" draggable="false" height="30px"></td>
+          <td><%= data.username %></td>
+          <td><%= data.joins %></td>
+          <td><%= data.leaves %></td>
+          <td><%= data.lastseen %></td>
+        </tr>
+      </tbody>
+      <% }) %>
+    </table>
+  </div>
+
+<% include partials/footer.ejs %>

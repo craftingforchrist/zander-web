@@ -90,3 +90,11 @@ body {
 #minecraft .form .box br {
   display: none
 }
+
+/*
+  Profile
+*/
+
+.playerheader {
+  text-align: center !important;
+}
