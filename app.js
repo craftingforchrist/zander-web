@@ -54,13 +54,10 @@ app.get('/players', function (req, res) {
       throw err;
     } else {
       obj = {objdata: result};
-      console.log(req.body);
-      console.log(result.uuid);
       res.render('players', obj);
     }
   });
 });
-
 
 //
 // Profile
@@ -74,7 +71,6 @@ app.get('/profile/:username', function (req, res) {
     } else {
       obj = {objdata: result};
       res.render('profile', obj);
-      console.log(req.body);
     }
   });
 });

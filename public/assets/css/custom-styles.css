@@ -97,4 +97,9 @@ body {
 
 .playerheader {
   text-align: center !important;
+  align-items: center;
+}
+
+.profile-text {
+  font-size: 30px;
 }

@@ -1,5 +1,5 @@
 {
-  "databasehost": "database.benrobson.tk",
+  "databasehost": "localhost",
   "databaseuser": "zander",
   "databasepassword": "Passwordzander321",
   "databasedatabase": "zander",
