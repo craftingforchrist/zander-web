@@ -13,8 +13,8 @@
           <th scope="col"></th>
           <th scope="col">Username</th>
           <th scope="col">Joins</th>
-          <th scope="col">Leaves</th>
           <th scope="col">Status</th>
+          <th scope="col">Last Seen</th>
         </tr>
       </thead>
     <% objdata.forEach(function (data) { %>
@@ -23,7 +23,7 @@
           <td><img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" draggable="false" height="30px"></td>
           <td><a href="profile/<%= data.username %>"><%= data.username %></a></td>
           <td><%= data.joins %></td>
-          <td><%= data.leaves %></td>
+          <td><%= data.status %></td>
           <td><%= data.lastseen %></td>
         </tr>
       </tbody>
