@@ -1,53 +1,60 @@
 <% include partials/header.ejs %>
 <% include partials/navigation.ejs %>
 
-    <div class="container container-main">
-      <header class="jumbotron my-4 home-jumbo">
-        <h1 class="display-3">zander</h1>
-        <p class="lead">An Open Source Minecraft Java plugin, developed with the Spigot library.<br>zander integrates Minecraft, Discord, a MySQL database and a website to work together.</p>
-        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#playPop"><a href="https://github.com/shadowolfyt/zander">&raquo; GitHub Project</a></button>
-      </header>
+<div class="container">
+  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
+    <!-- <video preload autoplay muted loop class="videohandler">
+      <source src="/assets/img/backdrop.mp4" type="video/mp4">
+    </video> -->
 
-      <div class="row text-center">
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card card-home">
-            <img class="card-img-top" src="assets/die.png" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Issues</h4>
-              <p class="card-text">Can you see something that I can't? Is something not working? Submit an issue on the issue tracker.</p>
-            </div>
-            <div class="card-footer">
-              <a href="https://github.com/shadowolfyt/zander/issues" class="btn btn-primary">&raquo; Issue Tracker</a>
-            </div>
-          </div>
+    <div class="container text-white">
+      <h1 class="display-3">zander</h1>
+      <p class="lead">This is a Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-info alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Notice:</strong> This site is in development stages and maybe a little buggy. Please report any issues you see to the <a href="/issues">GitHub Issue tracker</a>.
+  </div>
+
+  <div class="row text-center">
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title">Adventure</h4>
+          <p class="card-text">Explore the terrain with your friends or.. you know.. by yourself in the wonderous game that is Minecraft.</p>
         </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card card-home">
-            <img class="card-img-top" src="assets/trophy.png" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Stats</h4>
-              <p class="card-text"><b>This feature is not yet implemented.</b><br>Keep an eye out on this page.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">&raquo; Stats</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card card-home">
-            <img class="card-img-top" src="assets/speaker.png" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Discord</h4>
-              <p class="card-text">Want to use zander but don't know where to start or have problems? Join the Discord.</p>
-            </div>
-            <div class="card-footer">
-                <a href="https://discord.gg/r4rpaZX"><button type="button" class="btn btn-primary">&raquo; Discord</button></a>
-            </div>
-          </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary">Invalid Link</a>
         </div>
       </div>
     </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title">Players</h4>
+          <p class="card-text">Get to know the players and see their stats! Compare stats and see who is better, who hasn't died the most?</p>
+        </div>
+        <div class="card-footer">
+          <a href="/players" class="btn btn-primary"><i class="fas fa-users"></i> Players</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title">Community</h4>
+          <p class="card-text">Talk to and get to know the community of awesome people! Join the Discord to also stay informed about annoucements and upcoming events.</p>
+        </div>
+        <div class="card-footer">
+          <a href="/discord" class="btn btn-primary"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <% include partials/footer.ejs %>

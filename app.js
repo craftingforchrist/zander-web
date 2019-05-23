@@ -44,6 +44,21 @@ app.get('/', function (req, res) {
 });
 
 //
+// Discord Server Redirect
+//
+app.get('/discord', function (req, res) {
+  res.redirect(`${config.discordlink}`);
+});
+
+//
+// GitHub Issue Tracker Redirect
+//
+app.get('/issues', function (req, res) {
+  res.redirect(`${config.githubissuetrackerlink}`);
+});
+
+
+//
 // Players
 //
 app.get('/players', function (req, res) {
@@ -55,6 +70,22 @@ app.get('/players', function (req, res) {
     } else {
       obj = {objdata: result};
       res.render('players', obj);
+    }
+  });
+});
+
+//
+// Punishments
+//
+app.get('/punishments', function (req, res) {
+  let sql = `SELECT * FROM playerdata`;
+  connection.query (sql, function (err, result) {
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      obj = {objdata: result};
+      res.render('punishments', obj);
     }
   });
 });
@@ -74,17 +105,6 @@ app.get('/profile/:username', function (req, res) {
     }
   });
 });
-
-// app.post('/login', urlencodedParser, function (req, res) {
-//   session = req.session;
-//   session.uniqueID = req.body.username;
-//
-//   if (req.body.password == config.adminpanelpassword) {
-//     res.redirect('/admin');
-//   } else {
-//     res.render('login');
-//   }
-// });
 
 //
 // Application Boot

@@ -1,37 +1,54 @@
 <% include partials/header.ejs %>
 <% include partials/navigation.ejs %>
 
-  <% objdata.forEach(function (data) { %>
-    <div class="container container-main">
-      <header class="jumbotron my-4 home-jumbo">
-        <div class="playerheader">
-          <img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" alt="">
-          <h1 class="display-3"><%= data.username %></h1>
-          <h4><%= data.lastseen %></h4>
-        </div>
-      </header>
+<% objdata.forEach(function (data) { %>
+<div class="container">
+  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
+    <!-- <video preload autoplay muted loop class="videohandler">
+      <source src="/assets/img/backdrop.mp4" type="video/mp4">
+    </video> -->
 
-      <div class="row text-center">
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card card-home">
-            <div class="card-body">
-              <p class="profile-text"><b>Joins:</b> <%= data.joins %></p>
-              <p class="profile-text"><b>Deaths:</b> <%= data.deaths %></p>
-            </div>
-          </div>
-        </div>
+    <div class="container text-white">
+      <img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" alt="Player Avatar Head">
+      <h3 class="display-4"><%= data.username %></h3>
+      <p class="lead">Last Seen: <%= data.lastseen %></p>
+    </div>
+  </div>
 
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card card-home">
-            <img class="card-img-top" src="assets/speaker.png" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Information</h4>
-              <p class="side-card-text"><img src="/assets/img/discordlogo.png" alt="Discord Logo" height="30px" draggable="false">Username#1234</p>
-            </div>
-          </div>
+  <div class="row">
+    <div class="col-lg-8 col-md-6 mb-4">
+      <div class="card card-home">
+        <table class="table">
+          <tr>
+            <td>Joins</td>
+            <td>Deaths</td>
+            <td>Total Time Played</td>
+          </tr>
+
+          <tr>
+            <td><%= data.joins %></td>
+            <td><%= data.deaths %></td>
+            <td>Not Added Yet</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title">Information</h4>
+            <p>Could add a pretty bio here sometime in the future.</p>
+          <h4 class="card-title">Social</h4>
+            <p><i class="fab fa-discord"></i>: shadowolf#9212</p>
+            <p><i class="fab fa-instagram"></i>: @benrobson8</p>
+            <p><i class="fab fa-youtube"></i>: /shadowolf</p>
+            <p><i class="fab fa-twitch"></i>: shadowolfyt</p>
         </div>
       </div>
     </div>
-  <% }) %>
+  </div>
+</div>
+<% }) %>
 
 <% include partials/footer.ejs %>

@@ -1,0 +1,30 @@
+.jumbotron {
+  position: relative;
+  overflow: hidden;
+  background-image: url(../img/background.jpg);
+}
+
+.card-home {
+  height: 100%;
+}
+
+/*
+Video Handler (To be used)
+
+.jumbotron video {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width:150%;
+  height:100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+.jumbotron .container {
+  z-index: 2;
+  position: relative;
+} */
+
+.colour-custom {
+  background-color: #3a99e8 !important;
+}

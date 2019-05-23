@@ -1,13 +1,19 @@
 <% include partials/header.ejs %>
 <% include partials/navigation.ejs %>
 
-    <div class="container container-main">
-      <header class="jumbotron my-4 home-jumbo">
-        <h1 class="display-3">Players</h1>
-        <p class="lead">All users on the server.</p>
-      </header>
+<div class="container">
+  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
+    <!-- <video preload autoplay muted loop class="videohandler">
+      <source src="/assets/img/backdrop.mp4" type="video/mp4">
+    </video> -->
 
-      <table class="table">
+    <div class="container text-white">
+      <h1 class="display-3">zander</h1>
+      <p class="lead">List of all of the players that have logged in.</p>
+    </div>
+  </div>
+
+  <table class="table">
       <thead>
         <tr>
           <th scope="col"></th>
@@ -29,6 +35,6 @@
       </tbody>
       <% }) %>
     </table>
-  </div>
+</div>
 
 <% include partials/footer.ejs %>
