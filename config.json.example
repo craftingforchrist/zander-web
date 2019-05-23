@@ -5,6 +5,7 @@
   "databasedatabase": "zander",
 
   "discordlink": "https://www.discordapp.com/",
+  "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
 
   "applicationlistenport": "8080"
 }
