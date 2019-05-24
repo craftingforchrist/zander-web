@@ -6,6 +6,7 @@
 
   "discordlink": "https://www.discordapp.com/",
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
+  "rulesmd": "https://raw.githubusercontent.com/subtle-christian-minecraft/Rules/master/README.md",
 
   "applicationlistenport": "8080"
 }

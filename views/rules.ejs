@@ -15,21 +15,8 @@
 
   <div class="row">
     <div class="col-lg-12 col-md-12 mb-4">
-      <div class="card card-home">
-
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-
-        <div class="card-body" id="markdown-content">
-          <script>
-            document.getElementById('markdown-content').innerHTML = marked('https://raw.githubusercontent.com/subtle-christrian-minecraft/Rules/master/README.md');
-          </script>
-
-
-
-          <!-- <h4 class="card-title">Issues & Bugs</h4>
-          <p class="card-text">When you're developing software and programs, anything and everything is bound to go wrong! If you see something, say something by creating an issue on the issue tracker.</p> -->
-        </div>
+      <div class="card card-home markdown-style">
+        <zero-md src="<%= rulesmd %>"></zero-md>
       </div>
     </div>
   </div>

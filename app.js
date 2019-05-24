@@ -61,7 +61,7 @@ app.get('/issues', function (req, res) {
 // Rules
 //
 app.get('/rules', function (req, res) {
-  res.render('rules');
+  res.render('rules', { rulesmd: config.rulesmd });
 });
 
 //
