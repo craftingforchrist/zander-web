@@ -8,6 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
+const request = require('request');
 
 //
 // Constants
@@ -62,6 +63,44 @@ app.get('/issues', function (req, res) {
 //
 app.get('/rules', function (req, res) {
   res.render('rules', { rulesmd: config.rulesmd });
+});
+
+//
+// Development [plugin]
+//
+app.get('/development/plugin', function (req, res) {
+  var options = {
+    url: 'https://api.github.com/repos/shadowolfyt/zander/commits',
+    headers: { 'User-Agent': 'request' }
+  };
+
+  function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var info = JSON.parse(body);
+      obj = {objdata: info};
+      res.render('development-plugin', obj);
+    };
+  };
+  request(options, callback);
+});
+
+//
+// Development [web]
+//
+app.get('/development/web', function (req, res) {
+  var options = {
+    url: 'https://api.github.com/repos/shadowolfyt/zander-web/commits',
+    headers: { 'User-Agent': 'request' }
+  };
+
+  function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var info = JSON.parse(body);
+      obj = {objdata: info};
+      res.render('development-web', obj);
+    };
+  };
+  request(options, callback);
 });
 
 //
