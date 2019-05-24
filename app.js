@@ -57,6 +57,12 @@ app.get('/issues', function (req, res) {
   res.redirect(`${config.githubissuetrackerlink}`);
 });
 
+//
+// Rules
+//
+app.get('/rules', function (req, res) {
+  res.render('rules', { rulesmd: config.rulesmd });
+});
 
 //
 // Players
