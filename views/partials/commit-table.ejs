@@ -1,0 +1,20 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col">Commit Message</th>
+        <th scope="col committable-date">Date</th>
+      </tr>
+    </thead>
+  <% objdata.forEach(function (data) { %>
+    <tbody>
+      <tr>
+        <td><img src="<%= data.author.avatar_url %>" alt="<%= data.author.login %>'s profile picture'" draggable="false" height="30px"></td>
+        <td><a href="https://github.com/<%= data.author.login %>"><%= data.author.login %></a></td>
+        <td><%= data.commit.message %></td>
+        <td><%= data.commit.author.date %></td>
+      </tr>
+    </tbody>
+    <% }) %>
+</table>
