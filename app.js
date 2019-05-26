@@ -84,7 +84,7 @@ app.get('/players', function (req, res) {
 // Punishments
 //
 app.get('/punishments', function (req, res) {
-  let sql = `SELECT * FROM playerdata`;
+  let sql = `SELECT * FROM punishments ORDER BY id DESC`;
   connection.query (sql, function (err, result) {
     if (err) {
       res.redirect('/');

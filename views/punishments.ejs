@@ -3,38 +3,13 @@
 
 <div class="container">
   <div class="jumbotron my-4 home-jumbo-header" id="video-container">
-    <!-- <video preload autoplay muted loop class="videohandler">
-      <source src="/assets/img/backdrop.mp4" type="video/mp4">
-    </video> -->
-
     <div class="container text-white">
       <h1 class="display-3">Punishments</h1>
       <p class="lead">See who has been doing the naughty..</p>
     </div>
   </div>
 
-  <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Punished Player</th>
-          <th scope="col">Punished By</th>
-          <th scope="col">Type</th>
-          <th scope="col">Reason</th>
-        </tr>
-      </thead>
-    <% objdata.forEach(function (data) { %>
-      <tbody>
-        <tr>
-          <td><%= data.id %></td>
-          <td><img style="border-radius:5px;" src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" draggable="false" height="25px"> <a href="profile/<%= data.username %>"><%= data.username %></a></td>
-          <td><img style="border-radius:5px;" src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" draggable="false" height="25px"> <a href="profile/<%= data.username %>"><%= data.username %></a></td>
-          <td>BAN</td>
-          <td>Just for the lols, lol</td>
-        </tr>
-      </tbody>
-      <% }) %>
-    </table>
+  <% include partials/punishmenttable.ejs %>
 </div>
 
 <% include partials/footer.ejs %>
