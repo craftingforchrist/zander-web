@@ -139,7 +139,7 @@ app.get('/punishments', function (req, res) {
 // Profile
 //
 app.get('/profile/:username', function (req, res) {
-  let sql = `SELECT * FROM playerdata, punishments WHERE username='${req.params.username}'`;
+  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'`;
   connection.query (sql, function (err, result) {
     if (err) {
       res.redirect('/');
