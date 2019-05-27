@@ -17,20 +17,41 @@
 
   <div class="row">
     <div class="col-lg-8 col-md-6 mb-4">
-      <div class="card card-home">
-        <table class="table">
-          <tr>
-            <td>Joins</td>
-            <td>Deaths</td>
-            <td>Total Time Played</td>
-          </tr>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="true">Statistics</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="punishments-tab" data-toggle="tab" href="#punishments" role="tab" aria-controls="contact" aria-selected="false">Punishments</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+          <div class="card card-home">
+            <table class="table">
+              <tr>
+                <td>Joins</td>
+                <td>Deaths</td>
+                <td>Total Time Played</td>
+              </tr>
 
-          <tr>
-            <td><%= data.joins %></td>
-            <td><%= data.deaths %></td>
-            <td>Not Added Yet</td>
-          </tr>
-        </table>
+              <tr>
+                <td><%= data.joins %></td>
+                <td><%= data.deaths %></td>
+                <td>Not Added Yet</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+          <p>This is where the users about custom information will go.</p>
+        </div>
+        <div class="tab-pane fade" id="punishments" role="tabpanel" aria-labelledby="punishments-tab">
+          <% include partials/punishment-table.ejs %>
+        </div>
       </div>
     </div>
 
@@ -38,7 +59,8 @@
       <div class="card card-home">
         <div class="card-body">
           <h4 class="card-title">Information</h4>
-            <p>Could add a pretty bio here sometime in the future.</p>
+            <p>Joined: 1 day ago</p>
+            <p>Gender: Male</p>
           <h4 class="card-title">Social</h4>
             <p><i class="fab fa-discord"></i>: shadowolf#9212</p>
             <p><i class="fab fa-instagram"></i>: @benrobson8</p>
