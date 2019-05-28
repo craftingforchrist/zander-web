@@ -1,30 +1,36 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark colour-custom">
   <div class="container">
     <a class="navbar-brand" href="/"><img src="/assets/img/zander-icon.png" alt="Zander Logo" height="30px"> zander</a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navCollapse" aria-controls="navCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navCollapse">
+        <ul class="navbar-nav mr-auto" id="navCollapse">
+          <li class="nav-item">
+            <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/players"><i class="fas fa-users"></i> Players</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/rules"><i class="fas fa-highlighter"></i> Rules</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/punishments"><i class="fas fa-hammer"></i> Punishments</a>
+          </li>
 
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/players"><i class="fas fa-users"></i> Players</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/rules"><i class="fas fa-highlighter"></i> Rules</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/punishments"><i class="fas fa-hammer"></i> Punishments</a>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><i class="fas fa-link"></i> Links</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="https://github.com/shadowolfyt/zander"><i class="fab fa-github"></i> zander Plugin GitHub Project</a>
-          <a class="dropdown-item" href="https://github.com/shadowolfyt/zander-web"><i class="fab fa-github"></i> zander Web GitHub Project</a>
-          <a class="dropdown-item" href="/issues"><i class="fab fa-github"></i> GitHub Issue Tracker</a>
-          <a class="dropdown-item" href="/discord"><i class="fab fa-discord"></i> Discord</a>
-        </div>
-      </li>
-    </ul>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><i class="fas fa-link"></i> Links</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="https://github.com/shadowolfyt/zander"><i class="fab fa-github"></i> zander Plugin GitHub Project</a>
+              <a class="dropdown-item" href="https://github.com/shadowolfyt/zander-web"><i class="fab fa-github"></i> zander Web GitHub Project</a>
+              <a class="dropdown-item" href="/issues"><i class="fab fa-github"></i> GitHub Issue Tracker</a>
+              <a class="dropdown-item" href="/discord"><i class="fab fa-discord"></i> Discord</a>
+            </div>
+          </li>
+        </ul>
+    </div>
   </div>
 </nav>

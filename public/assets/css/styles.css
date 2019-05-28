@@ -52,3 +52,8 @@ footer a:hover {
   color: white;
   text-decoration: none;
 }
+
+nav #navCollapse {
+    margin-right: 0;
+    margin-left: auto;
+}
