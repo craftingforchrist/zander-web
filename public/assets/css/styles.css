@@ -36,3 +36,24 @@ Video Handler (To be used)
 .colour-custom {
   background-color: #3a99e8 !important;
 }
+
+footer .card {
+  background: rgba(0,0,0,0);
+  border: none;
+  color: white;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+nav #navCollapse {
+    margin-right: 0;
+    margin-left: auto;
+}
