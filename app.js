@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-const dbconfig = require('./dbconfig.json');
+//const dbconfig = require('./dbconfig.json');
 const request = require('request');
 
 //
