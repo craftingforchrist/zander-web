@@ -41,28 +41,37 @@ connection.connect(function(err) {
 // Homepage
 //
 app.get('/', function (req, res) {
-  res.render('index');
+  res.render('index', {
+    "servername": `${config.servername || process.env.servername}`,
+    "email": `${config.email || process.env.email}`,
+    "pagetitle": "Home"
+  });
 });
 
 //
 // Discord Server Redirect
 //
 app.get('/discord', function (req, res) {
-  res.redirect(`${config.discordlink}`);
+  res.redirect(`${config.discordlink || process.env.discordlink}`);
 });
 
 //
 // GitHub Issue Tracker Redirect
 //
 app.get('/issues', function (req, res) {
-  res.redirect(`${config.githubissuetrackerlink}`);
+  res.redirect(`${config.githubissuetrackerlink || process.env.githubissuetrackerlink}`);
 });
 
 //
 // Rules
 //
 app.get('/rules', function (req, res) {
-  res.render('rules', { rulesmd: config.rulesmd });
+  res.render('rules', {
+    "servername": `${config.servername || process.env.servername}`,
+    "email": `${config.email || process.env.email}`,
+    "pagetitle": "Rules",
+    rulesmd: config.rulesmd || process.env.rulesmd
+  });
 });
 
 //
@@ -77,8 +86,12 @@ app.get('/development/plugin', function (req, res) {
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
-      obj = {objdata: info};
-      res.render('development-plugin', obj);
+      res.render('development-plugin', {
+        "servername": `${config.servername || process.env.servername}`,
+        "email": `${config.email || process.env.email}`,
+        "pagetitle": "Plugin Development Log",
+        objdata: info
+      });
     };
   };
   request(options, callback);
@@ -96,8 +109,12 @@ app.get('/development/web', function (req, res) {
   function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
-      obj = {objdata: info};
-      res.render('development-web', obj);
+      res.render('development-web', {
+        "servername": `${config.servername || process.env.servername}`,
+        "email": `${config.email || process.env.email}`,
+        "pagetitle": "Web Development Log",
+        objdata: info
+      });
     };
   };
   request(options, callback);
@@ -113,8 +130,12 @@ app.get('/players', function (req, res) {
       res.redirect('/');
       throw err;
     } else {
-      obj = {objdata: result};
-      res.render('players', obj);
+      res.render('players', {
+        "servername": `${config.servername || process.env.servername}`,
+        "email": `${config.email || process.env.email}`,
+        "pagetitle": "Players",
+        objdata: result
+      });
     }
   });
 });
@@ -129,8 +150,12 @@ app.get('/punishments', function (req, res) {
       res.redirect('/');
       throw err;
     } else {
-      obj = {objdata: result};
-      res.render('punishments', obj);
+      res.render('punishments', {
+        "servername": `${config.servername || process.env.servername}`,
+        "email": `${config.email || process.env.email}`,
+        "pagetitle": "Punishments",
+        objdata: result
+      });
     }
   });
 });
@@ -145,8 +170,12 @@ app.get('/profile/:username', function (req, res) {
       res.redirect('/');
       throw err;
     } else {
-      obj = {objdata: result};
-      res.render('profile', obj);
+      res.render('profile', {
+        "servername": `${config.servername || process.env.servername}`,
+        "email": `${config.email || process.env.email}`,
+        "pagetitle": `${req.params.username}'s Profile`,
+        objdata: result
+      });
     }
   });
 });
@@ -156,5 +185,5 @@ app.get('/profile/:username', function (req, res) {
 //
 app.listen(process.env.PORT || config.applicationlistenport, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
-  console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + config.applicationlistenport);
+  console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + process.env.PORT || config.applicationlistenport);
 });
