@@ -14,11 +14,11 @@ When a new player joins the server, they are entered into the database get a pro
 
 ### Custom Links
 Changing the links in the config.json, you can redirect to your own:
- - GitHub Issue Tracking page.
- - Discord Server.
+ - GitHub Issue Tracking page `/issues`
+ - Discord Server `/discord`
 
 ### Rules
-Using GitHub and pulling raw md data and formatting it into HTML and displaying it on the page.
+Using GitHub and pulling raw md data and formatting it into HTML and displaying it on the page `/rules`.
 The rules md content file can be changed in the config.json under rulesmd.
 When updating and refreshing md data from a GitHub repo it may take more than 5 minutes.
 
