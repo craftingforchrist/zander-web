@@ -1,17 +1,12 @@
 {
-  "databasehost": "localhost",
-  "databaseuser": "zander",
-  "databasepassword": "Passwordzander321",
-  "databasedatabase": "zander",
   "servername": "zander",
-
-  "clientid": "clientidhere",
-  "clientsecret": "clientsecrethere",
-
   "email": "support@example.com",
   "discordlink": "https://www.discordapp.com/",
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
   "rulesmd": "https://raw.githubusercontent.com/shadowolfyt/zander-web/master/README.md",
+
+  "clientid": "clientidhere",
+  "clientsecret": "clientsecrethere",
 
   "applicationlistenport": "8080"
 }

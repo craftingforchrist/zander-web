@@ -8,6 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
+const dbconfig = require('./dbconfig.json');
 const request = require('request');
 
 //
@@ -23,10 +24,10 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 
 const connection = mysql.createConnection({
-  host: process.env.databasehost || config.databasehost,
-  user: process.env.databaseuser || config.databaseuser,
-  password: process.env.databasepassword || config.databasepassword,
-  database: process.env.databasedatabase || config.databasedatabase
+  host: process.env.dbhost || dbconfig.dbhost,
+  user: process.env.dbuser || dbconfig.dbuser,
+  password: process.env.dbpassword || dbconfig.dbpassword,
+  database: process.env.dbdatabase || dbconfig.dbdatabase
 });
 
 connection.connect(function(err) {
@@ -42,8 +43,8 @@ connection.connect(function(err) {
 //
 app.get('/', function (req, res) {
   res.render('index', {
-    "servername": `${config.servername || process.env.servername}`,
-    "email": `${config.email || process.env.email}`,
+    "servername": `${config.servername}`,
+    "email": `${config.email}`,
     "pagetitle": "Home"
   });
 });
@@ -52,14 +53,14 @@ app.get('/', function (req, res) {
 // Discord Server Redirect
 //
 app.get('/discord', function (req, res) {
-  res.redirect(`${config.discordlink || process.env.discordlink}`);
+  res.redirect(`${config.discordlink}`);
 });
 
 //
 // GitHub Issue Tracker Redirect
 //
 app.get('/issues', function (req, res) {
-  res.redirect(`${config.githubissuetrackerlink || process.env.githubissuetrackerlink}`);
+  res.redirect(`${config.githubissuetrackerlink}`);
 });
 
 //
@@ -67,10 +68,10 @@ app.get('/issues', function (req, res) {
 //
 app.get('/rules', function (req, res) {
   res.render('rules', {
-    "servername": `${config.servername || process.env.servername}`,
-    "email": `${config.email || process.env.email}`,
+    "servername": `${config.servername}`,
+    "email": `${config.email}`,
     "pagetitle": "Rules",
-    rulesmd: config.rulesmd || process.env.rulesmd
+    rulesmd: config.rulesmd
   });
 });
 
@@ -87,8 +88,8 @@ app.get('/development/plugin', function (req, res) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
       res.render('development-plugin', {
-        "servername": `${config.servername || process.env.servername}`,
-        "email": `${config.email || process.env.email}`,
+        "servername": `${config.servername}`,
+        "email": `${config.email}`,
         "pagetitle": "Plugin Development Log",
         objdata: info
       });
@@ -110,8 +111,8 @@ app.get('/development/web', function (req, res) {
     if (!error && response.statusCode == 200) {
       var info = JSON.parse(body);
       res.render('development-web', {
-        "servername": `${config.servername || process.env.servername}`,
-        "email": `${config.email || process.env.email}`,
+        "servername": `${config.servername}`,
+        "email": `${config.email}`,
         "pagetitle": "Web Development Log",
         objdata: info
       });
@@ -131,8 +132,8 @@ app.get('/players', function (req, res) {
       throw err;
     } else {
       res.render('players', {
-        "servername": `${config.servername || process.env.servername}`,
-        "email": `${config.email || process.env.email}`,
+        "servername": `${config.servername}`,
+        "email": `${config.email}`,
         "pagetitle": "Players",
         objdata: result
       });
@@ -151,8 +152,8 @@ app.get('/punishments', function (req, res) {
       throw err;
     } else {
       res.render('punishments', {
-        "servername": `${config.servername || process.env.servername}`,
-        "email": `${config.email || process.env.email}`,
+        "servername": `${config.servername}`,
+        "email": `${config.email}`,
         "pagetitle": "Punishments",
         objdata: result
       });
@@ -171,8 +172,8 @@ app.get('/profile/:username', function (req, res) {
       throw err;
     } else {
       res.render('profile', {
-        "servername": `${config.servername || process.env.servername}`,
-        "email": `${config.email || process.env.email}`,
+        "servername": `${config.servername}`,
+        "email": `${config.email}`,
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: result
       });
