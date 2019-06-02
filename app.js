@@ -8,8 +8,11 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-//const dbconfig = require('./dbconfig.json');
+const credentials = require('./credentials.json');
 const request = require('request');
+const nodemailer = require('nodemailer');
+const hogan = require('hogan.js');
+const fs = require('fs');
 
 //
 // Constants
@@ -24,10 +27,10 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 
 const connection = mysql.createConnection({
-  host: process.env.dbhost || dbconfig.dbhost,
-  user: process.env.dbuser || dbconfig.dbuser,
-  password: process.env.dbpassword || dbconfig.dbpassword,
-  database: process.env.dbdatabase || dbconfig.dbdatabase
+  host: process.env.dbhost || credentials.dbhost,
+  user: process.env.dbuser || credentials.dbuser,
+  password: process.env.dbpassword || credentials.dbpassword,
+  database: process.env.dbdatabase || credentials.dbdatabase
 });
 
 connection.connect(function(err) {
@@ -48,6 +51,58 @@ app.get('/', function (req, res) {
     "pagetitle": "Home"
   });
 });
+
+//
+// Apply
+//
+app.get('/apply', function (req, res) {
+  res.render('apply', {
+    "servername": `${config.servername}`,
+    "email": `${config.email}`,
+    "pagetitle": "Apply"
+  });
+});
+
+app.post('/apply', urlencodedParser, function (req, res) {
+  console.log(req.body);
+  let transporter = nodemailer.createTransport({
+    service: credentials.mailservice,
+    auth: {
+      user: credentials.mailauthuser,
+      pass: credentials.mailauthpass
+    }
+  });
+
+  var template = fs.readFileSync('./views/mailtemplates/apply.ejs', 'utf-8');
+  var compiledTemplate = hogan.compile(template);
+
+  let message = {
+    from: `${credentials.mailauthusername} <${credentials.mailauthuser}>`,
+    to: `${credentials.mailauthuser}`,
+    subject: `[WHITELIST] ${req.body.minecraftUsernameselector}'s Application`,
+    html: compiledTemplate.render({
+      minecraftUsernameselector: `${req.body.minecraftUsernameselector}`,
+      discordtagselector: `${req.body.discordtagselector}`,
+      howdidyouhearaboutusselector: `${req.body.howdidyouhearaboutusselector}`
+    })
+  };
+
+  transporter.sendMail(message, (err, info) => {
+    if (err) {
+      console.log('An error has occured.');
+      console.log(err.message);
+      return
+    } else {
+      res.render('index', {
+        "servername": `${config.servername}`,
+        "email": `${config.email}`,
+        "pagetitle": "Home"
+      });
+    }
+  });
+  console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[MAIL] ') + `Successfully sent Whitelist enquiry.`);
+});
+
 
 //
 // Discord Server Redirect

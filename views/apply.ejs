@@ -1,0 +1,33 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3">Apply</h1>
+      <p class="lead">Apply to join the server!</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <form action="/apply" method="post">
+      <div class="form-group">
+        <label for="minecraftUsernameselector">What is your Username?</label>
+        <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="shadowolfyt">
+      </div>
+      <div class="form-group">
+        <label for="discordtagselector">What is your Discord Tag?</label>
+        <input type="text" class="form-control" name="discordtagselector" placeholder="shadowolf#9212">
+        <small id="discordtaghelp" class="form-text text-muted">If you haven't joined the Discord, you can join <a href="/discord">here.</a></small>
+      </div>
+      <div class="form-group">
+        <label for="howdidyouhearaboutusselector">How did you hear about us?</label>
+        <input type="text" class="form-control" name="howdidyouhearaboutusselector">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>
