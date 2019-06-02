@@ -28,3 +28,6 @@ Using the GitHub API and pulling raw JSON data and formatting it into HTML and d
 ## Discord Features
 ### Whitelist Application
 Using the `#apply-report` channel from the application on `/apply` you can easily see all incoming whitelist request.
+
+### Report A Player
+Using the `#apply-report` channel from the application on `/report` you can easily see all incoming player reports with all information.
