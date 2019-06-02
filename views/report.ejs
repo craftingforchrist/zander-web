@@ -1,0 +1,38 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3">Report a Player</h1>
+      <p class="lead">Is someone breaking the Rules? Report them..</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <form action="/report" method="post">
+      <div class="form-group">
+        <label for="reporteruserselector">What is your Minecraft Username?</label>
+        <input type="text" class="form-control" name="reporteruserselector" placeholder="shadowolfyt" required>
+      </div>
+      <div class="form-group">
+        <label for="reporteduserselector">What is the Minecraft username of the player you would like to report?</label>
+        <input type="text" class="form-control" name="reporteduserselector" placeholder="Camemes" required>
+      </div>
+      <div class="form-group">
+        <label for="evidenceselector">Please provide your reasoning for this report with evidence.</label>
+        <textarea class="form-control" name="evidenceselector" rows="3" placeholder="Please enter you report with EVIDENCE." required></textarea>
+        <small id="evidenceselectorhelp" class="form-text text-muted">If you report does not contain any evidence, it will be ignored.</small>
+      </div>
+      <div class="form-group">
+        <label for="discordtagselector">What is your Discord Tag?</label>
+        <input type="text" class="form-control" name="discordtagselector" placeholder="shadowolf#9212" required>
+        <small id="discordtagselectorhelp" class="form-text text-muted">We may need to contact you to gather more information and ask follow up questions.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>
