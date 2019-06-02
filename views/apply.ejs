@@ -13,16 +13,20 @@
     <form action="/apply" method="post">
       <div class="form-group">
         <label for="minecraftUsernameselector">What is your Username?</label>
-        <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="shadowolfyt">
+        <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="shadowolfyt" required>
       </div>
       <div class="form-group">
         <label for="discordtagselector">What is your Discord Tag?</label>
-        <input type="text" class="form-control" name="discordtagselector" placeholder="shadowolf#9212">
+        <input type="text" class="form-control" name="discordtagselector" placeholder="shadowolf#9212" required>
         <small id="discordtaghelp" class="form-text text-muted">If you haven't joined the Discord, you can join <a href="/discord">here.</a></small>
       </div>
       <div class="form-group">
         <label for="howdidyouhearaboutusselector">How did you hear about us?</label>
         <input type="text" class="form-control" name="howdidyouhearaboutusselector">
+      </div>
+      <div class="form-group">
+        <label for="additionalinformationselector">Any other information or comments?</label>
+        <input type="text" class="form-control" name="additionalinformationselector">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

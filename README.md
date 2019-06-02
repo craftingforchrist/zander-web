@@ -24,3 +24,7 @@ When updating and refreshing md data from a GitHub repo it may take more than 5 
 
 ### Development Pages
 Using the GitHub API and pulling raw JSON data and formatting it into HTML and displaying it on the page. This takes the commit logs for both zander-web `/development/web` and zander `/development/plugin` and allows anyone to see the commit history on either project.
+
+## Discord Features
+### Whitelist Application
+Using the `#apply-report` channel from the application on `/apply` you can easily see all incoming whitelist request.

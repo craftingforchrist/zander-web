@@ -14,6 +14,11 @@ const nodemailer = require('nodemailer');
 const hogan = require('hogan.js');
 const fs = require('fs');
 
+const Discord = require('discord.js');
+const client = new Discord.Client({
+  disableEveryone: true
+});
+
 //
 // Constants
 //
@@ -65,44 +70,30 @@ app.get('/apply', function (req, res) {
 
 app.post('/apply', urlencodedParser, function (req, res) {
   console.log(req.body);
-  let transporter = nodemailer.createTransport({
-    service: credentials.mailservice,
-    auth: {
-      user: credentials.mailauthuser,
-      pass: credentials.mailauthpass
-    }
-  });
 
-  var template = fs.readFileSync('./views/mailtemplates/apply.ejs', 'utf-8');
-  var compiledTemplate = hogan.compile(template);
+  try {
+    let applyreportchannel = client.channels.find(c => c.name === 'apply-report');
+    if (!applyreportchannel) return console.log('A #apply-report channel does not exist.');
 
-  let message = {
-    from: `${credentials.mailauthusername} <${credentials.mailauthuser}>`,
-    to: `${credentials.mailauthuser}`,
-    subject: `[WHITELIST] ${req.body.minecraftUsernameselector}'s Application`,
-    html: compiledTemplate.render({
-      minecraftUsernameselector: `${req.body.minecraftUsernameselector}`,
-      discordtagselector: `${req.body.discordtagselector}`,
-      howdidyouhearaboutusselector: `${req.body.howdidyouhearaboutusselector}`
-    })
-  };
+    var embed = new Discord.RichEmbed()
+      .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
+      .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
+      .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
+      .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
+      .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
+      .setColor('#99ddff')
+    applyreportchannel.send(embed);
+    console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[MAIL] ') + `Successfully sent Whitelist enquiry.`);
 
-  transporter.sendMail(message, (err, info) => {
-    if (err) {
-      console.log('An error has occured.');
-      console.log(err.message);
-      return
-    } else {
-      res.render('index', {
-        "servername": `${config.servername}`,
-        "email": `${config.email}`,
-        "pagetitle": "Home"
-      });
-    }
-  });
-  console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[MAIL] ') + `Successfully sent Whitelist enquiry.`);
+    res.render('index', {
+      "servername": `${config.servername}`,
+      "email": `${config.email}`,
+      "pagetitle": "Home"
+    });
+  } catch {
+    console.log('An error occured');
+  }
 });
-
 
 //
 // Discord Server Redirect
@@ -242,4 +233,7 @@ app.get('/profile/:username', function (req, res) {
 app.listen(process.env.PORT || config.applicationlistenport, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
   console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + process.env.PORT || config.applicationlistenport);
+
+  client.login(process.env.token || credentials.token);
+  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + 'Launched Discord web-side.');
 });
