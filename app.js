@@ -10,9 +10,6 @@ const package = require('./package.json');
 const config = require('./config.json');
 // const credentials = require('./credentials.json');
 const request = require('request');
-const nodemailer = require('nodemailer');
-const hogan = require('hogan.js');
-const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client({
   disableEveryone: true
