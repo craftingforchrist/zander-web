@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({
@@ -51,6 +51,13 @@ app.get('/', function (req, res) {
     "email": `${config.email}`,
     "pagetitle": "Home"
   });
+});
+
+//
+// Donate Redirect
+//
+app.get('/donate', function (req, res) {
+  res.redirect(`${config.donatelink}`);
 });
 
 //

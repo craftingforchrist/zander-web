@@ -2,11 +2,10 @@
   "servername": "zander",
   "email": "support@example.com",
   "discordlink": "https://www.discordapp.com/",
+  "donatelink": "https://www.paypal.me/YOURPAYPALMEID",
+
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
   "rulesmd": "https://raw.githubusercontent.com/shadowolfyt/zander-web/master/README.md",
-
-  "clientid": "clientidhere",
-  "clientsecret": "clientsecrethere",
 
   "applicationlistenport": "8080"
 }
