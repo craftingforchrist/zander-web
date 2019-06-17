@@ -73,8 +73,8 @@ app.get('/apply', function (req, res) {
 
 app.post('/apply', urlencodedParser, function (req, res) {
   try {
-    let applyreportchannel = client.channels.find(c => c.name === 'apply-report');
-    if (!applyreportchannel) return console.log('A #apply-report channel does not exist.');
+    let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
+    if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
 
     var embed = new Discord.RichEmbed()
       .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
@@ -83,7 +83,7 @@ app.post('/apply', urlencodedParser, function (req, res) {
       .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
       .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
       .setColor('#99ddff')
-    applyreportchannel.send(embed);
+    whitelistappschannel.send(embed);
     console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Request for ${req.body.minecraftUsernameselector} has been sent.`);
 
     res.redirect('/');
@@ -104,11 +104,9 @@ app.get('/report', function (req, res) {
 });
 
 app.post('/report', urlencodedParser, function (req, res) {
-  console.log(req.body);
-
   try {
-    let applyreportchannel = client.channels.find(c => c.name === 'apply-report');
-    if (!applyreportchannel) return console.log('A #apply-report channel does not exist.');
+    let reportschannel = client.channels.find(c => c.name === 'reports');
+    if (!reportschannel) return console.log('A #reports channel does not exist.');
 
     var embed = new Discord.RichEmbed()
       .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
@@ -117,7 +115,7 @@ app.post('/report', urlencodedParser, function (req, res) {
       .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
       .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
       .setColor('#ffa366')
-    applyreportchannel.send(embed);
+    reportschannel.send(embed);
     console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent Report on ${req.body.reporteduserselector}.`);
 
     res.redirect('/');
