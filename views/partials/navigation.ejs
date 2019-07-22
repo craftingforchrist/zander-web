@@ -1,3 +1,9 @@
+<style media="screen">
+  .colour-custom {
+    background-color: <%= sitecolour %> !important;
+  }
+</style>
+
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark colour-custom">
   <div class="container">
     <a class="navbar-brand" href="/"><img src="/assets/img/server-icon.png" alt="Server Logo" height="30px"> <%= servername %></a>
@@ -25,17 +31,6 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/apply"><i class="fas fa-edit"></i> Apply</a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><i class="fas fa-link"></i> Links</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="https://github.com/shadowolfyt/zander"><i class="fab fa-github"></i> zander Plugin GitHub Project</a>
-              <a class="dropdown-item" href="https://github.com/shadowolfyt/zander-web"><i class="fab fa-github"></i> zander Web GitHub Project</a>
-              <a class="dropdown-item" href="/issues"><i class="fab fa-github"></i> GitHub Issue Tracker</a>
-              <a class="dropdown-item" href="/discord"><i class="fab fa-discord"></i> Discord</a>
-              <a class="dropdown-item" href="mailto:<%= email %>"><i class="fas fa-envelope"></i> Email</a>
-            </div>
           </li>
         </ul>
     </div>

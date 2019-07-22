@@ -22,11 +22,11 @@
     <% objdata.forEach(function (data) { %>
       <tbody>
         <tr>
-          <td><img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" draggable="false" height="30px"></td>
-          <td><a href="profile/<%= data.username %>"><%= data.username %></a></td>
-          <td><%= data.joins %></td>
-          <td><%= data.status %></td>
-          <td><%= data.lastseen %></td>
+          <td><img src="https://crafatar.com/avatars/<%= data[0].uuid %>?overlay" draggable="false" height="30px"></td>
+          <td><a href="profile/<%= data[0].username %>"><%= data[0].username %></a></td>
+          <td><%= data[1].joins %></td>
+          <td><%= data[0].status %></td>
+          <td><%= data[0].lastseen %></td>
         </tr>
       </tbody>
       <% }) %>
