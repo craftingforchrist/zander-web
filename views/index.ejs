@@ -4,8 +4,32 @@
 <div class="container">
   <div class="jumbotron my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
-      <h1 class="display-3">zander</h1>
-      <p class="lead">This is a Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.</p>
+      <h1 class="display-3"><%= servername %></h1>
+      <p class="lead"><%= description %></p>
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fas fa-angle-double-right"></i> Play</button>
+
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog colourblack" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Play</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Connect to our server using the IP address below:<br><br>
+              <div class="text-center" id="ip">
+                <input autofocus="autofocus" onfocus="this.select()" id="ip" type="text" class="form-control disabled" readonly="" value="<%= serverip %>">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

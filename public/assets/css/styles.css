@@ -41,3 +41,12 @@ nav #navCollapse {
     margin-right: 0;
     margin-left: auto;
 }
+
+.colourblack {
+  color: black;
+}
+
+.profilenumber {
+  font-size: 20pt;
+  font-weight: bold;
+}

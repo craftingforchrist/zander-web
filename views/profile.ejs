@@ -1,13 +1,12 @@
 <% include partials/header.ejs %>
 <% include partials/navigation.ejs %>
 
-<% objdata.forEach(function (data) { %>
 <div class="container">
   <div class="jumbotron my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
-      <img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" alt="Player Avatar Head" draggable="false">
-      <h3 class="display-4"><%= data.username %></h3>
-      <p class="lead">Last Seen: <%= data.lastseen %></p>
+      <img src="https://crafatar.com/avatars/<%= objdata[0][0].uuid %>?overlay" alt="Player Avatar Head" draggable="false">
+      <h3 class="display-4"><%= objdata[0][0].username %></h3>
+      <p class="lead">Status: <%= objdata[1][0].status %></p>
     </div>
   </div>
 
@@ -35,9 +34,9 @@
               </tr>
 
               <tr>
-                <td><%= data.joins %></td>
-                <td><%= data.deaths %></td>
-                <td>Not Added Yet</td>
+                <td class="profilenumber"><%= objdata[3][0].joins %></td>
+                <td class="profilenumber"><%= objdata.deaths %></td>
+                <td class="profilenumber"><%= objdata[2][0].timeplayed %></td>
               </tr>
             </table>
           </div>
@@ -61,18 +60,16 @@
       <div class="card card-home">
         <div class="card-body">
           <h4 class="card-title">Information</h4>
-            <p>Joined: 1 day ago</p>
-            <p>Gender: Male</p>
-          <h4 class="card-title">Social</h4>
+            <p>Joined: <%= objdata[0][0].joined %></p>
+          <!-- <h4 class="card-title">Social</h4>
             <p><i class="fab fa-discord"></i>: shadowolf#9212</p>
             <p><i class="fab fa-instagram"></i>: @benrobson8</p>
             <p><i class="fab fa-youtube"></i>: /shadowolf</p>
-            <p><i class="fab fa-twitch"></i>: shadowolfyt</p>
+            <p><i class="fab fa-twitch"></i>: shadowolfyt</p> -->
         </div>
       </div>
     </div>
   </div>
 </div>
-<% }) %>
 
 <% include partials/footer.ejs %>
