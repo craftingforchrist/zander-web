@@ -2,11 +2,17 @@
   "servername": "zander",
   "sitecolour": "#3a99e8",
   "email": "support@example.com",
+  "serverip": "playonmyserver.com",
   "discordlink": "https://www.discordapp.com/",
-  "donatelink": "https://www.paypal.me/subtlechristianmc",
+  "donatelink": "https://www.paypal.me/myserverspaypal",
+  "website": "https://www.example.com/",
+  "weblogo": "/assets/img/server-icon.png",
+  "description": "A Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.",
 
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
   "rulesmd": "https://raw.githubusercontent.com/shadowolfyt/zander-web/master/README.md",
+  "developmentplugindevlink": "https://api.github.com/repos/shadowolfyt/zander/commits",
+  "developmentwebdevlink": "https://api.github.com/repos/shadowolfyt/zander-web/commits",
 
   "applicationlistenport": "8080"
 }

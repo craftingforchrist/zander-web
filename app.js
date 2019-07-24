@@ -11,9 +11,7 @@ const config = require('./config.json');
 const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
-const client = new Discord.Client({
-  disableEveryone: true
-});
+const client = new Discord.Client({ disableEveryone: true });
 
 //
 // Constants
@@ -51,6 +49,10 @@ app.get('/', function (req, res) {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
     "pagetitle": "Home"
   });
 });
@@ -70,6 +72,10 @@ app.get('/apply', function (req, res) {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
     "pagetitle": "Apply"
   });
 });
@@ -103,6 +109,10 @@ app.get('/report', function (req, res) {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
     "pagetitle": "Report a Player"
   });
 });
@@ -150,6 +160,10 @@ app.get('/rules', function (req, res) {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
     "pagetitle": "Rules",
     rulesmd: config.rulesmd
   });
@@ -158,57 +172,57 @@ app.get('/rules', function (req, res) {
 //
 // Development [plugin]
 //
-app.get('/development/plugin', function (req, res) {
-  var options = {
-    url: 'https://api.github.com/repos/shadowolfyt/zander/commits',
-    headers: { 'User-Agent': 'request' }
-  };
-
-  function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var info = JSON.parse(body);
-      res.redirect('/');
-      res.render('development-plugin', {
-        "servername": `${config.servername}`,
-        "sitecolour": `${config.sitecolour}`,
-        "email": `${config.email}`,
-        "pagetitle": "Plugin Development Log",
-        objdata: info
-      });
-    };
-  };
-  request(options, callback);
-});
+// app.get('/development/plugin', function (req, res) {
+//   var options = {
+//     url: config.developmentplugindevlink,
+//     headers: { 'User-Agent': 'request' }
+//   };
+//
+//   function callback(error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//       var info = JSON.parse(body);
+//       res.redirect('/');
+//       res.render('development-plugin', {
+//         "servername": `${config.servername}`,
+//         "sitecolour": `${config.sitecolour}`,
+//         "email": `${config.email}`,
+//         "pagetitle": "Plugin Development Log",
+//         objdata: info
+//       });
+//     };
+//   };
+//   request(options, callback);
+// });
 
 //
 // Development [web]
 //
-app.get('/development/web', function (req, res) {
-  var options = {
-    url: 'https://api.github.com/repos/shadowolfyt/zander-web/commits',
-    headers: { 'User-Agent': 'request' }
-  };
-
-  function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var info = JSON.parse(body);
-      res.render('development-web', {
-        "servername": `${config.servername}`,
-        "sitecolour": `${config.sitecolour}`,
-        "email": `${config.email}`,
-        "pagetitle": "Web Development Log",
-        objdata: info
-      });
-    };
-  };
-  request(options, callback);
-});
+// app.get('/development/web', function (req, res) {
+//   var options = {
+//     url: config.developmentwebdevlink,
+//     headers: { 'User-Agent': 'request' }
+//   };
+//
+//   function callback(error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//       var info = JSON.parse(body);
+//       res.render('development-web', {
+//         "servername": `${config.servername}`,
+//         "sitecolour": `${config.sitecolour}`,
+//         "email": `${config.email}`,
+//         "pagetitle": "Web Development Log",
+//         objdata: info
+//       });
+//     };
+//   };
+//   request(options, callback);
+// });
 
 //
 // Players
 //
 app.get('/players', function (req, res) {
-  connection.query (`SELECT * FROM playerdata; select pd.username as 'username', count(ses.id) as 'joins' from sessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
+  connection.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', count(ses.id) as 'joins' FROM sessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
     if (error) {
       res.redirect('/');
       throw error;
@@ -217,12 +231,14 @@ app.get('/players', function (req, res) {
         "servername": `${config.servername}`,
         "sitecolour": `${config.sitecolour}`,
         "email": `${config.email}`,
+        "serverip": `${config.serverip}`,
+        "website": `${config.website}`,
+        "description": `${config.description}`,
+        "weblogo": `${config.weblogo}`,
         "pagetitle": "Players",
         objdata: results
       });
     }
-    console.log(results[0]);
-    console.log(results[1]);
   });
 });
 
@@ -230,8 +246,8 @@ app.get('/players', function (req, res) {
 // Punishments
 //
 app.get('/punishments', function (req, res) {
-  let sql = `SELECT * FROM punishments ORDER BY id DESC`;
-  connection.query (sql, function (err, result) {
+  let sql = `select * from punishments`;
+  connection.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
@@ -240,9 +256,14 @@ app.get('/punishments', function (req, res) {
         "servername": `${config.servername}`,
         "sitecolour": `${config.sitecolour}`,
         "email": `${config.email}`,
+        "serverip": `${config.serverip}`,
+        "website": `${config.website}`,
+        "description": `${config.description}`,
+        "weblogo": `${config.weblogo}`,
         "pagetitle": "Punishments",
-        objdata: result
+        objdata: results
       });
+      console.log(results);
     }
   });
 });
@@ -251,8 +272,8 @@ app.get('/punishments', function (req, res) {
 // Profile
 //
 app.get('/profile/:username', function (req, res) {
-  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'`;
-  connection.query (sql, function (err, result) {
+  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select ses.id from sessions ses left join playerdata pd on pd.id = ses.player_id where ses.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(ses.sessionend, ses.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}';`;
+  connection.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
@@ -261,9 +282,14 @@ app.get('/profile/:username', function (req, res) {
         "servername": `${config.servername}`,
         "sitecolour": `${config.sitecolour}`,
         "email": `${config.email}`,
+        "serverip": `${config.serverip}`,
+        "website": `${config.website}`,
+        "description": `${config.description}`,
+        "weblogo": `${config.weblogo}`,
         "pagetitle": `${req.params.username}'s Profile`,
-        objdata: result
+        objdata: results
       });
+      console.log(results);
     }
   });
 });
