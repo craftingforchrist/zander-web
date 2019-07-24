@@ -222,7 +222,7 @@ app.get('/rules', function (req, res) {
 // Players
 //
 app.get('/players', function (req, res) {
-  connection.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', count(ses.id) as 'joins' FROM sessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
+  connection.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', COUNT(ses.id) as 'joins' FROM sessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
     if (error) {
       res.redirect('/');
       throw error;
@@ -238,6 +238,7 @@ app.get('/players', function (req, res) {
         "pagetitle": "Players",
         objdata: results
       });
+      console.log(results[1]);
     }
   });
 });
@@ -263,7 +264,7 @@ app.get('/punishments', function (req, res) {
         "pagetitle": "Punishments",
         objdata: results
       });
-      console.log(results);
+      // console.log(results);
     }
   });
 });
@@ -272,7 +273,7 @@ app.get('/punishments', function (req, res) {
 // Profile
 //
 app.get('/profile/:username', function (req, res) {
-  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select ses.id from sessions ses left join playerdata pd on pd.id = ses.player_id where ses.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(ses.sessionend, ses.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}';`;
+  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select ses.id from sessions ses left join playerdata pd on pd.id = ses.player_id where ses.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(ses.sessionend, ses.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; SELECT mt.mobtype as 'mobtype', SUM(IF(pd.username='${req.params.username}', 1, 0)) as 'kills' FROM mobdeath md right outer join mobtypes mt on md.mobtype_id = mt.id left join playerdata pd on pd.id = md.killer_id group by mt.mobtype order by mt.displayorder asc;`;
   connection.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
@@ -289,7 +290,7 @@ app.get('/profile/:username', function (req, res) {
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: results
       });
-      console.log(results);
+      // console.log(results[4]);
     }
   });
 });
