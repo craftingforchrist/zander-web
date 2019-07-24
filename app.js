@@ -295,6 +295,41 @@ app.get('/profile/:username', function (req, res) {
 });
 
 //
+// Contact
+//
+app.get('/contact', function (req, res) {
+  res.render('contact', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "pagetitle": "Contact"
+  });
+});
+
+app.post('/contact', urlencodedParser, function (req, res) {
+  try {
+    let emailschannel = client.channels.find(c => c.name === 'emails');
+    if (!emailschannel) return console.log('A #emails channel does not exist.');
+
+    var embed = new Discord.RichEmbed()
+      .setTitle(`New Contact Submission [${req.body.name}]`)
+      .addField(`Email`, `${req.body.email}`, true)
+      .addField(`Subject`, `${req.body.subject}`, true)
+      .addField(`Message`, `${req.body.message}`)
+      .setColor('#ffa366')
+    emailschannel.send(embed);
+
+    res.redirect('/');
+  } catch {
+    console.log('An error occured');
+  }
+});
+
+//
 // Application Boot
 //
 app.listen(process.env.PORT || config.applicationlistenport, function() {
