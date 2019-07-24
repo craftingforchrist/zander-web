@@ -19,16 +19,16 @@
           <th scope="col">Last Seen</th>
         </tr>
       </thead>
-    <% objdata[0].forEach(function (data) { %>
-      <tbody>
-        <tr>
-          <td><img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" draggable="false" height="30px"></td>
-          <td><a href="profile/<%= data.username %>"><%= data.username %></a></td>
-          <td><%= data.joins %></td>
-          <td><%= data.status %></td>
-          <td><%= data.lastseen %></td>
-        </tr>
-      </tbody>
+      <% objdata[0].forEach(function (data) { %>
+        <tbody>
+          <tr>
+            <td><img src="https://crafatar.com/avatars/<%= data.uuid %>?overlay" draggable="false" height="30px"></td>
+            <td><a href="profile/<%= data.username %>"><%= data.username %></a></td>
+            <td><%= data.joins %></td>
+            <td><%= data.status %></td>
+            <td><%= data.lastseen %></td>
+          </tr>
+        </tbody>
       <% }) %>
     </table>
 </div>

@@ -31,12 +31,14 @@
                 <td>Joins</td>
                 <td>Deaths</td>
                 <td>Total Time Played</td>
+                <td>Last Seen</td>
               </tr>
 
               <tr>
                 <td class="profilenumber"><%= objdata[3][0].joins %></td>
-                <td class="profilenumber"><%= objdata.deaths %></td>
+                <td class="profilenumber"><%= objdata[0][0].deaths %></td>
                 <td class="profilenumber"><%= objdata[2][0].timeplayed %></td>
+                <td class="profilenumber"><%= objdata[4][0].lastseen %></td>
               </tr>
             </table>
           </div>
