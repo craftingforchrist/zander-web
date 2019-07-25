@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -169,6 +169,40 @@ app.get('/rules', function (req, res) {
     "weblogo": `${config.weblogo}`,
     "pagetitle": "Rules",
     rulesmd: config.rulesmd
+  });
+});
+
+//
+// Terms of Service
+//
+app.get('/terms', function (req, res) {
+  res.render('terms', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "pagetitle": "Terms of Service",
+    termsmd: config.termsmd
+  });
+});
+
+//
+// Privacy Policy
+//
+app.get('/privacy', function (req, res) {
+  res.render('privacy', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "pagetitle": "Privacy Policy",
+    privacymd: config.privacymd
   });
 });
 

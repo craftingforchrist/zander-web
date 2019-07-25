@@ -9,8 +9,11 @@
   "weblogo": "/assets/img/server-icon.png",
   "description": "A Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.",
 
-  "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
   "rulesmd": "https://raw.githubusercontent.com/shadowolfyt/zander-web/master/README.md",
+  "termsmd": "https://raw.githubusercontent.com/shadowolfyt/zander/master/README.md",
+  "privacymd": "https://raw.githubusercontent.com/shadowolfyt/zander/master/README.md",
+
+  "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
   "developmentplugindevlink": "https://api.github.com/repos/shadowolfyt/zander/commits",
   "developmentwebdevlink": "https://api.github.com/repos/shadowolfyt/zander-web/commits",
 
