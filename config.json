@@ -6,6 +6,7 @@
   "discordlink": "https://www.discordapp.com/",
   "donatelink": "https://www.paypal.me/myserverspaypal",
   "website": "https://www.example.com/",
+  "webfavicon": "/assets/img/favicon.ico",
   "weblogo": "/assets/img/server-icon.png",
   "description": "A Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.",
 

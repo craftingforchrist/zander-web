@@ -53,6 +53,7 @@ app.get('/', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Home"
   });
 });
@@ -76,6 +77,7 @@ app.get('/apply', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Apply"
   });
 });
@@ -113,6 +115,7 @@ app.get('/report', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Report a Player"
   });
 });
@@ -167,6 +170,7 @@ app.get('/rules', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Rules",
     rulesmd: config.rulesmd
   });
@@ -184,6 +188,7 @@ app.get('/terms', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Terms of Service",
     termsmd: config.termsmd
   });
@@ -201,6 +206,7 @@ app.get('/privacy', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Privacy Policy",
     privacymd: config.privacymd
   });
@@ -272,6 +278,7 @@ app.get('/players', function (req, res) {
         "website": `${config.website}`,
         "description": `${config.description}`,
         "weblogo": `${config.weblogo}`,
+        "webfavicon": `${config.webfavicon}`,
         "pagetitle": "Players",
         objdata: results
       });
@@ -298,6 +305,7 @@ app.get('/punishments', function (req, res) {
         "website": `${config.website}`,
         "description": `${config.description}`,
         "weblogo": `${config.weblogo}`,
+        "webfavicon": `${config.webfavicon}`,
         "pagetitle": "Punishments",
         objdata: results
       });
@@ -324,6 +332,7 @@ app.get('/profile/:username', function (req, res) {
         "website": `${config.website}`,
         "description": `${config.description}`,
         "weblogo": `${config.weblogo}`,
+        "webfavicon": `${config.webfavicon}`,
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: results
       });
@@ -344,6 +353,7 @@ app.get('/contact', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Contact"
   });
 });
