@@ -159,6 +159,13 @@ app.get('/issues', function (req, res) {
 });
 
 //
+// Store Redirect
+//
+app.get('/store', function (req, res) {
+  res.redirect(`${config.storelink}`);
+});
+
+//
 // Rules
 //
 app.get('/rules', function (req, res) {
@@ -376,6 +383,23 @@ app.post('/contact', urlencodedParser, function (req, res) {
     console.log('An error occured');
   }
 });
+
+// //
+// // About
+// //
+// app.get('/about', function (req, res) {
+//   res.render('about', {
+//     "servername": `${config.servername}`,
+//     "sitecolour": `${config.sitecolour}`,
+//     "email": `${config.email}`,
+//     "serverip": `${config.serverip}`,
+//     "website": `${config.website}`,
+//     "description": `${config.description}`,
+//     "weblogo": `${config.weblogo}`,
+//     "webfavicon": `${config.webfavicon}`,
+//     "pagetitle": "About"
+//   });
+// });
 
 //
 // Application Boot

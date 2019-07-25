@@ -3,12 +3,15 @@
   "sitecolour": "#3a99e8",
   "email": "support@example.com",
   "serverip": "playonmyserver.com",
-  "discordlink": "https://www.discordapp.com/",
-  "donatelink": "https://www.paypal.me/myserverspaypal",
-  "website": "https://www.example.com/",
+
   "webfavicon": "/assets/img/favicon.ico",
   "weblogo": "/assets/img/server-icon.png",
   "description": "A Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.",
+
+  "website": "https://www.example.com/",
+  "discordlink": "https://www.discordapp.com/",
+  "donatelink": "https://www.paypal.me/myserverspaypal",
+  "storelink": "http://myminecraftserver.tebex.io",
 
   "rulesmd": "https://raw.githubusercontent.com/shadowolfyt/zander-web/master/README.md",
   "termsmd": "https://raw.githubusercontent.com/shadowolfyt/zander/master/README.md",
