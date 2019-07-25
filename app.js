@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -126,11 +126,14 @@ app.post('/report', urlencodedParser, function (req, res) {
       .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
       .addField(`Reporters Username`, `${req.body.reporteruserselector}`, true)
       .addField(`Reporters Discord Tag`, `${req.body.discordtagselector}`, true)
+      .addField(`Platform`, `${req.body.platformselector}`, true)
       .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
       .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
       .setColor('#ffa366')
     reportschannel.send(embed);
     console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent Report on ${req.body.reporteduserselector}.`);
+
+    console.log(req.body);
 
     res.redirect('/');
   } catch {
