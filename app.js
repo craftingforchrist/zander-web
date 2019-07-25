@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-const credentials = require('./credentials.json');
+// const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -241,7 +241,7 @@ app.get('/players', function (req, res) {
         "pagetitle": "Players",
         objdata: results
       });
-      console.log(results[1]);
+      // console.log(results);
     }
   });
 });
@@ -267,7 +267,7 @@ app.get('/punishments', function (req, res) {
         "pagetitle": "Punishments",
         objdata: results
       });
-      console.log(results);
+      // console.log(results);
     }
   });
 });
@@ -293,7 +293,7 @@ app.get('/profile/:username', function (req, res) {
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: results
       });
-      console.log(results);
+      // console.log(results);
     }
   });
 });
