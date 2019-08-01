@@ -50,3 +50,17 @@ nav #navCollapse {
   font-size: 20pt;
   font-weight: bold;
 }
+
+.applyicons {
+  font-size: 64pt;
+}
+
+.disablecard {
+  opacity: 0.4;
+}
+
+.confirmpolicy {
+  max-height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

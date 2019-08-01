@@ -1,0 +1,49 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3">Apply</h1>
+    </div>
+  </div>
+
+  <form action="/apply" method="post">
+    <div class="form-group">
+      <label for="minecraftUsernameselector">What is your Username?</label>
+      <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="shadowolfyt" required>
+    </div>
+    <div class="form-group">
+      <label for="discordtagselector">What is your Discord Tag?</label>
+      <input type="text" class="form-control" name="discordtagselector" placeholder="shadowolf#9212" required>
+      <small class="form-text text-muted">If you haven't joined the Discord, you can join <a href="/discord">here.</a></small>
+    </div>
+    <div class="form-group">
+      <label for="howdidyouhearaboutusselector">How did you hear about us?</label>
+      <input type="text" class="form-control" name="howdidyouhearaboutusselector">
+    </div>
+    <div class="form-group">
+      <label for="additionalinformationselector">Any other information or comments?</label>
+      <input type="text" class="form-control" name="additionalinformationselector">
+    </div>
+
+    <div class="form-group card">
+      <div class="card-body markdown-style confirmpolicy">
+        <h2>Terms of Service</h2>
+        <zero-md src="<%= termsmd %>"></zero-md>
+
+        <h2>Privacy Policy</h2>
+        <zero-md src="<%= privacymd %>"></zero-md>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <small class="form-text text-muted">By applying and joining our server you agree and accept our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+</div>
+
+<% include ../partials/footer.ejs %>

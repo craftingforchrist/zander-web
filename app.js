@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -69,7 +69,7 @@ app.get('/donate', function (req, res) {
 // Apply
 //
 app.get('/apply', function (req, res) {
-  res.render('apply', {
+  res.render('apply/apply', {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
@@ -81,6 +81,50 @@ app.get('/apply', function (req, res) {
     "pagetitle": "Apply"
   });
 });
+
+app.get('/apply/game', function (req, res) {
+  res.render('apply/apply-game', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
+    "pagetitle": "Apply - Game",
+    termsmd: config.termsmd,
+    privacymd: config.privacymd
+  });
+});
+
+// app.get('/apply/creator', function (req, res) {
+//   res.render('apply-game', {
+//     "servername": `${config.servername}`,
+//     "sitecolour": `${config.sitecolour}`,
+//     "email": `${config.email}`,
+//     "serverip": `${config.serverip}`,
+//     "website": `${config.website}`,
+//     "description": `${config.description}`,
+//     "weblogo": `${config.weblogo}`,
+//     "webfavicon": `${config.webfavicon}`,
+//     "pagetitle": "Apply - Content Creator"
+//   });
+// });
+//
+// app.get('/apply/developer', function (req, res) {
+//   res.render('apply-game', {
+//     "servername": `${config.servername}`,
+//     "sitecolour": `${config.sitecolour}`,
+//     "email": `${config.email}`,
+//     "serverip": `${config.serverip}`,
+//     "website": `${config.website}`,
+//     "description": `${config.description}`,
+//     "weblogo": `${config.weblogo}`,
+//     "webfavicon": `${config.webfavicon}`,
+//     "pagetitle": "Apply - Developer"
+//   });
+// });
 
 app.post('/apply', urlencodedParser, function (req, res) {
   try {
@@ -187,7 +231,7 @@ app.get('/rules', function (req, res) {
 // Terms of Service
 //
 app.get('/terms', function (req, res) {
-  res.render('terms', {
+  res.render('policies/terms', {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
@@ -205,7 +249,7 @@ app.get('/terms', function (req, res) {
 // Privacy Policy
 //
 app.get('/privacy', function (req, res) {
-  res.render('privacy', {
+  res.render('policies/privacy', {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
@@ -289,7 +333,7 @@ app.get('/players', function (req, res) {
         "pagetitle": "Players",
         objdata: results
       });
-      // console.log(results);
+      console.log(results);
     }
   });
 });
@@ -298,7 +342,7 @@ app.get('/players', function (req, res) {
 // Punishments
 //
 app.get('/punishments', function (req, res) {
-  let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from punishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id;`;
+  let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from punishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id ORDER BY id ASC;`;
   connection.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
