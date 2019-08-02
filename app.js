@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-const credentials = require('./credentials.json');
+// const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -78,6 +78,8 @@ app.get('/apply', function (req, res) {
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
     "webfavicon": `${config.webfavicon}`,
+    developersmd: config.developersmd,
+    contentcreatorsmd: config.contentcreatorsmd,
     "pagetitle": "Apply"
   });
 });
@@ -213,7 +215,7 @@ app.get('/store', function (req, res) {
 // Rules
 //
 app.get('/rules', function (req, res) {
-  res.render('rules', {
+  res.render('policies/rules', {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,

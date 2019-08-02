@@ -13,9 +13,11 @@
   "donatelink": "https://www.paypal.me/myserverspaypal",
   "storelink": "http://myminecraftserver.tebex.io",
 
-  "rulesmd": "https://raw.githubusercontent.com/shadowolfyt/zander-web/master/README.md",
-  "termsmd": "https://raw.githubusercontent.com/shadowolfyt/zander/master/README.md",
-  "privacymd": "https://raw.githubusercontent.com/shadowolfyt/zander/master/README.md",
+  "rulesmd": "https://raw.githubusercontent.com/the-zander-project/Rules/master/README.md",
+  "termsmd": "https://raw.githubusercontent.com/the-zander-project/Terms/master/README.md",
+  "privacymd": "https://raw.githubusercontent.com/the-zander-project/Privacy/master/README.md",
+  "contentcreatorsmd": "https://raw.githubusercontent.com/the-zander-project/Content-Creators/master/README.md",
+  "developersmd": "https://raw.githubusercontent.com/the-zander-project/Developers/master/README.md",
 
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
   "developmentplugindevlink": "https://api.github.com/repos/shadowolfyt/zander/commits",
