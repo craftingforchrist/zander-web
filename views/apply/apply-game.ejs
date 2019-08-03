@@ -11,11 +11,11 @@
   <form action="/apply" method="post">
     <div class="form-group">
       <label for="minecraftUsernameselector">What is your Username?</label>
-      <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="shadowolfyt" required>
+      <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="Steve" required>
     </div>
     <div class="form-group">
       <label for="discordtagselector">What is your Discord Tag?</label>
-      <input type="text" class="form-control" name="discordtagselector" placeholder="shadowolf#9212" required>
+      <input type="text" class="form-control" name="discordtagselector" placeholder="Steve#9212" required>
       <small class="form-text text-muted">If you haven't joined the Discord, you can join <a href="/discord">here.</a></small>
     </div>
     <div class="form-group">
@@ -29,17 +29,17 @@
 
     <div class="form-group card">
       <div class="card-body markdown-style confirmpolicy">
-        <h2>Terms of Service</h2>
+        <h1>Terms of Service</h1>
         <zero-md src="<%= termsmd %>"></zero-md>
-        <br>
+        <br><br>
 
-        <h2>Privacy Policy</h2>
+        <h1>Privacy Policy</h1>
         <zero-md src="<%= privacymd %>"></zero-md>
       </div>
     </div>
 
     <div class="form-group">
-      <small class="form-text text-muted">By applying and joining our server you agree and accept our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</small>
+      <small class="form-text text-muted">By submitting this application and joining our server you agree and accept our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</small>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
