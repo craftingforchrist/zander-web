@@ -2,13 +2,18 @@
 <% include partials/navigation.ejs %>
 
 <div class="container">
-  <div class="jumbotron my-4 home-jumbo-header" id="video-container">
-    <div class="container text-white">
+  <div class="jumbotron jumbotron-video-header my-4 home-jumbo-header">
+    <video id="bg-video" autoplay="true" loop="loop" preload="metadata" muted="muted">
+        <source src="<%= webvideobackground %>" type="video/mp4" />
+    </video>
+    <div class="center jumbovidtext text-white">
       <h1 class="display-3"><%= servername %></h1>
       <p class="lead"><%= description %></p>
 
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fas fa-angle-double-right"></i> Play</button>
+    </div>
 
+    <div class="container text-white">
       <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog colourblack" role="document">
           <div class="modal-content">

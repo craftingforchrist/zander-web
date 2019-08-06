@@ -1,4 +1,4 @@
-.jumbotron {
+.jumbotron-image-header {
   position: relative;
   overflow: hidden;
   background-image: url(../img/background.jpg);
@@ -63,4 +63,21 @@ nav #navCollapse {
   max-height: 500px;
   overflow: scroll;
   overflow-x: hidden;
+}
+
+#bg-video {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: inherit;
+}
+.jumbovidtext {
+    z-index: 1;
+    position: absolute;
+}
+
+.jumbotron-video-header {
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
 }

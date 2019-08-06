@@ -6,6 +6,7 @@
 
   "webfavicon": "/assets/img/favicon.ico",
   "weblogo": "/assets/img/server-icon.png",
+  "webvideobackground": "./assets/img/rollingbackground.mp4",
   "description": "A Minecraft Plugin that is integrated with Minecraft, Discord, Website and a MySQL Database.",
 
   "website": "https://www.example.com/",

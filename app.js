@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -53,6 +53,7 @@ app.get('/', function (req, res) {
     "website": `${config.website}`,
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
+    "webvideobackground": `${config.webvideobackground}`,
     "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Home"
   });
@@ -100,19 +101,19 @@ app.get('/apply/game', function (req, res) {
   });
 });
 
-// app.get('/apply/creator', function (req, res) {
-//   res.render('apply-game', {
-//     "servername": `${config.servername}`,
-//     "sitecolour": `${config.sitecolour}`,
-//     "email": `${config.email}`,
-//     "serverip": `${config.serverip}`,
-//     "website": `${config.website}`,
-//     "description": `${config.description}`,
-//     "weblogo": `${config.weblogo}`,
-//     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "Apply - Content Creator"
-//   });
-// });
+app.get('/apply/creator', function (req, res) {
+  res.render('apply-creator', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
+    "pagetitle": "Apply - Content Creator"
+  });
+});
 //
 // app.get('/apply/developer', function (req, res) {
 //   res.render('apply-game', {
@@ -128,7 +129,28 @@ app.get('/apply/game', function (req, res) {
 //   });
 // });
 
-app.post('/apply', urlencodedParser, function (req, res) {
+app.post('/apply-game', urlencodedParser, function (req, res) {
+  try {
+    let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
+    if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
+
+    var embed = new Discord.RichEmbed()
+      .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
+      .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
+      .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
+      .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
+      .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
+      .setColor('#99ddff')
+    whitelistappschannel.send(embed);
+    console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Request for ${req.body.minecraftUsernameselector} has been sent.`);
+
+    res.redirect('/');
+  } catch {
+    console.log('An error occured');
+  }
+});
+
+app.post('/apply-creator', urlencodedParser, function (req, res) {
   try {
     let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
     if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
