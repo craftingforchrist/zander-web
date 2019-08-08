@@ -3,6 +3,7 @@
   "sitecolour": "#3a99e8",
   "email": "support@example.com",
   "serverip": "playonmyserver.com",
+  "notificationemail": "notify@example.com",
 
   "webfavicon": "/assets/img/favicon.ico",
   "weblogo": "/assets/img/server-icon.png",
@@ -24,5 +25,8 @@
   "developmentplugindevlink": "https://api.github.com/repos/shadowolfyt/zander/commits",
   "developmentwebdevlink": "https://api.github.com/repos/shadowolfyt/zander-web/commits",
 
-  "applicationlistenport": "8080"
+  "applicationlistenport": "8080",
+
+  "discordsend": true,
+  "mailsend": true
 }

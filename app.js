@@ -2,16 +2,41 @@
 // Project Dependencies
 //
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
+
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: credentials.serviceauthuser,
+    pass: credentials.serviceauthpass
+  }
+});
+
+var handlebarsOptions = {
+  viewEngine: {
+     extname: '.hbs',
+     layoutsDir: 'views/mail/',
+     defaultLayout : 'template',
+     partialsDir : 'views/partials/mail/'
+  },
+  viewPath: 'views/mail/',
+  extName: '.hbs'
+}
+
+transporter.use('compile', hbs(handlebarsOptions));
 
 //
 // Constants
@@ -60,13 +85,6 @@ app.get('/', function (req, res) {
 });
 
 //
-// Donate Redirect
-//
-app.get('/donate', function (req, res) {
-  res.redirect(`${config.donatelink}`);
-});
-
-//
 // Apply
 //
 app.get('/apply', function (req, res) {
@@ -101,8 +119,63 @@ app.get('/apply/game', function (req, res) {
   });
 });
 
+app.post('/apply-game', urlencodedParser, function (req, res) {
+  try {
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #whitelist-apps channel to be created.
+      //
+      let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
+      if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
+
+      var embed = new Discord.RichEmbed()
+        .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
+        .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
+        .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
+        .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
+        .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
+        .setColor('#99ddff')
+      whitelistappschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Request for ${req.body.minecraftUsernameselector} has been sent.`);
+    };
+
+    if (config.mailsend == true) {
+      //
+      // Mail Send
+      // Requires a email to be in the notificationemail field.
+      //
+      var mailOptions = {
+        from: credentials.serviceauthuser,
+        to: config.notificationemail,
+        subject: `[Whitelist Application] ${req.body.minecraftUsernameselector}`,
+        template: 'template',
+        context: {
+          minecraftUsernameselector: req.body.minecraftUsernameselector,
+          discordtagselector: req.body.discordtagselector,
+          howdidyouhearaboutusselector: req.body.howdidyouhearaboutusselector,
+          additionalinformationselector: req.body.additionalinformationselector
+        }
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('[MAIL] An email has been sent to the notification email.');
+        }
+      });
+    }
+
+    res.redirect('/');
+  } catch (error) {
+    console.log('An error occured');
+    console.log(error);
+  }
+});
+
 app.get('/apply/creator', function (req, res) {
-  res.render('apply-creator', {
+  res.render('apply/apply-creator', {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
@@ -114,9 +187,9 @@ app.get('/apply/creator', function (req, res) {
     "pagetitle": "Apply - Content Creator"
   });
 });
-//
+
 // app.get('/apply/developer', function (req, res) {
-//   res.render('apply-game', {
+//   res.render('apply/apply-developer', {
 //     "servername": `${config.servername}`,
 //     "sitecolour": `${config.sitecolour}`,
 //     "email": `${config.email}`,
@@ -128,27 +201,6 @@ app.get('/apply/creator', function (req, res) {
 //     "pagetitle": "Apply - Developer"
 //   });
 // });
-
-app.post('/apply-game', urlencodedParser, function (req, res) {
-  try {
-    let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
-    if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
-
-    var embed = new Discord.RichEmbed()
-      .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
-      .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
-      .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
-      .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
-      .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
-      .setColor('#99ddff')
-    whitelistappschannel.send(embed);
-    console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Request for ${req.body.minecraftUsernameselector} has been sent.`);
-
-    res.redirect('/');
-  } catch {
-    console.log('An error occured');
-  }
-});
 
 app.post('/apply-creator', urlencodedParser, function (req, res) {
   try {
@@ -190,47 +242,59 @@ app.get('/report', function (req, res) {
 
 app.post('/report', urlencodedParser, function (req, res) {
   try {
-    let reportschannel = client.channels.find(c => c.name === 'reports');
-    if (!reportschannel) return console.log('A #reports channel does not exist.');
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #reports channel to be created.
+      //
+      let reportschannel = client.channels.find(c => c.name === 'reports');
+      if (!reportschannel) return console.log('A #reports channel does not exist.');
 
-    var embed = new Discord.RichEmbed()
-      .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
-      .addField(`Reporters Username`, `${req.body.reporteruserselector}`, true)
-      .addField(`Reporters Discord Tag`, `${req.body.discordtagselector}`, true)
-      .addField(`Platform`, `${req.body.platformselector}`, true)
-      .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
-      .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
-      .setColor('#ffa366')
-    reportschannel.send(embed);
-    console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent Report on ${req.body.reporteduserselector}.`);
+      var embed = new Discord.RichEmbed()
+        .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
+        .addField(`Reporters Username`, `${req.body.reporteruserselector}`, true)
+        .addField(`Reporters Discord Tag`, `${req.body.discordtagselector}`, true)
+        .addField(`Platform`, `${req.body.platformselector}`, true)
+        .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
+        .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
+        .setColor('#ffa366')
+      reportschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent notification of report on ${req.body.reporteduserselector}.`);
+    }
 
-    console.log(req.body);
+    // if (config.mailsend == true) {
+    //   //
+    //   // Mail Send
+    //   // Requires a email to be in the notificationemail field.
+    //   //
+    //   var mailOptions = {
+    //     from: credentials.serviceauthuser,
+    //     to: config.notificationemail,
+    //     subject: `[Player Report] ${req.body.reporteduserselector}`,
+    //     template: 'template',
+    //     context: {
+    //       reporteruserselector: req.body.reporteruserselector,
+    //       reporteduserselector: req.body.reporteduserselector,
+    //       discordtagselector: req.body.discordtagselector,
+    //       platformselector: req.body.platformselector,
+    //       evidenceselector: req.body.evidenceselector
+    //     }
+    //   };
+    //
+    //   transporter.sendMail(mailOptions, function (error, info) {
+    //     if (error) {
+    //       console.log(error);
+    //     } else {
+    //       console.log('[MAIL] The player report has been sent to the notification email.');
+    //     }
+    //   });
+    // }
 
     res.redirect('/');
-  } catch {
+  } catch (error) {
     console.log('An error occured');
+    console.log(error);
   }
-});
-
-//
-// Discord Server Redirect
-//
-app.get('/discord', function (req, res) {
-  res.redirect(`${config.discordlink}`);
-});
-
-//
-// GitHub Issue Tracker Redirect
-//
-app.get('/issues', function (req, res) {
-  res.redirect(`${config.githubissuetrackerlink}`);
-});
-
-//
-// Store Redirect
-//
-app.get('/store', function (req, res) {
-  res.redirect(`${config.storelink}`);
 });
 
 //
@@ -452,9 +516,9 @@ app.post('/contact', urlencodedParser, function (req, res) {
   }
 });
 
-// //
-// // About
-// //
+//
+// About
+//
 // app.get('/about', function (req, res) {
 //   res.render('about', {
 //     "servername": `${config.servername}`,
@@ -468,6 +532,34 @@ app.post('/contact', urlencodedParser, function (req, res) {
 //     "pagetitle": "About"
 //   });
 // });
+
+//
+// Discord Server Redirect
+//
+app.get('/discord', function (req, res) {
+  res.redirect(`${config.discordlink}`);
+});
+
+//
+// GitHub Issue Tracker Redirect
+//
+app.get('/issues', function (req, res) {
+  res.redirect(`${config.githubissuetrackerlink}`);
+});
+
+//
+// Store Redirect
+//
+app.get('/store', function (req, res) {
+  res.redirect(`${config.storelink}`);
+});
+
+//
+// Donate Redirect
+//
+app.get('/donate', function (req, res) {
+  res.redirect(`${config.donatelink}`);
+});
 
 //
 // Application Boot
