@@ -20,8 +20,8 @@ const hbs = require('nodemailer-express-handlebars');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: credentials.serviceauthuser,
-    pass: credentials.serviceauthpass
+    user: process.env.serviceauthuser || credentials.serviceauthuser,
+    pass: process.env.serviceauthpass || credentials.serviceauthpass
   }
 });
 
@@ -146,7 +146,7 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
       // Requires a email to be in the notificationemail field.
       //
       var mailOptions = {
-        from: credentials.serviceauthuser,
+        from: process.env.serviceauthuser || credentials.serviceauthuser,
         to: config.notificationemail,
         subject: `[Whitelist Application] ${req.body.minecraftUsernameselector}`,
         template: 'template',
