@@ -9,7 +9,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-const credentials = require('./credentials.json');
+// const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -81,6 +81,23 @@ app.get('/', function (req, res) {
     "webvideobackground": `${config.webvideobackground}`,
     "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Home"
+  });
+});
+
+//
+// Login
+//
+app.get('/login', function (req, res) {
+  res.render('session/login', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
+    "pagetitle": "Login"
   });
 });
 
@@ -184,23 +201,25 @@ app.get('/apply/creator', function (req, res) {
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
     "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Apply - Content Creator"
+    "pagetitle": "Apply - Content Creator",
+    contentcreatorsmd: config.contentcreatorsmd
   });
 });
 
-// app.get('/apply/developer', function (req, res) {
-//   res.render('apply/apply-developer', {
-//     "servername": `${config.servername}`,
-//     "sitecolour": `${config.sitecolour}`,
-//     "email": `${config.email}`,
-//     "serverip": `${config.serverip}`,
-//     "website": `${config.website}`,
-//     "description": `${config.description}`,
-//     "weblogo": `${config.weblogo}`,
-//     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "Apply - Developer"
-//   });
-// });
+app.get('/apply/developer', function (req, res) {
+  res.render('apply/apply-developer', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
+    "pagetitle": "Apply - Developer",
+    developersmd: config.developersmd
+  });
+});
 
 app.post('/apply-creator', urlencodedParser, function (req, res) {
   try {
@@ -475,7 +494,6 @@ app.get('/profile/:username', function (req, res) {
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: results
       });
-      // console.log(results);
     }
   });
 });

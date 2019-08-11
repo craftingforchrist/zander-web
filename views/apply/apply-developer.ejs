@@ -1,0 +1,78 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3"><i class="fas fa-code"></i> Developer Application</h1>
+    </div>
+  </div>
+
+  <div class="modal fade" id="developersmdmodal" tabindex="-1" role="dialog" aria-labelledby="developersmdmodaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg text-left" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="developerTitle">Developer Requirements</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <zero-md src="<%= developersmd %>"></zero-md>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Notice:</strong> Before starting your application, ensure that you meet the Developer role requirements. Click here for the <a href="#" data-toggle="modal" data-target="#developersmdmodal">role requirements</a>.
+  </div>
+
+  <form action="/apply-game" method="post">
+    <div class="form-group">
+      <label for="nameselector">Your Name</label>
+      <input type="text" class="form-control" name="nameselector" placeholder="John Smith" required>
+      <small class="form-text text-muted">This could also be a nickname or your Minecraft IGN.</small>
+    </div>
+    <div class="form-group">
+      <label for="emailselector">What is your email address?</label>
+      <input type="text" class="form-control" name="emailselector" placeholder="johnsmith@domain.com.au" required>
+    </div>
+    <div class="form-group">
+      <label for="discordtagselector">What is your Discord Tag?</label>
+      <input type="text" class="form-control" name="discordtagselector" placeholder="JohnSmith#9212" required>
+    </div>
+    <div class="form-group">
+      <label for="devexperienceselector">What experience do you have as a Developer?</label>
+      <textarea class="form-control" id="devexperienceselector" rows="4" required></textarea>
+      <small class="form-text text-muted">This is where you should put where your development experience fits into our developer role requirements.</small>
+    </div>
+    <div class="form-group">
+      <label for="devcontributeselector">Provide links to projects that you have contributed to.</label>
+      <textarea class="form-control" id="devexperienceselector" rows="4"></textarea>
+      <small class="form-text text-muted">Links can include things such as Open Source GitHub projects or private projects you wish to share with us.</small>
+    </div>
+    <div class="form-group">
+      <label for="interestselector">Why are you interested in joining our team?</label>
+      <textarea class="form-control" id="interestselector" rows="4"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="bestchoiceselector">Why do you think you are the best choice for our team?</label>
+      <textarea class="form-control" id="bestchoiceselector" rows="4"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="additionalinformationselector">Any other information or comments?</label>
+      <input type="text" class="form-control" name="additionalinformationselector">
+    </div>
+
+    <div class="form-group">
+      <small class="form-text text-muted">By submitting your application, you agree to have your application and any material provided within it made available to Developers and Administrators.<br>We respect your privacy and will not share the application beyond these select few.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+</div>
+
+<% include ../partials/footer.ejs %>

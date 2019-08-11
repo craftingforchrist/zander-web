@@ -1,0 +1,68 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3"><i class="fas fa-video"></i> Content Creator Application</h1>
+    </div>
+  </div>
+
+  <div class="modal fade" id="contentcreatorsmdmodal" tabindex="-1" role="dialog" aria-labelledby="contentcreatorsmdmodaltitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg text-left" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contentcreatorTitle">Content Creator Requirements</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <zero-md src="<%= contentcreatorsmd %>"></zero-md>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Notice:</strong> Before starting your application, ensure that you meet the Content Creator requirements. Click here for the <a href="#" data-toggle="modal" data-target="#contentcreatorsmdmodal">requirements</a>.
+  </div>
+
+  <form action="/apply-creator" method="post">
+    <div class="form-group">
+      <label for="minecraftusernameselector">What is your Username?</label>
+      <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="Steve" required>
+    </div>
+    <div class="form-group">
+      <label for="discordtagselector">What is your Discord Tag?</label>
+      <input type="text" class="form-control" name="discordtagselector" placeholder="Steve#9212" required>
+    </div>
+    <div class="form-group">
+      <label for="contentplatformselector">What platfom do you record/stream on?</label>
+      <select class="form-control" id="contentplatformselector" required>
+        <option selected disabled>Select</option>
+        <option>YouTube</option>
+        <option>Twitch</option>
+        <option>Mixer</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="channellinkselector">What is the link for your channel?</label>
+      <input type="text" class="form-control" name="channellinkselector" required>
+    </div>
+    <div class="form-group">
+      <label for="subscribercountselector">What is the amount of subscribers/followers you have?</label>
+      <input type="text" class="form-control" name="subscribercountselector" required>
+    </div>
+    <div class="form-group">
+      <label for="additionalinformationselector">Any other additional information?</label>
+      <input type="text" class="form-control" name="additionalinformationselector">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+</div>
+
+<% include ../partials/footer.ejs %>
