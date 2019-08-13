@@ -15,28 +15,21 @@ const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 
 const nodemailer = require('nodemailer');
-const hbs = require('nodemailer-express-handlebars');
+const inlinecss = require('nodemailer-juice');
 
+//
+// Mailer Controller
+//
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: process.env.servicehost || credentials.servicehost,
+  port: process.env.serviceport || credentials.serviceport,
+  secure: true,
   auth: {
     user: process.env.serviceauthuser || credentials.serviceauthuser,
     pass: process.env.serviceauthpass || credentials.serviceauthpass
   }
 });
-
-var handlebarsOptions = {
-  viewEngine: {
-     extname: '.hbs',
-     layoutsDir: 'views/mail/',
-     defaultLayout : 'template',
-     partialsDir : 'views/partials/mail/'
-  },
-  viewPath: 'views/mail/',
-  extName: '.hbs'
-}
-
-transporter.use('compile', hbs(handlebarsOptions));
+transporter.use('compile', inlinecss());
 
 //
 // Constants
@@ -50,6 +43,32 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
 
+//
+// Site Routes
+//
+var index = require('./routes/index');
+var apply = require('./routes/apply/apply');
+var terms = require('./routes/policy/terms');
+var privacy = require('./routes/policy/privacy');
+var rules = require('./routes/policy/rules');
+var discord = require('./routes/redirect/discord');
+var donate = require('./routes/redirect/donate');
+var issues = require('./routes/redirect/issues');
+var store = require('./routes/redirect/store');
+
+app.use('/', index);
+app.use('/apply', apply);
+app.use('/terms', terms);
+app.use('/privacy', privacy);
+app.use('/rules', rules);
+app.use('/discord', discord);
+app.use('/donate', donate);
+app.use('/issues', issues);
+app.use('/store', store);
+
+//
+// Database Controller
+//
 const connection = mysql.createConnection({
   host: process.env.dbhost || credentials.dbhost,
   user: process.env.dbuser || credentials.dbuser,
@@ -64,24 +83,6 @@ connection.connect(function(err) {
     return;
   }
   console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DB] ') + 'Database connection is successful. Your connection ID is ' + connection.threadId + '.');
-});
-
-//
-// Homepage
-//
-app.get('/', function (req, res) {
-  res.render('index', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webvideobackground": `${config.webvideobackground}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Home"
-  });
 });
 
 //
@@ -102,10 +103,10 @@ app.get('/login', function (req, res) {
 });
 
 //
-// Apply
+// Register
 //
-app.get('/apply', function (req, res) {
-  res.render('apply/apply', {
+app.get('/register', function (req, res) {
+  res.render('session/register', {
     "servername": `${config.servername}`,
     "sitecolour": `${config.sitecolour}`,
     "email": `${config.email}`,
@@ -114,9 +115,7 @@ app.get('/apply', function (req, res) {
     "description": `${config.description}`,
     "weblogo": `${config.weblogo}`,
     "webfavicon": `${config.webfavicon}`,
-    developersmd: config.developersmd,
-    contentcreatorsmd: config.contentcreatorsmd,
-    "pagetitle": "Apply"
+    "pagetitle": "Register"
   });
 });
 
@@ -162,24 +161,30 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
       // Mail Send
       // Requires a email to be in the notificationemail field.
       //
-      var mailOptions = {
-        from: process.env.serviceauthuser || credentials.serviceauthuser,
-        to: config.notificationemail,
-        subject: `[Whitelist Application] ${req.body.minecraftUsernameselector}`,
-        template: 'template',
-        context: {
-          minecraftUsernameselector: req.body.minecraftUsernameselector,
-          discordtagselector: req.body.discordtagselector,
-          howdidyouhearaboutusselector: req.body.howdidyouhearaboutusselector,
-          additionalinformationselector: req.body.additionalinformationselector
-        }
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
+      ejs.renderFile(__dirname + "/views/email/template.ejs", {
+        subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
+        username: req.body.minecraftUsernameselector,
+        discordtag: req.body.discordtagselector,
+        howdidyouhearaboutus: req.body.howdidyouhearaboutusselector,
+        additionalinformation: req.body.additionalinformationselector
+      }, function (err, data) {
+        if (err) {
+            console.log(err);
         } else {
-          console.log('[MAIL] An email has been sent to the notification email.');
+            var mainOptions = {
+                from: "Support <support@subtlechristianminecraft.com>",
+                to: "benrobson76@gmail.com",
+                subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
+                html: data
+            };
+
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
         }
       });
     }
@@ -281,93 +286,11 @@ app.post('/report', urlencodedParser, function (req, res) {
       console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent notification of report on ${req.body.reporteduserselector}.`);
     }
 
-    // if (config.mailsend == true) {
-    //   //
-    //   // Mail Send
-    //   // Requires a email to be in the notificationemail field.
-    //   //
-    //   var mailOptions = {
-    //     from: credentials.serviceauthuser,
-    //     to: config.notificationemail,
-    //     subject: `[Player Report] ${req.body.reporteduserselector}`,
-    //     template: 'template',
-    //     context: {
-    //       reporteruserselector: req.body.reporteruserselector,
-    //       reporteduserselector: req.body.reporteduserselector,
-    //       discordtagselector: req.body.discordtagselector,
-    //       platformselector: req.body.platformselector,
-    //       evidenceselector: req.body.evidenceselector
-    //     }
-    //   };
-    //
-    //   transporter.sendMail(mailOptions, function (error, info) {
-    //     if (error) {
-    //       console.log(error);
-    //     } else {
-    //       console.log('[MAIL] The player report has been sent to the notification email.');
-    //     }
-    //   });
-    // }
-
     res.redirect('/');
   } catch (error) {
     console.log('An error occured');
     console.log(error);
   }
-});
-
-//
-// Rules
-//
-app.get('/rules', function (req, res) {
-  res.render('policies/rules', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Rules",
-    rulesmd: config.rulesmd
-  });
-});
-
-//
-// Terms of Service
-//
-app.get('/terms', function (req, res) {
-  res.render('policies/terms', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Terms of Service",
-    termsmd: config.termsmd
-  });
-});
-
-//
-// Privacy Policy
-//
-app.get('/privacy', function (req, res) {
-  res.render('policies/privacy', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Privacy Policy",
-    privacymd: config.privacymd
-  });
 });
 
 //
@@ -550,34 +473,6 @@ app.post('/contact', urlencodedParser, function (req, res) {
 //     "pagetitle": "About"
 //   });
 // });
-
-//
-// Discord Server Redirect
-//
-app.get('/discord', function (req, res) {
-  res.redirect(`${config.discordlink}`);
-});
-
-//
-// GitHub Issue Tracker Redirect
-//
-app.get('/issues', function (req, res) {
-  res.redirect(`${config.githubissuetrackerlink}`);
-});
-
-//
-// Store Redirect
-//
-app.get('/store', function (req, res) {
-  res.redirect(`${config.storelink}`);
-});
-
-//
-// Donate Redirect
-//
-app.get('/donate', function (req, res) {
-  res.redirect(`${config.donatelink}`);
-});
 
 //
 // Application Boot

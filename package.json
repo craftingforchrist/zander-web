@@ -8,19 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shadowolfyt/zander-web.git"
+    "url": "git+https://github.com/benrobson8/zander-web.git"
   },
-  "author": "shadowolfyt",
+  "author": "benrobson8",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shadowolfyt/zander-web/issues"
+    "url": "https://github.com/benrobson8/zander-web/issues"
   },
-  "homepage": "https://github.com/shadowolfyt/zander-web#readme",
+  "homepage": "https://github.com/benrobson8/zander-web#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "discord.js": "^11.5.1",
     "ejs": "^2.6.2",
+    "email-templates": "^6.0.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "hogan": "^1.0.2",
