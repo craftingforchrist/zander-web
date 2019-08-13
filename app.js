@@ -55,6 +55,7 @@ var discord = require('./routes/redirect/discord');
 var donate = require('./routes/redirect/donate');
 var issues = require('./routes/redirect/issues');
 var store = require('./routes/redirect/store');
+var support = require('./routes/redirect/support');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -65,6 +66,7 @@ app.use('/discord', discord);
 app.use('/donate', donate);
 app.use('/issues', issues);
 app.use('/store', store);
+app.use('/support', support);
 
 //
 // Database Controller
@@ -172,7 +174,7 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: config.email,
+                from: process.env.serviceauthuser || credentials.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
                 html: data

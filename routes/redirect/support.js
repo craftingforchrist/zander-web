@@ -3,7 +3,7 @@ const router = express.Router();
 const config = require('../../config.json');
 
 router.get('/', (req, res, next) => {
-  res.redirect(`${config.storelink}`);
+  res.redirect(`${config.patreonlink}`);
 });
 
 module.exports = router;
