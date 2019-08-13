@@ -32,19 +32,19 @@
   <form action="/apply-creator" method="post">
     <div class="form-group">
       <label for="minecraftusernameselector">What is your Username?</label>
-      <input type="text" class="form-control" name="minecraftUsernameselector" placeholder="Steve" required>
+      <input type="text" class="form-control" name="minecraftusernameselector" placeholder="Steve" required>
     </div>
     <div class="form-group">
       <label for="discordtagselector">What is your Discord Tag?</label>
       <input type="text" class="form-control" name="discordtagselector" placeholder="Steve#9212" required>
     </div>
     <div class="form-group">
-      <label for="contentplatformselector">What platfom do you record/stream on?</label>
-      <select class="form-control" id="contentplatformselector" required>
+      <label for="contentplatformselector">What platform do you record/stream on?</label>
+      <select class="form-control" name="contentplatformselector" required>
         <option selected disabled>Select</option>
-        <option>YouTube</option>
-        <option>Twitch</option>
-        <option>Mixer</option>
+        <option name="YouTube">YouTube</option>
+        <option name="Twitch">Twitch</option>
+        <option name="Mixer">Mixer</option>
       </select>
     </div>
     <div class="form-group">

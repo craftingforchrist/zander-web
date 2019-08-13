@@ -56,6 +56,8 @@ var donate = require('./routes/redirect/donate');
 var issues = require('./routes/redirect/issues');
 var store = require('./routes/redirect/store');
 var support = require('./routes/redirect/support');
+var applygame = require('./routes/apply/apply-game');
+var applycreator = require('./routes/apply/apply-creator');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -67,6 +69,8 @@ app.use('/donate', donate);
 app.use('/issues', issues);
 app.use('/store', store);
 app.use('/support', support);
+app.use('/apply/game', applygame);
+app.use('/apply/creator', applycreator);
 
 //
 // Database Controller
@@ -121,22 +125,9 @@ app.get('/register', function (req, res) {
   });
 });
 
-app.get('/apply/game', function (req, res) {
-  res.render('apply/apply-game', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Apply - Game",
-    termsmd: config.termsmd,
-    privacymd: config.privacymd
-  });
-});
-
+//
+// Apply [Game]
+//
 app.post('/apply-game', urlencodedParser, function (req, res) {
   try {
     if (config.discordsend == true) {
@@ -144,18 +135,18 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
       // Discord Notification Send
       // Requires a #whitelist-apps channel to be created.
       //
-      let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
-      if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
+      let applicationschannel = client.channels.find(c => c.name === 'applications');
+      if (!applicationschannel) return console.log('A #applications channel does not exist.');
 
       var embed = new Discord.RichEmbed()
-        .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
+        .setTitle(`Whitelist Application [${req.body.minecraftUsernameselector}]`)
         .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
         .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
         .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
         .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
         .setColor('#99ddff')
-      whitelistappschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Request for ${req.body.minecraftUsernameselector} has been sent.`);
+      applicationschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Application for ${req.body.minecraftUsernameselector} has been sent.`);
     };
 
     if (config.mailsend == true) {
@@ -163,7 +154,7 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
       // Mail Send
       // Requires a email to be in the notificationemail field.
       //
-      ejs.renderFile(__dirname + "/views/email/template.ejs", {
+      ejs.renderFile(__dirname + "/views/email/apply-game.ejs", {
         subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
         username: req.body.minecraftUsernameselector,
         discordtag: req.body.discordtagselector,
@@ -198,19 +189,72 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
   }
 });
 
-app.get('/apply/creator', function (req, res) {
-  res.render('apply/apply-creator', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Apply - Content Creator",
-    contentcreatorsmd: config.contentcreatorsmd
-  });
+//
+// Apply [Creator]
+//
+app.post('/apply-creator', urlencodedParser, function (req, res) {
+  try {
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #applications channel to be created.
+      //
+      let applicationsschannel = client.channels.find(c => c.name === 'applications');
+      if (!applicationsschannel) return console.log('A #applications channel does not exist.');
+
+      var embed = new Discord.RichEmbed()
+        .setTitle(`Content Creator Application [${req.body.minecraftusernameselector}]`)
+        .addField(`Username`, `${req.body.minecraftusernameselector}`, true)
+        .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
+        .addField(`Content Platform`, `${req.body.contentplatformselector}`)
+        .addField(`Channel Link`, `${req.body.channellinkselector}`)
+        .addField(`Subscriber Count`, `${req.body.subscribercountselector}`)
+        .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
+        .setColor('#99ddff')
+      applicationsschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Content Creator Application for ${req.body.minecraftusernameselector} has been sent.`);
+    };
+
+    if (config.mailsend == true) {
+      //
+      // Mail Send
+      // Requires a email to be in the notificationemail field.
+      //
+      ejs.renderFile(__dirname + "/views/email/apply-creator.ejs", {
+        subject: `[Content Creator] ${req.body.minecraftusernameselector}`,
+        username: req.body.minecraftusernameselector,
+        discordtag: req.body.discordtagselector,
+        contentplatform: req.body.contentplatformselector,
+        channellink: req.body.channellinkselector,
+        subscribercount: req.body.subscribercountselector,
+        additionalinformation: req.body.additionalinformationselector
+      }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mainOptions = {
+                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                to: config.notificationemail,
+                subject: `[Content Creator] ${req.body.minecraftusernameselector}`,
+                html: data
+            };
+
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
+      });
+    }
+
+    res.redirect('/');
+  } catch (error) {
+    console.log('An error occured');
+    console.log(error);
+  }
 });
 
 app.get('/apply/developer', function (req, res) {
@@ -226,27 +270,6 @@ app.get('/apply/developer', function (req, res) {
     "pagetitle": "Apply - Developer",
     developersmd: config.developersmd
   });
-});
-
-app.post('/apply-creator', urlencodedParser, function (req, res) {
-  try {
-    let whitelistappschannel = client.channels.find(c => c.name === 'whitelist-apps');
-    if (!whitelistappschannel) return console.log('A #whitelist-apps channel does not exist.');
-
-    var embed = new Discord.RichEmbed()
-      .setTitle(`New Whitelist Application [${req.body.minecraftUsernameselector}]`)
-      .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
-      .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
-      .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
-      .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
-      .setColor('#99ddff')
-    whitelistappschannel.send(embed);
-    console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Request for ${req.body.minecraftUsernameselector} has been sent.`);
-
-    res.redirect('/');
-  } catch {
-    console.log('An error occured');
-  }
 });
 
 //
@@ -266,34 +289,34 @@ app.get('/report', function (req, res) {
   });
 });
 
-app.post('/report', urlencodedParser, function (req, res) {
-  try {
-    if (config.discordsend == true) {
-      //
-      // Discord Notification Send
-      // Requires a #reports channel to be created.
-      //
-      let reportschannel = client.channels.find(c => c.name === 'reports');
-      if (!reportschannel) return console.log('A #reports channel does not exist.');
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
-        .addField(`Reporters Username`, `${req.body.reporteruserselector}`, true)
-        .addField(`Reporters Discord Tag`, `${req.body.discordtagselector}`, true)
-        .addField(`Platform`, `${req.body.platformselector}`, true)
-        .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
-        .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
-        .setColor('#ffa366')
-      reportschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent notification of report on ${req.body.reporteduserselector}.`);
-    }
-
-    res.redirect('/');
-  } catch (error) {
-    console.log('An error occured');
-    console.log(error);
-  }
-});
+// app.post('/report', urlencodedParser, function (req, res) {
+//   try {
+//     if (config.discordsend == true) {
+//       //
+//       // Discord Notification Send
+//       // Requires a #reports channel to be created.
+//       //
+//       let reportschannel = client.channels.find(c => c.name === 'reports');
+//       if (!reportschannel) return console.log('A #reports channel does not exist.');
+//
+//       var embed = new Discord.RichEmbed()
+//         .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
+//         .addField(`Reporters Username`, `${req.body.reporteruserselector}`, true)
+//         .addField(`Reporters Discord Tag`, `${req.body.discordtagselector}`, true)
+//         .addField(`Platform`, `${req.body.platformselector}`, true)
+//         .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
+//         .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
+//         .setColor('#ffa366')
+//       reportschannel.send(embed);
+//       console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent notification of report on ${req.body.reporteduserselector}.`);
+//     }
+//
+//     res.redirect('/');
+//   } catch (error) {
+//     console.log('An error occured');
+//     console.log(error);
+//   }
+// });
 
 //
 // Development [plugin]
