@@ -172,8 +172,8 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: "Support <support@subtlechristianminecraft.com>",
-                to: "benrobson76@gmail.com",
+                from: config.email,
+                to: config.notificationemail,
                 subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
                 html: data
             };
