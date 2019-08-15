@@ -622,6 +622,33 @@ app.post('/contact', urlencodedParser, function (req, res) {
 // });
 
 //
+// Discord Commands & Integration
+//
+client.on("message", (message) => {
+  if (message.content.startsWith("!rules")) {
+    var embed = new Discord.RichEmbed()
+      .setTitle(`Server Rules`)
+      .setURL(`${config.website}rules`)
+      .setDescription(`You can see the server rules here: ${config.website}rules`)
+      .setColor('#ffa366')
+    message.channel.send(embed);
+  }
+
+  if (message.content.startsWith("!invite")) {
+    message.channel.createInvite().then((invite) => {
+      let embed = new Discord.RichEmbed()
+        .setTitle('Invite Created!')
+        .setColor('#ffa366')
+        .setURL(`https://discord.gg/${invite.code}`)
+        .setDescription(`Successfully created an invite!\nhttps://discord.gg/${invite.code}`)
+      message.channel.send(embed);
+
+      console.log(chalk.yellow(`[CONSOLE]`) + ` ${message.author.username} has generated an invite to the guild ${message.guild}: https://discord.gg/${invite.code}`);
+    });
+  }
+});
+
+//
 // Application Boot
 //
 app.listen(process.env.PORT || config.applicationlistenport, function() {
@@ -629,5 +656,8 @@ app.listen(process.env.PORT || config.applicationlistenport, function() {
   console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + process.env.PORT || config.applicationlistenport);
 
   client.login(process.env.token || credentials.token);
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + 'Launched Discord web-side.');
+
+  client.on("ready", () => {
+    console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + 'Launched Discord web-side.');
+  });
 });
