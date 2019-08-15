@@ -73,6 +73,7 @@ var applygame = require('./routes/apply/apply-game');
 var applycreator = require('./routes/apply/apply-creator');
 var applydeveloper = require('./routes/apply/apply-developer');
 var report = require('./routes/report');
+var contact = require('./routes/contact');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -88,6 +89,7 @@ app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
 app.use('/report', report);
+app.use('/contact', contact);
 
 //
 // Database Controller
@@ -573,36 +575,63 @@ app.get('/profile/:username', function (req, res) {
 //
 // Contact
 //
-app.get('/contact', function (req, res) {
-  res.render('contact', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Contact"
-  });
-});
-
 app.post('/contact', urlencodedParser, function (req, res) {
   try {
-    let emailschannel = client.channels.find(c => c.name === 'emails');
-    if (!emailschannel) return console.log('A #emails channel does not exist.');
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #enquiries channel to be created.
+      //
+      let enquirieschannel = client.channels.find(c => c.name === 'enquiries');
+      if (!enquirieschannel) return console.log('A #enquiries channel does not exist.');
 
-    var embed = new Discord.RichEmbed()
-      .setTitle(`New Contact Submission [${req.body.name}]`)
-      .addField(`Email`, `${req.body.email}`, true)
-      .addField(`Subject`, `${req.body.subject}`, true)
-      .addField(`Message`, `${req.body.message}`)
-      .setColor('#ffa366')
-    emailschannel.send(embed);
+      var embed = new Discord.RichEmbed()
+        .setTitle(`New Contact Enquiry`)
+        .addField(`Username/Name`, `${req.body.name}`, true)
+        .addField(`Email`, `${req.body.email}`, true)
+        .addField(`Subject`, `${req.body.subject}`)
+        .addField(`Message`, `${req.body.message}`)
+        .setColor('#86b300')
+      enquirieschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Enquiry has been sent.`);
+    };
 
+    if (config.mailsend == true) {
+      //
+      // Mail Send
+      // Requires a email to be in the notificationemail field.
+      //
+      ejs.renderFile(__dirname + "/views/email/enquiry.ejs", {
+        subject: `[Enquiry] ${req.body.subject}`,
+        nameselector: req.body.name,
+        emailselector: req.body.email,
+        subjectselector: req.body.subject,
+        messageselector: req.body.message
+      }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mainOptions = {
+                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                to: config.notificationemail,
+                subject: `[Enquiry] ${req.body.subject}`,
+                html: data
+            };
+
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
+      });
+    }
     res.redirect('/');
-  } catch {
+  } catch (error) {
     console.log('An error occured');
+    console.log(error);
   }
 });
 
