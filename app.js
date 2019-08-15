@@ -2,6 +2,7 @@
 // Project Dependencies
 //
 const express = require('express');
+const session = require('express-session');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
@@ -37,11 +38,21 @@ transporter.use('compile', inlinecss());
 const app = express();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 var obj = {};
-var session;
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
+// app.use(session({
+//   name: 'sid',
+//   resave: false,
+//   saveUninitalized: false,
+//   secret: "LktTVKER2z_9$b[<",
+//   cookie: {
+//     maxAge: 3600000,
+//     sameSite: true,
+//     secure: true
+//   }
+// }));
 
 //
 // Site Routes
@@ -95,39 +106,69 @@ connection.connect(function(err) {
   console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DB] ') + 'Database connection is successful. Your connection ID is ' + connection.threadId + '.');
 });
 
+// //
+// // Login
+// //
+// app.get('/login', function (req, res) {
+//   res.render('session/login', {
+//     "servername": `${config.servername}`,
+//     "sitecolour": `${config.sitecolour}`,
+//     "email": `${config.email}`,
+//     "serverip": `${config.serverip}`,
+//     "website": `${config.website}`,
+//     "description": `${config.description}`,
+//     "weblogo": `${config.weblogo}`,
+//     "webfavicon": `${config.webfavicon}`,
+//     "pagetitle": "Login"
+//   });
+// });
 //
-// Login
+// app.post('/login', urlencodedParser, function (req, res) {
 //
-app.get('/login', function (req, res) {
-  res.render('session/login', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Login"
-  });
-});
-
+// });
 //
-// Register
+// //
+// // Register
+// //
+// app.get('/register', function (req, res) {
+//   res.render('session/register', {
+//     "servername": `${config.servername}`,
+//     "sitecolour": `${config.sitecolour}`,
+//     "email": `${config.email}`,
+//     "serverip": `${config.serverip}`,
+//     "website": `${config.website}`,
+//     "description": `${config.description}`,
+//     "weblogo": `${config.weblogo}`,
+//     "webfavicon": `${config.webfavicon}`,
+//     "pagetitle": "Register"
+//   });
+// });
 //
-app.get('/register', function (req, res) {
-  res.render('session/register', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Register"
-  });
-});
+// app.post('/register', urlencodedParser, function (req, res) {
+//
+// });
+//
+// //
+// // Dashboard
+// //
+// app.get('/dashboard', function (req, res) {
+//   res.render('administration/dashboard', {
+//     "servername": `${config.servername}`,
+//     "sitecolour": `${config.sitecolour}`,
+//     "email": `${config.email}`,
+//     "serverip": `${config.serverip}`,
+//     "website": `${config.website}`,
+//     "description": `${config.description}`,
+//     "weblogo": `${config.weblogo}`,
+//     "webfavicon": `${config.webfavicon}`,
+//     "pagetitle": "Dashboard"
+//   });
+// });
+//
+//
+// app.post('/logout', urlencodedParser, function (req, res) {
+//
+// });
 
 //
 // Apply [Game]
