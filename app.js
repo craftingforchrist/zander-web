@@ -333,36 +333,71 @@ app.post('/apply-developer', urlencodedParser, function (req, res) {
   }
 });
 
-
-
-// app.post('/report', urlencodedParser, function (req, res) {
-//   try {
-//     if (config.discordsend == true) {
-//       //
-//       // Discord Notification Send
-//       // Requires a #reports channel to be created.
-//       //
-//       let reportschannel = client.channels.find(c => c.name === 'reports');
-//       if (!reportschannel) return console.log('A #reports channel does not exist.');
 //
-//       var embed = new Discord.RichEmbed()
-//         .setTitle(`New Player Report [${req.body.reporteduserselector}]`, true)
-//         .addField(`Reporters Username`, `${req.body.reporteruserselector}`, true)
-//         .addField(`Reporters Discord Tag`, `${req.body.discordtagselector}`, true)
-//         .addField(`Platform`, `${req.body.platformselector}`, true)
-//         .addField(`Reported Players Username`, `${req.body.reporteduserselector}`, true)
-//         .addField(`Evidence & Reasoning`, `${req.body.evidenceselector}`)
-//         .setColor('#ffa366')
-//       reportschannel.send(embed);
-//       console.log(chalk.yellow('[CONSOLE] ') + chalk.cyan('[DISCORD] ') + `Successfully sent notification of report on ${req.body.reporteduserselector}.`);
-//     }
+// Report A Player
 //
-//     res.redirect('/');
-//   } catch (error) {
-//     console.log('An error occured');
-//     console.log(error);
-//   }
-// });
+app.post('/report', urlencodedParser, function (req, res) {
+  try {
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #reports channel to be created.
+      //
+      let reportsschannel = client.channels.find(c => c.name === 'reports');
+      if (!reportsschannel) return console.log('A #reports channel does not exist.');
+
+      var embed = new Discord.RichEmbed()
+        .setTitle(`Player Report [${req.body.reporteduserselector}]`)
+        .addField(`What is your Minecraft Username?`, `${req.body.reporteruserselector}`, true)
+        .addField(`What is the Minecraft username of the player you would like to report?`, `${req.body.reporteduserselector}`, true)
+        .addField(`Platform`, `${req.body.platformselector}`, true)
+        .addField(`Please provide your reasoning for this report with evidence.`, `${req.body.evidenceselector}`)
+        .addField(`What is your Discord Tag?`, `${req.body.discordtagselector}`)
+        .setColor('#ff8533')
+      reportsschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Player Report for ${req.body.reporteduserselector} has been sent.`);
+    };
+
+    if (config.mailsend == true) {
+      //
+      // Mail Send
+      // Requires a email to be in the notificationemail field.
+      //
+      ejs.renderFile(__dirname + "/views/email/report.ejs", {
+        subject: `[Player Report] ${req.body.reporteduserselector}`,
+        reporteduser: req.body.reporteduserselector,
+        reporteruser: req.body.reporteruserselector,
+        platform: req.body.platformselector,
+        evidence: req.body.evidenceselector,
+        discordtag: req.body.discordtagselector
+      }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mainOptions = {
+                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                to: config.notificationemail,
+                subject: `[Player Report] ${req.body.reporteduserselector}`,
+                html: data
+            };
+
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
+      });
+    }
+
+    res.redirect('/');
+  } catch (error) {
+    console.log('An error occured');
+    console.log(error);
+  }
+});
 
 //
 // Development [plugin]
