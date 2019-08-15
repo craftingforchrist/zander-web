@@ -14,6 +14,7 @@
   "discordlink": "https://www.discordapp.com/",
   "donatelink": "https://www.paypal.me/myserverspaypal",
   "storelink": "http://myminecraftserver.tebex.io",
+  "patreonlink": "https://www.patreon.com/myserverspatreon",
 
   "rulesmd": "https://raw.githubusercontent.com/the-zander-project/Rules/master/README.md",
   "termsmd": "https://raw.githubusercontent.com/the-zander-project/Terms/master/README.md",
@@ -27,6 +28,7 @@
 
   "applicationlistenport": "8080",
 
+  "discordprefix": "!",
   "discordsend": true,
   "mailsend": true
 }

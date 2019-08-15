@@ -12,8 +12,10 @@ const package = require('./package.json');
 const config = require('./config.json');
 const credentials = require('./credentials.json');
 const request = require('request');
+
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
+client.commands = new Discord.Collection();
 
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
@@ -624,28 +626,34 @@ app.post('/contact', urlencodedParser, function (req, res) {
 //
 // Discord Commands & Integration
 //
+// Reads all commands & boot them in.
+fs.readdir('./discord/commands', (err, files) => {
+  if (err) console.log(err);
+  let jsfile = files.filter(f => f.split(".").pop() === 'js')
+  if (jsfile.length <= 0) {
+    console.log(chalk.red('Couldn\'t find commands.'));
+    return
+  }
+
+  jsfile.forEach((files, i) => {
+    let props = require(`./discord/commands/${files}`);
+    console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + chalk.yellow(files) + ` has been loaded.`);
+    client.commands.set(props.help.name, props);
+  })
+});
+
 client.on("message", (message) => {
-  if (message.content.startsWith("!rules")) {
-    var embed = new Discord.RichEmbed()
-      .setTitle(`Server Rules`)
-      .setURL(`${config.website}rules`)
-      .setDescription(`You can see the server rules here: ${config.website}rules`)
-      .setColor('#ffa366')
-    message.channel.send(embed);
-  }
+  if (message.author.bot) return;
+  if (message.channel.type === "dm") return;
 
-  if (message.content.startsWith("!invite")) {
-    message.channel.createInvite().then((invite) => {
-      let embed = new Discord.RichEmbed()
-        .setTitle('Invite Created!')
-        .setColor('#ffa366')
-        .setURL(`https://discord.gg/${invite.code}`)
-        .setDescription(`Successfully created an invite!\nhttps://discord.gg/${invite.code}`)
-      message.channel.send(embed);
+  let prefix = '!';
+  let messageArray = message.content.split(" ");
+  let cmd = messageArray[0];
+  let args = messageArray.slice(1);
 
-      console.log(chalk.yellow(`[CONSOLE]`) + ` ${message.author.username} has generated an invite to the guild ${message.guild}: https://discord.gg/${invite.code}`);
-    });
-  }
+  if (!cmd.startsWith(prefix)) return;
+  let commandfile = client.commands.get(cmd.slice(prefix.length));
+  if (commandfile) commandfile.run(client, message, args);
 });
 
 //
