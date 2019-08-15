@@ -9,7 +9,7 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const package = require('./package.json');
 const config = require('./config.json');
-// const credentials = require('./credentials.json');
+const credentials = require('./credentials.json');
 const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -58,6 +58,8 @@ var store = require('./routes/redirect/store');
 var support = require('./routes/redirect/support');
 var applygame = require('./routes/apply/apply-game');
 var applycreator = require('./routes/apply/apply-creator');
+var applydeveloper = require('./routes/apply/apply-developer');
+var report = require('./routes/report');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -71,6 +73,8 @@ app.use('/store', store);
 app.use('/support', support);
 app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
+app.use('/apply/developer', applydeveloper);
+app.use('/report', report);
 
 //
 // Database Controller
@@ -257,37 +261,79 @@ app.post('/apply-creator', urlencodedParser, function (req, res) {
   }
 });
 
-app.get('/apply/developer', function (req, res) {
-  res.render('apply/apply-developer', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Apply - Developer",
-    developersmd: config.developersmd
-  });
+//
+// Apply [Developer]
+//
+app.post('/apply-developer', urlencodedParser, function (req, res) {
+  try {
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #applications channel to be created.
+      //
+      let applicationsschannel = client.channels.find(c => c.name === 'applications');
+      if (!applicationsschannel) return console.log('A #applications channel does not exist.');
+
+      var embed = new Discord.RichEmbed()
+        .setTitle(`Developer Application [${req.body.nameselector}]`)
+        .addField(`Name`, `${req.body.nameselector}`, true)
+        .addField(`What is your email address?`, `${req.body.emailselector}`, true)
+        .addField(`What is your Discord Tag?`, `${req.body.discordtagselector}`, true)
+        .addField(`What experience do you have as a Developer?`, `${req.body.devexperienceselector}`)
+        .addField(`Provide links to projects that you have contributed to.`, `${req.body.devcontributeselector}`)
+        .addField(`Why are you interested in joining our team?`, `${req.body.interestselector}`)
+        .addField(`Why do you think you are the best choice for our team?`, `${req.body.bestchoiceselector}`)
+        .addField(`Any other information or comments?`, `${req.body.additionalinformationselector}`)
+        .setColor('#99ddff')
+      applicationsschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Developer Application for ${req.body.nameselector} has been sent.`);
+    };
+
+    if (config.mailsend == true) {
+      //
+      // Mail Send
+      // Requires a email to be in the notificationemail field.
+      //
+      ejs.renderFile(__dirname + "/views/email/apply-developer.ejs", {
+        subject: `[Developer] ${req.body.nameselector}`,
+        name: req.body.nameselector,
+        email: req.body.emailselector,
+        discordtag: req.body.discordtagselector,
+        devexperience: req.body.devexperienceselector,
+        devcontribute: req.body.devcontributeselector,
+        interest: req.body.interestselector,
+        bestchoice: req.body.bestchoiceselector,
+        additionalinformation: req.body.additionalinformationselector
+      }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mainOptions = {
+                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                to: config.notificationemail,
+                subject: `[Developer] ${req.body.nameselector}`,
+                html: data
+            };
+
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
+      });
+    }
+
+    res.redirect('/');
+  } catch (error) {
+    console.log('An error occured');
+    console.log(error);
+  }
 });
 
-//
-// Report
-//
-app.get('/report', function (req, res) {
-  res.render('report', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Report a Player"
-  });
-});
+
 
 // app.post('/report', urlencodedParser, function (req, res) {
 //   try {
