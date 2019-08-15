@@ -11,7 +11,7 @@ module.exports.run = async (client, message, args) => {
       .setDescription(`Successfully created an invite!\nhttps://discord.gg/${invite.code}`)
     message.channel.send(embed);
 
-    console.log(chalk.yellow(`[CONSOLE]`) + ` ${message.author.username} has generated an invite: https://discord.gg/${invite.code}`);
+    console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${message.author.username} has generated an invite: https://discord.gg/${invite.code}`);
   });
 };
 
