@@ -214,7 +214,7 @@ app.post('/apply-creator', urlencodedParser, function (req, res) {
         .addField(`Channel Link`, `${req.body.channellinkselector}`)
         .addField(`Subscriber Count`, `${req.body.subscribercountselector}`)
         .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
-        .setColor('#99ddff')
+        .setColor('#00ace6')
       applicationsschannel.send(embed);
       console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Content Creator Application for ${req.body.minecraftusernameselector} has been sent.`);
     };
@@ -284,7 +284,7 @@ app.post('/apply-developer', urlencodedParser, function (req, res) {
         .addField(`Why are you interested in joining our team?`, `${req.body.interestselector}`)
         .addField(`Why do you think you are the best choice for our team?`, `${req.body.bestchoiceselector}`)
         .addField(`Any other information or comments?`, `${req.body.additionalinformationselector}`)
-        .setColor('#99ddff')
+        .setColor('#d580ff')
       applicationsschannel.send(embed);
       console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Developer Application for ${req.body.nameselector} has been sent.`);
     };
