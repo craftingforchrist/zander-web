@@ -29,6 +29,7 @@
   "applicationlistenport": "8080",
 
   "discordprefix": "!",
+  "discordinvitedectector": true,
   "discordsend": true,
   "mailsend": true
 }

@@ -3,43 +3,47 @@ const config = require('../../config.json');
 const chalk = require('chalk');
 
 module.exports.run = async (client, message, args) => {
+  // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
-      .setColor('#ffa366')
+      .setColor('#ff6666')
       .setDescription(`You do not have permissions to run this command.`)
     message.channel.send(embed);
     return;
-  }
+  };
 
+  // Checks if the user is in the Discord and exists.
   let user = message.mentions.members.first();
   if (!user) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
-      .setColor('#ffa366')
+      .setColor('#ff6666')
       .setDescription(`This user does not exist.`)
     message.channel.send(embed);
     return;
-  }
+  };
 
+  // Checks if you can punish the user.
+  if (user.hasPermission(`${module.exports.help.permission}`)) {
+    let embed = new Discord.RichEmbed()
+      .setTitle('Error!')
+      .setColor('#ff6666')
+      .setDescription(`You cannot punish this user.`)
+    message.channel.send(embed);
+    return;
+  };
+
+  // Check for a punishement reason.
   let reason = args.slice(1).join(' ');
   if (!reason) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
-      .setColor('#ffa366')
-      .setDescription(`Please provide a valid reason for this ban.`)
+      .setColor('#ff6666')
+      .setDescription(`Please provide a valid reason for this punishment.`)
     message.channel.send(embed);
     return;
-  }
-
-  if (user.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
-      .setTitle('Error!')
-      .setColor('#ffa366')
-      .setDescription(`You cannot ban this user.`)
-    message.channel.send(embed);
-    return;
-  }
+  };
 
   let createdAtRaw = message.createdAt.toDateString();
   let createdAt = createdAtRaw.split(' ');
@@ -53,11 +57,22 @@ module.exports.run = async (client, message, args) => {
     .addField('Reason', reason);
 
   let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
-
   adminlogchannel.send(embed).catch(e => {
     errors.noLogChannel(message);
-  })
+  });
 
+  // NOTE: Need to implement SQL.
+
+  // let sql = `INSERT INTO ;`;
+  // connection.query (sql, function (err, results) {
+  //   if (err) {
+  //     throw err;
+  //   } else {
+  //
+  //   };
+  // });
+
+  // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.RichEmbed()
     .setTitle('You have been banned from the Server.')
     .setColor('#ffa366')
@@ -66,7 +81,7 @@ module.exports.run = async (client, message, args) => {
 
   message.guild.member(user).ban(reason);
   console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${message.author.username} has banned ${user.user.username} for ${reason}.`);
-  return
+  return;
 };
 
 module.exports.help = {

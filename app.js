@@ -1,6 +1,4 @@
-//
-// Project Dependencies
-//
+// Project Constants
 const express = require('express');
 const session = require('express-session');
 const fs = require('fs');
@@ -8,10 +6,12 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
+const request = require('request');
+
+// File Constants
 const package = require('./package.json');
 const config = require('./config.json');
 const credentials = require('./credentials.json');
-const request = require('request');
 
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
