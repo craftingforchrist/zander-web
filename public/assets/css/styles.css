@@ -86,3 +86,8 @@ nav #navCollapse {
   position: relative;
   overflow: hidden;
 }
+
+footer li {
+  font-size: 10pt;
+  line-height: 20pt;
+}

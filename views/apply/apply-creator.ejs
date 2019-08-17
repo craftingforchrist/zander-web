@@ -30,23 +30,32 @@
   </div>
 
   <form action="/apply-creator" method="post">
-    <div class="form-group">
-      <label for="minecraftusernameselector">What is your Username?</label>
-      <input type="text" class="form-control" name="minecraftusernameselector" placeholder="Steve" required>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="minecraftusernameselector">What is your Username?</label>
+          <input type="text" class="form-control" name="minecraftusernameselector" placeholder="Steve" required>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="discordtagselector">What is your Discord Tag?</label>
+          <input type="text" class="form-control" name="discordtagselector" placeholder="Steve#9212" required>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="contentplatformselector">What platform do you record/stream on?</label>
+          <select class="form-control" name="contentplatformselector" required>
+            <option selected disabled>Select</option>
+            <option name="YouTube">YouTube</option>
+            <option name="Twitch">Twitch</option>
+            <option name="Mixer">Mixer</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="discordtagselector">What is your Discord Tag?</label>
-      <input type="text" class="form-control" name="discordtagselector" placeholder="Steve#9212" required>
-    </div>
-    <div class="form-group">
-      <label for="contentplatformselector">What platform do you record/stream on?</label>
-      <select class="form-control" name="contentplatformselector" required>
-        <option selected disabled>Select</option>
-        <option name="YouTube">YouTube</option>
-        <option name="Twitch">Twitch</option>
-        <option name="Mixer">Mixer</option>
-      </select>
-    </div>
+
     <div class="form-group">
       <label for="channellinkselector">What is the link for your channel?</label>
       <input type="text" class="form-control" name="channellinkselector" required>
