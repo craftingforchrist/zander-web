@@ -65,15 +65,14 @@ var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
 var discord = require('./routes/redirect/discord');
-var donate = require('./routes/redirect/donate');
 var issues = require('./routes/redirect/issues');
-var store = require('./routes/redirect/store');
 var support = require('./routes/redirect/support');
 var applygame = require('./routes/apply/apply-game');
 var applycreator = require('./routes/apply/apply-creator');
 var applydeveloper = require('./routes/apply/apply-developer');
 var report = require('./routes/report');
 var contact = require('./routes/contact');
+var feedback = require('./routes/feedback');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -81,15 +80,14 @@ app.use('/terms', terms);
 app.use('/privacy', privacy);
 app.use('/rules', rules);
 app.use('/discord', discord);
-app.use('/donate', donate);
 app.use('/issues', issues);
-app.use('/store', store);
 app.use('/support', support);
 app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
 app.use('/report', report);
 app.use('/contact', contact);
+app.use('/feedback', feedback);
 
 //
 // Database Controller
@@ -203,7 +201,7 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
       // Mail Send
       // Requires a email to be in the notificationemail field.
       //
-      ejs.renderFile(__dirname + "/views/email/apply-game.ejs", {
+      ejs.renderFile(__dirname + "/views/email/apply/apply-game.ejs", {
         subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
         username: req.body.minecraftUsernameselector,
         discordtag: req.body.discordtagselector,
@@ -269,7 +267,7 @@ app.post('/apply-creator', urlencodedParser, function (req, res) {
       // Mail Send
       // Requires a email to be in the notificationemail field.
       //
-      ejs.renderFile(__dirname + "/views/email/apply-creator.ejs", {
+      ejs.renderFile(__dirname + "/views/email/apply/apply-creator.ejs", {
         subject: `[Content Creator] ${req.body.minecraftusernameselector}`,
         username: req.body.minecraftusernameselector,
         discordtag: req.body.discordtagselector,
@@ -339,7 +337,7 @@ app.post('/apply-developer', urlencodedParser, function (req, res) {
       // Mail Send
       // Requires a email to be in the notificationemail field.
       //
-      ejs.renderFile(__dirname + "/views/email/apply-developer.ejs", {
+      ejs.renderFile(__dirname + "/views/email/apply/apply-developer.ejs", {
         subject: `[Developer] ${req.body.nameselector}`,
         name: req.body.nameselector,
         email: req.body.emailselector,
@@ -423,6 +421,68 @@ app.post('/report', urlencodedParser, function (req, res) {
                 from: process.env.serviceauthuser || credentials.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Player Report] ${req.body.reporteduserselector}`,
+                html: data
+            };
+
+            transporter.sendMail(mainOptions, function (err, info) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
+      });
+    }
+
+    res.redirect('/');
+  } catch (error) {
+    console.log('An error occured');
+    console.log(error);
+  }
+});
+
+//
+// Feedback
+//
+app.post('/feedback', urlencodedParser, function (req, res) {
+  try {
+    if (config.discordsend == true) {
+      //
+      // Discord Notification Send
+      // Requires a #enquiries channel to be created.
+      //
+      let enquirieschannel = client.channels.find(c => c.name === 'enquiries');
+      if (!enquirieschannel) return console.log('A #feedback channel does not exist.');
+
+      var embed = new Discord.RichEmbed()
+        .setTitle(`Feedback`)
+        .addField(`Username`, `${req.body.minecraftusernameselector}`, true)
+        .addField(`What type of feedback would you like to provide?`, `${req.body.feedbacktypeselector}`, true)
+        .addField(`Please provide detail on your feedback.`, `${req.body.detailfeedbackselector}`)
+        .setColor('#79ff4d')
+      enquirieschannel.send(embed);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Feedback has been sent.`);
+    };
+
+    if (config.mailsend == true) {
+      //
+      // Mail Send
+      // Requires a email to be in the notificationemail field.
+      //
+      ejs.renderFile(__dirname + "/views/email/feedback.ejs", {
+        subject: `[Feedback] ${req.body.feedbacktype}`,
+        username: req.body.minecraftusernameselector,
+        feedbacktype: req.body.feedbacktypeselector,
+        detailfeedback: req.body.detailfeedbackselector
+      }, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var mainOptions = {
+                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                to: config.notificationemail,
+                subject: `[Feedback] ${req.body.feedbacktypeselector}`,
                 html: data
             };
 
