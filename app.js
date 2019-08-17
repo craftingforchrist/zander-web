@@ -73,6 +73,7 @@ var applydeveloper = require('./routes/apply/apply-developer');
 var report = require('./routes/report');
 var contact = require('./routes/contact');
 var feedback = require('./routes/feedback');
+// var forums = require('./routes/forums');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -88,6 +89,7 @@ app.use('/apply/developer', applydeveloper);
 app.use('/report', report);
 app.use('/contact', contact);
 app.use('/feedback', feedback);
+// app.use('/forums', forums);
 
 //
 // Database Controller
