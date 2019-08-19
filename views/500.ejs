@@ -1,0 +1,31 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<link rel="stylesheet" href="./assets/css/forums.css">
+
+<div class="container text-center errorpage">
+  <div class="">
+    <h1><i class="fas fa-bug"></i></h1>
+    <h1>An Error has Occured</h1>
+
+    <blockquote class="blockquote">
+      <p class="mb-0">The 500 Internal Server Error is a very general HTTP status code that means something has gone wrong on the web site's server but the server could not be more specific on what the exact problem is.</p>
+      <footer class="blockquote-footer"><cite title="Source Title"><a href="https://www.westhost.com/knowledgebase/display/WES/What+Is+A+500+error" style="color:gray">WestHost Knowledgebase</a></cite></footer>
+    </blockquote>
+
+    <p>In short.. something has gone wrong on our side.<br>Please try again later.</p>
+
+    <small>Take this to the Developers, maybe they might resolve this.</small>
+  </div>
+
+  <div class="errorbox">
+    <pre><code><%= error %></code></pre>
+  </div>
+
+  <div class="">
+    <br>
+    <a href="/"><button class="btn btn-primary" type="button" name="button">Return to the Motherland</button></a> <a href="/issues"><button class="btn btn-warning" type="button" name="button">Report to Developers</button></a>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>

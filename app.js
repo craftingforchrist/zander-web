@@ -7,6 +7,7 @@ const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
+const db = require('./controllers/database.js');
 
 // File Constants
 const package = require('./package.json');
@@ -90,25 +91,6 @@ app.use('/report', report);
 app.use('/contact', contact);
 app.use('/feedback', feedback);
 // app.use('/forums', forums);
-
-//
-// Database Controller
-//
-const connection = mysql.createConnection({
-  host: process.env.dbhost || credentials.dbhost,
-  user: process.env.dbuser || credentials.dbuser,
-  password: process.env.dbpassword || credentials.dbpassword,
-  database: process.env.dbdatabase || credentials.dbdatabase,
-  multipleStatements: true
-});
-
-connection.connect(function(err) {
-  if (err) {
-    console.error(chalk.red('[ERROR] ') + chalk.blue('[DB] ') +  'There was an error connecting:\n' + err.stack);
-    return;
-  }
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DB] ') + 'Database connection is successful. Your connection ID is ' + connection.threadId + '.');
-});
 
 // //
 // // Login

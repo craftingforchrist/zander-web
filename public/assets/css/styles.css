@@ -91,3 +91,16 @@ footer li {
   font-size: 10pt;
   line-height: 20pt;
 }
+
+.errorpage {
+  min-height: 400px;
+  padding: 40px;
+}
+
+.errorbox {
+  background-color: #d6d6c2;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 auto;
+  text-align: left;
+}
