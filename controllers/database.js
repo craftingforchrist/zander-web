@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host: process.env.dbhost,
   user: process.env.dbuser,
   password: process.env.dbpassword,
-  database: process.env.dbdatabase,
+  database: process.env.dbname,
   multipleStatements: true
 });
 

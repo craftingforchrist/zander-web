@@ -1,18 +1,18 @@
 // Project Constants
 const express = require('express');
 const session = require('express-session');
+require ('dotenv').config();
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
-const db = require('./controllers/database.js');
+const database = require('./controllers/database.js');
 
 // File Constants
 const package = require('./package.json');
 const config = require('./config.json');
-const credentials = require('./credentials.json');
 
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
@@ -25,12 +25,15 @@ const inlinecss = require('nodemailer-juice');
 // Mailer Controller
 //
 var transporter = nodemailer.createTransport({
-  host: process.env.servicehost || credentials.servicehost,
-  port: process.env.serviceport || credentials.serviceport,
+  host: process.env.servicehost,
+  port: process.env.serviceport,
   secure: true,
   auth: {
-    user: process.env.serviceauthuser || credentials.serviceauthuser,
-    pass: process.env.serviceauthpass || credentials.serviceauthpass
+    user: process.env.serviceauthuser,
+    pass: process.env.serviceauthpass,
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
 transporter.use('compile', inlinecss());
@@ -45,17 +48,6 @@ var obj = {};
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
-// app.use(session({
-//   name: 'sid',
-//   resave: false,
-//   saveUninitalized: false,
-//   secret: "LktTVKER2z_9$b[<",
-//   cookie: {
-//     maxAge: 3600000,
-//     sameSite: true,
-//     secure: true
-//   }
-// }));
 
 //
 // Site Routes
@@ -75,6 +67,7 @@ var report = require('./routes/report');
 var contact = require('./routes/contact');
 var feedback = require('./routes/feedback');
 // var forums = require('./routes/forums');
+var register = require('./routes/sessions/register');
 
 app.use('/', index);
 app.use('/apply', apply);
@@ -91,32 +84,30 @@ app.use('/report', report);
 app.use('/contact', contact);
 app.use('/feedback', feedback);
 // app.use('/forums', forums);
+app.use('/register', register);
 
-// //
-// // Login
-// //
-// app.get('/login', function (req, res) {
-//   res.render('session/login', {
-//     "servername": `${config.servername}`,
-//     "sitecolour": `${config.sitecolour}`,
-//     "email": `${config.email}`,
-//     "serverip": `${config.serverip}`,
-//     "website": `${config.website}`,
-//     "description": `${config.description}`,
-//     "weblogo": `${config.weblogo}`,
-//     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "Login"
-//   });
-// });
 //
-// app.post('/login', urlencodedParser, function (req, res) {
+// Login
 //
-// });
-//
-// //
-// // Register
-// //
-// app.get('/register', function (req, res) {
+app.get('/login', function (req, res) {
+  res.render('session/login', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
+    "pagetitle": "Login"
+  });
+});
+
+app.post('/login', urlencodedParser, function (req, res) {
+
+});
+
+// app.post('/register', urlencodedParser, function (req, res) {
 //   res.render('session/register', {
 //     "servername": `${config.servername}`,
 //     "sitecolour": `${config.sitecolour}`,
@@ -126,19 +117,48 @@ app.use('/feedback', feedback);
 //     "description": `${config.description}`,
 //     "weblogo": `${config.weblogo}`,
 //     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "Register"
+//     "pagetitle": "Registration Complete"
 //   });
 // });
+
 //
-// app.post('/register', urlencodedParser, function (req, res) {
+// Dashboard
+//
+app.get('/dashboard', function (req, res) {
+  res.render('administration/dashboard', {
+    "servername": `${config.servername}`,
+    "sitecolour": `${config.sitecolour}`,
+    "email": `${config.email}`,
+    "serverip": `${config.serverip}`,
+    "website": `${config.website}`,
+    "description": `${config.description}`,
+    "weblogo": `${config.weblogo}`,
+    "webfavicon": `${config.webfavicon}`,
+    "pagetitle": "Dashboard"
+  });
+});
+
+
+// app.post('/logout', urlencodedParser, function (req, res) {
 //
 // });
+
 //
-// //
-// // Dashboard
-// //
-// app.get('/dashboard', function (req, res) {
-//   res.render('administration/dashboard', {
+// 404 Error Handler
+//
+// Catch 404 and forward to error handler
+// app.use(function (req, res, next, err) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
+//
+// // Error handler
+// app.use(function(err, req, res, next) {
+//   // Render the error page
+//   res.locals.message = err.message;
+//   res.status(err.status || 500);
+//   res.render('500', {
 //     "servername": `${config.servername}`,
 //     "sitecolour": `${config.sitecolour}`,
 //     "email": `${config.email}`,
@@ -147,14 +167,12 @@ app.use('/feedback', feedback);
 //     "description": `${config.description}`,
 //     "weblogo": `${config.weblogo}`,
 //     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "Dashboard"
+//     "pagetitle": "500 Error",
+//     "error": err.message
 //   });
 // });
-//
-//
-// app.post('/logout', urlencodedParser, function (req, res) {
-//
-// });
+
+
 
 //
 // Apply [Game]
@@ -196,7 +214,7 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                from: process.env.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
                 html: data
@@ -264,7 +282,7 @@ app.post('/apply-creator', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                from: process.env.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Content Creator] ${req.body.minecraftusernameselector}`,
                 html: data
@@ -336,7 +354,7 @@ app.post('/apply-developer', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                from: process.env.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Developer] ${req.body.nameselector}`,
                 html: data
@@ -402,7 +420,7 @@ app.post('/report', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                from: process.env.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Player Report] ${req.body.reporteduserselector}`,
                 html: data
@@ -464,7 +482,7 @@ app.post('/feedback', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                from: process.env.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Feedback] ${req.body.feedbacktypeselector}`,
                 html: data
@@ -656,7 +674,7 @@ app.post('/contact', urlencodedParser, function (req, res) {
             console.log(err);
         } else {
             var mainOptions = {
-                from: process.env.serviceauthuser || credentials.serviceauthuser,
+                from: process.env.serviceauthuser,
                 to: config.notificationemail,
                 subject: `[Enquiry] ${req.body.subject}`,
                 html: data
@@ -736,7 +754,7 @@ app.listen(process.env.PORT || config.applicationlistenport, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
   console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + process.env.PORT || config.applicationlistenport);
 
-  client.login(process.env.token || credentials.token);
+  client.login(process.env.token);
 
   client.on("ready", () => {
     console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + 'Launched Discord web-side.');
