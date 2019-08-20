@@ -16,7 +16,8 @@ router.get('/', (req, res, next) => {
     "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Apply - Game",
     termsmd: config.termsmd,
-    privacymd: config.privacymd
+    privacymd: config.privacymd,
+    rulesmd: config.rulesmd
   });
 });
 
