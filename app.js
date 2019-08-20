@@ -42,12 +42,13 @@ transporter.use('compile', inlinecss());
 // Constants
 //
 const app = express();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
+// const urlencodedParser = bodyParser.urlencoded({ extended: false });
 var obj = {};
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //
 // Site Routes
@@ -103,11 +104,11 @@ app.get('/login', function (req, res) {
   });
 });
 
-app.post('/login', urlencodedParser, function (req, res) {
+app.post('/login', function (req, res) {
 
 });
 
-// app.post('/register', urlencodedParser, function (req, res) {
+// app.post('/register', function (req, res) {
 //   res.render('session/register', {
 //     "servername": `${config.servername}`,
 //     "sitecolour": `${config.sitecolour}`,
@@ -139,7 +140,7 @@ app.get('/dashboard', function (req, res) {
 });
 
 
-// app.post('/logout', urlencodedParser, function (req, res) {
+// app.post('/logout', function (req, res) {
 //
 // });
 
@@ -177,7 +178,7 @@ app.get('/dashboard', function (req, res) {
 //
 // Apply [Game]
 //
-app.post('/apply-game', urlencodedParser, function (req, res) {
+app.post('/apply-game', function (req, res) {
   try {
     if (config.discordsend == true) {
       //
@@ -241,7 +242,7 @@ app.post('/apply-game', urlencodedParser, function (req, res) {
 //
 // Apply [Creator]
 //
-app.post('/apply-creator', urlencodedParser, function (req, res) {
+app.post('/apply-creator', function (req, res) {
   try {
     if (config.discordsend == true) {
       //
@@ -309,7 +310,7 @@ app.post('/apply-creator', urlencodedParser, function (req, res) {
 //
 // Apply [Developer]
 //
-app.post('/apply-developer', urlencodedParser, function (req, res) {
+app.post('/apply-developer', function (req, res) {
   try {
     if (config.discordsend == true) {
       //
@@ -381,7 +382,7 @@ app.post('/apply-developer', urlencodedParser, function (req, res) {
 //
 // Report A Player
 //
-app.post('/report', urlencodedParser, function (req, res) {
+app.post('/report', function (req, res) {
   try {
     if (config.discordsend == true) {
       //
@@ -447,7 +448,7 @@ app.post('/report', urlencodedParser, function (req, res) {
 //
 // Feedback
 //
-app.post('/feedback', urlencodedParser, function (req, res) {
+app.post('/feedback', function (req, res) {
   try {
     if (config.discordsend == true) {
       //
@@ -637,7 +638,7 @@ app.get('/profile/:username', function (req, res) {
 //
 // Contact
 //
-app.post('/contact', urlencodedParser, function (req, res) {
+app.post('/contact', function (req, res) {
   try {
     if (config.discordsend == true) {
       //
