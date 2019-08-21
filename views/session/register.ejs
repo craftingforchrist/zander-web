@@ -5,36 +5,32 @@
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
       <h1 class="display-3">Register</h1>
+      <p class="lead">Please register to join our community and to unlock website features.</p>
     </div>
   </div>
 
-  <div class="container">
-    <form>
-      <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Email Address</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-        </div>
+  <div class="container credential-container">
+    <form method="post" action="/register">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" required>
+        <small class="form-text text-muted">Enter your Minecraft IGN.</small>
       </div>
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-        </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" class="form-control" name="email" required>
+        <small class="form-text text-muted">We will never share your email with anyone else.</small>
       </div>
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-        </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" required>
+        <small class="form-text text-muted">Please ensure that your password is safe and secure, something that only you would know.</small>
       </div>
-
-      <div class="form-group row">
-        <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary">Sign in</button>
-        </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" style="margin:0 auto; width: 30%">Register</button>
       </div>
     </form>
+    <br>
   </div>
 </div>
 

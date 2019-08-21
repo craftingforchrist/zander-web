@@ -1,4 +1,6 @@
+//
 // Project Constants
+//
 const express = require('express');
 const session = require('express-session');
 require ('dotenv').config();
@@ -8,172 +10,126 @@ const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
-const database = require('./controllers/database.js');
-
-// File Constants
-const package = require('./package.json');
-const config = require('./config.json');
-
+const cookieparser = require('cookie-parser');
+const passport = require('passport');
+const mysqlstore = require('express-mysql-session')(session);
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
-
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
 
 //
-// Mailer Controller
+// File Constants
 //
-var transporter = nodemailer.createTransport({
-  host: process.env.servicehost,
-  port: process.env.serviceport,
-  secure: true,
-  auth: {
-    user: process.env.serviceauthuser,
-    pass: process.env.serviceauthpass,
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
-transporter.use('compile', inlinecss());
+const package = require('./package.json');
+const config = require('./config.json');
+
+//
+// Controllers
+//
+const database = require('./controllers/database.js');
+const transporter = require('./controllers/mail.js');
 
 //
 // Constants
 //
 const app = express();
-// const urlencodedParser = bodyParser.urlencoded({ extended: false });
 var obj = {};
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieparser());
+
+//
+// Session Management
+//
+var options = {
+  host: process.env.dbhost,
+  user: process.env.dbuser,
+  password: process.env.dbpassword,
+  database: process.env.dbname,
+  multipleStatements: true
+};
+const sessionstore = new mysqlstore(options);
+
+app.use(session({
+  secret: process.env.sessionsecret,
+  resave: false,
+  saveUninitialized: false,
+  store: sessionstore,
+  // cookie: {
+  //   secure: true
+  // }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function(req, res, next) {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
 
 //
 // Site Routes
 //
 var index = require('./routes/index');
-var apply = require('./routes/apply/apply');
+
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
-var discord = require('./routes/redirect/discord');
-var issues = require('./routes/redirect/issues');
-var support = require('./routes/redirect/support');
+
+var apply = require('./routes/apply/apply');
 var applygame = require('./routes/apply/apply-game');
 var applycreator = require('./routes/apply/apply-creator');
 var applydeveloper = require('./routes/apply/apply-developer');
+
 var report = require('./routes/report');
 var contact = require('./routes/contact');
 var feedback = require('./routes/feedback');
-// var forums = require('./routes/forums');
+
+var discord = require('./routes/redirect/discord');
+var issues = require('./routes/redirect/issues');
+var support = require('./routes/redirect/support');
+
+var login = require('./routes/sessions/login');
+var logout = require('./routes/sessions/logout');
 var register = require('./routes/sessions/register');
 
+var admin = require('./routes/admin/admin');
+
+// var forums = require('./routes/forums');
+
+
 app.use('/', index);
-app.use('/apply', apply);
+
 app.use('/terms', terms);
 app.use('/privacy', privacy);
 app.use('/rules', rules);
-app.use('/discord', discord);
-app.use('/issues', issues);
-app.use('/support', support);
+
+app.use('/apply', apply);
 app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
+
 app.use('/report', report);
 app.use('/contact', contact);
 app.use('/feedback', feedback);
-// app.use('/forums', forums);
+
+
+app.use('/discord', discord);
+app.use('/issues', issues);
+app.use('/support', support);
+
+app.use('/login', login);
+app.use('/logout', logout);
 app.use('/register', register);
 
-//
-// Login
-//
-app.get('/login', function (req, res) {
-  res.render('session/login', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Login"
-  });
-});
+app.use('/admin', admin);
 
-app.post('/login', function (req, res) {
-
-});
-
-// app.post('/register', function (req, res) {
-//   res.render('session/register', {
-//     "servername": `${config.servername}`,
-//     "sitecolour": `${config.sitecolour}`,
-//     "email": `${config.email}`,
-//     "serverip": `${config.serverip}`,
-//     "website": `${config.website}`,
-//     "description": `${config.description}`,
-//     "weblogo": `${config.weblogo}`,
-//     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "Registration Complete"
-//   });
-// });
-
-//
-// Dashboard
-//
-app.get('/dashboard', function (req, res) {
-  res.render('administration/dashboard', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webfavicon": `${config.webfavicon}`,
-    "pagetitle": "Dashboard"
-  });
-});
-
-
-// app.post('/logout', function (req, res) {
-//
-// });
-
-//
-// 404 Error Handler
-//
-// Catch 404 and forward to error handler
-// app.use(function (req, res, next, err) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-//
-// // Error handler
-// app.use(function(err, req, res, next) {
-//   // Render the error page
-//   res.locals.message = err.message;
-//   res.status(err.status || 500);
-//   res.render('500', {
-//     "servername": `${config.servername}`,
-//     "sitecolour": `${config.sitecolour}`,
-//     "email": `${config.email}`,
-//     "serverip": `${config.serverip}`,
-//     "website": `${config.website}`,
-//     "description": `${config.description}`,
-//     "weblogo": `${config.weblogo}`,
-//     "webfavicon": `${config.webfavicon}`,
-//     "pagetitle": "500 Error",
-//     "error": err.message
-//   });
-// });
-
-
+// app.use('/forums', forums);
 
 //
 // Apply [Game]
@@ -243,7 +199,40 @@ app.post('/apply-game', function (req, res) {
 // Apply [Creator]
 //
 app.post('/apply-creator', function (req, res) {
+  const username = req.body.minecraftusername;
+  const discordtag = req.body.discordtagselector;
+  const platform = req.body.contentplatform;
+  const otherplatform = req.body.othercontentplatform;
+  const channellink = req.body.channellink;
+  const subscribercount = req.body.subscribercount;
+  const additionalinformation = req.body.additionalinformation;
+
+  console.log(req.body);
+
+  if (otherplatform || subscribercount || additionalinformation === '') {
+    String.prototype.replace(null, "Not Required.");
+  }
+
   try {
+    switch (platform) {
+      case "YouTube":
+        console.log('This user has requested YouTube.');
+        break;
+
+      case "Twitch":
+        console.log('This user has requested Twitch.');
+        break;
+
+      case "Mixer":
+        console.log('This user has requested Mixer.');
+        break;
+
+      case "Other":
+        console.log('This user has requested Other, no data to pull, dropping request.');
+        break;
+    }
+
+
     if (config.discordsend == true) {
       //
       // Discord Notification Send
@@ -253,16 +242,17 @@ app.post('/apply-creator', function (req, res) {
       if (!applicationsschannel) return console.log('A #applications channel does not exist.');
 
       var embed = new Discord.RichEmbed()
-        .setTitle(`Content Creator Application [${req.body.minecraftusernameselector}]`)
-        .addField(`Username`, `${req.body.minecraftusernameselector}`, true)
-        .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
-        .addField(`Content Platform`, `${req.body.contentplatformselector}`)
-        .addField(`Channel Link`, `${req.body.channellinkselector}`)
-        .addField(`Subscriber Count`, `${req.body.subscribercountselector}`)
-        .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
+        .setTitle(`Content Creator Application [${username}]`)
+        .addField(`Username`, `${username}`, true)
+        .addField(`Discord Tag`, `${discordtag}`, true)
+        .addField(`Content Platform`, `${platform}`)
+        .addField(`Other Content Platform`, `${otherplatform}`)
+        .addField(`Channel Link`, `${channellink}`)
+        .addField(`Subscriber Count`, `${subscribercount}`)
+        .addField(`Any additional information`, `${additionalinformation}`)
         .setColor('#00ace6')
       applicationsschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Content Creator Application for ${req.body.minecraftusernameselector} has been sent.`);
+      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Content Creator Application for ${username} has been sent.`);
     };
 
     if (config.mailsend == true) {
@@ -271,13 +261,14 @@ app.post('/apply-creator', function (req, res) {
       // Requires a email to be in the notificationemail field.
       //
       ejs.renderFile(__dirname + "/views/email/apply/apply-creator.ejs", {
-        subject: `[Content Creator] ${req.body.minecraftusernameselector}`,
-        username: req.body.minecraftusernameselector,
-        discordtag: req.body.discordtagselector,
-        contentplatform: req.body.contentplatformselector,
-        channellink: req.body.channellinkselector,
-        subscribercount: req.body.subscribercountselector,
-        additionalinformation: req.body.additionalinformationselector
+        subject: `[Content Creator] ${username}`,
+        username: username,
+        discordtag: discordtag,
+        platform: platform,
+        otherplatform: otherplatform,
+        channellink: channellink,
+        subscribercount: subscribercount,
+        additionalinformation: additionalinformation
       }, function (err, data) {
         if (err) {
             console.log(err);
@@ -285,7 +276,7 @@ app.post('/apply-creator', function (req, res) {
             var mainOptions = {
                 from: process.env.serviceauthuser,
                 to: config.notificationemail,
-                subject: `[Content Creator] ${req.body.minecraftusernameselector}`,
+                subject: `[Content Creator] ${username}`,
                 html: data
             };
 

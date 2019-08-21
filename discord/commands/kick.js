@@ -8,7 +8,7 @@ module.exports.run = async (client, message, args) => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription(`You do not have permissions to run this command.`)
+      .setDescription('You do not have permissions to run this command.')
     message.channel.send(embed);
     return;
   }
@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription(`This user does not exist.`)
+      .setDescription('This user does not exist.')
     message.channel.send(embed);
     return;
   }
@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription(`You cannot punishment this user.`)
+      .setDescription('You cannot punishment this user.')
     message.channel.send(embed);
     return;
   }
@@ -40,7 +40,7 @@ module.exports.run = async (client, message, args) => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription(`Please provide a valid reason for this punishment.`)
+      .setDescription('Please provide a valid reason for this punishment.')
     message.channel.send(embed);
     return;
   }
@@ -61,7 +61,7 @@ module.exports.run = async (client, message, args) => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ffa366')
-      .setDescription(`There is no #admin-log channel.`)
+      .setDescription(`There is no #admin-log channel. Not logging this punishment.`)
     message.channel.send(embed);
     return;
   });
