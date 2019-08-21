@@ -61,7 +61,7 @@ var rules = require('./routes/policy/rules');
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
-var applygame = require('./routes/apply/apply-game');
+var applygame = require('./routes/apply/apply-game')(client);
 var applycreator = require('./routes/apply/apply-creator');
 var applydeveloper = require('./routes/apply/apply-developer');
 var report = require('./routes/report');
@@ -173,71 +173,6 @@ app.get('/dashboard', function (req, res) {
 //   });
 // });
 
-
-
-//
-// Apply [Game]
-//
-app.post('/apply-game', function (req, res) {
-  try {
-    if (config.discordsend == true) {
-      //
-      // Discord Notification Send
-      // Requires a #whitelist-apps channel to be created.
-      //
-      let applicationschannel = client.channels.find(c => c.name === 'applications');
-      if (!applicationschannel) return console.log('A #applications channel does not exist.');
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(`Whitelist Application [${req.body.minecraftUsernameselector}]`)
-        .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
-        .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
-        .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
-        .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
-        .setColor('#99ddff')
-      applicationschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Application for ${req.body.minecraftUsernameselector} has been sent.`);
-    };
-
-    if (config.mailsend == true) {
-      //
-      // Mail Send
-      // Requires a email to be in the notificationemail field.
-      //
-      ejs.renderFile(__dirname + "/views/email/apply/apply-game.ejs", {
-        subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
-        username: req.body.minecraftUsernameselector,
-        discordtag: req.body.discordtagselector,
-        howdidyouhearaboutus: req.body.howdidyouhearaboutusselector,
-        additionalinformation: req.body.additionalinformationselector
-      }, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var mainOptions = {
-                from: process.env.serviceauthuser,
-                to: config.notificationemail,
-                subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
-                html: data
-            };
-
-            transporter.sendMail(mainOptions, function (err, info) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });
-        }
-      });
-    }
-
-    res.redirect('/');
-  } catch (error) {
-    console.log('An error occured');
-    console.log(error);
-  }
-});
 
 //
 // Apply [Creator]
