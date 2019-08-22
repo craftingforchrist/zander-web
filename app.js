@@ -18,6 +18,7 @@ const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
+const flash = require('express-flash');
 
 //
 // File Constants
@@ -43,6 +44,7 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieparser());
+app.use(flash());
 
 //
 // Session Management
@@ -80,11 +82,14 @@ var index = require('./routes/index');
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
+var discord = require('./routes/redirect/discord');
+var issues = require('./routes/redirect/issues');
+var support = require('./routes/redirect/support');
 
 var apply = require('./routes/apply/apply');
-var applygame = require('./routes/apply/apply-game');
-var applycreator = require('./routes/apply/apply-creator');
-var applydeveloper = require('./routes/apply/apply-developer');
+var applygame = require('./routes/apply/apply-game')(client);
+var applycreator = require('./routes/apply/apply-creator')(client);
+var applydeveloper = require('./routes/apply/apply-developer')(client);
 
 var report = require('./routes/report');
 var contact = require('./routes/contact');
@@ -129,246 +134,12 @@ app.use('/register', register);
 
 app.use('/admin', admin);
 
-// app.use('/forums', forums);
-
-//
-// Apply [Game]
-//
-app.post('/apply-game', function (req, res) {
-  try {
-    if (config.discordsend == true) {
-      //
-      // Discord Notification Send
-      // Requires a #whitelist-apps channel to be created.
-      //
-      let applicationschannel = client.channels.find(c => c.name === 'applications');
-      if (!applicationschannel) return console.log('A #applications channel does not exist.');
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(`Whitelist Application [${req.body.minecraftUsernameselector}]`)
-        .addField(`Username`, `${req.body.minecraftUsernameselector}`, true)
-        .addField(`Discord Tag`, `${req.body.discordtagselector}`, true)
-        .addField(`How did you hear about us`, `${req.body.howdidyouhearaboutusselector}`)
-        .addField(`Any additional information`, `${req.body.additionalinformationselector}`)
-        .setColor('#99ddff')
-      applicationschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Application for ${req.body.minecraftUsernameselector} has been sent.`);
-    };
-
-    if (config.mailsend == true) {
-      //
-      // Mail Send
-      // Requires a email to be in the notificationemail field.
-      //
-      ejs.renderFile(__dirname + "/views/email/apply/apply-game.ejs", {
-        subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
-        username: req.body.minecraftUsernameselector,
-        discordtag: req.body.discordtagselector,
-        howdidyouhearaboutus: req.body.howdidyouhearaboutusselector,
-        additionalinformation: req.body.additionalinformationselector
-      }, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var mainOptions = {
-                from: process.env.serviceauthuser,
-                to: config.notificationemail,
-                subject: `[Game Application] ${req.body.minecraftUsernameselector}`,
-                html: data
-            };
-
-            transporter.sendMail(mainOptions, function (err, info) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });
-        }
-      });
-    }
-
-    res.redirect('/');
-  } catch (error) {
-    console.log('An error occured');
-    console.log(error);
-  }
-});
-
-//
-// Apply [Creator]
-//
-app.post('/apply-creator', function (req, res) {
-  const username = req.body.minecraftusername;
-  const discordtag = req.body.discordtagselector;
-  const platform = req.body.contentplatform;
-  const otherplatform = req.body.othercontentplatform;
-  const channellink = req.body.channellink;
-  const subscribercount = req.body.subscribercount;
-  const additionalinformation = req.body.additionalinformation;
-
-  console.log(req.body);
-
-  if (otherplatform || subscribercount || additionalinformation === '') {
-    String.prototype.replace(null, "Not Required.");
-  }
-
-  try {
-    switch (platform) {
-      case "YouTube":
-        console.log('This user has requested YouTube.');
-        break;
-
-      case "Twitch":
-        console.log('This user has requested Twitch.');
-        break;
-
-      case "Mixer":
-        console.log('This user has requested Mixer.');
-        break;
-
-      case "Other":
-        console.log('This user has requested Other, no data to pull, dropping request.');
-        break;
-    }
-
-
-    if (config.discordsend == true) {
-      //
-      // Discord Notification Send
-      // Requires a #applications channel to be created.
-      //
-      let applicationsschannel = client.channels.find(c => c.name === 'applications');
-      if (!applicationsschannel) return console.log('A #applications channel does not exist.');
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(`Content Creator Application [${username}]`)
-        .addField(`Username`, `${username}`, true)
-        .addField(`Discord Tag`, `${discordtag}`, true)
-        .addField(`Content Platform`, `${platform}`)
-        .addField(`Other Content Platform`, `${otherplatform}`)
-        .addField(`Channel Link`, `${channellink}`)
-        .addField(`Subscriber Count`, `${subscribercount}`)
-        .addField(`Any additional information`, `${additionalinformation}`)
-        .setColor('#00ace6')
-      applicationsschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Content Creator Application for ${username} has been sent.`);
-    };
-
-    if (config.mailsend == true) {
-      //
-      // Mail Send
-      // Requires a email to be in the notificationemail field.
-      //
-      ejs.renderFile(__dirname + "/views/email/apply/apply-creator.ejs", {
-        subject: `[Content Creator] ${username}`,
-        username: username,
-        discordtag: discordtag,
-        platform: platform,
-        otherplatform: otherplatform,
-        channellink: channellink,
-        subscribercount: subscribercount,
-        additionalinformation: additionalinformation
-      }, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var mainOptions = {
-                from: process.env.serviceauthuser,
-                to: config.notificationemail,
-                subject: `[Content Creator] ${username}`,
-                html: data
-            };
-
-            transporter.sendMail(mainOptions, function (err, info) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });
-        }
-      });
-    }
-
-    res.redirect('/');
-  } catch (error) {
-    console.log('An error occured');
-    console.log(error);
-  }
-});
-
 //
 // Apply [Developer]
 //
-app.post('/apply-developer', function (req, res) {
-  try {
-    if (config.discordsend == true) {
-      //
-      // Discord Notification Send
-      // Requires a #applications channel to be created.
-      //
-      let applicationsschannel = client.channels.find(c => c.name === 'applications');
-      if (!applicationsschannel) return console.log('A #applications channel does not exist.');
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(`Developer Application [${req.body.nameselector}]`)
-        .addField(`Name`, `${req.body.nameselector}`, true)
-        .addField(`What is your email address?`, `${req.body.emailselector}`, true)
-        .addField(`What is your Discord Tag?`, `${req.body.discordtagselector}`, true)
-        .addField(`What experience do you have as a Developer?`, `${req.body.devexperienceselector}`)
-        .addField(`Provide links to projects that you have contributed to.`, `${req.body.devcontributeselector}`)
-        .addField(`Why are you interested in joining our team?`, `${req.body.interestselector}`)
-        .addField(`Why do you think you are the best choice for our team?`, `${req.body.bestchoiceselector}`)
-        .addField(`Any other information or comments?`, `${req.body.additionalinformationselector}`)
-        .setColor('#d580ff')
-      applicationsschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Developer Application for ${req.body.nameselector} has been sent.`);
-    };
-
-    if (config.mailsend == true) {
-      //
-      // Mail Send
-      // Requires a email to be in the notificationemail field.
-      //
-      ejs.renderFile(__dirname + "/views/email/apply/apply-developer.ejs", {
-        subject: `[Developer] ${req.body.nameselector}`,
-        name: req.body.nameselector,
-        email: req.body.emailselector,
-        discordtag: req.body.discordtagselector,
-        devexperience: req.body.devexperienceselector,
-        devcontribute: req.body.devcontributeselector,
-        interest: req.body.interestselector,
-        bestchoice: req.body.bestchoiceselector,
-        additionalinformation: req.body.additionalinformationselector
-      }, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var mainOptions = {
-                from: process.env.serviceauthuser,
-                to: config.notificationemail,
-                subject: `[Developer] ${req.body.nameselector}`,
-                html: data
-            };
-
-            transporter.sendMail(mainOptions, function (err, info) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });
-        }
-      });
-    }
-
-    res.redirect('/');
-  } catch (error) {
-    console.log('An error occured');
-    console.log(error);
-  }
-});
+// app.post('/apply-developer', function (req, res) {
+//
+// });
 
 //
 // Report A Player
