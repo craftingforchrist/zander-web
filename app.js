@@ -92,7 +92,7 @@ var applycreator = require('./routes/apply/apply-creator')(client);
 var applydeveloper = require('./routes/apply/apply-developer')(client);
 
 var report = require('./routes/report')(client);
-var contact = require('./routes/contact');
+var contact = require('./routes/contact')(client);
 var feedback = require('./routes/feedback')(client);
 
 var discord = require('./routes/redirect/discord');
@@ -260,69 +260,6 @@ app.get('/profile/:username', function (req, res) {
       });
     }
   });
-});
-
-//
-// Contact
-//
-app.post('/contact', function (req, res) {
-  try {
-    if (config.discordsend == true) {
-      //
-      // Discord Notification Send
-      // Requires a #enquiries channel to be created.
-      //
-      let enquirieschannel = client.channels.find(c => c.name === 'enquiries');
-      if (!enquirieschannel) return console.log('A #enquiries channel does not exist.');
-
-      var embed = new Discord.RichEmbed()
-        .setTitle(`New Contact Enquiry`)
-        .addField(`Username/Name`, `${req.body.name}`, true)
-        .addField(`Email`, `${req.body.email}`, true)
-        .addField(`Subject`, `${req.body.subject}`)
-        .addField(`Message`, `${req.body.message}`)
-        .setColor('#86b300')
-      enquirieschannel.send(embed);
-      console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Enquiry has been sent.`);
-    };
-
-    if (config.mailsend == true) {
-      //
-      // Mail Send
-      // Requires a email to be in the notificationemail field.
-      //
-      ejs.renderFile(__dirname + "/views/email/enquiry.ejs", {
-        subject: `[Enquiry] ${req.body.subject}`,
-        nameselector: req.body.name,
-        emailselector: req.body.email,
-        subjectselector: req.body.subject,
-        messageselector: req.body.message
-      }, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var mainOptions = {
-                from: process.env.serviceauthuser,
-                to: config.notificationemail,
-                subject: `[Enquiry] ${req.body.subject}`,
-                html: data
-            };
-
-            transporter.sendMail(mainOptions, function (err, info) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Message sent: ' + info.response);
-                }
-            });
-        }
-      });
-    }
-    res.redirect('/');
-  } catch (error) {
-    console.log('An error occured');
-    console.log(error);
-  }
 });
 
 //
