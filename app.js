@@ -18,7 +18,7 @@ const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
-const flash = require('express-flash');
+const flash = require('connect-flash');
 
 //
 // File Constants
@@ -29,15 +29,14 @@ const config = require('./config.json');
 //
 // Controllers
 //
-const database = require('./controllers/database.js');
-const transporter = require('./controllers/mail.js');
+const database = require('./controllers/database.js'); // Database controller
+const transporter = require('./controllers/mail.js'); // Nodemailer Mail controller
+require('./controllers/passport.js')(passport); // Session Management controller
 
 //
 // Constants
 //
 const app = express();
-var obj = {};
-
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
@@ -53,8 +52,7 @@ var options = {
   host: process.env.dbhost,
   user: process.env.dbuser,
   password: process.env.dbpassword,
-  database: process.env.dbname,
-  multipleStatements: true
+  database: process.env.dbname
 };
 const sessionstore = new mysqlstore(options);
 
@@ -63,14 +61,42 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: sessionstore,
-  // cookie: {
-  //   secure: true
-  // }
+  cookie: {
+    secure: true
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function(req, res, next) {
-  res.locals.isAuthenticated = req.isAuthenticated();
+
+//
+// Global Flash Messages
+//
+app.use((req, res, next) => {
+  res.locals.successmsg = req.flash('successmsg');
+  res.locals.errormsg = req.flash('errormsg');
+  res.locals.error = req.flash('error'); // Flash message for passport
+  next();
+});
+
+//
+// Global Website Variables
+//
+app.use((req, res, next) => {
+  res.locals.servername = config.servername; // Set the server name.
+  res.locals.sitecolour = config.sitecolour; // Set the sit colour.
+  res.locals.email = config.email; // Set the servers contact email.
+  res.locals.serverip = config.serverip; // Set the server ip.
+  res.locals.website = config.website; // Set the website address.
+  res.locals.description = config.description; // Set the description for the website.
+  res.locals.weblogo = config.weblogo; // Set the logo.
+  res.locals.webvideobackground = config.webvideobackground; // Set the moving video background.
+  res.locals.webfavicon = config.webfavicon; // Set the website icon.
+
+  res.locals.contentcreatorsmd = config.contentcreatorsmd;
+  res.locals.developersmd = config.developersmd;
+  res.locals.termsmd = config.termsmd;
+  res.locals.privacymd = config.privacymd;
+  res.locals.rulesmd = config.rulesmd;
   next();
 });
 
@@ -78,10 +104,12 @@ app.use(function(req, res, next) {
 // Site Routes
 //
 var index = require('./routes/index');
+var news = require('./routes/news');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
+
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
@@ -99,16 +127,17 @@ var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 
-var login = require('./routes/sessions/login');
-var logout = require('./routes/sessions/logout');
-var register = require('./routes/sessions/register');
+var login = require('./routes/session/login');
+var logout = require('./routes/session/logout');
+var register = require('./routes/session/register');
 
 var admin = require('./routes/admin/admin');
+var newscreate = require('./routes/admin/news/create');
 
-// var forums = require('./routes/forums');
-
+// var forums = require('./routes/forum/forum');
 
 app.use('/', index);
+app.use('/news', news);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -133,6 +162,9 @@ app.use('/logout', logout);
 app.use('/register', register);
 
 app.use('/admin', admin);
+app.use('/admin/news/create', newscreate);
+
+// app.use('/forums', forums);
 
 //
 // Development [plugin]
@@ -187,20 +219,12 @@ app.use('/admin', admin);
 // Players
 //
 app.get('/players', function (req, res) {
-  connection.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', COUNT(ses.id) as 'joins' FROM sessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
+  database.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', COUNT(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
     if (error) {
       res.redirect('/');
       throw error;
     } else {
       res.render('players', {
-        "servername": `${config.servername}`,
-        "sitecolour": `${config.sitecolour}`,
-        "email": `${config.email}`,
-        "serverip": `${config.serverip}`,
-        "website": `${config.website}`,
-        "description": `${config.description}`,
-        "weblogo": `${config.weblogo}`,
-        "webfavicon": `${config.webfavicon}`,
         "pagetitle": "Players",
         objdata: results
       });
@@ -214,20 +238,12 @@ app.get('/players', function (req, res) {
 //
 app.get('/punishments', function (req, res) {
   let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from punishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id ORDER BY id ASC;`;
-  connection.query (sql, function (err, results) {
+  database.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
     } else {
       res.render('punishments', {
-        "servername": `${config.servername}`,
-        "sitecolour": `${config.sitecolour}`,
-        "email": `${config.email}`,
-        "serverip": `${config.serverip}`,
-        "website": `${config.website}`,
-        "description": `${config.description}`,
-        "weblogo": `${config.weblogo}`,
-        "webfavicon": `${config.webfavicon}`,
         "pagetitle": "Punishments",
         objdata: results
       });
@@ -240,21 +256,13 @@ app.get('/punishments', function (req, res) {
 // Profile
 //
 app.get('/profile/:username', function (req, res) {
-  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select ses.id from sessions ses left join playerdata pd on pd.id = ses.player_id where ses.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(ses.sessionend, ses.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from sessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; select p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' from (select ses.player_id, greatest(max(ses.sessionend), max(ses.sessionstart)) as 'lp_timestamp' from sessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id where username = '${req.params.username}';`;
-  connection.query (sql, function (err, results) {
+  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select gamesessions.id from gamesessions left join playerdata pd on pd.id = gamesessions.player_id where gamesessions.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = gamesessions.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from gamesessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; select p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' from (select ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' from sessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id where username = '${req.params.username}';`;
+  database.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
     } else {
       res.render('profile', {
-        "servername": `${config.servername}`,
-        "sitecolour": `${config.sitecolour}`,
-        "email": `${config.email}`,
-        "serverip": `${config.serverip}`,
-        "website": `${config.website}`,
-        "description": `${config.description}`,
-        "weblogo": `${config.weblogo}`,
-        "webfavicon": `${config.webfavicon}`,
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: results
       });
@@ -267,14 +275,6 @@ app.get('/profile/:username', function (req, res) {
 //
 // app.get('/about', function (req, res) {
 //   res.render('about', {
-//     "servername": `${config.servername}`,
-//     "sitecolour": `${config.sitecolour}`,
-//     "email": `${config.email}`,
-//     "serverip": `${config.serverip}`,
-//     "website": `${config.website}`,
-//     "description": `${config.description}`,
-//     "weblogo": `${config.weblogo}`,
-//     "webfavicon": `${config.webfavicon}`,
 //     "pagetitle": "About"
 //   });
 // });
@@ -315,9 +315,10 @@ client.on("message", (message) => {
 //
 // Application Boot
 //
-app.listen(process.env.PORT || config.applicationlistenport, function() {
+const port = process.env.port || 8080;
+app.listen(port, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
-  console.log(chalk.yellow('[CONSOLE] ' ) + 'Application is listening to the port ' + process.env.PORT || config.applicationlistenport);
+  console.log(chalk.yellow('[CONSOLE] ' ) + `Application is listening to the port ${port}`);
 
   client.login(process.env.token);
 

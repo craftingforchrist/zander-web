@@ -10,6 +10,7 @@
   </div>
 
   <div class="container credential-container">
+    <% include ../partials/messages.ejs %>
     <form method="post" action="/register">
       <div class="form-group">
         <label for="username">Username</label>
@@ -25,6 +26,10 @@
         <label for="password">Password</label>
         <input type="password" class="form-control" name="password" required>
         <small class="form-text text-muted">Please ensure that your password is safe and secure, something that only you would know.</small>
+      </div>
+      <div class="form-group">
+        <label for="passwordconfirm">Confirm Password</label>
+        <input type="password" class="form-control" name="passwordconfirm" required>
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-primary" style="margin:0 auto; width: 30%">Register</button>

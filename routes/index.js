@@ -3,19 +3,7 @@ const router = express.Router();
 const config = require('../config.json');
 
 router.get('/', (req, res, next) => {
-  console.log(req.user);
-  console.log(req.isAuthenticated());
-
   res.render('index', {
-    "servername": `${config.servername}`,
-    "sitecolour": `${config.sitecolour}`,
-    "email": `${config.email}`,
-    "serverip": `${config.serverip}`,
-    "website": `${config.website}`,
-    "description": `${config.description}`,
-    "weblogo": `${config.weblogo}`,
-    "webvideobackground": `${config.webvideobackground}`,
-    "webfavicon": `${config.webfavicon}`,
     "pagetitle": "Home"
   });
 });

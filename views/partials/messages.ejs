@@ -1,0 +1,25 @@
+<% if (typeof errors != 'undefined') { %>
+  <% errors.forEach(function(error) { %>
+    <div class="alert alert-danger" role="alert">
+      <%= error.message %>
+    </div>
+  <% }); %>
+<% } %>
+
+<% if (successmsg != '') { %>
+  <div class="alert alert-success" role="alert">
+    <%= successmsg %>
+  </div>
+<% } %>
+
+<% if (errormsg != '') { %>
+  <div class="alert alert-danger" role="alert">
+    <%= errormsg %>
+  </div>
+<% } %>
+
+<% if (error != '') { %>
+  <div class="alert alert-danger" role="alert">
+    <%= error %>
+  </div>
+<% } %>

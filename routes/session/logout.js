@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', function(req, res, next) {
   req.logout();
-  req.session.destroy();
+  req.flash('successmsg', 'You have been logged out.');
   res.redirect('/');
 });
 
