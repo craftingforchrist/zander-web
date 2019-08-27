@@ -1,0 +1,32 @@
+<% include ../../partials/header.ejs %>
+<% include ../../partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3">Edit an Article</h1>
+      <p class="lead"><%= results.title %> by <%= results.author %></p>
+    </div>
+  </div>
+
+  <form action="/admin/news/edit" method="post">
+    <input type="hidden" name="id" value="<%= results.id %>">
+    <div class="form-group">
+      <label for="title">News Title</label>
+      <input type="text" class="form-control" name="title" value="<%= results.title %>" required>
+    </div>
+    <div class="form-group">
+      <label for="author">Author</label>
+      <input type="text" class="form-control" name="author" value="<%= results.author %>" required>
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea class="form-control" name="content" rows="9" required><%= results.content %></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <br>
+</div>
+
+<% include ../../partials/footer.ejs %>

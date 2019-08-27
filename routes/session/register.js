@@ -8,7 +8,7 @@ const passport = require('passport');
 
 router.get('/', function(req, res, next) {
   res.render('session/register', {
-    "pagetitle": "Register"
+    pagetitle: "Register"
   });
 });
 
@@ -32,7 +32,7 @@ router.post('/', function(req, res, next) {
 
   if (errors.length > 0) {
     res.render('session/register', {
-      "pagetitle": "Register",
+      pagetitle: "Register",
       errors
     });
   } else {
@@ -42,7 +42,7 @@ router.post('/', function(req, res, next) {
         // There is already a user with that name.
         errors.push({ message: 'An account already exists with this username.' })
         res.render('session/register', {
-          "pagetitle": "Register",
+          pagetitle: "Register",
           errors
         });
       } else {

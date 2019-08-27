@@ -9,28 +9,27 @@
     </div>
   </div>
 
+  <% include ./partials/messages.ejs %>
+
+  <% objdata.forEach(function (data) { %>
   <div class="card">
     <div class="card-header">
       <div class="row">
         <div class="col-">
-          <img src="" alt="Authors head">
+          <img src="https://crafatar.com/avatars/<%= data.authoruuid %>?helm" alt="<%= data.author %>'s Head" height="60px" style="padding-left: 5px; border-radius: 10px;">
         </div>
         <div class="col-sm">
-          <h4>News Forum Title</h4>
-          <small><p>Published by <a href="#">shadowolfyt</a> on 22nd of August 2019</p></small>
+          <h4><%= data.title %></h4>
+          <small><p>Published by <a href="/profile/<%= data.author %>"><%= data.author %></a> on <%= data.created %></p></small>
         </div>
       </div>
     </div>
     <div class="card-body">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dui ligula, fermentum commodo consequat hendrerit, fermentum in eros. Sed facilisis porttitor commodo. Vivamus et risus ultrices, sodales turpis et, rhoncus eros. Vestibulum sed aliquam neque. Nulla rhoncus tempus nunc, quis congue justo. Integer ut neque lobortis, tristique libero nec, lacinia ligula. Cras eget lectus ac purus bibendum ornare non ut erat.<br><br>
-
-        Donec feugiat rutrum velit ac vulputate. Integer semper elementum massa, at gravida dui. Etiam at ipsum a erat efficitur egestas. Praesent non metus auctor, laoreet ante vel, vulputate quam. Curabitur vel velit ac nibh consequat facilisis. Nullam fermentum pretium lacinia. Etiam non eleifend felis. Nunc sed ultrices felis. Aliquam iaculis tristique lacus a malesuada. Cras pellentesque interdum justo eget rhoncus. Nullam semper, libero quis lobortis mattis, leo velit vehicula erat, et maximus nulla lectus non mi. Etiam malesuada vestibulum urna, non placerat elit. In semper luctus orci, sit amet fermentum nisl dignissim vitae. Etiam tristique porttitor elit a tempus.
-      </p>
+      <p><%= data.content %></p>
     </div>
-</div>
-
+  </div>
   <br>
+  <% }) %>
 </div>
 
 <% include partials/footer.ejs %>

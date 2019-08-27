@@ -7,6 +7,7 @@ FLUSH PRIVILEGES;
 GRANT SELECT ON zander.* TO zander@'%';
 GRANT INSERT ON zander.* TO zander@'%';
 GRANT UPDATE ON zander.* TO zander@'%';
+GRANT DELETE ON zander.* TO zander@'%';
 
 CREATE TABLE playerdata (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -51,17 +52,18 @@ CREATE TABLE webusers (
   registeredate TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS `sessions` (
-  `session_id` varchar(128) COLLATE utf8mb4_bin NOT NULL,
-  `expires` int(11) unsigned NOT NULL,
-  `data` mediumtext COLLATE utf8mb4_bin,
+CREATE TABLE sessions (
+  session_id VARCHAR(128) COLLATE utf8mb4_bin NOT NULL,
+  expires INT(11) unsigned NOT NULL,
+  data mediumtext COLLATE utf8mb4_bin,
   PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 CREATE TABLE news (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   title VARCHAR(255),
-  author VARCHAR(16)
+  author VARCHAR(16),
+  authoruuid VARCHAR(40),
   content TEXT,
   created TIMESTAMP NOT NULL DEFAULT NOW()
 );

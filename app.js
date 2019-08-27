@@ -74,6 +74,7 @@ app.use(passport.session());
 app.use((req, res, next) => {
   res.locals.successmsg = req.flash('successmsg');
   res.locals.errormsg = req.flash('errormsg');
+  res.locals.noticemsg = req.flash('noticemsg');
   res.locals.error = req.flash('error'); // Flash message for passport
   next();
 });
@@ -84,7 +85,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.locals.servername = config.servername; // Set the server name.
   res.locals.sitecolour = config.sitecolour; // Set the sit colour.
-  res.locals.email = config.email; // Set the servers contact email.
+  res.locals.contactemail = config.contactemail; // Set the servers contact email.
   res.locals.serverip = config.serverip; // Set the server ip.
   res.locals.website = config.website; // Set the website address.
   res.locals.description = config.description; // Set the description for the website.
@@ -97,6 +98,19 @@ app.use((req, res, next) => {
   res.locals.termsmd = config.termsmd;
   res.locals.privacymd = config.privacymd;
   res.locals.rulesmd = config.rulesmd;
+
+  res.locals.twitter = config.twitterlink;
+  res.locals.facebook = config.facebooklink;
+  res.locals.instagram = config.instagramlink;
+  res.locals.reddit = config.redditlink;
+
+  res.locals.platformemail = config.email;
+  res.locals.platformdiscord = config.discord;
+  res.locals.platformpatreon = config.patreon;
+  res.locals.platformtwitter = config.twitter;
+  res.locals.platformfacebook = config.facebook;
+  res.locals.platforminstagram = config.instagram;
+  res.locals.platformreddit = config.reddit;
   next();
 });
 
@@ -105,6 +119,8 @@ app.use((req, res, next) => {
 //
 var index = require('./routes/index');
 var news = require('./routes/news');
+var players = require('./routes/players');
+var punishments = require('./routes/punishments');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -132,12 +148,17 @@ var logout = require('./routes/session/logout');
 var register = require('./routes/session/register');
 
 var admin = require('./routes/admin/admin');
-var newscreate = require('./routes/admin/news/create');
+var newscreate = require('./routes/admin/news/create')(client);
+var newsremove = require('./routes/admin/news/remove');
+var newsedit = require('./routes/admin/news/edit');
+var newslist = require('./routes/admin/news/list');
 
 // var forums = require('./routes/forum/forum');
 
 app.use('/', index);
 app.use('/news', news);
+app.use('/players', players);
+app.use('/punishments', punishments);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -163,6 +184,9 @@ app.use('/register', register);
 
 app.use('/admin', admin);
 app.use('/admin/news/create', newscreate);
+app.use('/admin/news/remove', newsremove);
+app.use('/admin/news/edit', newsedit);
+app.use('/admin/news/list', newslist);
 
 // app.use('/forums', forums);
 
@@ -216,43 +240,6 @@ app.use('/admin/news/create', newscreate);
 // });
 
 //
-// Players
-//
-app.get('/players', function (req, res) {
-  database.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', COUNT(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
-    if (error) {
-      res.redirect('/');
-      throw error;
-    } else {
-      res.render('players', {
-        "pagetitle": "Players",
-        objdata: results
-      });
-      console.log(results);
-    }
-  });
-});
-
-//
-// Punishments
-//
-app.get('/punishments', function (req, res) {
-  let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from punishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id ORDER BY id ASC;`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      res.render('punishments', {
-        "pagetitle": "Punishments",
-        objdata: results
-      });
-      // console.log(results);
-    }
-  });
-});
-
-//
 // Profile
 //
 app.get('/profile/:username', function (req, res) {
@@ -302,7 +289,7 @@ client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
 
-  let prefix = '!';
+  let prefix = process.env.discordprefix;
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
@@ -315,12 +302,12 @@ client.on("message", (message) => {
 //
 // Application Boot
 //
-const port = process.env.port || 8080;
+const port = process.env.port;
 app.listen(port, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
   console.log(chalk.yellow('[CONSOLE] ' ) + `Application is listening to the port ${port}`);
 
-  client.login(process.env.token);
+  client.login(process.env.discordapitoken);
 
   client.on("ready", () => {
     console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + 'Launched Discord web-side.');
