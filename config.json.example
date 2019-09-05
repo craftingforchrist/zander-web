@@ -1,9 +1,9 @@
 {
   "servername": "zander",
   "sitecolour": "#3a99e8",
-  "email": "support@example.com",
+  "contactemail": "support@example.com",
   "serverip": "playonmyserver.com",
-  "notificationemail": "notify@example.com",
+  "notificationemail": "notify@gmail.com",
 
   "webfavicon": "/assets/img/favicon.ico",
   "weblogo": "/assets/img/server-icon.png",
@@ -12,9 +12,20 @@
 
   "website": "https://www.example.com/",
   "discordlink": "https://www.discordapp.com/",
-  "donatelink": "https://www.paypal.me/myserverspaypal",
-  "storelink": "http://myminecraftserver.tebex.io",
   "patreonlink": "https://www.patreon.com/myserverspatreon",
+  "twitterlink": "https://www.twitter.com/myserver",
+  "facebooklink": "https://www.facebook.com/myserver",
+  "instagramlink": "https://www.instagram.com/myserver",
+  "redditlink": "https://www.reddit.com/myserver",
+  "forumlink": "https://www.forum.com/myserver",
+
+  "email": "true",
+  "discord": "true",
+  "patreon": "true",
+  "twitter": "true",
+  "facebook": "true",
+  "instagram": "true",
+  "reddit": "false",
 
   "rulesmd": "https://raw.githubusercontent.com/the-zander-project/Rules/master/README.md",
   "termsmd": "https://raw.githubusercontent.com/the-zander-project/Terms/master/README.md",
@@ -26,9 +37,6 @@
   "developmentplugindevlink": "https://api.github.com/repos/shadowolfyt/zander/commits",
   "developmentwebdevlink": "https://api.github.com/repos/shadowolfyt/zander-web/commits",
 
-  "applicationlistenport": "8080",
-
-  "discordprefix": "!",
   "discordinvitedectector": true,
   "discordsend": true,
   "mailsend": true

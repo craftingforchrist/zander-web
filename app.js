@@ -118,7 +118,6 @@ app.use((req, res, next) => {
 // Site Routes
 //
 var index = require('./routes/index');
-var news = require('./routes/news');
 var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 
@@ -143,20 +142,15 @@ var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 
-var login = require('./routes/session/login');
-var logout = require('./routes/session/logout');
-var register = require('./routes/session/register');
+// var login = require('./routes/session/login');
+// var logout = require('./routes/session/logout');
+// var register = require('./routes/session/register');
+//
+// var admin = require('./routes/admin/admin');
 
-var admin = require('./routes/admin/admin');
-var newscreate = require('./routes/admin/news/create')(client);
-var newsremove = require('./routes/admin/news/remove');
-var newsedit = require('./routes/admin/news/edit');
-var newslist = require('./routes/admin/news/list');
-
-// var forums = require('./routes/forum/forum');
+var forums = require('./routes/forum/forums');
 
 app.use('/', index);
-app.use('/news', news);
 app.use('/players', players);
 app.use('/punishments', punishments);
 
@@ -178,17 +172,13 @@ app.use('/discord', discord);
 app.use('/issues', issues);
 app.use('/support', support);
 
-app.use('/login', login);
-app.use('/logout', logout);
-app.use('/register', register);
+// app.use('/login', login);
+// app.use('/logout', logout);
+// app.use('/register', register);
 
-app.use('/admin', admin);
-app.use('/admin/news/create', newscreate);
-app.use('/admin/news/remove', newsremove);
-app.use('/admin/news/edit', newsedit);
-app.use('/admin/news/list', newslist);
+// app.use('/admin', admin);
 
-// app.use('/forums', forums);
+app.use('/forums', forums);
 
 //
 // Development [plugin]
