@@ -292,8 +292,7 @@ client.on("message", (message) => {
 //
 // Application Boot
 //
-const port = process.env.port;
-app.listen(port, function() {
+app.listen(process.env.port || 8080, function() {
   console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
   console.log(chalk.yellow('[CONSOLE] ' ) + `Application is listening to the port ${port}`);
 
