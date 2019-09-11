@@ -49,7 +49,7 @@ module.exports.run = async (client, message, args) => {
   let createdAt = createdAtRaw.split(' ');
 
   let embed = new Discord.RichEmbed()
-    .setTitle('User has been banned')
+    .setTitle('User has been Banned')
     .setColor('#4d79ff')
     .addField('Banned User', `${user}`, true)
     .addField('Banned By', `${message.author}`, true)
@@ -58,24 +58,24 @@ module.exports.run = async (client, message, args) => {
 
   let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
   adminlogchannel.send(embed).catch(e => {
-    errors.noLogChannel(message);
+    let embed = new Discord.RichEmbed()
+      .setTitle('Error!')
+      .setColor('#ffa366')
+      .setDescription(`There is no #admin-log channel, can't display details.`)
+    message.channel.send(embed);
   });
 
-  // NOTE: Need to implement SQL.
-
-  // let sql = `INSERT INTO ;`;
-  // connection.query (sql, function (err, results) {
-  //   if (err) {
-  //     throw err;
-  //   } else {
-  //
-  //   };
-  // });
+  // Send notification to the command issuing channel.
+  let notificationembed = new Discord.RichEmbed()
+    .setTitle('User has been Banned.')
+    .setColor('#4d79ff')
+    .setDescription(`${user} has been banned by ${message.author} for ${reason}`)
+  message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.RichEmbed()
     .setTitle('You have been banned from the Server.')
-    .setColor('#ffa366')
+    .setColor('#ff6666')
     .setDescription(`Hello ${user}, you have been banned from the ${message.guild} server.\nYou were banned by ${message.author} for ${reason}.\nPlease contact us if you think this ban was unfair.\n\nSupport Email: ${config.email}`)
   await user.send(usernotifyembed).catch(e => { })
 
@@ -87,6 +87,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'ban',
   description: 'This will permanently bans a user from the guild with the reason provided.',
-  permission: 'BAN_MEMBERS',
+  permission: 'MANAGE_MESSAGES',
   usage: 'ban [@user] [reason]'
 };

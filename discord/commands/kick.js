@@ -54,28 +54,23 @@ module.exports.run = async (client, message, args) => {
     .addField('Kicked User:', `${user}`)
     .addField('Kicked By:', `${message.author}`)
     .addField('Time', `${createdAt[0]} ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`)
-    .addField('Reason:', reason);
+    .addField('Reason:', reason)
 
   let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
   adminlogchannel.send(embed).catch(e => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ffa366')
-      .setDescription(`There is no #admin-log channel. Not logging this punishment.`)
+      .setDescription(`There is no #admin-log channel, can't display details.`)
     message.channel.send(embed);
-    return;
   });
 
-  // NOTE: Need to implement SQL.
-
-  // let sql = `INSERT INTO ;`;
-  // connection.query (sql, function (err, results) {
-  //   if (err) {
-  //     throw err;
-  //   } else {
-  //
-  //   };
-  // });
+  // Send notification to the command issuing channel.
+  let notificationembed = new Discord.RichEmbed()
+    .setTitle('User has been Kicked.')
+    .setColor('#4d79ff')
+    .setDescription(`${user} has been kicked by ${message.author} for ${reason}`)
+  message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.RichEmbed()
