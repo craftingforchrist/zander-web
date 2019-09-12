@@ -3,7 +3,7 @@
   "sitecolour": "#3a99e8",
   "contactemail": "support@example.com",
   "serverip": "playonmyserver.com",
-  "notificationemail": "shadowolfbusiness@gmail.com",
+  "notificationemail": "notify@gmail.com",
 
   "webfavicon": "/assets/img/favicon.ico",
   "weblogo": "/assets/img/server-icon.png",
@@ -17,7 +17,7 @@
   "facebooklink": "https://www.facebook.com/myserver",
   "instagramlink": "https://www.instagram.com/myserver",
   "redditlink": "https://www.reddit.com/myserver",
-  "forumlink": "https://forums.craftingforchrist.net/",
+  "forumlink": "https://www.forum.com/myserver",
 
   "email": "true",
   "discord": "true",
