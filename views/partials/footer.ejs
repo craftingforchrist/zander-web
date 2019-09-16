@@ -39,13 +39,33 @@
       <div class="col-md-2 mb-md-0 mb-3 text-center">
         <h6 class="text-white">Platforms</h6>
         <ul class="list-unstyled">
+          <% if (platformdiscord == true) { %>
           <li><a href="/discord"><i class="fab fa-discord"></i> Discord</a></li>
-          <li><a href="/support"><i class="fab fa-patreon"></i> Patreon</a></li>
-          <li><a href="<%= twitter %>"><i class="fab fa-twitter-square"></i> Twitter</a></li>
-          <li><a href="<%= facebook %>"><i class="fab fa-facebook-square"></i> Facebook</a></li>
-          <li><a href="<%= instagram %>"><i class="fab fa-instagram"></i> Instagram</a></li>
-          <li><a href="<%= reddit %>"><i class="fab fa-reddit"></i> Reddit</a></li>
-          <li><a href="mailto:<%= contactemail %>"><i class="fas fa-envelope"></i> Email</a></li>
+          <% } %>
+
+          <% if (platformpatreon == true) { %>
+            <li><a href="/support"><i class="fab fa-patreon"></i> Patreon</a></li>
+          <% } %>
+
+          <% if (platformtwitter == true) { %>
+            <li><a href="<%= twitter %>"><i class="fab fa-twitter-square"></i> Twitter</a></li>
+          <% } %>
+
+          <% if (platformfacebook == true) { %>
+            <li><a href="<%= facebook %>"><i class="fab fa-facebook-square"></i> Facebook</a></li>
+          <% } %>
+
+          <% if (platforminstagram == true) { %>
+            <li><a href="<%= instagram %>"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <% } %>
+
+          <% if (platformreddit == true) { %>
+            <li><a href="<%= reddit %>"><i class="fab fa-reddit"></i> Reddit</a></li>
+          <% } %>
+
+          <% if (platformemail == true) { %>
+            <li><a href="mailto:<%= contactemail %>"><i class="fas fa-envelope"></i> Email</a></li>
+          <% } %>
         </ul>
       </div>
     </div>

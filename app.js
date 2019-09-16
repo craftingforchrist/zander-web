@@ -2,7 +2,6 @@
 // Project Constants
 //
 const express = require('express');
-const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -10,15 +9,11 @@ const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
-const cookieparser = require('cookie-parser');
-const passport = require('passport');
-const mysqlstore = require('express-mysql-session')(session);
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
-const flash = require('connect-flash');
 
 //
 // File Constants
@@ -31,7 +26,6 @@ const config = require('./config.json');
 //
 const database = require('./controllers/database.js'); // Database controller
 const transporter = require('./controllers/mail.js'); // Nodemailer Mail controller
-require('./controllers/passport.js')(passport); // Session Management controller
 
 //
 // Constants
@@ -42,42 +36,6 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieparser());
-app.use(flash());
-
-//
-// Session Management
-//
-var options = {
-  host: process.env.dbhost,
-  user: process.env.dbuser,
-  password: process.env.dbpassword,
-  database: process.env.dbname
-};
-const sessionstore = new mysqlstore(options);
-
-app.use(session({
-  secret: process.env.sessionsecret,
-  resave: false,
-  saveUninitialized: false,
-  store: sessionstore,
-  cookie: {
-    secure: true
-  }
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-//
-// Global Flash Messages
-//
-app.use((req, res, next) => {
-  res.locals.successmsg = req.flash('successmsg');
-  res.locals.errormsg = req.flash('errormsg');
-  res.locals.noticemsg = req.flash('noticemsg');
-  res.locals.error = req.flash('error'); // Flash message for passport
-  next();
-});
 
 //
 // Global Website Variables
@@ -142,12 +100,6 @@ var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 
-// var login = require('./routes/session/login');
-// var logout = require('./routes/session/logout');
-// var register = require('./routes/session/register');
-//
-// var admin = require('./routes/admin/admin');
-
 var forums = require('./routes/forum/forums');
 
 app.use('/', index);
@@ -171,12 +123,6 @@ app.use('/feedback', feedback);
 app.use('/discord', discord);
 app.use('/issues', issues);
 app.use('/support', support);
-
-// app.use('/login', login);
-// app.use('/logout', logout);
-// app.use('/register', register);
-
-// app.use('/admin', admin);
 
 app.use('/forums', forums);
 

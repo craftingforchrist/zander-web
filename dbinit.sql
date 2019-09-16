@@ -18,7 +18,7 @@ CREATE TABLE playerdata (
   bedlocation POINT NULL
 );
 create index playerdata_username on playerdata (username);
-INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
+-- INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
 
 CREATE TABLE gamesessions (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -32,38 +32,22 @@ create index gamesessions_player_id    on gamesessions (player_id);
 create index gamesessions_sessionstart on gamesessions (sessionstart);
 create index gamesessions_sessionend   on gamesessions (sessionend);
 
-CREATE TABLE punishments (
+CREATE TABLE gamepunishments (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   punisheduser_id INT NOT NULL DEFAULT 0,
   punisher_id INT NOT NULL DEFAULT 0,
-  punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE'),
-  platform ENUM('SERVER', 'DISCORD', 'WEBSITE'),
+  punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
   reason TEXT,
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
   FOREIGN KEY (punisheduser_id) REFERENCES playerdata (id),
   FOREIGN KEY (punisher_id) REFERENCES playerdata (id)
 );
 
-CREATE TABLE webusers (
+CREATE TABLE discordpunishments (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  username VARCHAR(16),
-  email VARCHAR(150),
-  password BINARY(60),
-  registeredate TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
-CREATE TABLE sessions (
-  session_id VARCHAR(128) COLLATE utf8mb4_bin NOT NULL,
-  expires INT(11) unsigned NOT NULL,
-  data mediumtext COLLATE utf8mb4_bin,
-  PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB;
-
-CREATE TABLE news (
-  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  title VARCHAR(255),
-  author VARCHAR(16),
-  authoruuid VARCHAR(40),
-  content TEXT,
-  created TIMESTAMP NOT NULL DEFAULT NOW()
+  punisheduser TEXT,
+  punisher TEXT,
+  punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
+  reason TEXT,
+  punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 );

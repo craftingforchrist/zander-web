@@ -13,11 +13,11 @@
       <tbody>
         <tr>
           <td>#<%= data.id %></td>
-          <td><img style="border-radius:5px;" src="https://crafatar.com/avatars/<%= data.punisheduuid %>?overlay" draggable="false" height="25px"> <a href="profile/<%= data.punished %>"><%= data.punished %></a></td>
-          <td><img style="border-radius:5px;" src="https://crafatar.com/avatars/<%= data.punisheruuid %>?overlay" draggable="false" height="25px"> <a href="profile/<%= data.punisher %>"><%= data.punisher %></a></td>
+          <td><%= data.punisheduser %></td>
+          <td><%= data.punisher %></td>
           <td><%= data.punishtype %></td>
           <td><%= data.reason %></td>
-          <td><%= data.timestamp %></td>
+          <td><%= data.punishtimestamp %></td>
         </tr>
       </tbody>
     <% }) %>

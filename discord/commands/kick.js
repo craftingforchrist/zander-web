@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const config = require('../../config.json');
 const chalk = require('chalk');
+const database = require('../../controllers/database.js'); // Database controller
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
@@ -80,7 +81,18 @@ module.exports.run = async (client, message, args) => {
   await user.send(usernotifyembed).catch(e => { })
 
   message.guild.member(user).kick(reason);
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + ` ${message.author.username} has kicked ${user.user.username} for ${reason}.`);
+
+  //
+  // Database Entry
+  //
+  let sql = `INSERT INTO discordpunishments (punisheduser, punisher, punishtype, reason) VALUES ('${user.user.username}', '${message.author.username}', 'KICK', '${reason}')`;
+  database.query (sql, function (err, results) {
+    if (err) {
+      throw err;
+    }
+  });
+
+  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${message.author.username} has kicked ${user.user.username} for ${reason}.`);
   return;
 };
 

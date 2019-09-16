@@ -19,13 +19,13 @@
   "redditlink": "https://www.reddit.com/myserver",
   "forumlink": "https://www.forum.com/myserver",
 
-  "email": "true",
-  "discord": "true",
-  "patreon": "true",
-  "twitter": "true",
-  "facebook": "true",
-  "instagram": "true",
-  "reddit": "false",
+  "email": true,
+  "discord": true,
+  "patreon": true,
+  "twitter": true,
+  "facebook": true,
+  "instagram": true,
+  "reddit": true,
 
   "rulesmd": "https://raw.githubusercontent.com/the-zander-project/Rules/master/README.md",
   "termsmd": "https://raw.githubusercontent.com/the-zander-project/Terms/master/README.md",
@@ -37,7 +37,6 @@
   "developmentplugindevlink": "https://api.github.com/repos/shadowolfyt/zander/commits",
   "developmentwebdevlink": "https://api.github.com/repos/shadowolfyt/zander-web/commits",
 
-  "discordinvitedectector": true,
   "discordsend": true,
   "mailsend": true
 }
