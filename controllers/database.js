@@ -12,6 +12,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) {
     console.error(chalk.red('[ERROR] ') + chalk.blue('[DB] ') +  'There was an error connecting:\n' + err.stack);
+    connection.connect();
     return;
   }
   console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DB] ') + 'Database connection is successful. Your connection ID is ' + connection.threadId + '.');

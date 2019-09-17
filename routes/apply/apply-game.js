@@ -9,7 +9,6 @@ const chalk = require('chalk');
 const ejs = require('ejs');
 const path = require('path');
 const transporter = require('../../controllers/mail.js');
-const flash = require('express-flash');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
