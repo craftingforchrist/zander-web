@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args) => {
       .setTitle('Messages Cleared!')
       .setColor('#ffd633')
       .setDescription(`${message.author.username} deleted ${args[0]} messages.`)
-    message.channel.send(embed).then(message.delete(5000));
+    message.channel.send(embed).then(msg => {msg.delete(3000)});
     return
   })
 
@@ -57,10 +57,7 @@ module.exports.run = async (client, message, args) => {
   let embed = new Discord.RichEmbed()
     .setTitle('Messages Purged!')
     .setColor('#ffd633')
-    .addField('Purged By', `${message.author}`)
-    .addField('Number of Messages', args)
-    .addField('Channel', message.channel)
-    .addField('Time', `${createdAt[0]} ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`)
+    .setDescription(`${args} messages have been purged from ${message.channel} by ${message.author}`)
 
   let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
   adminlogchannel.send(embed).catch(e => {
@@ -71,7 +68,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(embed);
   });
 
-  console.log(`${args} messages have been purged from ${message.channel.name} by ${message.author.username}`);
+  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${args} messages have been purged from ${message.channel.name} by ${message.author.username}`);
   return
 };
 
