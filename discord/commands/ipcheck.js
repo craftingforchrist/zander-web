@@ -50,9 +50,6 @@ module.exports.run = async (client, message, args) => {
                 embed.addField(`${playeripdata.username}`, `Last Login: ${playeripdata.lastlogin}`)
               })
               message.channel.send(embed);
-
-
-              console.log(res[0].name + "? No, they're " + res[0].id + " to me.");
             };
           });
         }
