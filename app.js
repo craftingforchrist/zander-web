@@ -12,6 +12,7 @@ const request = require('request');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
+require('./discord/util/eventLoader.js')(client);
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
 
