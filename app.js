@@ -100,7 +100,7 @@ var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 
-var forums = require('./routes/forum/forums');
+var forums = require('./routes/forums');
 
 app.use('/', index);
 app.use('/players', players);
@@ -119,61 +119,11 @@ app.use('/report', report);
 app.use('/contact', contact);
 app.use('/feedback', feedback);
 
-
 app.use('/discord', discord);
 app.use('/issues', issues);
 app.use('/support', support);
 
 app.use('/forums', forums);
-
-//
-// Development [plugin]
-//
-// app.get('/development/plugin', function (req, res) {
-//   var options = {
-//     url: config.developmentplugindevlink,
-//     headers: { 'User-Agent': 'request' }
-//   };
-//
-//   function callback(error, response, body) {
-//     if (!error && response.statusCode == 200) {
-//       var info = JSON.parse(body);
-//       res.redirect('/');
-//       res.render('development-plugin', {
-//         "servername": `${config.servername}`,
-//         "sitecolour": `${config.sitecolour}`,
-//         "email": `${config.email}`,
-//         "pagetitle": "Plugin Development Log",
-//         objdata: info
-//       });
-//     };
-//   };
-//   request(options, callback);
-// });
-
-//
-// Development [web]
-//
-// app.get('/development/web', function (req, res) {
-//   var options = {
-//     url: config.developmentwebdevlink,
-//     headers: { 'User-Agent': 'request' }
-//   };
-//
-//   function callback(error, response, body) {
-//     if (!error && response.statusCode == 200) {
-//       var info = JSON.parse(body);
-//       res.render('development-web', {
-//         "servername": `${config.servername}`,
-//         "sitecolour": `${config.sitecolour}`,
-//         "email": `${config.email}`,
-//         "pagetitle": "Web Development Log",
-//         objdata: info
-//       });
-//     };
-//   };
-//   request(options, callback);
-// });
 
 //
 // Profile
@@ -192,15 +142,6 @@ app.get('/profile/:username', function (req, res) {
     }
   });
 });
-
-//
-// About
-//
-// app.get('/about', function (req, res) {
-//   res.render('about', {
-//     "pagetitle": "About"
-//   });
-// });
 
 //
 // Discord Commands & Integration
