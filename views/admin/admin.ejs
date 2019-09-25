@@ -28,8 +28,8 @@
 
           <div class="form-group">
             <label for="method">Method</label>
-            <select class="custom-select" name="method">
-              <option selected disabled>Select a Method</option>
+            <select class="custom-select" name="method" required>
+              <option value="" disabled selected>Select a Method</option>
               <option value="add">Add a Player</option>
               <option value="remove">Remove a Player</option>
             </select>
@@ -48,8 +48,8 @@
 
           <div class="form-group">
             <label for="method">Method</label>
-            <select class="custom-select" name="method">
-              <option selected disabled>Select a Method</option>
+            <select class="custom-select" name="method" required>
+              <option value="" disabled selected>Select a Method</option>
               <option value="warn">Warn a Player</option>
               <option value="kick">Kick a Player</option>
               <option value="tempban">Temporarily Ban a Player</option>
@@ -71,8 +71,8 @@
           <input type="hidden" name="action" value="broadcast">
           <div class="form-group">
             <label for="method">Broadcast Method</label>
-            <select class="custom-select" name="method">
-              <option selected disabled>Select a Method</option>
+            <select class="custom-select" name="method" required>
+              <option value="" disabled selected>Select a Method</option>
               <option value="all">All Platforms</option>
               <option value="discord">Just Discord</option>
               <option value="ingame">Just In-Game</option>
@@ -81,7 +81,7 @@
 
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea class="form-control" name="message" rows="3"></textarea>
+            <textarea class="form-control" name="message" rows="3" required></textarea>
           </div>
 
           <br>
