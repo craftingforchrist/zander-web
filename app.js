@@ -27,6 +27,7 @@ const config = require('./config.json');
 //
 const database = require('./controllers/database.js'); // Database controller
 const transporter = require('./controllers/mail.js'); // Nodemailer Mail controller
+const rcon = require('./controllers/rcon.js'); // RCON controller
 
 //
 // Constants

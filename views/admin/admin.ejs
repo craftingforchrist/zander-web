@@ -8,25 +8,26 @@
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
       <a class="nav-link active" id="v-pills-information-tab" data-toggle="pill" href="#v-pills-information" role="tab" aria-controls="v-pills-information" aria-selected="true">Information</a>
       <a class="nav-link" id="v-pills-whitelist-tab" data-toggle="pill" href="#v-pills-whitelist" role="tab" aria-controls="v-pills-whitelist" aria-selected="false">Whitelist</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+      <a class="nav-link" id="v-pills-punishment-tab" data-toggle="pill" href="#v-pills-punishment" role="tab" aria-controls="v-pills-punishment" aria-selected="false">Punishment</a>
+      <a class="nav-link" id="v-pills-broadcast-tab" data-toggle="pill" href="#v-pills-broadcast" role="tab" aria-controls="v-pills-broadcast" aria-selected="false">Broadcast</a>
     </div>
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane fade show active" id="v-pills-information" role="tabpanel" aria-labelledby="v-pills-information-tab">
         <h3>Welcome to the Administration Panel!</h3>
+        <p>Use the tabs on the side bar.</p>
       </div>
       <div class="tab-pane fade" id="v-pills-whitelist" role="tabpanel" aria-labelledby="v-pills-whitelist-tab">
-        <form>
+        <form action="/admin" method="post">
           <input type="hidden" name="action" value="whitelist">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username">
+            <input type="text" class="form-control" name="username">
           </div>
 
           <div class="form-group">
-            <label for="method">Select a Method</label>
+            <label for="method">Method</label>
             <select class="custom-select" name="method">
               <option selected disabled>Select a Method</option>
               <option value="add">Add a Player</option>
@@ -37,8 +38,56 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+      <div class="tab-pane fade" id="v-pills-punishment" role="tabpanel" aria-labelledby="v-pills-punishment-tab">
+        <form action="/admin" method="post">
+          <input type="hidden" name="action" value="punish">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username">
+          </div>
+
+          <div class="form-group">
+            <label for="method">Method</label>
+            <select class="custom-select" name="method">
+              <option selected disabled>Select a Method</option>
+              <option value="warn">Warn a Player</option>
+              <option value="kick">Kick a Player</option>
+              <option value="tempban">Temporarily Ban a Player</option>
+              <option value="ban">Ban a Player</option>
+              <option value="ipban">Ban a Players IP</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reason">Reason</label>
+            <input type="text" class="form-control" name="reason">
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="v-pills-broadcast" role="tabpanel" aria-labelledby="v-pills-broadcast-tab">
+        <form action="/admin" method="post">
+          <input type="hidden" name="action" value="broadcast">
+          <div class="form-group">
+            <label for="method">Broadcast Method</label>
+            <select class="custom-select" name="method">
+              <option selected disabled>Select a Method</option>
+              <option value="all">All Platforms</option>
+              <option value="discord">Just Discord</option>
+              <option value="ingame">Just In-Game</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea class="form-control" name="message" rows="3"></textarea>
+          </div>
+
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
