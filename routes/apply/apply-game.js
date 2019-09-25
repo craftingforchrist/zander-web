@@ -40,6 +40,7 @@ module.exports = (client) => {
           .addField(`Any additional information`, `${additionalinformation}`)
           .setColor('#99ddff')
         applicationschannel.send(embed);
+
         console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Application for ${username} has been sent.`);
       };
 

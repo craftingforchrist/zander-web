@@ -25,12 +25,14 @@
             <input type="text" class="form-control" id="username">
           </div>
 
-          <select class="custom-select">
-            <option selected disabled>Select a Method</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+          <div class="form-group">
+            <label for="method">Select a Method</label>
+            <select class="custom-select" name="method">
+              <option selected disabled>Select a Method</option>
+              <option value="add">Add a Player</option>
+              <option value="remove">Remove a Player</option>
+            </select>
+          </div>
           <br>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
