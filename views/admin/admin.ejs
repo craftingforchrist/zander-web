@@ -25,7 +25,7 @@
       <!-- Whitelist Panel -->
       <div class="tab-pane fade" id="v-pills-whitelist" role="tabpanel" aria-labelledby="v-pills-whitelist-tab">
         <h3>Whitelist</h3>
-        <form>
+        <form action="/admin" method="post">
           <input type="hidden" name="action" value="whitelist">
           <div class="form-group">
             <label for="username">Username</label>
@@ -52,7 +52,7 @@
         <div class="alert alert-warning" role="alert">
           Some fields are disabled, since they have not been implemented in Development.
         </div>
-        <form>
+        <form action="/admin" method="post">
           <input type="hidden" name="action" value="punish">
           <div class="form-group">
             <label for="username">Username</label>
@@ -94,7 +94,7 @@
         <div class="alert alert-warning" role="alert">
           Some fields are disabled, since they have not been implemented in Development.
         </div>
-        <form>
+        <form action="/admin" method="post">
           <input type="hidden" name="action" value="broadcast">
           <div class="form-group">
             <label for="username">Username</label>
