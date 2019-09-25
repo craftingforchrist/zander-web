@@ -18,6 +18,7 @@
   "instagramlink": "https://www.instagram.com/myserver",
   "redditlink": "https://www.reddit.com/myserver",
   "forumlink": "https://www.forum.com/myserver",
+  "twitchlink": "https://www.twitch.tv/myserver",
 
   "email": true,
   "discord": true,
@@ -26,6 +27,7 @@
   "facebook": true,
   "instagram": true,
   "reddit": true,
+  "twitch": true,
 
   "rulesmd": "https://raw.githubusercontent.com/the-zander-project/Rules/master/README.md",
   "termsmd": "https://raw.githubusercontent.com/the-zander-project/Terms/master/README.md",
