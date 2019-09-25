@@ -4,17 +4,43 @@
 <div class="container">
   <br>
   <div class="row">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">News</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Actions</h6>
-
-        <a href="admin/news/create"><button type="button" class="btn btn-primary btn-sm">Create New News Article</button></a><br><br>
-        <a href="admin/news/list"><button type="button" class="btn btn-primary btn-sm">List News Articles</button></a>
-      </div>
+  <div class="col-3">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link active" id="v-pills-information-tab" data-toggle="pill" href="#v-pills-information" role="tab" aria-controls="v-pills-information" aria-selected="true">Information</a>
+      <a class="nav-link" id="v-pills-whitelist-tab" data-toggle="pill" href="#v-pills-whitelist" role="tab" aria-controls="v-pills-whitelist" aria-selected="false">Whitelist</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
     </div>
   </div>
-  <br>
+  <div class="col-9">
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-information" role="tabpanel" aria-labelledby="v-pills-information-tab">
+        <h3>Welcome to the Administration Panel!</h3>
+      </div>
+      <div class="tab-pane fade" id="v-pills-whitelist" role="tabpanel" aria-labelledby="v-pills-whitelist-tab">
+        <form>
+          <input type="hidden" name="action" value="whitelist">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username">
+          </div>
+
+          <select class="custom-select">
+            <option selected disabled>Select a Method</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+    </div>
+  </div>
+</div>
+<br>
 </div>
 
 <% include ../partials/footer.ejs %>

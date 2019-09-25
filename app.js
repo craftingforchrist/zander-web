@@ -100,8 +100,9 @@ var feedback = require('./routes/feedback')(client);
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
-
 var forums = require('./routes/forums');
+
+var admin = require('./routes/admin/admin');
 
 app.use('/', index);
 app.use('/players', players);
@@ -123,8 +124,9 @@ app.use('/feedback', feedback);
 app.use('/discord', discord);
 app.use('/issues', issues);
 app.use('/support', support);
-
 app.use('/forums', forums);
+
+app.use('/admin', admin);
 
 //
 // Profile
