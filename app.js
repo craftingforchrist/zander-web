@@ -63,6 +63,7 @@ app.use((req, res, next) => {
   res.locals.facebook = config.facebooklink;
   res.locals.instagram = config.instagramlink;
   res.locals.reddit = config.redditlink;
+  res.locals.twitch = config.twitchlink;
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
@@ -71,6 +72,7 @@ app.use((req, res, next) => {
   res.locals.platformfacebook = config.facebook;
   res.locals.platforminstagram = config.instagram;
   res.locals.platformreddit = config.reddit;
+  res.locals.platformtwitch = config.twitch;
   next();
 });
 

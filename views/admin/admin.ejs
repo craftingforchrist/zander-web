@@ -13,23 +13,30 @@
     </div>
   </div>
   <div class="col-9">
+
+
+    <!-- Information Panel -->
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane fade show active" id="v-pills-information" role="tabpanel" aria-labelledby="v-pills-information-tab">
         <h3>Welcome to the Administration Panel!</h3>
         <p>Use the tabs on the side bar.</p>
       </div>
+
+
+      <!-- Whitelist Panel -->
       <div class="tab-pane fade" id="v-pills-whitelist" role="tabpanel" aria-labelledby="v-pills-whitelist-tab">
+        <h3>Whitelist</h3>
         <form action="/admin" method="post">
           <input type="hidden" name="action" value="whitelist">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="username">
+            <input type="text" class="form-control" name="username" required>
           </div>
 
           <div class="form-group">
-            <label for="method">Method</label>
+            <label for="method">Select a Method</label>
             <select class="custom-select" name="method" required>
-              <option value="" disabled selected>Select a Method</option>
+              <option value="" selected disabled>Select a Method</option>
               <option value="add">Add a Player</option>
               <option value="remove">Remove a Player</option>
             </select>
@@ -38,26 +45,40 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
+
+
+      <!-- Punishment Panel -->
       <div class="tab-pane fade" id="v-pills-punishment" role="tabpanel" aria-labelledby="v-pills-punishment-tab">
+        <h3>Punishment</h3>
+        <div class="alert alert-warning" role="alert">
+          Some fields are disabled, since they have not been implemented in Development.
+        </div>
         <form action="/admin" method="post">
           <input type="hidden" name="action" value="punish">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="username">
+            <input type="text" class="form-control" name="username" required>
           </div>
-
           <div class="form-group">
-            <label for="method">Method</label>
+            <label for="method">Select a Broadcast Method</label>
             <select class="custom-select" name="method" required>
-              <option value="" disabled selected>Select a Method</option>
-              <option value="warn">Warn a Player</option>
-              <option value="kick">Kick a Player</option>
-              <option value="tempban">Temporarily Ban a Player</option>
-              <option value="ban">Ban a Player</option>
-              <option value="ipban">Ban a Players IP</option>
+              <option value="" selected disabled>Select a Platform</option>
+              <option value="all">All Platforms</option>
+              <option value="discord">Just Discord</option>
+              <option value="server">Just Server</option>
             </select>
           </div>
-
+          <div class="form-group">
+            <label for="method">Select a Method</label>
+            <select class="custom-select" name="method" required>
+              <option value="" selected disabled>Select a Method</option>
+              <option value="warn">Warn</option>
+              <option value="kick">Kick</option>
+              <option value="tempban" disabled>Temporarily Ban</option>
+              <option value="ban">Ban</option>
+              <option value="ipban" disabled>IP Address Ban</option>
+            </select>
+          </div>
           <div class="form-group">
             <label for="reason">Reason</label>
             <input type="text" class="form-control" name="reason">
@@ -66,28 +87,39 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
+
+
+      <!-- Broadcast Panel -->
       <div class="tab-pane fade" id="v-pills-broadcast" role="tabpanel" aria-labelledby="v-pills-broadcast-tab">
+        <h3>Broadcast</h3>
+        <div class="alert alert-warning" role="alert">
+          Some fields are disabled, since they have not been implemented in Development.
+        </div>
         <form action="/admin" method="post">
           <input type="hidden" name="action" value="broadcast">
           <div class="form-group">
-            <label for="method">Broadcast Method</label>
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username">
+          </div>
+          <div class="form-group">
+            <label for="method">Select a Broadcast Method</label>
             <select class="custom-select" name="method" required>
-              <option value="" disabled selected>Select a Method</option>
-              <option value="all">All Platforms</option>
+              <option value="" selected disabled>Select a Platform</option>
+              <option value="all" disabled>All Platforms</option>
               <option value="discord">Just Discord</option>
-              <option value="ingame">Just In-Game</option>
+              <option value="server" disabled>Just Server</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="message">Message</label>
-            <textarea class="form-control" name="message" rows="3" required></textarea>
+            <textarea class="form-control" name="message" rows="3"></textarea>
           </div>
-
           <br>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
+
+
     </div>
   </div>
 </div>
