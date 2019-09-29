@@ -4,6 +4,8 @@ const config = require('../../config.json');
 const rcon = require('../../controllers/rcon.js');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
+const broadcast = require('../../functions/broadcast');
+const whitelist = require('../../functions/whitelist');
 
 module.exports = (client) => {
   router.get('/', function(req, res, next) {
@@ -27,9 +29,9 @@ module.exports = (client) => {
     //
     if (action === "whitelist") {
       if (method === "add") {
-        rcon.send(`whitelist add ${username}`);
+        whitelist.add(username);
       } else if (method === "remove") {
-        rcon.send(`whitelist remove ${username}`);
+        whitelist.remove(username);
       };
       res.redirect('/admin');
     };
@@ -51,14 +53,7 @@ module.exports = (client) => {
     //
     if (action === "broadcast") {
       if (method === "discord") {
-        let broadcastchannel = client.channels.find(c => c.name === `${config.broadcastchannel}`);
-        if (!broadcastchannel) return console.log('A broadcast channel does not exist.');
-
-        var embed = new Discord.RichEmbed()
-          .setTitle('Platform Broadcast')
-          .setDescription(`${message}`)
-          .setColor('#FFA500')
-        broadcastchannel.send(embed);
+        broadcast.discord(message);
       };
       res.redirect('/admin');
     };
