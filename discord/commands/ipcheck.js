@@ -37,21 +37,14 @@ module.exports.run = async (client, message, args) => {
         if (err) {
           throw err;
         } else {
-          mojangapi.nameToUuid(`${args[0]}`, function(err, res) {
-            if (err){
-              console.log(err);
-            } else {
-              let embed = new Discord.RichEmbed()
-              .setTitle(`${args[0]}'s Connected Accounts`)
-              .setThumbnail(`https://crafatar.com/avatars/${res[0].id}`)
-              .setColor('#4d79ff')
+          let embed = new Discord.RichEmbed()
+          .setTitle(`${args[0]}'s Connected Accounts`)
+          .setColor('#4d79ff')
 
-              results.forEach(function(playeripdata) {
-                embed.addField(`${playeripdata.username}`, `Last Login: ${playeripdata.lastlogin}`)
-              })
-              message.channel.send(embed);
-            };
-          });
+          results.forEach(function(playeripdata) {
+            embed.addField(`${playeripdata.username}`, `Last Login: ${playeripdata.lastlogin}`)
+          })
+          message.channel.send(embed);
         }
       });
     }

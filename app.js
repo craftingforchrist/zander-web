@@ -2,6 +2,7 @@
 // Project Constants
 //
 const express = require('express');
+const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -15,6 +16,8 @@ client.commands = new Discord.Collection();
 require('./discord/util/eventLoader.js')(client);
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
+const flash = require('express-flash');
+const cookieParser = require('cookie-parser');
 
 //
 // File Constants
@@ -38,20 +41,27 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(flash());
+app.use(cookieParser());
+app.use(session({
+  secret: `${process.env.sessionsecret}`,
+  resave: false,
+  saveUninitialized: false
+}));
 
 //
 // Global Website Variables
 //
 app.use((req, res, next) => {
-  res.locals.servername = config.servername; // Set the server name.
-  res.locals.sitecolour = config.sitecolour; // Set the sit colour.
-  res.locals.contactemail = config.contactemail; // Set the servers contact email.
-  res.locals.serverip = config.serverip; // Set the server ip.
-  res.locals.website = config.website; // Set the website address.
-  res.locals.description = config.description; // Set the description for the website.
-  res.locals.weblogo = config.weblogo; // Set the logo.
-  res.locals.webvideobackground = config.webvideobackground; // Set the moving video background.
-  res.locals.webfavicon = config.webfavicon; // Set the website icon.
+  res.locals.servername = config.servername;
+  res.locals.sitecolour = config.sitecolour;
+  res.locals.contactemail = config.contactemail;
+  res.locals.serverip = config.serverip;
+  res.locals.website = config.website;
+  res.locals.description = config.description;
+  res.locals.weblogo = config.weblogo;
+  res.locals.webvideobackground = config.webvideobackground;
+  res.locals.webfavicon = config.webfavicon;
 
   res.locals.contentcreatorsmd = config.contentcreatorsmd;
   res.locals.developersmd = config.developersmd;
@@ -73,6 +83,10 @@ app.use((req, res, next) => {
   res.locals.platforminstagram = config.instagram;
   res.locals.platformreddit = config.reddit;
   res.locals.platformtwitch = config.twitch;
+
+  res.locals.gameserverapp = config.gameserverapp;
+  res.locals.contentcreatorapp = config.contentcreatorapp;
+  res.locals.developerapp = config.developerapp;
   next();
 });
 
@@ -80,7 +94,7 @@ app.use((req, res, next) => {
 // Site Routes
 //
 var index = require('./routes/index');
-var players = require('./routes/players');
+//var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 
 var terms = require('./routes/policy/terms');
@@ -105,10 +119,10 @@ var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 var forums = require('./routes/forums');
 
-var admin = require('./routes/admin/admin');
+var admin = require('./routes/admin/admin')(client);
 
 app.use('/', index);
-app.use('/players', players);
+//app.use('/players', players);
 app.use('/punishments', punishments);
 
 app.use('/terms', terms);

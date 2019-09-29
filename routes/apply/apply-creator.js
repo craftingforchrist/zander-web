@@ -12,9 +12,13 @@ const transporter = require('../../controllers/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
-    res.render('apply/apply-creator', {
-      "pagetitle": "Apply - Content Creator"
-    });
+    if (config.contentcreatorapp == false) {
+      res.redirect("/");
+    } else {
+      res.render('apply/apply-creator', {
+        "pagetitle": "Apply - Content Creator"
+      });
+    };
   });
 
   router.post('/', function (req, res) {

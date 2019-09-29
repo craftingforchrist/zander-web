@@ -18,7 +18,7 @@ CREATE TABLE playerdata (
   bedlocation POINT NULL
 );
 create index playerdata_username on playerdata (username);
--- INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
+INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
 
 CREATE TABLE gamesessions (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -28,9 +28,9 @@ CREATE TABLE gamesessions (
   ipaddress VARCHAR(45),
   FOREIGN KEY (player_id) REFERENCES playerdata (id)
 );
-create index gamesessions_player_id    on gamesessions (player_id);
+create index gamesessions_player_id on gamesessions (player_id);
 create index gamesessions_sessionstart on gamesessions (sessionstart);
-create index gamesessions_sessionend   on gamesessions (sessionend);
+create index gamesessions_sessionend on gamesessions (sessionend);
 
 CREATE TABLE gamepunishments (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -46,8 +46,21 @@ CREATE TABLE gamepunishments (
 CREATE TABLE discordpunishments (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   punisheduser TEXT,
+  punisheduserid TEXT,
   punisher TEXT,
+  punisherid TEXT,
   punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
   reason TEXT,
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE gameapplications (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  username TEXT,
+  email TEXT,
+  discordtag TEXT,
+  howdidyouhearaboutus TEXT,
+  otherinformation TEXT,
+  accepted BOOLEAN,
+  submissiontimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 );

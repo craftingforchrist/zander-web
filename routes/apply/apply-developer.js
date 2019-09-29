@@ -13,9 +13,13 @@ const transporter = require('../../controllers/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
-    res.render('apply/apply-developer', {
-      "pagetitle": "Apply - Developer"
-    });
+    if (config.developerapp == false) {
+      res.redirect("/");
+    } else {
+      res.render('apply/apply-developer', {
+        "pagetitle": "Apply - Developer"
+      });
+    };
   });
 
   router.post('/', function (req, res) {

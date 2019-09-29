@@ -12,14 +12,19 @@ const transporter = require('../../controllers/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
-    res.render('apply/apply-game', {
-      "pagetitle": "Apply - Game"
-    });
+    if (config.gameserverapp == false) {
+      res.redirect("/");
+    } else {
+      res.render('apply/apply-game', {
+        "pagetitle": "Apply - Game"
+      });
+    };
   });
 
   router.post('/', function (req, res) {
     const username = req.body.username;
     const discordtag = req.body.discordtag;
+    const email = req.body.email;
     const howdidyouhearaboutus = req.body.howdidyouhearaboutus;
     const additionalinformation = req.body.additionalinformation;
 
@@ -35,6 +40,7 @@ module.exports = (client) => {
         var embed = new Discord.RichEmbed()
           .setTitle(`Whitelist Application [${username}]`)
           .addField(`Username`, `${username}`, true)
+          .addField(`Email`, `${email}`, true)
           .addField(`Discord Tag`, `${discordtag}`, true)
           .addField(`How did you hear about us`, `${howdidyouhearaboutus}`)
           .addField(`Any additional information`, `${additionalinformation}`)
@@ -50,8 +56,9 @@ module.exports = (client) => {
         // Requires a email to be in the notificationemail field.
         //
         ejs.renderFile(path.join(__dirname + "../../../views/email/apply/apply-game.ejs"), {
-          subject: `[Content Creator] ${username}`,
+          subject: `[Game Application] ${username}`,
           username: username,
+          email: email,
           discordtag: discordtag,
           howdidyouhearaboutus: howdidyouhearaboutus,
           additionalinformation: additionalinformation
@@ -77,7 +84,17 @@ module.exports = (client) => {
         });
       }
 
-      res.redirect('/');
+      //
+      // Database Entry
+      //
+      let sql = `INSERT INTO gameapplications (username, punisher, punishtype, reason) VALUES ('${user.user.username}', '${message.author.username}', 'BAN', '${reason}')`;
+      database.query (sql, function (err, results) {
+        if (err) {
+          throw err;
+        } else {
+          res.redirect('/');
+        }
+      });
     } catch (error) {
       console.log('An error occured');
       console.log(error);

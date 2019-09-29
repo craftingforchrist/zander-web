@@ -4,6 +4,11 @@ const chalk = require('chalk');
 const database = require('../../controllers/database.js'); // Database controller
 
 module.exports.run = async (client, message, args) => {
+  const punisheduser = user.user.tag;
+  const punisheduserid = user.user.id;
+  const punisher = message.author.user.tag;
+  const punisherid = message.author.user.id;
+
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.RichEmbed()
@@ -85,7 +90,7 @@ module.exports.run = async (client, message, args) => {
   //
   // Database Entry
   //
-  let sql = `INSERT INTO discordpunishments (punisheduser, punisher, punishtype, reason) VALUES ('${user.user.username}', '${message.author.username}', 'KICK', '${reason}')`;
+  let sql = `INSERT INTO discordpunishments (punisheduser, punisheduserid, punisher, punisherid, punishtype, reason) VALUES ('${punisheduser}', '${punisheduserid}', '${punisher}', '${punisherid}' 'KICK', '${reason}')`;
   database.query (sql, function (err, results) {
     if (err) {
       throw err;

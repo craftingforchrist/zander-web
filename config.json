@@ -40,5 +40,10 @@
   "developmentwebdevlink": "https://api.github.com/repos/shadowolfyt/zander-web/commits",
 
   "discordsend": true,
-  "mailsend": true
+  "broadcastchannel": "general",
+  "mailsend": true,
+
+  "gameserverapp": true,
+  "contentcreatorapp": false,
+  "developerapp": false
 }
