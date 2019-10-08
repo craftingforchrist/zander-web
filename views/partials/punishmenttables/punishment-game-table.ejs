@@ -9,15 +9,15 @@
         <th scope="col">Time</th>
       </tr>
     </thead>
-    <% discordpunishmentsdata.forEach(function (data) { %>
+    <% gamepunishmentsdata.forEach(function (data) { %>
       <tbody>
         <tr>
           <td>#<%= data.id %></td>
-          <td><%= data.punisheduser %></td>
-          <td><%= data.punisher %></td>
+          <td><img src="https://crafatar.com/avatars/<%= data.punisheduuid %>?overlay" style="border-radius:10px; height:25px;"> <%= data.punished %></td>
+          <td><img src="https://crafatar.com/avatars/<%= data.punisheruuid %>?overlay" style="border-radius:10px; height:25px;"> <%= data.punisher %></td>
           <td><%= data.punishtype %></td>
           <td><%= data.reason %></td>
-          <!-- <td><%= data.punishtimestamp %></td> -->
+          <!-- <td><%= data.timestamp %></td> -->
         </tr>
       </tbody>
     <% }) %>

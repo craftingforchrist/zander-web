@@ -2,12 +2,15 @@ const Discord = require('discord.js');
 const config = require('../../config.json');
 const chalk = require('chalk');
 const database = require('../../controllers/database.js'); // Database controller
+const punishment = require('../../functions/discord/punishment');
 
 module.exports.run = async (client, message, args) => {
-  const punisheduser = user.user.tag;
-  const punisheduserid = user.user.id;
-  const punisher = message.author.user.tag;
-  const punisherid = message.author.user.id;
+  const mentioneduser = message.mentions.members.first();
+  const punisheduser = `${mentioneduser.user.username}#${mentioneduser.user.discriminator}`;
+  const punisheduserid = mentioneduser.user.id;
+  const punisher = `${message.author.username}#${message.author.discriminator}`;
+  const punisherid = message.author.id;
+  const punishtype = "WARN";
 
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
@@ -20,8 +23,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   // Checks if the user is in the Discord and exists.
-  let user = message.mentions.members.first();
-  if (!user) {
+  if (!mentioneduser) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
@@ -31,7 +33,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   // Checks if you can punish the user.
-  if (user.hasPermission(`${module.exports.help.permission}`)) {
+  if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
@@ -51,18 +53,14 @@ module.exports.run = async (client, message, args) => {
     return;
   }
 
-  let createdAtRaw = message.createdAt.toDateString();
-  let createdAt = createdAtRaw.split(' ');
-
   let embed = new Discord.RichEmbed()
     .setTitle('User has been Warned')
     .setColor('#4d79ff')
-    .addField('Kicked User:', `${user}`)
-    .addField('Kicked By:', `${message.author}`)
-    .addField('Time', `${createdAt[0]} ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`)
+    .addField('Kicked User:', `${mentioneduser}`)
+    .addField('Kicked By:', `${punisheduser}`)
     .addField('Reason:', reason)
 
-  let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
+  let adminlogchannel = message.guild.channels.find(c => c.name === `${config.punishmentchannel}`);
   adminlogchannel.send(embed).catch(e => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
@@ -75,27 +73,17 @@ module.exports.run = async (client, message, args) => {
   let notificationembed = new Discord.RichEmbed()
     .setTitle('User has been Warned.')
     .setColor('#4d79ff')
-    .setDescription(`${user} has been warned by ${message.author} for ${reason}`)
+    .setDescription(`${mentioneduser} has been warned by ${punisheduser} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.RichEmbed()
     .setTitle('You have been warned.')
     .setColor('#ffa366')
-    .setDescription(`Hello ${user}, you have been warned by ${message.author} for ${reason}.`)
-  await user.send(usernotifyembed).catch(e => { })
+    .setDescription(`Hello ${mentioneduser}, you have been warned by ${punisheduser} for ${reason}`)
+  await mentioneduser.send(usernotifyembed).catch(e => { })
 
-  //
-  // Database Entry
-  //
-  let sql = `INSERT INTO discordpunishments (punisheduser, punisheduserid, punisher, punisherid, punishtype, reason) VALUES ('${punisheduser}', '${punisheduserid}', '${punisher}', '${punisherid}' 'WARN', '${reason}')`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      throw err;
-    }
-  });
-
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${punisher} has warned ${punisheduser} for ${reason}.`);
+  punishment.addpunishment(punisheduser, punisheduserid, punisher, punisherid, punishtype, reason);
   return;
 };
 

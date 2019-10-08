@@ -2,13 +2,16 @@ const Discord = require('discord.js');
 const config = require('../../config.json');
 const chalk = require('chalk');
 const database = require('../../controllers/database.js'); // Database controller
+const punishment = require('../../functions/discord/punishment');
 
 module.exports.run = async (client, message, args) => {
-  const punisheduser = user.user.tag;
-  const punisheduserid = user.user.id;
-  const punisher = message.author.user.tag;
-  const punisherid = message.author.user.id;
-  
+  const mentioneduser = message.mentions.members.first();
+  const punisheduser = `${mentioneduser.user.username}#${mentioneduser.user.discriminator}`;
+  const punisheduserid = mentioneduser.user.id;
+  const punisher = `${message.author.username}#${message.author.discriminator}`;
+  const punisherid = message.author.id;
+  const punishtype = "BAN";
+
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.RichEmbed()
@@ -20,8 +23,7 @@ module.exports.run = async (client, message, args) => {
   };
 
   // Checks if the user is in the Discord and exists.
-  let user = message.mentions.members.first();
-  if (!user) {
+  if (!mentioneduser) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
@@ -31,7 +33,7 @@ module.exports.run = async (client, message, args) => {
   };
 
   // Checks if you can punish the user.
-  if (user.hasPermission(`${module.exports.help.permission}`)) {
+  if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
@@ -51,18 +53,14 @@ module.exports.run = async (client, message, args) => {
     return;
   };
 
-  let createdAtRaw = message.createdAt.toDateString();
-  let createdAt = createdAtRaw.split(' ');
-
   let embed = new Discord.RichEmbed()
     .setTitle('User has been Banned')
     .setColor('#4d79ff')
-    .addField('Banned User', `${user}`)
-    .addField('Banned By', `${message.author}`)
-    .addField('Time', `${createdAt[0]} ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`)
+    .addField('Banned User', `${punisheduser}`)
+    .addField('Banned By', `${punisher}`)
     .addField('Reason', reason);
 
-  let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
+  let adminlogchannel = message.guild.channels.find(c => c.name === `${config.punishmentchannel}`);
   adminlogchannel.send(embed).catch(e => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')
@@ -75,29 +73,22 @@ module.exports.run = async (client, message, args) => {
   let notificationembed = new Discord.RichEmbed()
     .setTitle('User has been Banned.')
     .setColor('#4d79ff')
-    .setDescription(`${user} has been banned by ${message.author} for ${reason}`)
+    .setDescription(`${mentioneduser} has been banned by ${punisher} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.RichEmbed()
     .setTitle('You have been banned from the Server.')
     .setColor('#ff6666')
-    .setDescription(`Hello ${user}, you have been banned from the ${message.guild} server.\nYou were banned by ${message.author} for ${reason}.\n\nPlease contact us if you think this ban was unfair.\nSupport Email: ${config.contactemail}`)
-  await user.send(usernotifyembed).catch(e => { })
+    .setDescription(`Hello ${mentioneduser}, you have been banned from the ${message.guild} server.\nYou were banned by ${punisher} for ${reason}.\n\nPlease contact us if you think this ban was unfair.\nSupport Email: ${config.contactemail}`)
+  await mentioneduser.send(usernotifyembed).catch(e => { })
 
-  message.guild.member(user).ban({days:7,reason:reason});
-
-  //
-  // Database Entry
-  //
-  let sql = `INSERT INTO discordpunishments (punisheduser, punisheduserid, punisher, punisherid, punishtype, reason) VALUES ('${punisheduser}', '${punisheduserid}', '${punisher}', '${punisherid}' 'BAN', '${reason}')`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      throw err;
-    }
+  message.guild.member(user).ban({
+    days: 7,
+    reason: reason
   });
 
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${message.author.username} has banned ${user.user.username} for ${reason}.`);
+  punishment.addpunishment(punisheduser, punisheduserid, punisher, punisherid, punishtype, reason);
   return;
 };
 

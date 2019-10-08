@@ -9,7 +9,23 @@
     </div>
   </div>
 
-  <% include partials/punishmenttables/punishment-discord-table.ejs %>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="game-tab" data-toggle="tab" href="#game" role="tab" aria-controls="game" aria-selected="true">Server</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="discord-tab" data-toggle="tab" href="#discord" role="tab" aria-controls="discord" aria-selected="false">Discord</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="game" role="tabpanel" aria-labelledby="game-tab">
+      <% include partials/punishmenttables/punishment-game-table.ejs %>
+    </div>
+    <div class="tab-pane fade" id="discord" role="tabpanel" aria-labelledby="discord-tab">
+      <% include partials/punishmenttables/punishment-discord-table.ejs %>
+    </div>
+  </div>
 </div>
 
 <% include partials/footer.ejs %>
