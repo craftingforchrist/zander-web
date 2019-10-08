@@ -38,6 +38,7 @@ CREATE TABLE gamepunishments (
   punisher_id INT NOT NULL DEFAULT 0,
   punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
   reason TEXT,
+  appealed ENUM('true', 'false'),
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
   FOREIGN KEY (punisheduser_id) REFERENCES playerdata (id),
   FOREIGN KEY (punisher_id) REFERENCES playerdata (id)
@@ -51,16 +52,18 @@ CREATE TABLE discordpunishments (
   punisherid TEXT,
   punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
   reason TEXT,
+  appealed ENUM('true', 'false'),
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE gameapplications (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  uuid VARCHAR(32),
   username TEXT,
   email TEXT,
   discordtag TEXT,
   howdidyouhearaboutus TEXT,
   otherinformation TEXT,
-  accepted BOOLEAN,
+  appstatus ENUM('ACCEPTED', 'DENIED', 'PROCESSING'),
   submissiontimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 );
