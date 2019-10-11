@@ -18,6 +18,7 @@ const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
+const passportjs = require('passport');
 
 //
 // File Constants
@@ -28,9 +29,10 @@ const config = require('./config.json');
 //
 // Controllers
 //
-const database = require('./controllers/database.js'); // Database controller
-const transporter = require('./controllers/mail.js'); // Nodemailer Mail controller
-const rcon = require('./controllers/rcon.js'); // RCON controller
+const database = require('./controllers/database'); // Database controller
+const transporter = require('./controllers/mail'); // Nodemailer Mail controller
+const rcon = require('./controllers/rcon'); // RCON controller
+const passport = require('./controllers/passport'); // Passport controller
 
 //
 // Constants
@@ -41,12 +43,15 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(flash());
+app.use(flash({ locals: 'flash' }));
 app.use(cookieParser());
 app.use(session({
   secret: `${process.env.sessionsecret}`,
+  saveUninitialized: true,
   resave: false,
-  saveUninitialized: false
+  cookie: {
+    secure: true
+  }
 }));
 
 //
@@ -87,6 +92,11 @@ app.use((req, res, next) => {
   res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
+
+  res.locals['flash'];
+  res.locals.flashmessages = req.flash();
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
   next();
 });
 
@@ -119,6 +129,8 @@ var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 var forums = require('./routes/forums');
 
+var login = require('./routes/session/login');
+
 var admin = require('./routes/admin/admin')(client);
 
 app.use('/', index);
@@ -143,21 +155,41 @@ app.use('/issues', issues);
 app.use('/support', support);
 app.use('/forums', forums);
 
+app.use('/login', login);
+
 app.use('/admin', admin);
 
 //
 // Profile
 //
-app.get('/profile/:username', function (req, res) {
-  let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select gamesessions.id from gamesessions left join playerdata pd on pd.id = gamesessions.player_id where gamesessions.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = gamesessions.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from gamesessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; select p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' from (select ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' from sessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id where username = '${req.params.username}';`;
+// app.get('/profile/:username', function (req, res) {
+//   let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select gamesessions.id from gamesessions left join playerdata pd on pd.id = gamesessions.player_id where gamesessions.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = gamesessions.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from gamesessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; select p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' from (select ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' from sessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id where username = '${req.params.username}';`;
+//   database.query (sql, function (err, results) {
+//     if (err) {
+//       res.redirect('/');
+//       throw err;
+//     } else {
+//       res.render('profile', {
+//         "pagetitle": `${req.params.username}'s Profile`,
+//         objdata: results
+//       });
+//     }
+//   });
+// });
+
+//
+// Application View
+//
+app.get('/admin/applications/view/:id', function (req, res) {
+  let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
   database.query (sql, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
     } else {
-      res.render('profile', {
-        "pagetitle": `${req.params.username}'s Profile`,
-        objdata: results
+      res.render('admin/view', {
+        "pagetitle": `${results[0].username}'s Game Application`,
+        objdata: results[0]
       });
     }
   });
@@ -195,6 +227,38 @@ client.on("message", (message) => {
   let commandfile = client.commands.get(cmd.slice(prefix.length));
   if (commandfile) commandfile.run(client, message, args);
 });
+
+// client.on("voiceStateUpdate", (oldMember, newMember) => {
+//   let newUserChannel = newMember.voiceChannel
+//   let oldUserChannel = oldMember.voiceChannel
+//
+//   let voicechannelrole = newMember.roles.find(role => role.name === 'Voice');
+//   if (!voicechannelrole) {
+//     try {
+//       voicechannelrole = newMember.guild.createRole({
+//         name: 'Text',
+//         color: "#000000"
+//       })
+//     } catch (err) {
+//       console.log(err.stack);
+//     }
+//   };
+//
+//   let voicechannel = newMember.channels.find(channel => channel.name === 'voice');
+//   if (!voicechannel) {
+//     newMember.guild.createChannel('voice', { type: 'text' });
+//   }
+//
+//   if (oldUserChannel === undefined && newUserChannel !== undefined) {
+//     // User Joins a voice channel
+//     console.log('Someone joins voice channel.');
+//     newMember.addRole(voicechannelrole.id);
+//   } else if (newUserChannel === undefined) {
+//     // User leaves a voice channel
+//     console.log('Someone leaves voice channel.');
+//     newMember.removeRole(voicechannelrole.id);
+//   };
+// });
 
 //
 // Application Boot

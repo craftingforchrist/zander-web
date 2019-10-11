@@ -36,7 +36,7 @@ CREATE TABLE gamepunishments (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   punisheduser_id INT NOT NULL DEFAULT 0,
   punisher_id INT NOT NULL DEFAULT 0,
-  punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
+  punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN', 'IP BAN'),
   reason TEXT,
   appealed ENUM('true', 'false'),
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),

@@ -11,10 +11,10 @@
       <a class="nav-link" id="v-pills-application-tab" data-toggle="pill" href="#v-pills-application" role="tab" aria-controls="v-pills-application" aria-selected="false">Application</a>
       <a class="nav-link" id="v-pills-punishment-tab" data-toggle="pill" href="#v-pills-punishment" role="tab" aria-controls="v-pills-punishment" aria-selected="false">Punishment</a>
       <a class="nav-link" id="v-pills-broadcast-tab" data-toggle="pill" href="#v-pills-broadcast" role="tab" aria-controls="v-pills-broadcast" aria-selected="false">Broadcast</a>
+      <a class="nav-link" id="v-pills-broadcast-tab" data-toggle="pill" href="#v-pills-contentcreator" role="tab" aria-controls="v-pills-contentcreator" aria-selected="false">Content Creator</a>
     </div>
   </div>
   <div class="col-9">
-
     <!-- Information Panel -->
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane fade show active" id="v-pills-information" role="tabpanel" aria-labelledby="v-pills-information-tab">
@@ -41,6 +41,10 @@
         <% include ../partials/admin/broadcast.ejs %>
       </div>
 
+      <!-- Content Creator Panel -->
+      <div class="tab-pane fade" id="v-pills-contentcreator" role="tabpanel" aria-labelledby="v-pills-contentcreator-tab">
+        <% include ../partials/admin/contentcreator.ejs %>
+      </div>
     </div>
   </div>
 </div>

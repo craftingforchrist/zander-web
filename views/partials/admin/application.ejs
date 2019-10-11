@@ -9,15 +9,29 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>shadowolfyt</td>
-      <td style="font-size:13px;">29th of September 2019</td>
-      <td>
-        <button type="button" class="btn btn-primary btn-sm">View</button>
-        <button type="button" class="btn btn-success btn-sm">Accept</button>
-        <button type="button" class="btn btn-danger btn-sm">Deny</button>
-      </td>
-    </tr>
+    <% objdata.forEach(function (data) { %>
+      <tr>
+        <td scope="row"><%= data.id %></td>
+        <td><%= data.username %></td>
+        <td style="font-size:13px;"></td>
+        <td>
+          <div class="btn-group" role="group" aria-label="applicationgroup">
+            <a href="admin/applications/view/<%= data.id %>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+            <form action="/admin" method="post">
+              <input type="hidden" name="action" value="applyaccept">
+              <input type="hidden" name="id" value="<%= data.id %>">
+              <input type="hidden" name="username" value="<%= data.username %>">
+              <button type="submit" class="btn btn-success btn-sm">Accept</button>
+            </form>
+            <form action="/admin" method="post">
+              <input type="hidden" name="action" value="applydeny">
+              <input type="hidden" name="id" value="<%= data.id %>">
+              <input type="hidden" name="username" value="<%= data.username %>">
+              <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    <% }) %>
   </tbody>
 </table>

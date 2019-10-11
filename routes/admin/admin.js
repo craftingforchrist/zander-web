@@ -1,16 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../../config.json');
-const rcon = require('../../controllers/rcon.js');
+const database = require('../../controllers/database');
+const rcon = require('../../controllers/rcon');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 const broadcast = require('../../functions/broadcast');
 const whitelist = require('../../functions/whitelist');
+const applystatus = require('../../functions/apply/applystatus');
 
 module.exports = (client) => {
   router.get('/', function(req, res, next) {
-    res.render('admin/admin', {
-      "pagetitle": "Administration Panel"
+    database.query (`SELECT * FROM gameapplications WHERE appstatus='PROCESSING';`, function (error, results, fields) {
+      if (error) {
+        res.redirect('/');
+        throw error;
+      } else {
+        res.render('admin/admin', {
+          "pagetitle": "Administration Panel",
+          objdata: results
+        });
+        // console.log(results);
+      }
     });
   });
 
@@ -21,8 +32,20 @@ module.exports = (client) => {
     const platform = req.body.platform;
     const reason = req.body.reason;
     const message = req.body.message;
+    const id = req.body.id;
 
     console.log(req.body);
+
+    //
+    // Application
+    //
+    if (action === "applyaccept") {
+      applystatus.accept(id, req, res);
+    };
+
+    if (action === "applydeny") {
+      applystatus.deny(id, req, res);
+    };
 
     //
     // Whitelist

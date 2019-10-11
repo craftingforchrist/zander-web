@@ -1,0 +1,51 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1 class="display-4"><%= objdata.username %>'s Game Application</h1>
+          <p class="lead"><b>UUID:</b></p>
+        </div>
+        <div class="col-" style="padding-right:20px;">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-success">Accept</button>
+            <button type="submit" class="btn btn-danger">Deny</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
+      <h4>Username</h4>
+      <p><%= objdata.username %></p>
+    </div>
+    <div class="col-sm">
+      <h4>Email</h4>
+      <a href="mailto:<%= objdata.email %>"><%= objdata.email %></a>
+    </div>
+    <div class="col-sm">
+      <h4>Discord Tag</h4>
+      <p><%= objdata.discordtag %></p>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm">
+      <h4>How did you hear about us?</h4>
+      <p><%= objdata.howdidyouhearaboutus %></p>
+    </div>
+    <div class="col-sm">
+      <h4>Other Information</h4>
+      <p><%= objdata.otherinformation %></p>
+    </div>
+  </div>
+<br>
+</div>
+
+<% include ../partials/footer.ejs %>

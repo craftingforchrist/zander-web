@@ -14,7 +14,7 @@ const transporter = require('../../controllers/mail.js');
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
     if (config.developerapp == false) {
-      res.redirect("/");
+      res.redirect("/apply");
     } else {
       res.render('apply/apply-developer', {
         "pagetitle": "Apply - Developer"

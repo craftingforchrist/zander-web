@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args) => {
   let notificationembed = new Discord.RichEmbed()
     .setTitle('User has been Kicked.')
     .setColor('#4d79ff')
-    .setDescription(`${mentioneduser} has been kicked by ${punisher} for ${reason}`)
+    .setDescription(`${mentioneduser} has been kicked by ${message.author} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.

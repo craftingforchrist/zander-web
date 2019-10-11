@@ -1,12 +1,12 @@
 const config = require('../config.json');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const broadcastchannel = config.broadcastchannel;
+
 //
 // Discord Broadcast
 //
 function discord(message) {
-  let broadcastchannel = client.channels.find(c => c.name === broadcastchannel);
+  let broadcastchannel = client.channels.find(c => c.name === `${config.broadcastchannel}`);
   if (!broadcastchannel) return console.log('A broadcast channel does not exist.');
 
   var embed = new Discord.RichEmbed()

@@ -9,11 +9,12 @@ const chalk = require('chalk');
 const ejs = require('ejs');
 const path = require('path');
 const transporter = require('../../controllers/mail.js');
+const game = require('../../functions/apply/game');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
     if (config.gameserverapp == false) {
-      res.redirect("/");
+      res.redirect("/apply");
     } else {
       res.render('apply/apply-game', {
         "pagetitle": "Apply - Game"
@@ -28,14 +29,16 @@ module.exports = (client) => {
     const howdidyouhearaboutus = req.body.howdidyouhearaboutus;
     const additionalinformation = req.body.additionalinformation;
 
+    game.applycheck(username, res);
+    game.applygamedbinsert(username, email, discordtag, howdidyouhearaboutus, additionalinformation);
+
     try {
       if (config.discordsend == true) {
         //
         // Discord Notification Send
-        // Requires a #applications channel to be created.
         //
-        let applicationschannel = client.channels.find(c => c.name === 'applications');
-        if (!applicationschannel) return console.log('A #applications channel does not exist.');
+        let applicationschannel = client.channels.find(c => c.name === `${config.applicationschannel}`);
+        if (!applicationschannel) return console.log(`A #${config.applicationschannel} channel does not exist.`);
 
         var embed = new Discord.RichEmbed()
           .setTitle(`Whitelist Application [${username}]`)
@@ -82,23 +85,12 @@ module.exports = (client) => {
               });
           }
         });
-      }
-
-      //
-      // Database Entry
-      //
-      let sql = `INSERT INTO gameapplications (username, punisher, punishtype, reason) VALUES ('${user.user.username}', '${message.author.username}', 'BAN', '${reason}')`;
-      database.query (sql, function (err, results) {
-        if (err) {
-          throw err;
-        } else {
-          res.redirect('/');
-        }
-      });
+      };
     } catch (error) {
       console.log('An error occured');
       console.log(error);
     }
+    res.redirect('/');
   });
 
   return router;
