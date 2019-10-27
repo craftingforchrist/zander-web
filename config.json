@@ -11,11 +11,11 @@
   "description": "A Christian Minecraft Server.",
 
   "website": "https://www.craftingforchrist.net/",
-  "discordlink": "https://www.discordapp.com/",
+  "discordlink": "https://discordapp.com/invite/fGWNchS",
   "patreonlink": "https://www.patreon.com/craftingforchrist",
   "twitterlink": "https://twitter.com/craft4christmc",
-  "facebooklink": "https://www.facebook.com/myserver",
-  "instagramlink": "https://www.instagram.com/myserver",
+  "facebooklink": "https://www.facebook.com/craft4christ/",
+  "instagramlink": "https://instagram.com/craftingforchrist",
   "redditlink": "https://www.reddit.com/myserver",
   "forumlink": "https://forums.craftingforchrist.net/",
   "twitchlink": "https://www.twitch.tv/craftingforchrist",
@@ -34,7 +34,6 @@
   "privacymd": "https://raw.githubusercontent.com/crafting-for-christ/Privacy/master/README.md",
   "contentcreatorsmd": "https://raw.githubusercontent.com/crafting-for-christ/Content-Creators/master/README.md",
   "developersmd": "https://raw.githubusercontent.com/crafting-for-christ/Developers/master/README.md",
-
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
 
   "discordsend": true,
@@ -44,6 +43,6 @@
   "mailsend": true,
 
   "gameserverapp": true,
-  "contentcreatorapp": false,
+  "contentcreatorapp": true,
   "developerapp": false
 }
