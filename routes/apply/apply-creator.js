@@ -23,7 +23,7 @@ module.exports = (client) => {
 
   router.post('/', function (req, res) {
     const username = req.body.minecraftusername;
-    const discordtag = req.body.discordtagselector;
+    const discordtag = req.body.discordtag;
     const platform = req.body.contentplatform;
     const otherplatform = req.body.othercontentplatform;
     const channellink = req.body.channellink;
@@ -31,23 +31,25 @@ module.exports = (client) => {
     const additionalinformation = req.body.additionalinformation;
 
     try {
-      switch (platform) {
-        case "YouTube":
-          console.log('This user has requested YouTube.');
-          break;
+      // TODO: Using the channel link in the channel link field, look up the stats of the user's channel.
 
-        case "Twitch":
-          console.log('This user has requested Twitch.');
-          break;
-
-        case "Mixer":
-          console.log('This user has requested Mixer.');
-          break;
-
-        case "Other":
-          console.log('This user has requested Other, no data to pull, dropping request.');
-          break;
-      }
+      // switch (platform) {
+      //   case "YouTube":
+      //     console.log('This user has requested YouTube.');
+      //     break;
+      //
+      //   case "Twitch":
+      //     console.log('This user has requested Twitch.');
+      //     break;
+      //
+      //   case "Mixer":
+      //     console.log('This user has requested Mixer.');
+      //     break;
+      //
+      //   case "Other":
+      //     console.log('This user has requested Other, no data to pull, dropping request.');
+      //     break;
+      // }
 
       if (config.discordsend == true) {
         //
@@ -62,9 +64,9 @@ module.exports = (client) => {
           .addField(`Username`, `${username}`, true)
           .addField(`Discord Tag`, `${discordtag}`, true)
           .addField(`Content Platform`, `${platform}`)
-          .addField(`Other Content Platform`, `${otherplatform}`)
+          // .addField(`Other Content Platform`, `${otherplatform}`)
           .addField(`Channel Link`, `${channellink}`)
-          .addField(`Subscriber Count`, `${subscribercount}`)
+          // .addField(`Subscriber Count`, `${subscribercount}`)
           .addField(`Any additional information`, `${additionalinformation}`)
           .setColor('#00ace6')
         applicationsschannel.send(embed);
@@ -106,7 +108,6 @@ module.exports = (client) => {
           }
         });
       }
-
       res.redirect('/');
     } catch (error) {
       console.log('An error occured');

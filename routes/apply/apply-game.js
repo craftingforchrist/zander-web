@@ -9,6 +9,7 @@ const chalk = require('chalk');
 const ejs = require('ejs');
 const path = require('path');
 const transporter = require('../../controllers/mail.js');
+const database = require('../../controllers/database.js');
 const game = require('../../functions/apply/game');
 
 module.exports = (client) => {
@@ -29,7 +30,21 @@ module.exports = (client) => {
     const howdidyouhearaboutus = req.body.howdidyouhearaboutus;
     const additionalinformation = req.body.additionalinformation;
 
-    game.applycheck(username, res);
+    // TODO: Duplication is marked as detected, but still continues with remainder of code.
+    database.query (`SELECT COUNT(*) as 'user' from gameapplications WHERE username=?;`, [username], function (error, results, fields) {
+      console.log(results[0]);
+      if (error) {
+        throw error;
+      };
+
+      if (results[0].user > 1) {
+        res.render('apply/apply', {
+          "pagetitle": "Apply"
+        });
+        console.log('Duplication Detected');
+      };
+    });
+
     game.applygamedbinsert(username, email, discordtag, howdidyouhearaboutus, additionalinformation);
 
     try {
@@ -48,9 +63,11 @@ module.exports = (client) => {
           .addField(`How did you hear about us`, `${howdidyouhearaboutus}`)
           .addField(`Any additional information`, `${additionalinformation}`)
           .setColor('#99ddff')
-        applicationschannel.send(embed);
-
-        console.log(chalk.yellow('[CONSOLE] ') + chalk.blue('[DISCORD] ') + `Whitelist Application for ${username} has been sent.`);
+        applicationschannel.send(embed).then(async embed => {
+          await embed.react('✅')
+          await embed.react('❎')
+        });
+        console.log(`[CONSOLE] [DISCORD] Whitelist Application for ${username} has been sent.`);
       };
 
       if (config.mailsend == true) {

@@ -18,7 +18,8 @@ const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
-const passportjs = require('passport');
+const passport = require('passport');
+const LocalStratagy = require('passport-local');
 
 //
 // File Constants
@@ -32,7 +33,7 @@ const config = require('./config.json');
 const database = require('./controllers/database'); // Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 const rcon = require('./controllers/rcon'); // RCON controller
-const passport = require('./controllers/passport'); // Passport controller
+// const passport = require('./controllers/passport'); // Passport controller
 
 //
 // Constants
@@ -43,16 +44,37 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(flash({ locals: 'flash' }));
+app.use(flash());
 app.use(cookieParser());
 app.use(session({
   secret: `${process.env.sessionsecret}`,
-  saveUninitialized: true,
+  saveUninitialized: false,
   resave: false,
   cookie: {
     secure: true
   }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStratagy(
+  function(username, password, done) {
+    console.log(username);
+    console.log(password);
+
+    database.query('SELECT password FROM accounts WHERE username=?', [username], function(err, results, fields) {
+      if (err) {
+        done(err);
+      };
+
+      if (results.length === 0) {
+        done(null, false);
+      }
+
+      return done(null, 'success');
+    });
+  }
+));
 
 //
 // Global Website Variables
@@ -92,11 +114,6 @@ app.use((req, res, next) => {
   res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
-
-  res.locals['flash'];
-  res.locals.flashmessages = req.flash();
-  res.locals.success = req.flash('success');
-  res.locals.error = req.flash('error');
   next();
 });
 
@@ -131,7 +148,12 @@ var forums = require('./routes/forums');
 
 var login = require('./routes/session/login');
 
-var admin = require('./routes/admin/admin')(client);
+var accountslist = require('./routes/admin/accounts/list');
+var accountscreate = require('./routes/admin/accounts/create');
+var application = require('./routes/admin/application');
+var whitelist = require('./routes/admin/whitelist');
+var broadcast = require('./routes/admin/broadcast');
+var punishment = require('./routes/admin/punishment');
 
 app.use('/', index);
 //app.use('/players', players);
@@ -157,7 +179,12 @@ app.use('/forums', forums);
 
 app.use('/login', login);
 
-app.use('/admin', admin);
+app.use('/admin/accounts/list', accountslist);
+app.use('/admin/accounts/create', accountscreate);
+app.use('/admin/application', application);
+app.use('/admin/whitelist', whitelist);
+app.use('/admin/broadcast', broadcast);
+app.use('/admin/punishment', punishment);
 
 //
 // Profile

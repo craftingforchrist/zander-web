@@ -4,6 +4,7 @@ const chalk = require('chalk');
 module.exports = (message) => {
   let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
   if (!adminlogchannel) return;
+  if (message.author.bot) return;
 
   let embed = new Discord.RichEmbed()
     .setTitle('Message Deleted')

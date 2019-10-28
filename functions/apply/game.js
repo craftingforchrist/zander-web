@@ -6,22 +6,22 @@ const uuid = require('../uuid');
 // Duplication Check
 //
 function applycheck(username) {
-  database.query (`SELECT COUNT(*) as 'user' from gameapplications WHERE username=?;`, [username], function (error, results, fields) {
-    console.log(results[0]);
-    if (error) {
-      throw error;
-    };
-
-    if (results[0].user > 1) {
-      // res.redirect('/apply');
-      // res.render('apply/apply', {
-      //   "pagetitle": "Apply"
-      // });
-      console.log('Duplication Detected');
-    } else {
-
-    };
-  });
+  // database.query (`SELECT COUNT(*) as 'user' from gameapplications WHERE username=?;`, [username], function (error, results, fields) {
+  //   console.log(results[0]);
+  //   if (error) {
+  //     throw error;
+  //   };
+  //
+  //   if (results[0].user > 1) {
+  //     // res.redirect('/apply');
+  //     // res.render('apply/apply', {
+  //     //   "pagetitle": "Apply"
+  //     // });
+  //     console.log('Duplication Detected');
+  //   } else {
+  //
+  //   };
+  // });
 };
 
 //

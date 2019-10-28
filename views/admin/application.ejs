@@ -1,0 +1,48 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <h3>Application</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Timestamp</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% objdata.forEach(function (data) { %>
+          <tr>
+            <td scope="row"><%= data.id %></td>
+            <td><%= data.username %></td>
+            <td style="font-size:13px;"></td>
+            <td>
+              <div class="btn-group" role="group" aria-label="applicationgroup">
+                <a href="/admin/applications/view/<%= data.id %>"><button type="button" class="btn btn-primary btn-sm">View</button></a>
+                <form action="/admin" method="post">
+                  <input type="hidden" name="action" value="applyaccept">
+                  <input type="hidden" name="id" value="<%= data.id %>">
+                  <input type="hidden" name="username" value="<%= data.username %>">
+                  <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                </form>
+                <form action="/admin" method="post">
+                  <input type="hidden" name="action" value="applydeny">
+                  <input type="hidden" name="id" value="<%= data.id %>">
+                  <input type="hidden" name="username" value="<%= data.username %>">
+                  <button type="submit" class="btn btn-danger btn-sm">Deny</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<br>
+</div>
+
+<% include ../partials/footer.ejs %>

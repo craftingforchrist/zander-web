@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/benrobson8/zander-web#readme",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "connect-flash": "^0.1.1",

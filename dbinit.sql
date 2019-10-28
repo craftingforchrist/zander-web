@@ -67,3 +67,9 @@ CREATE TABLE gameapplications (
   appstatus ENUM('ACCEPTED', 'DENIED', 'PROCESSING'),
   submissiontimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE accounts (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  username VARCHAR(16),
+  password TEXT
+);

@@ -1,0 +1,61 @@
+<% include ../../partials/header.ejs %>
+<% include ../../partials/navigation.ejs %>
+
+<!-- <script type="text/javascript">
+  window.onload=function() {
+    const deleteButton = document.getElementById("delete")
+
+    deleteButton.addEventListener('click', function() {
+      fetch('/admin/accounts/list', {method: 'POST'})
+        .then(response => response.text())
+        .then(text => console.log(text))
+    });
+  }
+</script> -->
+
+<div class="container">
+<br>
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1>Accounts</h1>
+        </div>
+        <div class="col-">
+          <a href="/admin/accounts/create"><button type="button" class="btn btn-primary btn-sm">Create an Account</button></a>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Username</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% objdata.forEach(function (data) { %>
+          <tr>
+            <td><%= data.id %></td>
+            <td><%= data.username %></td>
+            <td style="max-width: 10px;">
+              <button type="button" class="btn btn-warning btn-sm">Disable</button>
+
+              <form action="/admin/accounts/list" method="post">
+                <input type="hidden" name="action" value="accountdelete">
+                <input type="hidden" name="id" value="<%= data.id %>">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<br>
+</div>
+
+<% include ../../partials/footer.ejs %>

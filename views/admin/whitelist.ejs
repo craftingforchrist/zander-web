@@ -1,0 +1,30 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <h3>Whitelist</h3>
+    <form action="/admin" method="post">
+      <input type="hidden" name="action" value="whitelist">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="method">Select a Method</label>
+        <select class="custom-select" name="method" required>
+          <option value="" selected disabled>Select a Method</option>
+          <option value="add">Add a Player</option>
+          <option value="remove">Remove a Player</option>
+        </select>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+<br>
+</div>
+
+<% include ../partials/footer.ejs %>

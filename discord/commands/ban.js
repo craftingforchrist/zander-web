@@ -83,7 +83,7 @@ module.exports.run = async (client, message, args) => {
     .setDescription(`Hello ${mentioneduser}, you have been banned from the ${message.guild} server.\nYou were banned by ${punisher} for ${reason}.\n\nPlease contact us if you think this ban was unfair.\nSupport Email: ${config.contactemail}`)
   await mentioneduser.send(usernotifyembed).catch(e => { })
 
-  message.guild.member(user).ban({
+  message.guild.member(punisheduserid).ban({
     days: 7,
     reason: reason
   });
