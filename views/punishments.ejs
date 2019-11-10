@@ -20,10 +20,56 @@
 
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="game" role="tabpanel" aria-labelledby="game-tab">
-      <% include partials/punishmenttables/punishment-game-table.ejs %>
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Punished User</th>
+              <th scope="col">Punished By</th>
+              <th scope="col">Type</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+          <% gamepunishmentsdata.forEach(function (data) { %>
+            <tbody>
+              <tr>
+                <td>#<%= data.id %></td>
+                <td><img src="https://crafatar.com/avatars/<%= data.punisheduuid %>?overlay" style="border-radius:10px; height:25px;"> <%= data.punished %></td>
+                <td><img src="https://crafatar.com/avatars/<%= data.punisheruuid %>?overlay" style="border-radius:10px; height:25px;"> <%= data.punisher %></td>
+                <td><%= data.punishtype %></td>
+                <td><%= data.reason %></td>
+                <!-- <td><%= data.timestamp %></td> -->
+              </tr>
+            </tbody>
+          <% }) %>
+      </table>
     </div>
     <div class="tab-pane fade" id="discord" role="tabpanel" aria-labelledby="discord-tab">
-      <% include partials/punishmenttables/punishment-discord-table.ejs %>
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Punished User</th>
+              <th scope="col">Punished By</th>
+              <th scope="col">Type</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Time</th>
+            </tr>
+          </thead>
+          <% discordpunishmentsdata.forEach(function (data) { %>
+            <tbody>
+              <tr>
+                <td>#<%= data.id %></td>
+                <td><%= data.punisheduser %></td>
+                <td><%= data.punisher %></td>
+                <td><%= data.punishtype %></td>
+                <td><%= data.reason %></td>
+                <!-- <td><%= data.punishtimestamp %></td> -->
+              </tr>
+            </tbody>
+          <% }) %>
+      </table>
     </div>
   </div>
 </div>
