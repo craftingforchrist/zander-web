@@ -5,9 +5,6 @@ const database = require('../../controllers/database');
 const rcon = require('../../controllers/rcon');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const broadcast = require('../../functions/broadcast');
-const whitelist = require('../../functions/whitelist');
-const applystatus = require('../../functions/apply/applystatus');
 
 router.get('/', (req, res, next) => {
   res.render('admin/punishment', {
@@ -16,7 +13,26 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', function (req, res) {
+  const platform = req.body.platform;
+  const method = req.body.method;
+  const username = req.body.username;
+  const reason = req.body.reason;
 
+  if (platform === 'server') {
+    if (method === 'warn') {
+      rcon.send(`warn ${username} ${reason}`);
+    }
+    if (method === 'kick') {
+      rcon.send(`kick ${username} ${reason}`);
+    }
+    if (method === 'ban') {
+      rcon.send(`ban ${username} ${reason}`);
+    }
+    if (method === 'pardon') {
+      rcon.send(`pardon ${username}`);
+    }
+  }
+  res.redirect('/admin/punishment')
 });
 
 module.exports = router;

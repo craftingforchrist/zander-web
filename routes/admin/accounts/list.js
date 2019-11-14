@@ -14,7 +14,6 @@ router.get('/', (req, res, next) => {
         "pagetitle": "Administration Panel - Accounts",
         objdata: results
       });
-      console.log(results);
     }
   });
 });

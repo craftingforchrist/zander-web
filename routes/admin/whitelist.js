@@ -1,20 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../../config.json');
-const database = require('../../controllers/database.js');
-const accounts = require('../../functions/admin/accounts.js');
+const database = require('../../controllers/database');
+const rcon = require('../../controllers/rcon');
 
 router.get('/', (req, res, next) => {
-  database.query (`SELECT * FROM gameapplications WHERE appstatus='PROCESSING';`, function (error, results, fields) {
-    if (error) {
-      res.redirect('/');
-      throw error;
-    } else {
-      res.render('admin/whitelist', {
-        "pagetitle": "Administration Panel - Whitelist",
-        objdata: results
-      });
-    }
+  res.render('admin/whitelist', {
+    "pagetitle": "Administration Panel - Whitelist"
   });
 });
 
@@ -32,7 +24,7 @@ router.post('/', function (req, res) {
     } else if (method === "remove") {
       whitelist.remove(username);
     };
-    res.redirect('/admin');
+    res.redirect('/admin/whitelist');
   };;
 });
 

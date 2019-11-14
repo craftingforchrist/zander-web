@@ -8,39 +8,71 @@
     <div class="alert alert-warning" role="alert">
       Some fields are disabled, since they have not been implemented in Development.
     </div>
-    <form action="/admin" method="post">
-      <input type="hidden" name="action" value="punish">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" name="username" required>
+
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="server-tab" data-toggle="tab" href="#server" role="tab" aria-controls="Server" aria-selected="true">Server</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="discord-tab" data-toggle="tab" href="#discord" role="tab" aria-controls="discord" aria-selected="false">Discord</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="server" role="tabpanel" aria-labelledby="server-tab">
+        <form action="/admin/punishment" method="post">
+          <input type="hidden" name="platform" value="server">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="method">Select a Method</label>
+            <select class="custom-select" name="method" required>
+              <option value="" selected disabled>Select a Method</option>
+              <option value="warn">Warn</option>
+              <option value="kick">Kick</option>
+              <option value="tempban" disabled>Temporarily Ban</option>
+              <option value="ban">Ban</option>
+              <option value="ipban" disabled>IP Address Ban</option>
+              <option value="pardon">Pardon</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reason">Reason</label>
+            <input type="text" class="form-control" name="reason">
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="platform">Select a Platform</label>
-        <select class="custom-select" name="platform" required>
-          <option value="" selected disabled>Select a Platform</option>
-          <option value="all" disabled>All Platforms</option>
-          <option value="discord" disabled>Just Discord</option>
-          <option value="server" disabled>Just Server</option>
-        </select>
+
+      <div class="tab-pane fade" id="discord" role="tabpanel" aria-labelledby="discord-tab">
+        <form action="/admin/punishment" method="post">
+          <input type="hidden" name="platform" value="discord">
+          <div class="form-group">
+            <label for="username">User ID</label>
+            <small class="form-text text-muted">Select the user and find Copy ID</small>
+            <input type="text" class="form-control" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="method">Select a Method</label>
+            <select class="custom-select" name="method" required>
+              <option value="" selected disabled>Select a Method</option>
+              <option value="warn" disabled>Warn</option>
+              <option value="kick" disabled>Kick</option>
+              <option value="tempban" disabled>Temporarily Ban</option>
+              <option value="ban" disabled>Ban</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reason">Reason</label>
+            <input type="text" class="form-control" name="reason">
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="method">Select a Method</label>
-        <select class="custom-select" name="method" required>
-          <option value="" selected disabled>Select a Method</option>
-          <option value="warn" disabled>Warn</option>
-          <option value="kick" disabled>Kick</option>
-          <option value="tempban" disabled>Temporarily Ban</option>
-          <option value="ban" disabled>Ban</option>
-          <option value="ipban" disabled>IP Address Ban</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="reason">Reason</label>
-        <input type="text" class="form-control" name="reason">
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
   </div>
 <br>
 </div>
