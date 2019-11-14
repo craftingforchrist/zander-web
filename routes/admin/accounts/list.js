@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
       res.redirect('/');
       throw error;
     } else {
-      res.render('admin/accounts/list', {
+      res.render('admin/accounts', {
         "pagetitle": "Administration Panel - Accounts",
         objdata: results
       });

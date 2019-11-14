@@ -11,6 +11,7 @@ const path = require('path');
 const transporter = require('../../controllers/mail.js');
 const database = require('../../controllers/database.js');
 const game = require('../../functions/apply/game');
+const mail = require('../../functions/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
@@ -63,14 +64,14 @@ module.exports = (client) => {
           .addField(`How did you hear about us`, `${howdidyouhearaboutus}`)
           .addField(`Any additional information`, `${additionalinformation}`)
           .setColor('#99ddff')
-        applicationschannel.send(embed).then(async embed => {
-          await embed.react('✅')
-          await embed.react('❎')
-        });
+          .setFooter('You can accept or deny on the Website in the Administration Panel.')
+        applicationschannel.send(embed);
         console.log(`[CONSOLE] [DISCORD] Whitelist Application for ${username} has been sent.`);
       };
 
       if (config.mailsend == true) {
+        mail.applyconfirmmail(req.body.email, req.body.username, "✉ We got your Application");
+
         //
         // Mail Send
         // Requires a email to be in the notificationemail field.

@@ -1,0 +1,85 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1>Accounts</h1>
+        </div>
+        <div class="col-">
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal">Create an Account</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-white">
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog colourblack" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Create an Account</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/admin/accounts/create">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" name="username" value="">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="text" class="form-control" name="password" value="">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Username</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% objdata.forEach(function (data) { %>
+          <tr>
+            <td><%= data.id %></td>
+            <td><%= data.username %></td>
+            <td style="max-width: 10px;">
+              <div class="btn-group" role="group" aria-label="accountgroup">
+                <form action="/admin/accounts/disable" method="post">
+                  <input type="hidden" name="action" value="accountdisable">
+                  <input type="hidden" name="id" value="<%= data.id %>">
+                  <button type="submit" class="btn btn-warning btn-sm">Disable</button>
+                </form>
+                <form action="/admin/accounts/list" method="post">
+                  <input type="hidden" name="action" value="accountdelete">
+                  <input type="hidden" name="id" value="<%= data.id %>">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<br>
+</div>
+
+<% include ../partials/footer.ejs %>

@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<div class="container">
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-5">✉ We've got your Application</h1>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <p>Hello <b><%= username %></b>,</p>
+      <p>Thank you for submitting your application to Crafting For Christ.<br>We have recieved your application and will be looking over it shortly. Please be patient with us.</p>
+
+      <div class="alert alert-warning" role="alert">
+        Please do not consistantly spam our Support email or harrass staff members in regards to your application.<br>This may effect your application might lessen your chances in getting accepted.
+      </div>
+    </div>
+  </div>
+
+  <% include ../../partials/email/footer.ejs %>
+</div>

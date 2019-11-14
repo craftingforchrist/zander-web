@@ -10,12 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/benrobson8/zander-web.git"
   },
-  "author": "benrobson8",
+  "author": "benrobson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/benrobson8/zander-web/issues"
+    "url": "https://github.com/benrobson/zander-web/issues"
   },
-  "homepage": "https://github.com/benrobson8/zander-web#readme",
+  "homepage": "https://github.com/benrobson/zander-web#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",

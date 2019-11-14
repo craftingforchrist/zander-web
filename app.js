@@ -148,8 +148,7 @@ var forums = require('./routes/forums');
 
 var login = require('./routes/session/login');
 
-var accountslist = require('./routes/admin/accounts/list');
-var accountscreate = require('./routes/admin/accounts/create');
+var accounts = require('./routes/admin/accounts/list');
 var application = require('./routes/admin/application');
 var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
@@ -179,8 +178,7 @@ app.use('/forums', forums);
 
 app.use('/login', login);
 
-app.use('/admin/accounts/list', accountslist);
-app.use('/admin/accounts/create', accountscreate);
+app.use('/admin/accounts', accounts);
 app.use('/admin/application', application);
 app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);

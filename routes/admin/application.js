@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../../config.json');
-const database = require('../../controllers/database.js');
-const accounts = require('../../functions/admin/accounts.js');
+const database = require('../../controllers/database');
+const applystatus = require('../../functions/apply/applystatus');
 
 router.get('/', (req, res, next) => {
   database.query (`SELECT * FROM gameapplications WHERE appstatus='PROCESSING';`, function (error, results, fields) {
