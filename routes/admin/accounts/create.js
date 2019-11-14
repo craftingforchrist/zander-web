@@ -16,7 +16,7 @@ router.post('/', function (req, res) {
 
   console.log(req.body);
 
-  res.redirect('/admin/accounts/list');
+  res.redirect('/admin/accounts');
 });
 
 module.exports = router;

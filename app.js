@@ -35,6 +35,8 @@ const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 const rcon = require('./controllers/rcon'); // RCON controller
 // const passport = require('./controllers/passport'); // Passport controller
 
+const uuid = require('./functions/uuid');
+
 //
 // Constants
 //
@@ -149,6 +151,7 @@ var forums = require('./routes/forums');
 var login = require('./routes/session/login');
 
 var accounts = require('./routes/admin/accounts/list');
+var accountscreate = require('./routes/admin/accounts/create');
 var application = require('./routes/admin/application');
 var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
@@ -179,6 +182,7 @@ app.use('/forums', forums);
 app.use('/login', login);
 
 app.use('/admin/accounts', accounts);
+app.use('/admin/accounts/create', accountscreate);
 app.use('/admin/application', application);
 app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);

@@ -14,6 +14,7 @@ router.get('/', (req, res, next) => {
         "pagetitle": "Administration Panel - Accounts",
         objdata: results
       });
+      console.log(results);
     }
   });
 });
@@ -24,7 +25,17 @@ router.post('/', function (req, res) {
 
   if (action === "accountdelete") {
     accounts.deleteaccount(id);
-    res.redirect('/admin/accounts/list');
+    res.redirect('/admin/accounts');
+  };
+
+  if (action === "accountdisable") {
+    accounts.disableaccount(id);
+    res.redirect('/admin/accounts');
+  };
+
+  if (action === "accountenable") {
+    accounts.enableaccount(id);
+    res.redirect('/admin/accounts');
   };
 });
 

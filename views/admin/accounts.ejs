@@ -62,12 +62,24 @@
             <td><%= data.username %></td>
             <td style="max-width: 10px;">
               <div class="btn-group" role="group" aria-label="accountgroup">
-                <form action="/admin/accounts/disable" method="post">
-                  <input type="hidden" name="action" value="accountdisable">
-                  <input type="hidden" name="id" value="<%= data.id %>">
-                  <button type="submit" class="btn btn-warning btn-sm">Disable</button>
-                </form>
-                <form action="/admin/accounts/list" method="post">
+
+                <% if (data.status === "ACTIVE") { %>
+                  <form action="/admin/accounts" method="post">
+                    <input type="hidden" name="action" value="accountdisable">
+                    <input type="hidden" name="id" value="<%= data.id %>">
+                    <button type="submit" class="btn btn-warning btn-sm">Disable</button>
+                  </form>
+                <% } %>
+
+                <% if (data.status === "DISABLED") { %>
+                  <form action="/admin/accounts" method="post">
+                    <input type="hidden" name="action" value="accountenable">
+                    <input type="hidden" name="id" value="<%= data.id %>">
+                    <button type="submit" class="btn btn-success btn-sm">Enable</button>
+                  </form>
+                <% } %>
+
+                <form action="/admin/accounts" method="post">
                   <input type="hidden" name="action" value="accountdelete">
                   <input type="hidden" name="id" value="<%= data.id %>">
                   <button type="submit" class="btn btn-danger btn-sm">Delete</button>

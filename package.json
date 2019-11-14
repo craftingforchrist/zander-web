@@ -30,6 +30,7 @@
     "express-flash": "0.0.2",
     "express-flash-messages": "^0.1.1",
     "express-session": "^1.16.2",
+    "fetch": "^1.1.0",
     "fs": "0.0.1-security",
     "hogan": "^1.0.2",
     "inline-css": "^2.4.2",

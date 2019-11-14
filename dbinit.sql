@@ -71,5 +71,6 @@ CREATE TABLE gameapplications (
 CREATE TABLE accounts (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   username VARCHAR(16),
-  password TEXT
+  password TEXT,
+  status ENUM('ACTIVE', 'DISABLED')
 );
