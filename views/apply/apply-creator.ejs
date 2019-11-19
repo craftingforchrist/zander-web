@@ -29,24 +29,24 @@
     <strong>Notice:</strong> Before starting your application, ensure that you meet the Content Creator requirements. Click here for the <a href="#" data-toggle="modal" data-target="#contentcreatorsmdmodal">requirements</a>.
   </div>
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function showOtherDiv(divId, element) {
       document.getElementById(divId).style.display = element.value == 'Other' ? 'block' : 'none';
     };
-  </script>
+  </script> -->
 
   <form action="/apply/creator" method="post">
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label for="minecraftusername">What is your Username?</label>
-          <input type="text" class="form-control" name="minecraftusername" placeholder="Steve" required>
+          <input type="text" class="form-control" name="minecraftusername" required>
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label for="discordtag">What is your Discord Tag?</label>
-          <input type="text" class="form-control" name="discordtag" placeholder="Steve#9212" required>
+          <input type="text" class="form-control" name="discordtag" required>
         </div>
       </div>
       <div class="col">
@@ -68,16 +68,14 @@
       <input type="text" class="form-control" name="channellink" required>
     </div>
 
-    <div id="otherplatform" style="display:none">
-      <div class="form-group">
-        <label for="othercontentplatform">Which other service do you record/stream on?</label>
-        <input type="text" class="form-control" name="othercontentplatform">
-      </div>
-      <div class="form-group">
-        <label for="subscribercount">What is the amount of subscribers/followers you have?</label>
-        <input type="text" class="form-control" name="subscribercount">
-      </div>
+    <div class="form-group">
+      <label for="subscribercount">What is the amount of subscribers/followers you have?</label>
+      <input type="text" class="form-control" name="subscribercount">
     </div>
+
+    <!-- <div id="otherplatform" style="display:none">
+
+    </div> -->
 
     <div class="form-group">
       <label for="additionalinformation">Any other additional information?</label>

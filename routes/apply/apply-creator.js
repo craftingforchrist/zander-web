@@ -66,7 +66,7 @@ module.exports = (client) => {
           .addField(`Content Platform`, `${platform}`)
           // .addField(`Other Content Platform`, `${otherplatform}`)
           .addField(`Channel Link`, `${channellink}`)
-          // .addField(`Subscriber Count`, `${subscribercount}`)
+          .addField(`Subscriber/Follower Count`, `${subscribercount}`)
           .addField(`Any additional information`, `${additionalinformation}`)
           .setColor('#00ace6')
         applicationsschannel.send(embed);
@@ -83,7 +83,7 @@ module.exports = (client) => {
           username: username,
           discordtag: discordtag,
           platform: platform,
-          otherplatform: otherplatform,
+          // otherplatform: otherplatform,
           channellink: channellink,
           subscribercount: subscribercount,
           additionalinformation: additionalinformation
