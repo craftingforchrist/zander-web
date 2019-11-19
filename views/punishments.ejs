@@ -34,7 +34,7 @@
           <% gamepunishmentsdata.forEach(function (data) { %>
             <tbody>
               <tr>
-                <td>#<%= data.id %></td>
+                <td><a href="/punishments/game/view/<%= data.id %>">#<%= data.id %></a></td>
                 <td><img src="https://crafatar.com/avatars/<%= data.punisheduuid %>?overlay" style="border-radius:10px; height:25px;"> <%= data.punished %></td>
                 <td><img src="https://crafatar.com/avatars/<%= data.punisheruuid %>?overlay" style="border-radius:10px; height:25px;"> <%= data.punisher %></td>
                 <td><%= data.punishtype %></td>
@@ -60,12 +60,12 @@
           <% discordpunishmentsdata.forEach(function (data) { %>
             <tbody>
               <tr>
-                <td>#<%= data.id %></td>
+                <td><a href="/punishments/discord/view/<%= data.id %>">#<%= data.id %></a></td>
                 <td><%= data.punisheduser %></td>
                 <td><%= data.punisher %></td>
                 <td><%= data.punishtype %></td>
                 <td><%= data.reason %></td>
-                <td style="font-size: 13px; max-width:180px;"><%= data.punishtimestamp %></td>
+                <td style="font-size: 13px; max-width:280px;"><%= data.punishtimestamp %></td>
               </tr>
             </tbody>
           <% }) %>

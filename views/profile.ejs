@@ -19,9 +19,9 @@
         <!-- <li class="nav-item">
           <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
         </li> -->
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" id="punishments-tab" data-toggle="tab" href="#punishments" role="tab" aria-controls="contact" aria-selected="false">Punishments</a>
-        </li> -->
+        </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="stats" role="tabpanel" aria-labelledby="stats-tab">
@@ -35,10 +35,10 @@
               </tr>
 
               <tr>
-                <td class="profilenumber"><%= objdata[3][0].joins %></td>
-                <td class="profilenumber"><%= objdata[0][0].deaths %></td>
-                <td class="profilenumber"><%= objdata[2][0].timeplayed %></td>
-                <td class="profilenumber"><%= objdata[4][0].lastseen %></td>
+                <td class="profilenumber"></td>
+                <td class="profilenumber"></td>
+                <td class="profilenumber"></td>
+                <td class="profilenumber"></td>
               </tr>
             </table>
           </div>
@@ -53,7 +53,7 @@
           <div class="alert alert-primary" role="alert">
             This section is surpose to display a users punishments that they have, but it is currently not working.
           </div>
-          <% include partials/punishment-table.ejs %>
+
         </div>
       </div>
     </div>

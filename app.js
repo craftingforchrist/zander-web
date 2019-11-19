@@ -123,7 +123,7 @@ app.use((req, res, next) => {
 // Site Routes
 //
 var index = require('./routes/index');
-//var players = require('./routes/players');
+// var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 
 var terms = require('./routes/policy/terms');
@@ -158,7 +158,7 @@ var broadcast = require('./routes/admin/broadcast');
 var punishment = require('./routes/admin/punishment');
 
 app.use('/', index);
-//app.use('/players', players);
+// app.use('/players', players);
 app.use('/punishments', punishments);
 
 app.use('/terms', terms);
@@ -189,10 +189,12 @@ app.use('/admin/broadcast', broadcast);
 app.use('/admin/punishment', punishment);
 
 //
-// Profile
+// Profiles
 //
 // app.get('/profile/:username', function (req, res) {
-//   let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; select if((select gamesessions.id from gamesessions left join playerdata pd on pd.id = gamesessions.player_id where gamesessions.sessionstart <= NOW() and sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; select SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from sessions ses left join playerdata pd on pd.id = gamesessions.player_id where pd.username = '${req.params.username}'; SELECT count(ses.id) as 'joins' from gamesessions ses left join playerdata pd on pd.id = ses.player_id where pd.username = '${req.params.username}'; select p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' from (select ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' from sessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id where username = '${req.params.username}';`;
+//   let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; SELECT IF((SELECT gamesessions.id FROM gamesessions left join playerdata pd on pd.id = gamesessions.player_id WHERE gamesessions.sessionstart <= NOW() and gamesessions.sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; SELECT count(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id WHERE pd.username = '${req.params.username}';`;
+//   // SELECT p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' FROM (SELECT ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' FROM gamesessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id WHERE username = '${req.params.username}';
+//   // SELECT SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from gamesessions ses left join playerdata pd on pd.id = gamesessions.player_id WHERE pd.username = '${req.params.username}';
 //   database.query (sql, function (err, results) {
 //     if (err) {
 //       res.redirect('/');
@@ -219,6 +221,44 @@ app.get('/admin/applications/view/:id', function (req, res) {
       res.render('admin/view', {
         "pagetitle": `${results[0].username}'s Game Application`,
         objdata: results[0]
+      });
+    }
+  });
+});
+
+//
+// GAME Punishment View
+//
+app.get('/punishments/game/view/:id', function (req, res) {
+  let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from gamepunishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id WHERE p.id='${req.params.id}';`;
+  database.query (sql, function (err, results) {
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      res.render('punishments-game-view', {
+        "pagetitle": `${results[0].punished}'s Punishment || #${results[0].id}`,
+        objdata: results[0],
+        platform: "GAME"
+      });
+    }
+  });
+});
+
+//
+// DISCORD Punishment View
+//
+app.get('/punishments/discord/view/:id', function (req, res) {
+  let sql = `select * from discordpunishments where id='${req.params.id}';`;
+  database.query (sql, function (err, results) {
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      res.render('punishments-discord-view', {
+        "pagetitle": `${results[0].punisheduser}'s Punishment || #${results[0].id}`,
+        objdata: results[0],
+        platform: "DISCORD"
       });
     }
   });

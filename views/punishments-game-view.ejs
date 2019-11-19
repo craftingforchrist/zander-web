@@ -1,0 +1,54 @@
+<% include ./partials/header.ejs %>
+<% include ./partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1 class="display-4"><%= objdata.punished %>'s Punishment</h1>
+          <p class="lead"><b>ID: #<%= objdata.id %></b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:700px; margin:0 auto;">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td><b>Punishment ID</b></td>
+          <td>#<%= objdata.id %></td>
+        </tr>
+        <tr>
+          <td><b>Punished User</b></td>
+          <td><img src="https://crafatar.com/avatars/<%= objdata.punisheduuid %>?overlay" style="border-radius:10px; height:25px;"> <%= objdata.punished %></td>
+        </tr>
+        <tr>
+          <td><b>Punisher</b></td>
+          <td><img src="https://crafatar.com/avatars/<%= objdata.punisheruuid %>?overlay" style="border-radius:10px; height:25px;"> <%= objdata.punisher %></td>
+        </tr>
+        <tr>
+          <td><b>Punish Type</b></td>
+          <td><%= objdata.punishtype %></td>
+        </tr>
+        <tr>
+          <td><b>Platform</b></td>
+          <td><%= platform %></td>
+        </tr>
+        <tr>
+          <td><b>Reason</b></td>
+          <td><%= objdata.reason %></td>
+        </tr>
+        <tr>
+          <td><b>Time</b></td>
+          <td><%= objdata.timestamp %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<br>
+</div>
+
+<% include ./partials/footer.ejs %>
