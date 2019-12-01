@@ -9,6 +9,13 @@
     </div>
   </div>
 
+  <% if (setValue) { %>
+    <div class="alert alert-danger alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Error!</strong> <%- JSON.stringify(message) %>
+    </div>
+  <% } %>
+
   <div class="container credential-container">
     <form method="post" action="/login">
       <div class="form-group">

@@ -73,6 +73,12 @@ module.exports = (client) => {
           }
         });
       }
+        if(req.session.user){
+            res.locals.info = true;
+        }
+        else{
+            res.locals.info = false;
+        }
       res.redirect('/');
     } catch (error) {
       console.log('An error occured');

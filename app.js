@@ -33,7 +33,7 @@ const config = require('./config.json');
 const database = require('./controllers/database'); // Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 const rcon = require('./controllers/rcon'); // RCON controller
-// const passport = require('./controllers/passport'); // Passport controller
+require('./controllers/passport')(passport); // Passport controller
 
 const uuid = require('./functions/uuid');
 
@@ -48,35 +48,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(flash());
 app.use(cookieParser());
-app.use(session({
-  secret: `${process.env.sessionsecret}`,
-  saveUninitialized: false,
-  resave: false,
-  cookie: {
-    secure: true
-  }
-}));
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.use(new LocalStratagy(
-  function(username, password, done) {
-    console.log(username);
-    console.log(password);
-
-    database.query('SELECT password FROM accounts WHERE username=?', [username], function(err, results, fields) {
-      if (err) {
-        done(err);
-      };
-
-      if (results.length === 0) {
-        done(null, false);
-      }
-
-      return done(null, 'success');
-    });
-  }
-));
+app.use(session({secret: "asdsadasdsadasdas", resave: false, saveUninitialized: false, cookie: { maxAge: 60000 * 10} }));
 
 //
 // Global Website Variables
@@ -116,6 +90,13 @@ app.use((req, res, next) => {
   res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
+
+  if (req.session.user ) {
+      res.locals.info = true
+  } else {
+      res.locals.info = false
+  };
+  
   next();
 });
 
@@ -149,6 +130,7 @@ var support = require('./routes/redirect/support');
 var forums = require('./routes/forums');
 
 var login = require('./routes/session/login');
+var logout = require('./routes/session/logout');
 
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
@@ -180,7 +162,7 @@ app.use('/support', support);
 app.use('/forums', forums);
 
 app.use('/login', login);
-
+app.use('/logout',logout)
 app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
 app.use('/admin/application', application);

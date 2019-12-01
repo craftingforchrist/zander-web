@@ -74,3 +74,6 @@ CREATE TABLE accounts (
   password TEXT,
   status ENUM('ACTIVE', 'DISABLED')
 );
+
+-- This account should be removed immediately after setting up your own account.
+INSERT INTO accounts (username, password, status) VALUES ("root", "password", "ACTIVE")

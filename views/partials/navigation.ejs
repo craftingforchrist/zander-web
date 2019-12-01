@@ -26,6 +26,7 @@
           <!-- <li class="nav-item disablecard">
             <a class="nav-link" href="#"><i class="fas fa-users"></i> Players</a>
           </li> -->
+          <% if (info) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -37,6 +38,20 @@
               <a class="dropdown-item disablecard" href="#">Content Creator</a>
             </div>
           </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout"><i class="fas fa-logout"></i> Logout</a>
+            </li>
+          <% } %>
+
+          <!--
+          <% if(!info) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login"><i class="fas fa-lock"></i>  Login</a>
+            </li>
+          <% } %>
+          -->
+        </ul>
     </div>
+
   </div>
 </nav>

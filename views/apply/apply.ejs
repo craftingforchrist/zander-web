@@ -12,7 +12,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Notice:</strong> If you are having issues applying, please contact us <a href="/contact">here</a>.
   </div>
-  
+
   <div class="row text-center">
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card card-home">
@@ -21,9 +21,15 @@
           <h2 class="card-title">Game Server</h2>
           <p class="card-text">Want to play on the server? You can apply to get your in-game whitelist application reviewed and get approved to join our awesome community!</p>
         </div>
-        <div class="card-footer">
-          <a href="/apply/game" class="btn btn-primary">Apply</a>
-        </div>
+
+        <% if (gameserverapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/game" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+        
       </div>
     </div>
 
@@ -50,9 +56,15 @@
             </div>
           </div>
         </div>
-        <div class="card-footer">
-          <a href="/apply/creator" class="btn btn-primary">Apply</a>
-        </div>
+
+        <% if (contentcreatorapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/creator" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+
       </div>
     </div>
 
@@ -79,9 +91,15 @@
             </div>
           </div>
         </div>
-        <div class="card-footer">
-          <a href="/apply/developer" class="btn btn-primary">Apply</a>
-        </div>
+
+        <% if (developerapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/developer" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+
       </div>
     </div>
   </div>

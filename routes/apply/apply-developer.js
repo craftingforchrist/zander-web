@@ -13,6 +13,12 @@ const transporter = require('../../controllers/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
+      if(req.session.user){
+          res.locals.info = true;
+      }
+      else{
+          res.locals.info = false;
+      }
     if (config.developerapp == false) {
       res.redirect("/apply");
     } else {

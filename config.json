@@ -43,6 +43,6 @@
   "mailsend": true,
 
   "gameserverapp": true,
-  "contentcreatorapp": true,
+  "contentcreatorapp": false,
   "developerapp": false
 }
