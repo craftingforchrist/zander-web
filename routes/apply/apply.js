@@ -11,6 +11,9 @@ router.get('/', (req, res, next) => {
 
   res.render('apply/apply', {
     "pagetitle": "Apply",
+    successalert: null,
+    erroralert: null,
+    message: null,
     errors: req.flash('error'),
     developerapp: config.developerapp,
     contentcreatorapp: config.contentcreatorapp,

@@ -47,7 +47,16 @@ module.exports = (client) => {
 
       if (results[0].user > 1) {
         res.render('apply/apply', {
-          "pagetitle": "Apply"
+          "pagetitle": "Apply",
+          successalert: null,
+          erroralert: true,
+          message: "There was a duplication detected.",
+          errors: req.flash('error'),
+          developerapp: config.developerapp,
+          contentcreatorapp: config.contentcreatorapp,
+          gameserverapp: config.gameserverapp,
+          juniorstaffapp: config.juniorstaffapp,
+          socialmediaapp: config.socialmediaapp
         });
         console.log('Duplication Detected');
       };
@@ -115,7 +124,19 @@ module.exports = (client) => {
       console.log('An error occured');
       console.log(error);
     }
-    res.redirect('/');
+
+    res.render('apply/apply', {
+      "pagetitle": "Apply",
+      successalert: true,
+      erroralert: null,
+      message: "Success! Your application has been submitted and sent to our Staff!",
+      errors: req.flash('error'),
+      developerapp: config.developerapp,
+      contentcreatorapp: config.contentcreatorapp,
+      gameserverapp: config.gameserverapp,
+      juniorstaffapp: config.juniorstaffapp,
+      socialmediaapp: config.socialmediaapp
+    });
   });
 
   return router;

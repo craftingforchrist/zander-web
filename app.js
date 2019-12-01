@@ -91,7 +91,7 @@ app.use((req, res, next) => {
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
 
-  if (req.session.user ) {
+  if (req.session.user) {
       res.locals.info = true
   } else {
       res.locals.info = false
@@ -198,18 +198,26 @@ app.use('/admin/punishment', punishment);
 // Application View
 //
 app.get('/admin/applications/view/:id', function (req, res) {
-  let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      res.render('admin/view', {
-        "pagetitle": `${results[0].username}'s Game Application`,
-        objdata: results[0]
-      });
-    }
-  });
+  if (req.session.user) {
+    let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
+    database.query (sql, function (err, results) {
+      if (err) {
+        res.redirect('/');
+        throw err;
+      } else {
+        res.render('admin/view', {
+          "pagetitle": `${results[0].username}'s Game Application`,
+          objdata: results[0]
+        });
+      }
+    });
+  } else {
+    res.render('session/login', {
+      setValue: true,
+      message: 'You cannot access this page unless you are logged in.',
+      "pagetitle": "Login"
+    });
+  }
 });
 
 //
