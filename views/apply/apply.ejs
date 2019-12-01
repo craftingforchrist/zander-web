@@ -13,7 +13,7 @@
     <strong>Notice:</strong> If you are having issues applying, please contact us <a href="/contact">here</a>.
   </div>
 
-  <div class="row text-center">
+  <div class="row text-center" style="">
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card card-home">
         <div class="card-body">
@@ -29,7 +29,7 @@
             <a href="/apply/game" class="btn btn-primary">Apply Now!</a>
           </div>
         <% } %>
-        
+
       </div>
     </div>
 
@@ -97,6 +97,44 @@
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/developer" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title applyicons"><i class="fas fa-user"></i></h4>
+          <h2 class="card-title">Junior Staff</h2>
+          <p class="card-text">Text for the application role will appear here.</p>
+        </div>
+
+        <% if (juniorstaffapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/juniorstaff" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title applyicons"><i class="fas fa-hashtag"></i></h4>
+          <h2 class="card-title">Social Media</h2>
+          <p class="card-text">Text for the application role will appear here.</p>
+        </div>
+
+        <% if (socialmediaapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/socialmedia" class="btn btn-primary">Apply Now!</a>
           </div>
         <% } %>
 

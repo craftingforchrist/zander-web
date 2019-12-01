@@ -36,13 +36,18 @@
   "developersmd": "https://raw.githubusercontent.com/crafting-for-christ/Developers/master/README.md",
   "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
 
+  "juniorstaffapplink": "http://google.com.au/",
+  "socialmediapplink": "http://google.com.au/",
+
   "discordsend": true,
   "broadcastchannel": "general",
   "applicationschannel": "applications",
   "punishmentchannel": "admin-log",
   "mailsend": true,
 
-  "gameserverapp": true,
+  "gameserverapp": false,
   "contentcreatorapp": false,
-  "developerapp": false
+  "developerapp": false,
+  "juniorstaffapp": false,
+  "socialmediaapp": false
 }

@@ -14,7 +14,9 @@ router.get('/', (req, res, next) => {
     errors: req.flash('error'),
     developerapp: config.developerapp,
     contentcreatorapp: config.contentcreatorapp,
-    gameserverapp: config.gameserverapp
+    gameserverapp: config.gameserverapp,
+    juniorstaffapp: config.juniorstaffapp,
+    socialmediaapp: config.socialmediaapp
   });
 });
 

@@ -96,7 +96,7 @@ app.use((req, res, next) => {
   } else {
       res.locals.info = false
   };
-  
+
   next();
 });
 
@@ -119,6 +119,8 @@ var apply = require('./routes/apply/apply');
 var applygame = require('./routes/apply/apply-game')(client);
 var applycreator = require('./routes/apply/apply-creator')(client);
 var applydeveloper = require('./routes/apply/apply-developer')(client);
+var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
+var applysocialmedia = require('./routes/apply/apply-socialmedia');
 
 var report = require('./routes/report')(client);
 var contact = require('./routes/contact')(client);
@@ -151,6 +153,8 @@ app.use('/apply', apply);
 app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
+app.use('/apply/juniorstaff', applyjuniorstaff);
+app.use('/apply/socialmedia', applysocialmedia);
 
 app.use('/report', report);
 app.use('/contact', contact);
