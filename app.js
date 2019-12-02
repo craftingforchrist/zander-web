@@ -47,10 +47,16 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(flash());
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session({secret: "asdsadasdsadasdas", resave: false, saveUninitialized: false, cookie: { maxAge: 60000 * 10} }));
+
+app.use(session({ cookie: { maxAge: 60000 },
+                  secret: process.env.sessionsecret,
+                  resave: false,
+                  saveUninitialized: false}));
+
+// app.use(session({secret: "asdsadasdsadasdas", resave: false, saveUninitialized: false, cookie: { maxAge: 60000 * 10} }));
 
 //
 // Global Website Variables
@@ -90,6 +96,13 @@ app.use((req, res, next) => {
   res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
+  res.locals.juniorstaffapp = config.juniorstaffapp;
+  res.locals.socialmediaapp = config.socialmediaapp;
+
+  res.locals.successalert = null;
+  res.locals.erroralert = null;
+  res.locals.warningalert = null;
+  res.locals.message = null;
 
   if (req.session.user) {
       res.locals.info = true

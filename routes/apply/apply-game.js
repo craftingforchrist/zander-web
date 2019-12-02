@@ -15,13 +15,6 @@ const mail = require('../../functions/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
-    if (req.session.user) {
-      res.locals.info = true;
-    }
-    else {
-      res.locals.info = false;
-    }
-
     if (config.gameserverapp == false) {
       res.redirect("/apply");
     } else {
@@ -39,29 +32,7 @@ module.exports = (client) => {
     const additionalinformation = req.body.additionalinformation;
 
     // TODO: Duplication is marked as detected, but still continues with remainder of code.
-    database.query (`SELECT COUNT(*) as 'user' from gameapplications WHERE username=?;`, [username], function (error, results, fields) {
-      console.log(results[0]);
-      if (error) {
-        throw error;
-      };
-
-      if (results[0].user > 1) {
-        res.render('apply/apply', {
-          "pagetitle": "Apply",
-          successalert: null,
-          erroralert: true,
-          message: "There was a duplication detected.",
-          errors: req.flash('error'),
-          developerapp: config.developerapp,
-          contentcreatorapp: config.contentcreatorapp,
-          gameserverapp: config.gameserverapp,
-          juniorstaffapp: config.juniorstaffapp,
-          socialmediaapp: config.socialmediaapp
-        });
-        console.log('Duplication Detected');
-      };
-    });
-
+    game.applycheck(username, res);
     game.applygamedbinsert(username, email, discordtag, howdidyouhearaboutus, additionalinformation);
 
     try {
@@ -128,14 +99,7 @@ module.exports = (client) => {
     res.render('apply/apply', {
       "pagetitle": "Apply",
       successalert: true,
-      erroralert: null,
-      message: "Success! Your application has been submitted and sent to our Staff!",
-      errors: req.flash('error'),
-      developerapp: config.developerapp,
-      contentcreatorapp: config.contentcreatorapp,
-      gameserverapp: config.gameserverapp,
-      juniorstaffapp: config.juniorstaffapp,
-      socialmediaapp: config.socialmediaapp
+      message: "Success! Your application has been submitted and sent to our Staff!"
     });
   });
 

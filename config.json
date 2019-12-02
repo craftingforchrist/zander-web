@@ -45,7 +45,7 @@
   "punishmentchannel": "admin-log",
   "mailsend": true,
 
-  "gameserverapp": false,
+  "gameserverapp": true,
   "contentcreatorapp": false,
   "developerapp": false,
   "juniorstaffapp": false,

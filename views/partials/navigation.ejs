@@ -28,18 +28,18 @@
           </li> -->
           <% if (info) { %>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog"></i> Administration</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/admin/accounts">Accounts</a>
-              <a class="dropdown-item" href="/admin/whitelist">Whitelist</a>
-              <a class="dropdown-item" href="/admin/application">Application</a>
-              <a class="dropdown-item" href="/admin/punishment">Punishment</a>
-              <a class="dropdown-item disablecard" href="/admin/broadcast">Broadcast</a>
-              <a class="dropdown-item disablecard" href="#">Content Creator</a>
+              <a class="dropdown-item" href="/admin/accounts"><i class="fas fa-users"></i> Accounts</a>
+              <a class="dropdown-item" href="/admin/whitelist"><i class="fas fa-list"></i> Whitelist</a>
+              <a class="dropdown-item" href="/admin/application"><i class="fas fa-scroll"></i> Applications</a>
+              <a class="dropdown-item" href="/admin/punishment"><i class="fas fa-gavel"></i> Punishment</a>
+              <a class="dropdown-item disablecard" href="/admin/broadcast"><i class="fas fa-bullhorn"></i> Broadcast</a>
+              <a class="dropdown-item disablecard" href="#"><i class="fab fa-youtube"></i> Content Creator</a>
             </div>
           </li>
             <li class="nav-item">
-              <a class="nav-link" href="/logout"><i class="fas fa-logout"></i> Logout</a>
+              <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </li>
           <% } %>
 
