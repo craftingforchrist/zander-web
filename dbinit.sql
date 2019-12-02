@@ -75,5 +75,14 @@ CREATE TABLE accounts (
   status ENUM('ACTIVE', 'DISABLED')
 );
 
+CREATE TABLE `ipbans` (
+	ip VARCHAR(20) NOT NULL PRIMARY KEY,
+	time TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+	punisher VARCHAR(16) NOT NULL,
+	reason TEXT NOT NULL,
+	active TINYINT(4) NOT NULL,
+	deactivater VARCHAR(16) NOT NULL
+);
+
 -- This account should be removed immediately after setting up your own account.
 INSERT INTO accounts (username, password, status) VALUES ("root", "password", "ACTIVE")
