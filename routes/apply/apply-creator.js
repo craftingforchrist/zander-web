@@ -12,12 +12,6 @@ const transporter = require('../../controllers/mail.js');
 
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
-      if(req.session.user){
-          res.locals.info = true;
-      }
-      else{
-          res.locals.info = false;
-      }
     if (config.contentcreatorapp == false) {
       res.redirect("/apply");
     } else {
@@ -114,7 +108,20 @@ module.exports = (client) => {
           }
         });
       }
-      res.redirect('/');
+
+      res.render('apply/apply', {
+        "pagetitle": "Apply",
+        successalert: true,
+        erroralert: null,
+        message: "Success! Your application has been submitted and sent to our Staff! You will be contacted by either Discord or Email.",
+        errors: req.flash('error'),
+        developerapp: config.developerapp,
+        contentcreatorapp: config.contentcreatorapp,
+        gameserverapp: config.gameserverapp,
+        juniorstaffapp: config.juniorstaffapp,
+        socialmediaapp: config.socialmediaapp
+      });
+
     } catch (error) {
       console.log('An error occured');
       console.log(error);
