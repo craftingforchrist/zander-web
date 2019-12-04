@@ -11,11 +11,11 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) {
-    console.error(chalk.red('[ERROR] ') + chalk.blue('[DB] ') +  'There was an error connecting:\n' + err.stack);
+    console.error(`[ERROR] [DB] [zander] There was an error connecting:\n ${err.stack}`);
     connection.connect();
     return;
   }
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DB] ') + 'Database connection is successful. Your connection ID is ' + connection.threadId + '.');
+  console.log(`[CONSOLE] [DB] [zander] Database connection is successful. Your connection ID is ${connection.threadId}.`);
 });
 
 module.exports = connection;

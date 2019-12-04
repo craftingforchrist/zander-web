@@ -106,3 +106,20 @@ footer li {
   margin: 0 auto;
   text-align: left;
 }
+
+/* Staff */
+.staffitem {
+  display:block;
+  text-align:center;
+}
+
+.staffname {
+  text-decoration:none;
+  border-bottom:1px;
+}
+
+.staffimg {
+  width:100px;
+  text-decoration:none;
+  border-radius: 10px;
+}

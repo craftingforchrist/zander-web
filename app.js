@@ -30,7 +30,8 @@ const config = require('./config.json');
 //
 // Controllers
 //
-const database = require('./controllers/database'); // Database controller
+const database = require('./controllers/database'); // zander Database controller
+const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
@@ -119,6 +120,7 @@ app.use((req, res, next) => {
 var index = require('./routes/index');
 // var players = require('./routes/players');
 var punishments = require('./routes/punishments');
+var staff = require('./routes/staff');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -157,6 +159,7 @@ var punishment = require('./routes/admin/punishment');
 app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
+app.use('/staff', staff);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
