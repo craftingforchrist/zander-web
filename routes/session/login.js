@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req,res,next){
-  passport.authenticate("local", function(err, user, info) {
+  passport.authenticate("local", function (err, user, info) {
     if (err) {
       console.log('Error')
       res.locals.info = null;
@@ -58,7 +58,7 @@ router.post('/', function(req,res,next){
           "pagetitle": "Login"
         });
       }
-  })(req, res,next);
+  })(req, res, next);
 })
 
 module.exports = router;

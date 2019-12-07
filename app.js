@@ -31,7 +31,7 @@ const config = require('./config.json');
 // Controllers
 //
 const database = require('./controllers/database'); // zander Database controller
-const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
+// const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
