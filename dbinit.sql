@@ -76,13 +76,13 @@ CREATE TABLE accounts (
 );
 
 CREATE TABLE `ipbans` (
-    `ip` VARCHAR(20) NOT NULL,
-    `time` TIMESTAMP NOT NULL,
-    `punisher` VARCHAR(16) NOT NULL,
-    `reason` TEXT NOT NULL,
-    `active` TINYINT(4) NOT NULL,
-    `deactivater` VARCHAR(16) NOT NULL,
-    PRIMARY KEY (`ip`)
+  ip VARCHAR(20) NOT NULL,
+  time TIMESTAMP NOT NULL,
+  punisher VARCHAR(16) NOT NULL,
+  reason TEXT NOT NULL,
+  active TINYINT(4) NOT NULL,
+  deactivater VARCHAR(16) NOT NULL,
+  PRIMARY KEY (ip)
 );
 
 -- This account should be removed immediately after setting up your own account.
