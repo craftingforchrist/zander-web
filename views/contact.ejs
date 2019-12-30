@@ -17,7 +17,8 @@
             <div class="col-md-6">
               <div class="md-form mb-0">
                 <label for="name" class="">Username/Name</label>
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="name" class="form-control" maxlength="50">
+                <small class="form-text text-muted">Maximum of 50 Characters</small>
               </div>
             </div>
 
@@ -28,21 +29,25 @@
               </div>
             </div>
           </div>
+          <br>
 
           <div class="row">
             <div class="col-md-12">
               <div class="md-form mb-0">
                 <label for="enquirysubject" class="">Subject</label>
-                <input type="text" name="enquirysubject" class="form-control">
+                <input type="text" name="enquirysubject" class="form-control" maxlength="50">
+                <small class="form-text text-muted">Maximum of 50 Characters</small>
               </div>
             </div>
           </div>
+          <br>
 
           <div class="row">
             <div class="col-md-12">
               <div class="md-form">
                 <label for="message">Message</label>
-                <textarea type="text" name="message" rows="4" class="form-control md-textarea"></textarea>
+                <textarea type="text" name="message" rows="4" class="form-control md-textarea" maxlength="1000"></textarea>
+                <small class="form-text text-muted">Maximum of 1000 Characters</small>
               </div>
             </div>
           </div>
