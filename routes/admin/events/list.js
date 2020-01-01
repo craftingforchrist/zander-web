@@ -11,7 +11,6 @@ router.get('/', (req, res, next) => {
         res.redirect('/');
         throw error;
       } else {
-        console.log(results);
         res.render('admin/events', {
           "pagetitle": "Administration Panel - Events",
           objdata: results

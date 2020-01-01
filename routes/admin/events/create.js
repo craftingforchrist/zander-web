@@ -15,8 +15,6 @@ module.exports = (client) => {
       const time = req.body.time;
       const information = req.body.information;
 
-      console.log(req.body);
-
       database.query(`INSERT INTO events (eventtitle, eventicon, eventdate, eventtime, eventinformation) VALUES (?, ?, ?, ?, ?)`, [name, icon, date, time, information], function (error, results, fields) {
         if (error) {
           res.redirect('/');
