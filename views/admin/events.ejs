@@ -1,0 +1,102 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1>Events</h1>
+        </div>
+        <div class="col-">
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal">Create an Event</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-white">
+      <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog colourblack" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Create an Event</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/admin/events/create">
+                <div class="form-group">
+                  <label for="name">Event Name</label>
+                  <input type="text" class="form-control" name="name" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="icon">Event Icon</label>
+                  <input type="text" class="form-control" name="icon" value="" required>
+                  <small class="form-text text-muted">This should be a .png file link from imgur. The event icon MUST be 250px x 250px.</small>
+                </div>
+                <div class="form-group">
+                  <label for="date">Event Date</label>
+                  <input type="text" class="form-control" name="date" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="time">Event Time</label>
+                  <input type="text" class="form-control" name="time" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="information">Event Information</label>
+                  <textarea name="information" rows="8" cols="63" required></textarea>
+                  <small class="form-text text-muted">You can use HTML to format the information.</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Event</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Event Name</th>
+          <th scope="col">Date & Time</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% objdata.forEach(function (data) { %>
+          <tr>
+            <td><%= data.id %></td>
+            <td><%= data.eventtitle %></td>
+            <td><%= data.eventdate %> @ <%= data.eventtime %></td>
+            <td style="max-width: 10px;">
+              <div class="btn-group" role="group" aria-label="eventgroup">
+                <form action="/admin/events" method="post">
+                  <input type="hidden" name="action" value="eventedit">
+                  <input type="hidden" name="id" value="<%= data.id %>">
+                  <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                </form>
+
+                <form action="/admin/events" method="post">
+                  <input type="hidden" name="action" value="eventdelete">
+                  <input type="hidden" name="id" value="<%= data.id %>">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<br>
+</div>
+
+<% include ../partials/footer.ejs %>

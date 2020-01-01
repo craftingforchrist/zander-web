@@ -4,17 +4,17 @@ const config = require('../config.json');
 const database = require('../controllers/database.js');
 
 router.get('/', (req, res, next) => {
-  database.query (`SELECT * FROM playerdata; SELECT pd.username as 'username', COUNT(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id group by pd.username;`, function (error, results, fields) {
+  database.query (`SELECT * FROM events ORDER BY id DESC;`, function (error, results, fields) {
     if (error) {
       res.redirect('/');
       throw error;
     } else {
-      res.render('players', {
-        "pagetitle": "Players",
+      res.render('events', {
+        "pagetitle": "Events",
         objdata: results
       });
       console.log(results);
-    }
+    };
   });
 });
 

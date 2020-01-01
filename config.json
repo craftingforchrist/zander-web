@@ -42,6 +42,7 @@
   "discordsend": true,
   "broadcastchannel": "general",
   "applicationschannel": "applications",
+  "eventschannel": "general",
   "punishmentchannel": "admin-log",
   "mailsend": true,
   "contactform": true,

@@ -121,6 +121,7 @@ var index = require('./routes/index');
 // var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 // var staff = require('./routes/staff');
+var events = require('./routes/events');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -151,6 +152,8 @@ var logout = require('./routes/session/logout');
 
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
+var eventsadmin = require('./routes/admin/events/list');
+var eventsadmincreate = require('./routes/admin/events/create')(client);
 var application = require('./routes/admin/application');
 var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
@@ -160,6 +163,7 @@ app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
 // app.use('/staff', staff);
+app.use('/events', events);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -185,6 +189,8 @@ app.use('/login', login);
 app.use('/logout',logout)
 app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
+app.use('/admin/events', eventsadmin);
+app.use('/admin/events/create', eventsadmincreate);
 app.use('/admin/application', application);
 app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);

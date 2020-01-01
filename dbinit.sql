@@ -59,7 +59,7 @@ CREATE TABLE discordpunishments (
 CREATE TABLE gameapplications (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   uuid VARCHAR(32),
-  username TEXT,
+  username VARCHAR(16),
   email TEXT,
   discordtag TEXT,
   howdidyouhearaboutus TEXT,
@@ -75,6 +75,9 @@ CREATE TABLE accounts (
   status ENUM('ACTIVE', 'DISABLED')
 );
 
+-- This account should be removed immediately after setting up your own account.
+INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE");
+
 CREATE TABLE `ipbans` (
   ip VARCHAR(20) NOT NULL,
   time TIMESTAMP NOT NULL,
@@ -85,5 +88,11 @@ CREATE TABLE `ipbans` (
   PRIMARY KEY (ip)
 );
 
--- This account should be removed immediately after setting up your own account.
-INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE")
+CREATE TABLE events (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  eventtitle TEXT,
+  eventicon TEXT,
+  eventdate TEXT,
+  eventtime TEXT,
+  eventinformation TEXT
+);

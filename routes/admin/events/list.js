@@ -6,16 +6,17 @@ const accounts = require('../../../functions/admin/accounts.js');
 
 router.get('/', (req, res, next) => {
   if (req.session.user) {
-    database.query(`SELECT * FROM accounts;`, function (error, results, fields) {
+    database.query(`SELECT * FROM events;`, function (error, results, fields) {
       if (error) {
         res.redirect('/');
         throw error;
       } else {
-        res.render('admin/accounts', {
-          "pagetitle": "Administration Panel - Accounts",
+        console.log(results);
+        res.render('admin/events', {
+          "pagetitle": "Administration Panel - Events",
           objdata: results
         });
-      }
+      };
     });
   } else {
     res.render('session/login', {
@@ -23,7 +24,7 @@ router.get('/', (req, res, next) => {
       message: 'You cannot access this page unless you are logged in.',
       "pagetitle": "Login"
     });
-  }
+  };
 });
 
 router.post('/', function (req, res) {
@@ -31,19 +32,15 @@ router.post('/', function (req, res) {
     const action = req.body.action;
     const id = req.body.id;
 
-    if (action === "accountdelete") {
-      accounts.deleteaccount(id);
-      res.redirect('/admin/accounts');
-    };
-
-    if (action === "accountdisable") {
-      accounts.disableaccount(id);
-      res.redirect('/admin/accounts');
-    };
-
-    if (action === "accountenable") {
-      accounts.enableaccount(id);
-      res.redirect('/admin/accounts');
+    if (action === "eventdelete") {
+      database.query(`DELETE FROM events WHERE id=?;`, [id], function (error, results, fields) {
+        if (error) {
+          res.redirect('/');
+          throw error;
+        } else {
+          res.redirect('/admin/events');
+        }
+      });
     };
   } else {
     res.render('session/login', {
@@ -51,7 +48,7 @@ router.post('/', function (req, res) {
       message: 'You cannot access this page unless you are logged in.',
       "pagetitle": "Login"
     });
-  }
+  };
 });
 
 module.exports = router;
