@@ -34,7 +34,7 @@
   "privacymd": "https://raw.githubusercontent.com/crafting-for-christ/Privacy/master/README.md",
   "contentcreatorsmd": "https://raw.githubusercontent.com/crafting-for-christ/Content-Creators/master/README.md",
   "developersmd": "https://raw.githubusercontent.com/crafting-for-christ/Developers/master/README.md",
-  "githubissuetrackerlink": "https://github.com/shadowolfyt/zander/issues/new",
+  "githubissuetrackerlink": "https://github.com/benrobson/zander/issues/new",
 
   "juniorstaffapplink": "http://google.com.au/",
   "socialmediapplink": "http://google.com.au/",
@@ -44,6 +44,7 @@
   "applicationschannel": "applications",
   "punishmentchannel": "admin-log",
   "mailsend": true,
+  "contactform": true,
 
   "gameserverapp": false,
   "contentcreatorapp": false,

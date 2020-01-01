@@ -9,60 +9,71 @@
     </div>
   </div>
 
-  <section class="mb-4">
-    <div class="row">
-      <div class="col-md-9 mb-md-0 mb-5">
-        <form action="/contact" method="post">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <label for="name" class="">Username/Name</label>
-                <input type="text" name="name" class="form-control">
+  <% if (contactform == false) { %>
+    <section class="mb-4">
+      <div class="row">
+        <div class="col-md-9 mb-md-0 mb-5">
+          <form action="/contact" method="post">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="md-form mb-0">
+                  <label for="name" class="">Username/Name</label>
+                  <input type="text" name="name" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="md-form mb-0">
+                  <label for="email" class="">Email</label>
+                  <input type="text" name="email" class="form-control">
+                </div>
               </div>
             </div>
 
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <label for="email" class="">Email</label>
-                <input type="text" name="email" class="form-control">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="md-form mb-0">
+                  <label for="enquirysubject" class="">Subject</label>
+                  <input type="text" name="enquirysubject" class="form-control">
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form mb-0">
-                <label for="enquirysubject" class="">Subject</label>
-                <input type="text" name="enquirysubject" class="form-control">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="md-form">
+                  <label for="message">Message</label>
+                  <textarea type="text" name="message" rows="4" class="form-control md-textarea"></textarea>
+                </div>
               </div>
             </div>
-          </div>
+            <br>
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="md-form">
-                <label for="message">Message</label>
-                <textarea type="text" name="message" rows="4" class="form-control md-textarea"></textarea>
-              </div>
+            <div class="text-center text-md-left">
+              <input class="btn btn-primary" type="submit" name="" value="Send">
             </div>
-          </div>
-          <br>
+           </form>
+        </div>
 
-          <div class="text-center text-md-left">
-            <input class="btn btn-primary" type="submit" name="" value="Send">
-          </div>
-         </form>
+        <div class="col-md-3 text-center">
+          <ul class="list-unstyled mb-0">
+            <li><i class="fas fa-envelope mt-4 fa-2x"></i>
+              <p><a href="mailto:<%= contactemail %>"><%= contactemail %></a></p>
+            </li>
+          </ul>
+        </div>
       </div>
-
-      <div class="col-md-3 text-center">
-        <ul class="list-unstyled mb-0">
-          <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-            <p><a href="mailto:<%= contactemail %>"><%= contactemail %></a></p>
-          </li>
-        </ul>
+    </section>
+  <% } else { %>
+    <div class="row" style="padding:30px; margin:0 auto; width:600px; text-align:center;">
+      <div class="">
+        <h1>Contact Form is disabled!</h1>
+        <p>Our contact form is currently out of action and working on fixing it.</p>
+        <p>Contact us via email is if you have any questions or queries.</p>
+        <i class="fas fa-envelope mt-4 fa-2x"></i> <p><a href="mailto:<%= contactemail %>"><%= contactemail %></a></p>
       </div>
     </div>
-  </section>
+  <% } %>
 </div>
 
 <% include partials/footer.ejs %>

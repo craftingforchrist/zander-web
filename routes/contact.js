@@ -11,7 +11,8 @@ const transporter = require('../controllers/mail.js');
 module.exports = (client) => {
   router.get('/', (req, res, next) => {
     res.render('contact', {
-      "pagetitle": "Contact"
+      "pagetitle": "Contact",
+      "contactform": config.contactform
     });
   });
 
