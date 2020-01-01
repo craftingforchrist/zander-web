@@ -84,6 +84,7 @@ app.use((req, res, next) => {
   res.locals.instagram = config.instagramlink;
   res.locals.reddit = config.redditlink;
   res.locals.twitch = config.twitchlink;
+  res.locals.discord = config.discordlink;
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
