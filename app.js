@@ -139,8 +139,6 @@ var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
 var applysocialmedia = require('./routes/apply/apply-socialmedia');
 
 var report = require('./routes/report')(client);
-var contact = require('./routes/contact')(client);
-var feedback = require('./routes/feedback')(client);
 
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
@@ -177,8 +175,6 @@ app.use('/apply/juniorstaff', applyjuniorstaff);
 app.use('/apply/socialmedia', applysocialmedia);
 
 app.use('/report', report);
-app.use('/contact', contact);
-app.use('/feedback', feedback);
 
 app.use('/discord', discord);
 app.use('/issues', issues);
