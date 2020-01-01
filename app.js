@@ -84,6 +84,7 @@ app.use((req, res, next) => {
   res.locals.instagram = config.instagramlink;
   res.locals.reddit = config.redditlink;
   res.locals.twitch = config.twitchlink;
+  res.locals.discord = config.discordlink;
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
@@ -121,6 +122,7 @@ var index = require('./routes/index');
 // var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 // var staff = require('./routes/staff');
+var events = require('./routes/events');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -138,8 +140,6 @@ var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
 var applysocialmedia = require('./routes/apply/apply-socialmedia');
 
 var report = require('./routes/report')(client);
-var contact = require('./routes/contact')(client);
-var feedback = require('./routes/feedback')(client);
 
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
@@ -151,6 +151,8 @@ var logout = require('./routes/session/logout');
 
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
+var eventsadmin = require('./routes/admin/events/list');
+var eventsadmincreate = require('./routes/admin/events/create')(client);
 var application = require('./routes/admin/application');
 var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
@@ -160,6 +162,7 @@ app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
 // app.use('/staff', staff);
+app.use('/events', events);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -173,8 +176,6 @@ app.use('/apply/juniorstaff', applyjuniorstaff);
 app.use('/apply/socialmedia', applysocialmedia);
 
 app.use('/report', report);
-app.use('/contact', contact);
-app.use('/feedback', feedback);
 
 app.use('/discord', discord);
 app.use('/issues', issues);
@@ -185,6 +186,8 @@ app.use('/login', login);
 app.use('/logout',logout)
 app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
+app.use('/admin/events', eventsadmin);
+app.use('/admin/events/create', eventsadmincreate);
 app.use('/admin/application', application);
 app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);
