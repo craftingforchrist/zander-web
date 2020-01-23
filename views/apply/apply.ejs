@@ -8,11 +8,6 @@
     </div>
   </div>
 
-  <div class="alert alert-warning alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Notice:</strong> If you are having issues applying, please contact us <a href="/contact">here</a>.
-  </div>
-
   <% if (successalert == true) { %>
     <% include ../partials/micros/successalert.ejs %>
   <% } %>
@@ -124,6 +119,25 @@
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/developer" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title applyicons"><i class="fas fa-hard-hat"></i></h4>
+          <h2 class="card-title">Builder</h2>
+          <p class="card-text">Text for the application role will appear here.</p>
+        </div>
+
+        <% if (builderapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/builder" class="btn btn-primary">Apply Now!</a>
           </div>
         <% } %>
 

@@ -54,8 +54,8 @@ app.use(passport.session());
 
 app.use(session({ cookie: { maxAge: 60000 },
                   secret: process.env.sessionsecret,
-                  resave: false,
-                  saveUninitialized: false}));
+                  resave: true,
+                  saveUninitialized: true}));
 
 // app.use(session({secret: "asdsadasdsadasdas", resave: false, saveUninitialized: false, cookie: { maxAge: 60000 * 10} }));
 
@@ -95,11 +95,12 @@ app.use((req, res, next) => {
   res.locals.platformreddit = config.reddit;
   res.locals.platformtwitch = config.twitch;
 
-  res.locals.gameserverapp = config.gameserverapp;
+  // res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
   res.locals.juniorstaffapp = config.juniorstaffapp;
   res.locals.socialmediaapp = config.socialmediaapp;
+  res.locals.builderapp = config.builderapp;
 
   res.locals.successalert = null;
   res.locals.erroralert = null;
@@ -121,8 +122,11 @@ app.use((req, res, next) => {
 var index = require('./routes/index');
 // var players = require('./routes/players');
 var punishments = require('./routes/punishments');
-// var staff = require('./routes/staff');
+var staff = require('./routes/staff');
 var events = require('./routes/events');
+var live = require('./routes/live');
+var watch = require('./routes/watch');
+var play = require('./routes/play');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -133,11 +137,12 @@ var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 
 var apply = require('./routes/apply/apply');
-var applygame = require('./routes/apply/apply-game')(client);
+// var applygame = require('./routes/apply/apply-game')(client);
 var applycreator = require('./routes/apply/apply-creator')(client);
 var applydeveloper = require('./routes/apply/apply-developer')(client);
 var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
 var applysocialmedia = require('./routes/apply/apply-socialmedia');
+var applybuilder = require('./routes/apply/apply-builder');
 
 var report = require('./routes/report')(client);
 
@@ -149,6 +154,7 @@ var forums = require('./routes/forums');
 var login = require('./routes/session/login');
 var logout = require('./routes/session/logout');
 
+var dashboard = require('./routes/admin/dashboard');
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
 var eventsadmin = require('./routes/admin/events/list');
@@ -161,19 +167,23 @@ var punishment = require('./routes/admin/punishment');
 app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
-// app.use('/staff', staff);
+app.use('/staff', staff);
 app.use('/events', events);
+app.use('/live', live);
+app.use('/watch', watch);
+app.use('/play', play);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
 app.use('/rules', rules);
 
 app.use('/apply', apply);
-app.use('/apply/game', applygame);
+// app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
 app.use('/apply/juniorstaff', applyjuniorstaff);
 app.use('/apply/socialmedia', applysocialmedia);
+app.use('/apply/builder', applybuilder);
 
 app.use('/report', report);
 
@@ -184,6 +194,8 @@ app.use('/forums', forums);
 
 app.use('/login', login);
 app.use('/logout',logout)
+
+app.use('/admin/dashboard', dashboard);
 app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
 app.use('/admin/events', eventsadmin);
@@ -216,28 +228,28 @@ app.use('/admin/punishment', punishment);
 //
 // Application View
 //
-app.get('/admin/applications/view/:id', function (req, res) {
-  if (req.session.user) {
-    let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
-    database.query (sql, function (err, results) {
-      if (err) {
-        res.redirect('/');
-        throw err;
-      } else {
-        res.render('admin/view', {
-          "pagetitle": `${results[0].username}'s Game Application`,
-          objdata: results[0]
-        });
-      }
-    });
-  } else {
-    res.render('session/login', {
-      setValue: true,
-      message: 'You cannot access this page unless you are logged in.',
-      "pagetitle": "Login"
-    });
-  }
-});
+// app.get('/admin/applications/view/:id', function (req, res) {
+//   if (req.session.user) {
+//     let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
+//     database.query (sql, function (err, results) {
+//       if (err) {
+//         res.redirect('/');
+//         throw err;
+//       } else {
+//         res.render('admin/view', {
+//           "pagetitle": `${results[0].username}'s Game Application`,
+//           objdata: results[0]
+//         });
+//       }
+//     });
+//   } else {
+//     res.render('session/login', {
+//       setValue: true,
+//       message: 'You cannot access this page unless you are logged in.',
+//       "pagetitle": "Login"
+//     });
+//   }
+// });
 
 //
 // GAME Punishment View
