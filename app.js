@@ -122,11 +122,11 @@ app.use((req, res, next) => {
 var index = require('./routes/index');
 // var players = require('./routes/players');
 var punishments = require('./routes/punishments');
-var staff = require('./routes/staff');
+// var staff = require('./routes/staff');
 var events = require('./routes/events');
-var live = require('./routes/live');
-var watch = require('./routes/watch');
-var play = require('./routes/play');
+// var live = require('./routes/live');
+// var watch = require('./routes/watch');
+// var play = require('./routes/play');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -167,11 +167,11 @@ var punishment = require('./routes/admin/punishment');
 app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
-app.use('/staff', staff);
+// app.use('/staff', staff);
 app.use('/events', events);
-app.use('/live', live);
-app.use('/watch', watch);
-app.use('/play', play);
+// app.use('/live', live);
+// app.use('/watch', watch);
+// app.use('/play', play);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
