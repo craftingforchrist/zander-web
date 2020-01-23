@@ -49,6 +49,7 @@
     "req-flash": "0.0.3",
     "request": "^2.88.0",
     "superagent": "^5.1.0",
+    "twitchonlinetracker": "^1.1.5",
     "youtube-grabber-js": "^1.0.1"
   },
   "devDependencies": {}
