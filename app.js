@@ -308,6 +308,10 @@ fs.readdir('./discord/commands', (err, files) => {
   })
 });
 
+app.get('*', function(req, res) {
+    res.redirect('/');
+});
+
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
