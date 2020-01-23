@@ -22,7 +22,7 @@
   <% } %>
 
   <div class="row text-center" style="justify-content:center">
-    <div class="col-lg-4 col-md-6 mb-4">
+    <!-- <div class="col-lg-4 col-md-6 mb-4">
       <div class="card card-home">
         <div class="card-body">
           <h4 class="card-title applyicons"><i class="fas fa-gamepad"></i></h4>
@@ -35,6 +35,25 @@
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/game" class="btn btn-primary">Apply Now!</a>
+          </div>
+        <% } %>
+
+      </div>
+    </div> -->
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card card-home">
+        <div class="card-body">
+          <h4 class="card-title applyicons"><i class="fas fa-user"></i></h4>
+          <h2 class="card-title">Junior Staff</h2>
+          <p class="card-text">Text for the application role will appear here.</p>
+        </div>
+
+        <% if (juniorstaffapp == false) { %>
+          <% include ../partials/micros/appsnotaccepted.ejs %>
+        <% } else { %>
+          <div class="card-footer">
+            <a href="/apply/juniorstaff" class="btn btn-primary">Apply Now!</a>
           </div>
         <% } %>
 
@@ -105,25 +124,6 @@
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/developer" class="btn btn-primary">Apply Now!</a>
-          </div>
-        <% } %>
-
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card card-home">
-        <div class="card-body">
-          <h4 class="card-title applyicons"><i class="fas fa-user"></i></h4>
-          <h2 class="card-title">Junior Staff</h2>
-          <p class="card-text">Text for the application role will appear here.</p>
-        </div>
-
-        <% if (juniorstaffapp == false) { %>
-          <% include ../partials/micros/appsnotaccepted.ejs %>
-        <% } else { %>
-          <div class="card-footer">
-            <a href="/apply/juniorstaff" class="btn btn-primary">Apply Now!</a>
           </div>
         <% } %>
 
