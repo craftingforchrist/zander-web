@@ -20,6 +20,7 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
+var mysqlApostrophe = require("mysql-apostrophe");
 
 //
 // File Constants
@@ -33,8 +34,9 @@ const config = require('./config.json');
 const database = require('./controllers/database'); // zander Database controller
 // const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
-const rcon = require('./controllers/rcon'); // RCON controller
+// const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
+const twitchtracker = require('./controllers/twitchtracker'); // Twtich Online Tracker controller
 
 const uuid = require('./functions/uuid');
 
@@ -47,6 +49,7 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(mysqlApostrophe);
 app.use(flash());
 // app.use(cookieParser());
 app.use(passport.initialize());
@@ -56,8 +59,6 @@ app.use(session({ cookie: { maxAge: 60000 },
                   secret: process.env.sessionsecret,
                   resave: true,
                   saveUninitialized: true}));
-
-// app.use(session({secret: "asdsadasdsadasdas", resave: false, saveUninitialized: false, cookie: { maxAge: 60000 * 10} }));
 
 //
 // Global Website Variables
@@ -124,9 +125,10 @@ var index = require('./routes/index');
 var punishments = require('./routes/punishments');
 // var staff = require('./routes/staff');
 var events = require('./routes/events');
-// var live = require('./routes/live');
+var live = require('./routes/live');
 // var watch = require('./routes/watch');
 // var play = require('./routes/play');
+var vote = require('./routes/vote');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -159,19 +161,23 @@ var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
 var eventsadmin = require('./routes/admin/events/list');
 var eventsadmincreate = require('./routes/admin/events/create')(client);
-var application = require('./routes/admin/application');
-var whitelist = require('./routes/admin/whitelist');
+// var application = require('./routes/admin/application');
+// var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
 var punishment = require('./routes/admin/punishment');
+var contentcreator = require('./routes/admin/contentcreator/list');
+var contentcreatorcreate = require('./routes/admin/contentcreator/create');
+var contentcreatordelete = require('./routes/admin/contentcreator/delete');
 
 app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
 // app.use('/staff', staff);
 app.use('/events', events);
-// app.use('/live', live);
+app.use('/live', live);
 // app.use('/watch', watch);
 // app.use('/play', play);
+app.use('/vote', vote);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -200,10 +206,13 @@ app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
 app.use('/admin/events', eventsadmin);
 app.use('/admin/events/create', eventsadmincreate);
-app.use('/admin/application', application);
-app.use('/admin/whitelist', whitelist);
+// app.use('/admin/application', application);
+// app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);
 app.use('/admin/punishment', punishment);
+app.use('/admin/contentcreator', contentcreator);
+app.use('/admin/contentcreator/create', contentcreatorcreate);
+app.use('/admin/contentcreator/delete', contentcreatordelete);
 
 //
 // Profiles

@@ -35,10 +35,6 @@
                   <label for="channelname">Channel Name</label>
                   <input type="text" class="form-control" name="channelname" value="" required>
                 </div>
-                <div class="form-group">
-                  <label for="channellink">Channel Link</label>
-                  <input type="text" class="form-control" name="channellink" value="" required>
-                </div>
                 <button type="submit" class="btn btn-primary">Add Streamer</button>
               </form>
             </div>
@@ -102,20 +98,22 @@
         <table class="table">
             <thead>
               <tr>
+                <th scope="col"></th>
                 <th scope="col">Channel Name</th>
-                <th scope="col">Channel Link</th>
                 <th scope="col">Stream Title</th>
+                <th scope="col">Viewers</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <% ccstreamsdata.forEach(function (data) { %>
               <tbody>
                 <tr>
+                  <td><i class="fas fa-circle"></i></td>
                   <td><%= data.channelname %></td>
-                  <td><a href="<%= data.channellink %>"><%= data.channellink %></a></td>
                   <td><%= data.streamtitle %></td>
+                  <td><%= data.viewercount %></td>
                   <td>
-                    <form action="/admin/contentcreator/delete" method="post">
+                    <form action="contentcreator/delete" method="post">
                       <input type="hidden" name="action" value="delete">
                       <input type="hidden" name="type" value="streamer">
                       <input type="hidden" name="id" value="<%= data.id %>">

@@ -44,6 +44,10 @@
     <% include ./partials/micros/successalert.ejs %>
   <% } %>
 
+  <% if (objdata) { %>
+    <% include partials/micros/nowlive.ejs %>
+  <% } %>
+
   <div class="alert alert-warning alert-dismissible">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Notice:</strong> Our website is currently in development stages and may be a little buggy and broken!<br>Please report any issues you see to the <a href="/issues">issue tracker</a>.

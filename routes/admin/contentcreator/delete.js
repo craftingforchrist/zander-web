@@ -8,10 +8,11 @@ router.post('/', function (req, res) {
     const action = req.body.action;
     const type = req.body.type;
     const channelname = req.body.channelname;
+    const id = req.body.id;
 
-    if (action == 'add') {
+    if (action == 'delete') {
       if (type == 'streamer') {
-        database.query(`INSERT INTO ccstreams (channelname, streamtitle, status) VALUES (?, ?, ?)`, [channelname, "Not Yet Updated", "OFFLINE"], function (error, results, fields) {
+        database.query(`DELETE FROM ccstreams WHERE id = ?`, [id], function (error, results, fields) {
           if (error) {
             res.redirect('/');
             throw error;
@@ -20,7 +21,7 @@ router.post('/', function (req, res) {
           };
         });
       } else if (type == 'channel') {
-        database.query(`INSERT INTO ccvideos (channelname, channellink) VALUES (?, ?, ?, ?)`, [channelname, channellink], function (error, results, fields) {
+        database.query(`DELETE FROM ccvideos WHERE id = ?`, [id], function (error, results, fields) {
           if (error) {
             res.redirect('/');
             throw error;

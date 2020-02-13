@@ -29,19 +29,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', function (req, res) {
   if (req.session.user) {
-    // const action = req.body.action;
-    // const id = req.body.id;
-    //
-    // if (action === "eventdelete") {
-    //   database.query(`DELETE FROM events WHERE id=?;`, [id], function (error, results, fields) {
-    //     if (error) {
-    //       res.redirect('/');
-    //       throw error;
-    //     } else {
-    //       res.redirect('/admin/events');
-    //     }
-    //   });
-    // };
+    
   } else {
     res.render('session/login', {
       setValue: true,

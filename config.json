@@ -48,10 +48,10 @@
   "mailsend": true,
   "contactform": true,
 
-  "gameserverapp": true,
-  "contentcreatorapp": true,
-  "developerapp": true,
-  "juniorstaffapp": true,
-  "socialmediaapp": true,
-  "builderapp": true
+  "gameserverapp": false,
+  "contentcreatorapp": false,
+  "developerapp": false,
+  "juniorstaffapp": false,
+  "socialmediaapp": false,
+  "builderapp": false
 }

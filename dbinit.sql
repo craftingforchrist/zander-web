@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS zander;
 CREATE DATABASE IF NOT EXISTS zander;
 USE zander;
 
-CREATE USER 'zander'@'%' IDENTIFIED WITH mysql_native_password BY 'Passwordzander321';
+CREATE USER 'zander'@'%' IDENTIFIED WITH mysql_native_password BY 'Paswordzander321';
 FLUSH PRIVILEGES;
 GRANT SELECT ON zander.* TO zander@'%';
 GRANT INSERT ON zander.* TO zander@'%';
@@ -13,9 +13,7 @@ CREATE TABLE playerdata (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   uuid VARCHAR(36),
   username VARCHAR(16),
-  joined TIMESTAMP NOT NULL DEFAULT NOW(),
-  deaths int DEFAULT 0,
-  bedlocation POINT NULL
+  joined TIMESTAMP NOT NULL DEFAULT NOW()
 );
 create index playerdata_username on playerdata (username);
 INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
@@ -103,20 +101,26 @@ CREATE TABLE servers (
   description TEXT,
   disclaimer TEXT,
   ipaddress TEXT,
-  playersonline TEXT,
-  maxplayers TEXT
+  playersonline TEXT
 );
 
 CREATE TABLE ccstreams (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   channelname TEXT,
-  channellink TEXT,
   streamtitle TEXT,
+  viewercount VARCHAR(3),
   status ENUM('ONLINE', 'OFFLINE')
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 CREATE TABLE ccvideos (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   channelname TEXT,
   channellink TEXT
+);
+
+CREATE TABLE votes (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  username VARCHAR(16),
+  service TEXT,
+  time TIMESTAMP NOT NULL
 );

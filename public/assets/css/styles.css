@@ -123,3 +123,11 @@ footer li {
   text-decoration:none;
   border-radius: 10px;
 }
+
+.voteservers h5 {
+  line-height: 15pt;
+}
+
+.btn-space {
+  margin-bottom: 10px;
+}
