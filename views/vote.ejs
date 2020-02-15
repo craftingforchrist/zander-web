@@ -13,13 +13,14 @@
   </div>
 
   <div class="row">
-    <div class="col text-center">
+      <!-- <div class="col text-center">
         <h3>Crafting For Christ</h3>
         <h6>play.craftingforchrist.net</h6>
         <br>
 
         <a href="#"><button type="button" class="btn btn-primary btn-sm"></button></a>
-      </div>
+      </div> -->
+
       <div class="col text-center">
         <h3>RLCraft</h3>
         <h6>rlcraft.craftingforchrist.net</h6>
@@ -29,6 +30,7 @@
         <!-- https://minecraftservers.org/server/573906 -->
         <a href="https://minecraftservers.org/server/573906"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 2</button></a>
       </div>
+
       <div class="col text-center">
         <h3>Revelation</h3>
         <h6>revelation.craftingforchrist.net</h6>
@@ -45,14 +47,18 @@
         This is just some text where we will advertise what the Top Voter will get for the month.
       </div>
 
-      <table class="table" style="line-height:13px;">
-        <% objdata.forEach(function (data) { %>
-          <tr>
-            <td><%= data.username %></td>
-            <td><%= data.votes %></td>
-          </tr>
-        <% }) %>
-      </table>
+      <% if (!objdata) { %>
+        <% include partials/micros/noupcomingevents.ejs %>
+      <% } else { %>
+        <table class="table" style="line-height:13px;">
+          <% objdata.forEach(function (data) { %>
+            <tr>
+              <td><%= data.username %></td>
+              <td><%= data.votes %></td>
+            </tr>
+          <% }) %>
+        </table>
+      <% } %>
     </div>
   </div>
 
