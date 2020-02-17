@@ -4,12 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benrobson8/zander-web.git"
+    "url": "git+https://github.com/benrobson/zander-web.git"
   },
   "author": "benrobson",
   "license": "ISC",
@@ -50,8 +49,7 @@
     "req-flash": "0.0.3",
     "request": "^2.88.0",
     "superagent": "^5.1.0",
-    "twitchonlinetracker": "^1.1.5",
-    "youtube-grabber-js": "^1.0.1"
+    "twitchonlinetracker": "^1.1.5"
   },
   "devDependencies": {}
 }

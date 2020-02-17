@@ -114,8 +114,7 @@ CREATE TABLE ccstreams (
 
 CREATE TABLE ccvideos (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  channelname TEXT,
-  channellink TEXT
+  channelid TEXT
 );
 
 CREATE TABLE votes (

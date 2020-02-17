@@ -17,8 +17,8 @@ database.query (`SELECT * FROM ccstreams;`, function (error, results, fields) {
     const tracker = new TwitchOnlineTracker({
       client_id: `${process.env.twitchtrackerclientid}`, // used for api requests
       track: channelArray, // all the channels you want to track
-      pollInterval: 30, // how often in between polls in seconds
-      debug: true, // whether to debug to console
+      pollInterval: 600, // how often in between polls in seconds
+      debug: false, // whether to debug to console
       start: true
     });
 
