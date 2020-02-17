@@ -1,0 +1,68 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3"><i class="fas fa-vote-yea"></i> Vote</h1>
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Help out Crafting For Christ by voting on Minecraft Server lists!
+  </div>
+
+  <div class="row">
+      <!-- <div class="col text-center">
+        <h3>Crafting For Christ</h3>
+        <h6>play.craftingforchrist.net</h6>
+        <br>
+
+        <a href="#"><button type="button" class="btn btn-primary btn-sm"></button></a>
+      </div> -->
+
+      <div class="col text-center">
+        <h3>RLCraft</h3>
+        <h6>rlcraft.craftingforchrist.net</h6>
+        <br>
+        <!-- https://minecraft-server-list.com/server/447978/ -->
+        <a href="https://minecraft-server-list.com/server/447978/"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 1</button></a><br>
+        <!-- https://minecraftservers.org/server/573906 -->
+        <a href="https://minecraftservers.org/server/573906"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 2</button></a>
+      </div>
+
+      <div class="col text-center">
+        <h3>Revelation</h3>
+        <h6>revelation.craftingforchrist.net</h6>
+        <br>
+        <!-- https://minecraft-server-list.com/server/452408/ -->
+        <a href="https://minecraft-server-list.com/server/452408/"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 1</button></a><br>
+        <!-- https://minecraftservers.org/server/573844 -->
+        <a href="https://minecraftservers.org/server/573844"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 2</button></a>
+      </div>
+
+    <div class="col">
+      <h3 class="text-center">Top Voters</h3>
+      <div class="alert alert-info" role="alert" style="font-size:10pt;">
+        We are looking into how we can reward the top voter of the month.<br>Watch this space!
+      </div>
+
+      <% if (!objdata) { %>
+        <% include partials/micros/noupcomingevents.ejs %>
+      <% } else { %>
+        <table class="table" style="line-height:13px;">
+          <% objdata.forEach(function (data) { %>
+            <tr>
+              <td><%= data.username %></td>
+              <td><%= data.votes %></td>
+            </tr>
+          <% }) %>
+        </table>
+      <% } %>
+    </div>
+  </div>
+
+  <br>
+</div>
+
+<% include partials/footer.ejs %>

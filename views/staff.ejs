@@ -8,92 +8,135 @@
     </div>
   </div>
 
-  <p>Meet the network's Staff Team! These are the people to look for when you have problems, questions, etc. They work hard to ensure you you have the best experience possible during your stay.<br>People on here are <b>100% volunteers</b>. They set apart time to ensure that you get the best quality experience.</p>
-  <small>If you think any of these people are engaging in behavior that is unnaceptable, please send an e-mail to our <a href="mailto:<%= contactemail %>">Support Team</a>.</small>
+  <p>Meet the Network Staff Team! These are the people to look for when you have problems, questions, etc. They work hard to ensure you you have the best experience possible during your stay.<br>People on here are <b>100% volunteers</b>. They set apart time to ensure that you get the best quality experience.</p>
+  <small>If you think any of these people are engaging in behavior that is unacceptable, please send an e-mail to our <a href="mailto:<%= contactemail %>">Support Team</a>.</small>
 
-  <div class="" style="font-size:11pt;">
+  <div style="font-size:12pt;">
     <hr>
-    <h5>Administrator <small style="padding-left:10px;"> <% if (objdata[1][0].primary_group == 'administrator') { objdata[1][0].count } else { 0 } %> </small></h5>
-      <% objdata[0].forEach(function (data) { %>
-        <% if (objdata[0][0].primary_group == 'administrator') { %>
-          <ul style="list-style-type:none;">
-            <li class="staffitem">
-              <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px"><br>
-              <p class="staffname"><%= data.username %></p>
-            </li>
-          </ul>
+    <h5 style="margin-bottom:15px;">Administrator</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.administrator') { %>
+          <div style="width: 12rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+                <!-- <small style="line-height:0pt;"><%= data.title %></small> -->
+              </li>
+            </ul>
+          </div>
         <% } %>
       <% }) %>
+      <br>
+  </div>
 
+  <div style="font-size:12pt;">
     <hr>
-    <h5>Developer <small style="padding-left:10px;"> <% if (objdata[1][0].primary_group == 'developer') { objdata[1][0].count } else { 0 } %> </small></h5>
-      <% objdata[0].forEach(function (data) { %>
-        <% if (objdata[0][0].primary_group == 'developer') { %>
-          <ul style="list-style-type:none;">
-            <li class="staffitem">
-              <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px"><br>
-              <p class="staffname"><%= data.username %></p>
-            </li>
-          </ul>
+    <h5 style="margin-bottom:15px;">Senior Staff</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.seniorstaff') { %>
+          <div style="width: 10rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+              </li>
+            </ul>
+          </div>
         <% } %>
       <% }) %>
+      <br>
+  </div>
 
+  <div style="font-size:12pt;">
     <hr>
-    <h5>Senior Staff <small style="padding-left:10px;"> <% if (objdata[1][0].primary_group == 'seniorstaff') { objdata[1][0].count } else { 0 } %> </small></h5>
-      <% objdata[0].forEach(function (data) { %>
-        <% if (objdata[0][0].primary_group == 'seniorstaff') { %>
-          <ul style="list-style-type:none;">
-            <li class="staffitem">
-              <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px"><br>
-              <p class="staffname"><%= data.username %></p>
-            </li>
-          </ul>
+    <h5 style="margin-bottom:15px;">Developer</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.developer') { %>
+          <div style="width: 10rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+              </li>
+            </ul>
+          </div>
         <% } %>
       <% }) %>
+      <br>
+  </div>
 
+  <div style="font-size:12pt;">
     <hr>
-    <h5>Junior Developer <small style="padding-left:10px;"> <% if (objdata[1][0].primary_group == 'juniordeveloper') { objdata[1][0].count } else { 0 } %> </small></h5>
-      <% objdata[0].forEach(function (data) { %>
-        <% if (objdata[0][0].primary_group == 'juniordeveloper') { %>
-          <ul style="list-style-type:none;">
-            <li class="staffitem">
-              <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px"><br>
-              <p class="staffname"><%= data.username %></p>
-            </li>
-          </ul>
-        <% } else { %>
-          <% include partials/micros/lookingtoapply.ejs %>
+    <h5 style="margin-bottom:15px;">Junior Developer</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.juniordeveloper') { %>
+          <div style="width: 10rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+              </li>
+            </ul>
+          </div>
         <% } %>
       <% }) %>
+      <br>
+  </div>
 
+  <div style="font-size:12pt;">
     <hr>
-    <h5>Staff <small style="padding-left:10px;"> <% if (objdata[1][0].primary_group == 'staff') { objdata[1][0].count } else { 0 } %> </small></h5>
-      <% objdata[0].forEach(function (data) { %>
-        <% if (objdata[0][0].primary_group == 'staff') { %>
-          <ul style="list-style-type:none;">
-            <li class="staffitem">
-              <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px"><br>
-              <p class="staffname"><%= data.username %></p>
-            </li>
-          </ul>
+    <h5 style="margin-bottom:15px;">Staff</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.staff') { %>
+          <div style="width: 10rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+              </li>
+            </ul>
+          </div>
         <% } %>
       <% }) %>
+      <br>
+  </div>
 
+  <div style="font-size:12pt;">
     <hr>
-    <h5>Junior Staff <small style="padding-left:10px;"> <% if (objdata[1][0].primary_group == 'juniorstaff') { objdata[1][0].count } else { 0 } %> </small></h5>
-      <% objdata[0].forEach(function (data) { %>
-        <% if (objdata[0][0].primary_group == 'juniorstaff') { %>
-          <ul style="list-style-type:none;">
-            <li class="staffitem">
-              <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px"><br>
-              <p class="staffname"><%= data.username %></p>
-            </li>
-          </ul>
-        <% } else { %>
-          <% include partials/micros/lookingtoapply.ejs %>
+    <h5 style="margin-bottom:15px;">Junior Staff</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.juniorstaff') { %>
+          <div style="width: 10rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+              </li>
+            </ul>
+          </div>
         <% } %>
       <% }) %>
-  <br>
+      <br>
+  </div>
+
+  <div style="font-size:12pt;">
+    <hr>
+    <h5 style="margin-bottom:15px;">Builder</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.builder') { %>
+          <div style="width: 10rem; display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="img-rounded" class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %></p>
+              </li>
+            </ul>
+          </div>
+        <% } %>
+      <% }) %>
+      <br>
+  </div>
 </div>
 
 <% include partials/footer.ejs %>

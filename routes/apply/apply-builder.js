@@ -6,7 +6,7 @@ router.get('/', (req, res, next) => {
   if (config.juniorstaffapp == false) {
     res.redirect("/apply");
   } else {
-    res.redirect(`${config.socialmediaapplink}`);
+    res.redirect(`${config.builderapplink}`);
   };
 
 

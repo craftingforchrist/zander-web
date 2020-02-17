@@ -45,9 +45,7 @@ router.post('/', function(req,res,next){
               res.locals.info = false;
             }
 
-            res.render('index', {
-              "pagetitle": "Home"
-            });
+            res.redirect('/admin/dashboard');
           }
         });
       } else {
