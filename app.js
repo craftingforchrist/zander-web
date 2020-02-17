@@ -20,7 +20,6 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
-var mysqlApostrophe = require("mysql-apostrophe");
 
 //
 // File Constants
@@ -32,7 +31,7 @@ const config = require('./config.json');
 // Controllers
 //
 const database = require('./controllers/database'); // zander Database controller
-// const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
+const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 // const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
@@ -49,7 +48,6 @@ app.set('views', 'views');
 app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(mysqlApostrophe);
 app.use(flash());
 // app.use(cookieParser());
 app.use(passport.initialize());
@@ -123,7 +121,7 @@ app.use((req, res, next) => {
 var index = require('./routes/index');
 // var players = require('./routes/players');
 var punishments = require('./routes/punishments');
-// var staff = require('./routes/staff');
+var staff = require('./routes/staff');
 var events = require('./routes/events');
 var live = require('./routes/live');
 // var watch = require('./routes/watch');
@@ -172,7 +170,7 @@ var contentcreatordelete = require('./routes/admin/contentcreator/delete');
 app.use('/', index);
 // app.use('/players', players);
 app.use('/punishments', punishments);
-// app.use('/staff', staff);
+app.use('/staff', staff);
 app.use('/events', events);
 app.use('/live', live);
 // app.use('/watch', watch);
@@ -318,7 +316,9 @@ fs.readdir('./discord/commands', (err, files) => {
 });
 
 app.get('*', function(req, res) {
-    res.redirect('/');
+  res.render('404', {
+    "pagetitle": "404"
+  });
 });
 
 client.on("message", (message) => {
