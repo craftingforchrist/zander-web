@@ -36,6 +36,9 @@
   "developersmd": "https://raw.githubusercontent.com/crafting-for-christ/Developers/master/README.md",
   "githubissuetrackerlink": "https://github.com/benrobson/zander/issues/new",
 
+  "reportlink": "https://forms.gle/WeyFqBynSDhaiPjT7",
+  "contentcreatorapplink": "https://forms.gle/cvTJkYYiGtRnZqxK8",
+  "developerapplink": "http://google.com.au/",
   "juniorstaffapplink": "http://google.com.au/",
   "socialmediaapplink": "http://google.com.au/",
   "builderapplink": "http://google.com.au/",
@@ -49,8 +52,8 @@
   "contactform": true,
 
   "gameserverapp": false,
-  "contentcreatorapp": false,
-  "developerapp": false,
+  "contentcreatorapp": true,
+  "developerapp": true,
   "juniorstaffapp": false,
   "socialmediaapp": false,
   "builderapp": false

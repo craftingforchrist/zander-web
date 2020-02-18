@@ -3,13 +3,7 @@ const router = express.Router();
 const config = require('../../config.json');
 
 router.get('/', (req, res, next) => {
-  if (config.juniorstaffapp == false) {
-    res.redirect("/apply");
-  } else {
-    res.redirect(`${config.juniorstaffapplink}`);
-  };
-
-
+  res.redirect(`${config.reportlink}`);
 });
 
 module.exports = router;
