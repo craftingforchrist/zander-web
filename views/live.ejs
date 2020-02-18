@@ -11,24 +11,28 @@
 
   <script src="https://embed.twitch.tv/embed/v1.js"></script>
 
-  <% objdata.forEach(function (data) { %>
-    <div class="card">
-      <div class="card-header">
-        <%= data.channelname %>
+  <% if (!objdata[0]) { %>
+    <% include partials/micros/nostreams.ejs %>
+  <% } else { %>
+    <% objdata.forEach(function (data) { %>
+      <div class="card">
+        <div class="card-header">
+          <%= data.channelname %>
+        </div>
+        <div class="card-body">
+          <div id="twitch-embed<%= data.id %>"></div>
+          <script type="text/javascript">
+            new Twitch.Embed("twitch-embed<%= data.id %>", {
+              width: 1065,
+              height: 480,
+              channel: "<%= data.channelname %>"
+            });
+          </script>
+        </div>
       </div>
-      <div class="card-body">
-        <div id="twitch-embed<%= data.id %>"></div>
-        <script type="text/javascript">
-          new Twitch.Embed("twitch-embed<%= data.id %>", {
-            width: 1065,
-            height: 480,
-            channel: "<%= data.channelname %>"
-          });
-        </script>
-      </div>
-    </div>
-    <br>
-  <% }) %>
+      <br>
+    <% }) %>
+  <% } %>
 
 </div>
 
