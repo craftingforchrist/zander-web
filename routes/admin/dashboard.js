@@ -6,8 +6,8 @@ const broadcast = require('../../functions/broadcast');
 
 router.get('/', (req, res, next) => {
   if (req.session.user) {
-  res.render('admin/content-creator', {
-    "pagetitle": "Administration Panel - Content Creator"
+  res.render('admin/dashboard', {
+    "pagetitle": "Administration Panel"
   });
   } else {
     res.render('session/login', {

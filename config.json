@@ -37,7 +37,8 @@
   "githubissuetrackerlink": "https://github.com/benrobson/zander/issues/new",
 
   "juniorstaffapplink": "http://google.com.au/",
-  "socialmediapplink": "http://google.com.au/",
+  "socialmediaapplink": "http://google.com.au/",
+  "builderapplink": "http://google.com.au/",
 
   "discordsend": true,
   "broadcastchannel": "general",
@@ -51,5 +52,6 @@
   "contentcreatorapp": false,
   "developerapp": false,
   "juniorstaffapp": false,
-  "socialmediaapp": false
+  "socialmediaapp": false,
+  "builderapp": false
 }

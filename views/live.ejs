@@ -1,0 +1,35 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3"><i class="fab fa-twitch"></i> Live</h1>
+      <p class="lead">See what the community is streaming across our Network!</p>
+    </div>
+  </div>
+
+  <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+  <% objdata.forEach(function (data) { %>
+    <div class="card">
+      <div class="card-header">
+        <%= data.channelname %>
+      </div>
+      <div class="card-body">
+        <div id="twitch-embed<%= data.id %>"></div>
+        <script type="text/javascript">
+          new Twitch.Embed("twitch-embed<%= data.id %>", {
+            width: 1065,
+            height: 480,
+            channel: "<%= data.channelname %>"
+          });
+        </script>
+      </div>
+    </div>
+    <br>
+  <% }) %>
+
+</div>
+
+<% include partials/footer.ejs %>

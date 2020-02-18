@@ -43,8 +43,6 @@ module.exports = function (passport, req, res) {
             if (!result[0]) {
               return done(null, false, { message: "The username or password is not correct." });
             } else {
-              // TODO: If the User enters in a username and password that is not in the system, the app crashes.
-              // Refer to https://github.com/benrobson/zander/issues/195
               if (result[0].password) {
                 let hashedpassword = result[0].password;
                 bcrypt.compare(password, hashedpassword, function(err, response) {

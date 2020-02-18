@@ -1,0 +1,161 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1>Content Creator</h1>
+        </div>
+        <div class="col-">
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#streamermodal">Add a Streamer</button>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#channelmodal">Add a Channel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Streamer Modal -->
+    <div class="container text-white">
+      <div class="modal fade" id="streamermodal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog colourblack" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Add a Streamer</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/admin/contentcreator/create">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="type" value="streamer">
+                <div class="form-group">
+                  <label for="channelname">Channel Name</label>
+                  <input type="text" class="form-control" name="channelname" value="" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Streamer</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <!-- Channel Modal -->
+    <div class="container text-white">
+      <div class="modal fade" id="channelmodal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog colourblack" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Add a Channel</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/admin/contentcreator/create">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="type" value="channel">
+                <div class="form-group">
+                  <label for="channelname">Channel Name</label>
+                  <input type="text" class="form-control" name="channelname" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="channellink">Channel Link</label>
+                  <input type="text" class="form-control" name="channellink" value="" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Channel</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="ccstreams-tab" data-toggle="tab" href="#ccstreams" role="tab" aria-controls="ccstreams" aria-selected="true">Streamers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="ccvideos-tab" data-toggle="tab" href="#ccvideos" role="tab" aria-controls="ccvideos" aria-selected="false">Channels</a>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+      <!-- Streamers -->
+      <div class="tab-pane fade show active" id="ccstreams" role="tabpanel" aria-labelledby="ccstreams-tab">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Channel Name</th>
+                <th scope="col">Stream Title</th>
+                <th scope="col">Viewers</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <% ccstreamsdata.forEach(function (data) { %>
+              <tbody>
+                <tr>
+                  <td><i class="fas fa-circle"></i></td>
+                  <td><%= data.channelname %></td>
+                  <td><%= data.streamtitle %></td>
+                  <td><%= data.viewercount %></td>
+                  <td>
+                    <form action="contentcreator/delete" method="post">
+                      <input type="hidden" name="action" value="delete">
+                      <input type="hidden" name="type" value="streamer">
+                      <input type="hidden" name="id" value="<%= data.id %>">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            <% }) %>
+        </table>
+      </div>
+      <!-- Channels -->
+      <div class="tab-pane fade" id="ccvideos" role="tabpanel" aria-labelledby="ccvideos-tab">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Channel Name</th>
+                <th scope="col">Channel Link</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <% ccstreamsdata.forEach(function (data) { %>
+              <tbody>
+                <tr>
+                  <td><%= data.channelname %></td>
+                  <td><a href="<%= data.channellink %>"><%= data.channellink %></a></td>
+                  <td>
+                    <form action="/admin/contentcreator/delete" method="post">
+                      <input type="hidden" name="action" value="delete">
+                      <input type="hidden" name="type" value="streamer">
+                      <input type="hidden" name="id" value="<%= data.id %>">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            <% }) %>
+        </table>
+      </div>
+    </div>
+  </div>
+<br>
+</div>
+
+<% include ../partials/footer.ejs %>
