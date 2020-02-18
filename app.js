@@ -120,7 +120,7 @@ app.use((req, res, next) => {
 //
 var index = require('./routes/index');
 // var players = require('./routes/players');
-var punishments = require('./routes/punishments');
+// var punishments = require('./routes/punishments');
 var staff = require('./routes/staff');
 var events = require('./routes/events');
 var live = require('./routes/live');
@@ -144,12 +144,11 @@ var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
 var applysocialmedia = require('./routes/apply/apply-socialmedia');
 var applybuilder = require('./routes/apply/apply-builder');
 
-var report = require('./routes/report')(client);
-
+var report = require('./routes/redirect/report');
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
-var forums = require('./routes/forums');
+var forums = require('./routes/redirect/forums');
 
 var login = require('./routes/session/login');
 var logout = require('./routes/session/logout');
@@ -169,7 +168,7 @@ var contentcreatordelete = require('./routes/admin/contentcreator/delete');
 
 app.use('/', index);
 // app.use('/players', players);
-app.use('/punishments', punishments);
+// app.use('/punishments', punishments);
 app.use('/staff', staff);
 app.use('/events', events);
 app.use('/live', live);
