@@ -13,7 +13,6 @@ router.get('/', (req, res, next) => {
         "pagetitle": "Vote",
         objdata: results
       });
-      console.log(results);
     }
   });
 });
