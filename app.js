@@ -77,6 +77,7 @@ app.use((req, res, next) => {
   res.locals.termsmd = config.termsmd;
   res.locals.privacymd = config.privacymd;
   res.locals.rulesmd = config.rulesmd;
+  res.locals.refundmd = config.refundmd;
 
   res.locals.twitter = config.twitterlink;
   res.locals.facebook = config.facebooklink;
@@ -131,6 +132,7 @@ var vote = require('./routes/vote');
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
+var refund = require('./routes/policy/refund');
 
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
@@ -179,6 +181,7 @@ app.use('/vote', vote);
 app.use('/terms', terms);
 app.use('/privacy', privacy);
 app.use('/rules', rules);
+app.use('/refund', refund);
 
 app.use('/apply', apply);
 // app.use('/apply/game', applygame);
