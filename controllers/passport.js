@@ -25,8 +25,6 @@ module.exports = function (passport, req, res) {
           throw err;
         };
 
-        console.log(result);
-
         if (result < 1) {
           console.log("There was no account found.");
           return done(null, false, { message: "The username or password is not correct." });
