@@ -126,7 +126,7 @@ var staff = require('./routes/staff');
 var events = require('./routes/events');
 var live = require('./routes/live');
 // var watch = require('./routes/watch');
-// var play = require('./routes/play');
+var play = require('./routes/play');
 var vote = require('./routes/vote');
 
 var terms = require('./routes/policy/terms');
@@ -167,6 +167,11 @@ var punishment = require('./routes/admin/punishment');
 var contentcreator = require('./routes/admin/contentcreator/list');
 var contentcreatorcreate = require('./routes/admin/contentcreator/create');
 var contentcreatordelete = require('./routes/admin/contentcreator/delete');
+var stafftitlelist = require('./routes/admin/staff/title/list');
+var stafftitleedit = require('./routes/admin/staff/title/edit');
+var serverslist = require('./routes/admin/servers/list');
+var serverscreate = require('./routes/admin/servers/create');
+var serversdelete = require('./routes/admin/servers/delete');
 
 app.use('/', index);
 // app.use('/players', players);
@@ -175,7 +180,7 @@ app.use('/staff', staff);
 app.use('/events', events);
 app.use('/live', live);
 // app.use('/watch', watch);
-// app.use('/play', play);
+app.use('/play', play);
 app.use('/vote', vote);
 
 app.use('/terms', terms);
@@ -213,6 +218,11 @@ app.use('/admin/punishment', punishment);
 app.use('/admin/contentcreator', contentcreator);
 app.use('/admin/contentcreator/create', contentcreatorcreate);
 app.use('/admin/contentcreator/delete', contentcreatordelete);
+app.use('/admin/staff/title', stafftitlelist);
+app.use('/admin/staff/title/edit', stafftitleedit);
+app.use('/admin/servers', serverslist);
+app.use('/admin/servers/create', serverscreate);
+app.use('/admin/servers/delete', serversdelete);
 
 //
 // Profiles
@@ -263,40 +273,40 @@ app.use('/admin/contentcreator/delete', contentcreatordelete);
 //
 // GAME Punishment View
 //
-app.get('/punishments/game/view/:id', function (req, res) {
-  let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from gamepunishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id WHERE p.id='${req.params.id}';`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      res.render('punishments-game-view', {
-        "pagetitle": `${results[0].punished}'s Punishment || #${results[0].id}`,
-        objdata: results[0],
-        platform: "GAME"
-      });
-    }
-  });
-});
-
+// app.get('/punishments/game/view/:id', function (req, res) {
+//   let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from gamepunishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id WHERE p.id='${req.params.id}';`;
+//   database.query (sql, function (err, results) {
+//     if (err) {
+//       res.redirect('/');
+//       throw err;
+//     } else {
+//       res.render('punishments-game-view', {
+//         "pagetitle": `${results[0].punished}'s Punishment || #${results[0].id}`,
+//         objdata: results[0],
+//         platform: "GAME"
+//       });
+//     }
+//   });
+// });
 //
-// DISCORD Punishment View
-//
-app.get('/punishments/discord/view/:id', function (req, res) {
-  let sql = `select * from discordpunishments where id='${req.params.id}';`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      res.render('punishments-discord-view', {
-        "pagetitle": `${results[0].punisheduser}'s Punishment || #${results[0].id}`,
-        objdata: results[0],
-        platform: "DISCORD"
-      });
-    }
-  });
-});
+// //
+// // DISCORD Punishment View
+// //
+// app.get('/punishments/discord/view/:id', function (req, res) {
+//   let sql = `select * from discordpunishments where id='${req.params.id}';`;
+//   database.query (sql, function (err, results) {
+//     if (err) {
+//       res.redirect('/');
+//       throw err;
+//     } else {
+//       res.render('punishments-discord-view', {
+//         "pagetitle": `${results[0].punisheduser}'s Punishment || #${results[0].id}`,
+//         objdata: results[0],
+//         platform: "DISCORD"
+//       });
+//     }
+//   });
+// });
 
 //
 // Discord Commands & Integration
