@@ -26,7 +26,12 @@ const LocalStratagy = require('passport-local');
 //
 const package = require('./package.json');
 const config = require('./config.json');
-
+// const SimpleNodeLogger = require('simple-node-logger'),
+//   opts = {
+//       logFilePath:'mylogfile.log',
+//       timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+//   },
+// log = SimpleNodeLogger.createSimpleLogger(opts);
 //
 // Controllers
 //

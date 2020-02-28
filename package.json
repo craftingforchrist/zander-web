@@ -48,6 +48,7 @@
     "path": "^0.12.7",
     "req-flash": "0.0.3",
     "request": "^2.88.0",
+    "simple-node-logger": "^18.12.24",
     "superagent": "^5.1.0",
     "twitchonlinetracker": "^1.1.5"
   },
