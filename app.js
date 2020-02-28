@@ -158,6 +158,7 @@ var logout = require('./routes/session/logout');
 var dashboard = require('./routes/admin/dashboard');
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
+var accountspermissionslist = require('./routes/admin/accounts/permissions/list');
 var eventsadmin = require('./routes/admin/events/list');
 var eventsadmincreate = require('./routes/admin/events/create')(client);
 // var application = require('./routes/admin/application');
@@ -170,6 +171,7 @@ var contentcreatordelete = require('./routes/admin/contentcreator/delete');
 var stafftitlelist = require('./routes/admin/staff/title/list');
 var stafftitleedit = require('./routes/admin/staff/title/edit');
 var serverslist = require('./routes/admin/servers/list');
+var serversedit = require('./routes/admin/servers/edit');
 var serverscreate = require('./routes/admin/servers/create');
 var serversdelete = require('./routes/admin/servers/delete');
 
@@ -207,8 +209,10 @@ app.use('/login', login);
 app.use('/logout',logout)
 
 app.use('/admin/dashboard', dashboard);
+app.use('/admin', dashboard);
 app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
+app.use('/admin/accounts/permissions', accountspermissionslist);
 app.use('/admin/events', eventsadmin);
 app.use('/admin/events/create', eventsadmincreate);
 // app.use('/admin/application', application);
@@ -222,6 +226,7 @@ app.use('/admin/staff/title', stafftitlelist);
 app.use('/admin/staff/title/edit', stafftitleedit);
 app.use('/admin/servers', serverslist);
 app.use('/admin/servers/create', serverscreate);
+app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
 
 //

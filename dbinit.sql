@@ -76,6 +76,19 @@ CREATE TABLE accounts (
 -- This account should be removed immediately after setting up your own account.
 INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE");
 
+-- CREATE TABLE accountspermissions (
+--   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+--   account_id INT NOT NULL DEFAULT 0,
+--   admincontentcreator BOOLEAN DEFAULT false,
+--   adminevents BOOLEAN DEFAULT false,
+--   adminservers BOOLEAN DEFAULT false,
+--   adminaccounts BOOLEAN DEFAULT false,
+--   adminaccountspermissions BOOLEAN DEFAULT false
+-- );
+--
+-- -- This allows the root account to have access to all parts of the admin panel
+-- INSERT INTO accountspermissions (account_id, admincontentcreator, adminevents, adminservers, adminaccounts, adminaccountspermissions) VALUES (0, true, true, true, true, true);
+
 -- CREATE TABLE `ipbans` (
 --   ip VARCHAR(20) NOT NULL,
 --   time TIMESTAMP NOT NULL,
@@ -101,6 +114,7 @@ CREATE TABLE servers (
   description TEXT,
   disclaimer TEXT,
   ipaddress TEXT,
+  position VARCHAR(2),
   playersonline TEXT
 );
 
@@ -110,7 +124,7 @@ CREATE TABLE ccstreams (
   streamtitle TEXT,
   viewercount VARCHAR(3),
   status ENUM('ONLINE', 'OFFLINE')
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+);
 
 CREATE TABLE ccvideos (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
