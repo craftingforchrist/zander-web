@@ -83,7 +83,11 @@ INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzx
 --   adminevents BOOLEAN DEFAULT false,
 --   adminservers BOOLEAN DEFAULT false,
 --   adminaccounts BOOLEAN DEFAULT false,
---   adminaccountspermissions BOOLEAN DEFAULT false
+--   adminaccountscreate BOOLEAN DEFAULT false
+--   adminaccountsdelete BOOLEAN DEFAULT false
+--   adminaccountsdisable BOOLEAN DEFAULT false
+--   adminaccountsreenable BOOLEAN DEFAULT false
+--   adminstafftitle BOOLEAN DEFAULT false
 -- );
 --
 -- -- This allows the root account to have access to all parts of the admin panel

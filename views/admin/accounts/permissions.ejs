@@ -1,0 +1,52 @@
+<% include ../../partials/header.ejs %>
+<% include ../../partials/navigation.ejs %>
+
+<div class="container">
+  <br>
+  <h1>Account Permissions</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col"><small>admin.accounts</small></th>
+          <th scope="col"><small>admin.accounts.create</small></th>
+          <th scope="col"><small>admin.accounts.delete</small></th>
+          <th scope="col"><small>admin.accounts.disable</small></th>
+          <th scope="col"><small>admin.accounts.reenable</small></th>
+          <th scope="col"><small>admin.contentcreator</small></th>
+          <th scope="col"><small>admin.events</small></th>
+          <th scope="col"><small>admin.servers</small></th>
+          <th scope="col"><small>admin.servers</small></th>
+          <th scope="col"><small>admin.staff.title</small></th>
+          <th scope="col" colspan="20"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% objdata.forEach(function (data) { %>
+          <tr>
+            <td><%= data.username %></td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td>Egg</td>
+            <td style="max-width: 10px;">
+              <form action="/admin/accounts/permissions/update" method="post">
+                <input type="hidden" name="action" value="accountpermissionsupdate">
+                <input type="hidden" name="id" value="<%= data.id %>">
+                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+<br>
+</div>
+
+<% include ../../partials/footer.ejs %>

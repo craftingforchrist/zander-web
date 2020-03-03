@@ -14,9 +14,7 @@ router.post('/', function (req, res) {
     bcrypt.hash(password, saltrounds, function (err, hash) {
       accounts.addaccount(username, hash);
     });
-
-    console.log(req.body);
-
+    
     res.redirect('/admin/accounts');
   } else {
     res.render('session/login', {
