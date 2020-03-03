@@ -13,8 +13,6 @@ router.get('/', (req, res, next) => {
         "pagetitle": "Staff",
         objdata: results
       });
-
-      console.log(results);
     }
   });
 });

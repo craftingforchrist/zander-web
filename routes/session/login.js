@@ -5,22 +5,21 @@ const database = require('../../controllers/database.js');
 const passport = require('passport');
 
 router.get('/', function(req, res, next) {
-  if(!req.session.user) {
+  if (!req.session.user) {
     res.locals.info = null;
     res.locals.success = null;
     res.render('session/login', {
       setValue: false,
       "pagetitle": "Login"
     });
-  }
-  else{
+  } else {
     res.render('index', {
       "pagetitle": "Home"
     });
   }
 });
 
-router.post('/', function(req,res,next){
+router.post('/', function (req,res,next) {
   passport.authenticate("local", function (err, user, info) {
     if (err) {
       console.log('Error')
@@ -33,18 +32,18 @@ router.post('/', function(req,res,next){
       });
     }
     if (user) {
-        database.query("SELECT id from accounts where username = ?", [req.body.username], function (err, result, fields) {
+        database.query("SELECT id, username from accounts where username = ?", [req.body.username], function (err, result, fields) {
           if (err) {
             res.send("No such user found");
           } else {
-            console.log('User Logged in successfully');
+            console.log(`[CONSOLE] [ADMIN] ${result[0].username} has logged in.`);
+
             req.session.user = result[0].id;
             if (req.session.user) {
               res.locals.info = true;
             } else {
               res.locals.info = false;
             }
-
             res.redirect('/admin/dashboard');
           }
         });

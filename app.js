@@ -26,7 +26,12 @@ const LocalStratagy = require('passport-local');
 //
 const package = require('./package.json');
 const config = require('./config.json');
-
+// const SimpleNodeLogger = require('simple-node-logger'),
+//   opts = {
+//       logFilePath:'mylogfile.log',
+//       timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
+//   },
+// log = SimpleNodeLogger.createSimpleLogger(opts);
 //
 // Controllers
 //
@@ -77,6 +82,7 @@ app.use((req, res, next) => {
   res.locals.termsmd = config.termsmd;
   res.locals.privacymd = config.privacymd;
   res.locals.rulesmd = config.rulesmd;
+  res.locals.refundmd = config.refundmd;
 
   res.locals.twitter = config.twitterlink;
   res.locals.facebook = config.facebooklink;
@@ -125,12 +131,13 @@ var staff = require('./routes/staff');
 var events = require('./routes/events');
 var live = require('./routes/live');
 // var watch = require('./routes/watch');
-// var play = require('./routes/play');
+var play = require('./routes/play');
 var vote = require('./routes/vote');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
+var refund = require('./routes/policy/refund');
 
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
@@ -156,6 +163,7 @@ var logout = require('./routes/session/logout');
 var dashboard = require('./routes/admin/dashboard');
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
+var accountspermissionslist = require('./routes/admin/accounts/permissions/list');
 var eventsadmin = require('./routes/admin/events/list');
 var eventsadmincreate = require('./routes/admin/events/create')(client);
 // var application = require('./routes/admin/application');
@@ -165,6 +173,12 @@ var punishment = require('./routes/admin/punishment');
 var contentcreator = require('./routes/admin/contentcreator/list');
 var contentcreatorcreate = require('./routes/admin/contentcreator/create');
 var contentcreatordelete = require('./routes/admin/contentcreator/delete');
+var stafftitlelist = require('./routes/admin/staff/title/list');
+var stafftitleedit = require('./routes/admin/staff/title/edit');
+var serverslist = require('./routes/admin/servers/list');
+var serversedit = require('./routes/admin/servers/edit');
+var serverscreate = require('./routes/admin/servers/create');
+var serversdelete = require('./routes/admin/servers/delete');
 
 app.use('/', index);
 // app.use('/players', players);
@@ -173,12 +187,13 @@ app.use('/staff', staff);
 app.use('/events', events);
 app.use('/live', live);
 // app.use('/watch', watch);
-// app.use('/play', play);
+app.use('/play', play);
 app.use('/vote', vote);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
 app.use('/rules', rules);
+app.use('/refund', refund);
 
 app.use('/apply', apply);
 // app.use('/apply/game', applygame);
@@ -199,8 +214,10 @@ app.use('/login', login);
 app.use('/logout',logout)
 
 app.use('/admin/dashboard', dashboard);
+app.use('/admin', dashboard);
 app.use('/admin/accounts', accounts);
 app.use('/admin/accounts/create', accountscreate);
+app.use('/admin/accounts/permissions', accountspermissionslist);
 app.use('/admin/events', eventsadmin);
 app.use('/admin/events/create', eventsadmincreate);
 // app.use('/admin/application', application);
@@ -210,6 +227,12 @@ app.use('/admin/punishment', punishment);
 app.use('/admin/contentcreator', contentcreator);
 app.use('/admin/contentcreator/create', contentcreatorcreate);
 app.use('/admin/contentcreator/delete', contentcreatordelete);
+app.use('/admin/staff/title', stafftitlelist);
+app.use('/admin/staff/title/edit', stafftitleedit);
+app.use('/admin/servers', serverslist);
+app.use('/admin/servers/create', serverscreate);
+app.use('/admin/servers/edit', serversedit);
+app.use('/admin/servers/delete', serversdelete);
 
 //
 // Profiles
@@ -260,40 +283,40 @@ app.use('/admin/contentcreator/delete', contentcreatordelete);
 //
 // GAME Punishment View
 //
-app.get('/punishments/game/view/:id', function (req, res) {
-  let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from gamepunishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id WHERE p.id='${req.params.id}';`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      res.render('punishments-game-view', {
-        "pagetitle": `${results[0].punished}'s Punishment || #${results[0].id}`,
-        objdata: results[0],
-        platform: "GAME"
-      });
-    }
-  });
-});
-
+// app.get('/punishments/game/view/:id', function (req, res) {
+//   let sql = `select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from gamepunishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id WHERE p.id='${req.params.id}';`;
+//   database.query (sql, function (err, results) {
+//     if (err) {
+//       res.redirect('/');
+//       throw err;
+//     } else {
+//       res.render('punishments-game-view', {
+//         "pagetitle": `${results[0].punished}'s Punishment || #${results[0].id}`,
+//         objdata: results[0],
+//         platform: "GAME"
+//       });
+//     }
+//   });
+// });
 //
-// DISCORD Punishment View
-//
-app.get('/punishments/discord/view/:id', function (req, res) {
-  let sql = `select * from discordpunishments where id='${req.params.id}';`;
-  database.query (sql, function (err, results) {
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      res.render('punishments-discord-view', {
-        "pagetitle": `${results[0].punisheduser}'s Punishment || #${results[0].id}`,
-        objdata: results[0],
-        platform: "DISCORD"
-      });
-    }
-  });
-});
+// //
+// // DISCORD Punishment View
+// //
+// app.get('/punishments/discord/view/:id', function (req, res) {
+//   let sql = `select * from discordpunishments where id='${req.params.id}';`;
+//   database.query (sql, function (err, results) {
+//     if (err) {
+//       res.redirect('/');
+//       throw err;
+//     } else {
+//       res.render('punishments-discord-view', {
+//         "pagetitle": `${results[0].punisheduser}'s Punishment || #${results[0].id}`,
+//         objdata: results[0],
+//         platform: "DISCORD"
+//       });
+//     }
+//   });
+// });
 
 //
 // Discord Commands & Integration

@@ -2,20 +2,22 @@ const express = require('express');
 const router = express.Router();
 const config = require('../../../config.json');
 const database = require('../../../controllers/database.js');
-const accounts = require('../../../functions/admin/accounts.js');
-const bcrypt = require('bcryptjs');
 
 router.post('/', function (req, res) {
   if (req.session.user) {
-    const username = req.body.username;
-    const password = req.body.password;
-    const saltrounds = 10;
+    const action = req.body.action;
+    const id = req.body.id;
 
-    bcrypt.hash(password, saltrounds, function (err, hash) {
-      accounts.addaccount(username, hash);
-    });
-    
-    res.redirect('/admin/accounts');
+    if (action == 'delete') {
+      database.query(`DELETE FROM servers WHERE id = ?`, [id], function (error, results, fields) {
+        if (error) {
+          res.redirect('/');
+          throw error;
+        } else {
+          res.redirect('/admin/servers');
+        };
+      });
+    }
   } else {
     res.render('session/login', {
       setValue: true,

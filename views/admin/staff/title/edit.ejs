@@ -1,0 +1,20 @@
+<% include ../../../partials/header.ejs %>
+<% include ../../../partials/navigation.ejs %>
+
+<div class="container">
+  <br>
+  <form action="/admin/staff/title/edit" method="post" style="margin: 0 auto; width: 500px; padding: 10px;">
+    <input type="hidden" name="uuid" value="<%= uuid %>">
+    <input type="hidden" name="username" value="<%= username %>">
+    <input type="hidden" name="permission" value="<%= permission %>">
+    <input type="hidden" name="oldtile" value="<%= title %>">
+    <div class="form-group">
+      <label for="newstafftitle">Staff Title</label>
+      <input type="text" class="form-control" name="newtitle" value="<%= title %>">
+    </div>
+    <button type="submit" class="btn btn-primary">Update Staff Title</button>
+  </form>
+  <br>
+</div>
+
+<% include ../../../partials/footer.ejs %>

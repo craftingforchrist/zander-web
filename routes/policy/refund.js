@@ -9,8 +9,8 @@ router.get('/', (req, res, next) => {
   else{
     res.locals.info = false;
   }
-  res.render('policies/terms', {
-    "pagetitle": "Terms Of Service"
+  res.render('policies/refund', {
+    "pagetitle": "Refund Policy"
   });
 });
 

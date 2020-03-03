@@ -16,10 +16,10 @@ module.exports = (client) => {
     if (config.developerapp == false) {
       res.redirect("/apply");
     } else {
-      // res.redirect(`${config.developerapplink}`);
-      res.render('apply/apply-developer', {
-        "pagetitle": "Apply - Developer"
-      });
+      res.redirect(`${config.developerapplink}`);
+      // res.render('apply/apply-developer', {
+      //   "pagetitle": "Apply - Developer"
+      // });
     };
   });
 

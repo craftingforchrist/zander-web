@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../../../config.json');
-const database = require('../../../controllers/database.js');
-const accounts = require('../../../functions/admin/accounts.js');
+const config = require('../../../../config.json');
+const database = require('../../../../controllers/database.js');
 
 router.get('/', (req, res, next) => {
   if (req.session.user) {
@@ -11,8 +10,8 @@ router.get('/', (req, res, next) => {
         res.redirect('/');
         throw error;
       } else {
-        res.render('admin/accounts/list', {
-          "pagetitle": "Administration Panel - Accounts",
+        res.render('admin/accounts/permissions', {
+          "pagetitle": "Administration Panel - Account Permissions",
           objdata: results
         });
       }
@@ -28,23 +27,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', function (req, res) {
   if (req.session.user) {
-    const action = req.body.action;
-    const id = req.body.id;
 
-    if (action === "accountdelete") {
-      accounts.deleteaccount(id);
-      res.redirect('/admin/accounts');
-    };
-
-    if (action === "accountdisable") {
-      accounts.disableaccount(id);
-      res.redirect('/admin/accounts');
-    };
-
-    if (action === "accountenable") {
-      accounts.enableaccount(id);
-      res.redirect('/admin/accounts');
-    };
   } else {
     res.render('session/login', {
       setValue: true,

@@ -1,0 +1,49 @@
+<% include ../../../partials/header.ejs %>
+<% include ../../../partials/navigation.ejs %>
+
+<div class="container">
+  <br>
+  <h2>Staff Rank List</h2>
+  <small>Select a Staff Members rank and edit their title, or remove it.</small>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Username</th>
+        <th scope="col">Rank</th>
+        <th scope="col">Title</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% objdata.forEach(function (data) { %>
+        <tr>
+          <td scope="row"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="50px" draggable="false"><br></td>
+          <td><%= data.username %></td>
+          <td><%= data.permission %></td>
+          <td><%= data.title %></td>
+          <td>
+            <div class="btn-group" role="group" aria-label="staffgroup">
+              <form action="/admin/staff/title" method="post">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="uuid" value="<%= data.uuid %>">
+                <input type="hidden" name="username" value="<%= data.username %>">
+                <input type="hidden" name="permission" value="<%= data.permission %>">
+                <input type="hidden" name="title" value="<%= data.title %>">
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+              </form>
+              <form action="/admin/staff/title" method="post">
+                <input type="hidden" name="action" value="remove">
+                <input type="hidden" name="uuid" value="<%= data.uuid %>">
+                <input type="hidden" name="permission" value="<%= data.permission %>">
+                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<% include ../../../partials/footer.ejs %>

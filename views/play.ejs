@@ -11,18 +11,25 @@
   <% if (!objdata[0]) { %>
     <% include partials/micros/noservers.ejs %>
   <% } else { %>
-    <% objdata.forEach(function (data) { %>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title"><%= data.name %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= data.description %></h6>
-          <p class="card-text"><%= data.ipaddress %></p>
-          <p class="card-text" style="font-size:30pt">0 / 0</p>
-        </div>
+    <div class="row">
+      <div class="col-sm">
+        <% objdata.forEach(function (data) { %>
+          <div class="card" style="width: 20rem; min-height:50px; display:inline-block;">
+            <div class="card-body">
+              <h4 class="card-title"><%= data.name %></h4>
+              <h5><%= data.ipaddress %></h5>
+              <p style="font-size:10pt"><%= data.description %></p>
+              <% if (data.disclaimer) { %>
+                <small class="text-muted"><%= data.disclaimer %></small>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
       </div>
-      <br>
-    <% }) %>
+    </div>
+    <br>
   <% } %>
+
 </div>
 
 <% include partials/footer.ejs %>

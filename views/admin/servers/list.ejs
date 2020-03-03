@@ -1,0 +1,105 @@
+<% include ../../partials/header.ejs %>
+<% include ../../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1>Servers</h1>
+          <small class="text-muted">These are the Servers that will display on the /play page.</small>
+        </div>
+        <div class="col-">
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#servermodal">Add a Server</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Server Modal -->
+    <div class="container text-white">
+      <div class="modal fade" id="servermodal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog colourblack" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Add a Server</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/admin/servers/create">
+                <input type="hidden" name="action" value="add">
+                <div class="form-group">
+                  <label for="servername">Server Name</label>
+                  <input type="text" class="form-control" name="name" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="serveraddress">Server Address</label>
+                  <input type="text" class="form-control" name="ipaddress" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="serverdisclaimer">Server Disclaimer</label>
+                  <input type="text" class="form-control" name="disclaimer" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="description">Server Description</label>
+                  <textarea name="description" rows="4" cols="63"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="serverposition">Server Position</label>
+                  <input type="text" class="form-control" name="position" value="" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Server</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Disclaimer</th>
+            <th scope="col">Address</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <% objdata.forEach(function (data) { %>
+          <tbody>
+            <tr>
+              <td><%= data.name %></td>
+              <td style="max-width:300px"><small><%= data.description %></small></td>
+              <td><small><%= data.disclaimer %></small></td>
+              <td><%= data.ipaddress %></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="serversgroup">
+                  <form action="servers" method="post">
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="id" value="<%= data.id %>">
+                    <button type="submit" class="btn btn-warning btn-sm" style="margin-right:5px;">Edit</button>
+                  </form>
+
+                  <form action="servers/delete" method="post">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="id" value="<%= data.id %>">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        <% }) %>
+    </table>
+  </div>
+<br>
+</div>
+
+<% include ../../partials/footer.ejs %>
