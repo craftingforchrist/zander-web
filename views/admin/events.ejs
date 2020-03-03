@@ -64,7 +64,6 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">Event Name</th>
           <th scope="col">Date & Time</th>
           <th scope="col">Action</th>
@@ -73,7 +72,6 @@
       <tbody>
         <% objdata.forEach(function (data) { %>
           <tr>
-            <td><%= data.id %></td>
             <td><%= data.eventtitle %></td>
             <td><%= data.eventdate %> @ <%= data.eventtime %></td>
             <td style="max-width: 10px;">
