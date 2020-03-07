@@ -31,23 +31,23 @@
               <form method="post" action="/admin/servers/create">
                 <input type="hidden" name="action" value="add">
                 <div class="form-group">
-                  <label for="servername">Server Name</label>
+                  <label for="servername">Name</label>
                   <input type="text" class="form-control" name="name" value="" required>
                 </div>
                 <div class="form-group">
-                  <label for="serveraddress">Server Address</label>
+                  <label for="serveraddress">Address</label>
                   <input type="text" class="form-control" name="ipaddress" value="" required>
                 </div>
                 <div class="form-group">
-                  <label for="serverdisclaimer">Server Disclaimer</label>
-                  <input type="text" class="form-control" name="disclaimer" value="" required>
-                </div>
-                <div class="form-group">
-                  <label for="description">Server Description</label>
+                  <label for="description">Disclaimer</label>
                   <textarea name="description" rows="4" cols="63"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="serverposition">Server Position</label>
+                  <label for="description">Description</label>
+                  <textarea name="description" rows="4" cols="63"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="serverposition">Position</label>
                   <input type="text" class="form-control" name="position" value="" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Server</button>
@@ -76,7 +76,7 @@
           <tbody>
             <tr>
               <td><%= data.name %></td>
-              <td style="max-width:300px"><small><%= data.description %></small></td>
+              <td><small><%= data.description %></small></td>
               <td><small><%= data.disclaimer %></small></td>
               <td><%= data.ipaddress %></td>
               <td>
