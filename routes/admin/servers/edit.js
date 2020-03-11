@@ -22,7 +22,9 @@ router.post('/', function (req, res) {
     const ipaddress = req.body.ipaddress;
     const position = req.body.position;
 
-    database.query(`UPDATE servers SET name = ?, description = ?, disclaimer = ?, ipaddress = ?, position = ? WHERE id = ?;`, [name, description, disclaimer, ipaddress, position, id], function (error, results, fields) {
+    console.log(req.body);
+
+    database.query(`UPDATE servers SET name = ?, description = ?, disclaimer = '${disclaimer}', ipaddress = ?, position = ? WHERE id = ?;`, [name, description, ipaddress, position, id], function (error, results, fields) {
       if (error) {
         res.redirect('/');
         throw error;
