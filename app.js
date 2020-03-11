@@ -93,7 +93,7 @@ app.use((req, res, next) => {
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
-  res.locals.platformpatreon = config.patreon;
+  res.locals.platformshop = config.shop;
   res.locals.platformtwitter = config.twitter;
   res.locals.platformfacebook = config.facebook;
   res.locals.platforminstagram = config.instagram;
@@ -133,6 +133,7 @@ var live = require('./routes/live');
 // var watch = require('./routes/watch');
 var play = require('./routes/play');
 var vote = require('./routes/vote');
+var ranks = require('./routes/ranks');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -156,6 +157,7 @@ var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 var forums = require('./routes/redirect/forums');
+var shop = require('./routes/redirect/shop');
 
 var login = require('./routes/session/login');
 var logout = require('./routes/session/logout');
@@ -189,6 +191,7 @@ app.use('/live', live);
 // app.use('/watch', watch);
 app.use('/play', play);
 app.use('/vote', vote);
+app.use('/ranks', ranks);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -209,6 +212,7 @@ app.use('/discord', discord);
 app.use('/issues', issues);
 app.use('/support', support);
 app.use('/forums', forums);
+app.use('/shop', shop);
 
 app.use('/login', login);
 app.use('/logout',logout)

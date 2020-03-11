@@ -13,10 +13,16 @@ CREATE TABLE playerdata (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   uuid VARCHAR(36),
   username VARCHAR(16),
-  joined TIMESTAMP NOT NULL DEFAULT NOW()
+  joined TIMESTAMP NOT NULL DEFAULT NOW(),
+  discord TEXT(),
+  twitter TEXT(),
+  youtube TEXT(),
+  mixer TEXT(),
+  instagram TEXT(),
+  facebook TEXT()
 );
 create index playerdata_username on playerdata (username);
-INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
+-- INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
 
 CREATE TABLE gamesessions (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,

@@ -12,7 +12,7 @@
 
   "website": "https://www.craftingforchrist.net/",
   "discordlink": "https://discordapp.com/invite/fGWNchS",
-  "patreonlink": "https://www.patreon.com/craftingforchrist",
+  "shoplink": "http://craftingforchrist.tebex.io/",
   "twitterlink": "https://twitter.com/craft4christmc",
   "facebooklink": "https://www.facebook.com/craft4christ/",
   "instagramlink": "https://instagram.com/craftingforchrist",
@@ -22,7 +22,6 @@
 
   "email": true,
   "discord": true,
-  "patreon": true,
   "twitter": true,
   "facebook": true,
   "instagram": true,

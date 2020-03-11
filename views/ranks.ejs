@@ -1,0 +1,138 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<style media="screen">
+  .ranktitle {
+    text-align:center;
+    vertical-align:sub;
+
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6));
+    background-size: 140px 140px;
+    margin: 0 auto;
+    margin-bottom:20px;
+    height:140px;
+    border-radius:30px 60px;
+  }
+
+  .ranktitle img {
+    height:100px;
+  }
+
+  .rankperks p {
+    font-size:10pt;
+  }
+</style>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3"><i class="fas fa-tag"></i> Ranks</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <!--
+      Iron
+     -->
+      <div class="col text-center">
+        <h3 class="ranktitle" style="background-color: rgba(203, 205, 205, 0.7);"><img src="./assets/img/rank-icons/iron.png" alt=""><br>Iron</h3>
+        <div class="text-muted">
+          <h2><b>$1</b><small style="font-size:12pt">(monthly)</small></h2>
+        </div>
+        <br>
+
+        <div class="rankperks">
+          <p><span class="badge badge-pill badge-secondary">Iron</span> on our Server, Forums and Discord</p>
+          <p>Access to exclusive Donator channels on Discord.</p>
+          <p>Access to /fly in the Hub.</p>
+          <p>Access to /sethome, maximum of 2 on the Survial Server.</p>
+          <p>Ability to join full games during Events.</p>
+          <!-- <p>A player statue in the Hall of Patrons.</p> -->
+        </div>
+      </div>
+
+      <!--
+        Gold
+       -->
+      <div class="col text-center">
+        <h3 class="ranktitle" style="background-color: rgba(243, 204, 0, 0.7);"><img src="./assets/img/rank-icons/gold.png" alt=""><br>Gold</h3>
+        <div class="text-muted">
+          <h2><b>$25</b> or <b>$5</b><small style="font-size:12pt">(monthly)</small></h2>
+        </div>
+        <br>
+
+        <div class="rankperks">
+          <p><span class="badge badge-pill badge-warning">Gold</span> on our Server, Forums and Discord</p>
+          <p>Inherit all perks from <span class="badge badge-pill badge-secondary">Iron</span></p>
+          <p>Access to using colours in your chat messages globally.</p>
+          <p>Access to /hat, wear the block that you’re holding on the Survival server.</p>
+          <p>Access to /deathcoords to reveal the location of where you died on the Survival server.</p>
+          <p>Access to /sethome, maximum of 3 on the Survial Server.</p>
+        </div>
+      </div>
+
+      <!--
+        Diamond
+       -->
+      <div class="col text-center">
+        <h3 class="ranktitle" style="background-color: rgba(0, 165, 218, 0.9);"><img src="./assets/img/rank-icons/diamond.png" alt=""><br>Diamond</h3>
+        <div class="text-muted">
+          <h2><b>$50</b> or <b>$10</b><small style="font-size:12pt">(monthly)</small></h2>
+        </div>
+        <br>
+
+        <div class="rankperks">
+          <p><span class="badge badge-pill badge-primary">Diamond</span> on our Server, Forums and Discord</p>
+          <p>Inherit all perks from <span class="badge badge-pill badge-secondary">Iron</span> and <span class="badge badge-pill badge-warning">Gold</span></p>
+          <p>Access to the exclusive donator Creative Server.</p>
+          <!-- <p>Natural Fortune (a chance to give you an additional ore from a mining) on the Survival server.</p> -->
+          <p>Access to /sethome, maximum of 4 on the Survial Server.</p>
+        </div>
+      </div>
+
+      <!--
+        Emerald
+       -->
+      <!-- <div class="col text-center">
+        <h3 class="ranktitle" style="background-color: rgba(0, 151, 97, 0.9);"><img src="./assets/img/rank-icons/emerald.png" alt=""><br>Emerald</h3>
+        <div class="text-muted">
+          <h2><b>$100</b> or <b>$30</b><small style="font-size:12pt">(monthly)</small></h2>
+        </div>
+        <br>
+
+        <div class="rankperks">
+          <p><span class="badge badge-pill badge-success">Emerald</span> on our Server, Forums and Discord</p>
+          <p>Inherit all perks from <span class="badge badge-pill badge-secondary">Iron</span> , <span class="badge badge-pill badge-warning">Gold</span> and <span class="badge badge-pill badge-primary">Diamond</span></p>
+          <p>Access to /sethome, maximum of 5 on the Survial Server.</p>
+        </div>
+      </div> -->
+  </div>
+  <br>
+
+  <div class="alert alert-info" role="alert">
+    Visit the Shop to buy any of our ranks to support our Server and operations :) <a href="/shop">Click me to be directed to the shop.</a>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><i class="fas fa-question"></i> Shop FAQ</div>
+    <div class="card-body">
+      <h5 class="card-title">Where does my money go?</h5>
+      <p class="card-text">Any money directed towards Crafting For Christ will primarly go towards the costs to maintain and run the Servers. In addition to server costs, money may also go towards Social Media advertising, giveaways and in the future Developers whom make the server possible. By purchasing anything from Crafting For Christ you are helping us keep the servers up and running!</p>
+
+      <h5 class="card-title">What can I pay with?</h5>
+      <p class="card-text">I dunno..</p>
+
+      <h5 class="card-title">I didn't get my rank!</h5>
+      <p class="card-text">If you have waited 12 hours and haven't received your rank or other purchased items, it is likely there was an issue handling your payment. Be sure to <a href="mailto:<%= contactemail %>">contact our Support Team</a> if you are in this position and we'll be sure to sort it out as soon as possible.</p>
+
+      <h5 class="card-title">Can I transfer my rank to a different account?</h5>
+      <p class="card-text">Ranks purchased are strictly not transferrable, You may not move your rank from one Minecraft account to another.</p>
+
+      <h5 class="card-title">I didn't get my rank in Discord!</h5>
+      <p class="card-text">The assigning of ranks in Discord is not automated. Please ping a Senior Staff or Administrator to ask for your rank to be assigned.</p>
+    </div>
+  </div>
+  <br>
+</div>
+
+<% include partials/footer.ejs %>
