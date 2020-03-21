@@ -46,10 +46,9 @@
   "discordsend": true,
   "broadcastchannel": "general",
   "applicationschannel": "applications",
-  "eventschannel": "general",
+  "eventschannel": "announcements",
+  "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
-  "mailsend": true,
-  "contactform": true,
 
   "gameserverapp": false,
   "contentcreatorapp": true,
