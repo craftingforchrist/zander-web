@@ -13,10 +13,8 @@ router.get('/', function(req, res, next) {
       "pagetitle": "Login"
     });
   } else {
-    res.render('index', {
-      "pagetitle": "Home"
-    });
-  }
+    res.redirect('/');
+  };
 });
 
 router.post('/', function (req,res,next) {

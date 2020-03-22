@@ -1,0 +1,40 @@
+<% include ../../partials/header.ejs %>
+<% include ../../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <h1>Event Creation</h1>
+  </div>
+
+  <div class="" style="width:500px; margin:0 auto;">
+    <form method="post" action="/admin/events/create">
+      <div class="form-group">
+        <label for="name">Event Name</label>
+        <input type="text" class="form-control" name="name" value="" required>
+      </div>
+      <div class="form-group">
+        <label for="icon">Event Icon</label>
+        <input type="text" class="form-control" name="icon" value="" required>
+        <small class="form-text text-muted">This should be a .png file link from imgur. The event icon MUST be 250px x 250px.</small>
+      </div>
+      <div class="form-group">
+        <label for="date">Event Date</label>
+        <input type="text" class="form-control" name="date" value="" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Event Time</label>
+        <input type="text" class="form-control" name="time" value="" required>
+      </div>
+      <div class="form-group">
+        <label for="information">Event Information</label>
+        <textarea name="information" rows="8" cols="63" required></textarea>
+        <small class="form-text text-muted">You can use HTML to format the information.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+  </div>
+  <br>
+</div>
+
+<% include ../../partials/footer.ejs %>

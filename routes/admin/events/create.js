@@ -5,8 +5,21 @@ const database = require('../../../controllers/database.js');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 
-
 module.exports = (client) => {
+  router.get('/', function (req, res, next) {
+    if (req.session.user) {
+      res.render('admin/events/create', {
+        "pagetitle": "Administration Panel - Create Event"
+      });
+    } else {
+      res.render('session/login', {
+        setValue: true,
+        message: 'You cannot access this page unless you are logged in.',
+        "pagetitle": "Login"
+      });
+    }
+  });
+
   router.post('/', function (req, res) {
     if (req.session.user) {
       const name = req.body.name;

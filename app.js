@@ -32,6 +32,7 @@ const config = require('./config.json');
 //       timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
 //   },
 // log = SimpleNodeLogger.createSimpleLogger(opts);
+
 //
 // Controllers
 //
@@ -348,6 +349,8 @@ app.get('*', function(req, res) {
 });
 
 client.on("message", (message) => {
+  // console.log(message.content);
+
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
 
@@ -360,38 +363,6 @@ client.on("message", (message) => {
   let commandfile = client.commands.get(cmd.slice(prefix.length));
   if (commandfile) commandfile.run(client, message, args);
 });
-
-// client.on("voiceStateUpdate", (oldMember, newMember) => {
-//   let newUserChannel = newMember.voiceChannel
-//   let oldUserChannel = oldMember.voiceChannel
-//
-//   let voicechannelrole = newMember.roles.find(role => role.name === 'Voice');
-//   if (!voicechannelrole) {
-//     try {
-//       voicechannelrole = newMember.guild.createRole({
-//         name: 'Text',
-//         color: "#000000"
-//       })
-//     } catch (err) {
-//       console.log(err.stack);
-//     }
-//   };
-//
-//   let voicechannel = newMember.channels.find(channel => channel.name === 'voice');
-//   if (!voicechannel) {
-//     newMember.guild.createChannel('voice', { type: 'text' });
-//   }
-//
-//   if (oldUserChannel === undefined && newUserChannel !== undefined) {
-//     // User Joins a voice channel
-//     console.log('Someone joins voice channel.');
-//     newMember.addRole(voicechannelrole.id);
-//   } else if (newUserChannel === undefined) {
-//     // User leaves a voice channel
-//     console.log('Someone leaves voice channel.');
-//     newMember.removeRole(voicechannelrole.id);
-//   };
-// });
 
 //
 // Application Boot
