@@ -56,7 +56,7 @@
   "gameserverapp": false,
   "contentcreatorapp": true,
   "developerapp": true,
-  "juniorstaffapp": false,
+  "juniorstaffapp": true,
   "socialmediaapp": true,
   "builderapp": true
 }
