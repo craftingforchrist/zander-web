@@ -135,6 +135,7 @@ var live = require('./routes/live');
 var play = require('./routes/play');
 var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
+var faq = require('./routes/faq');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -193,6 +194,7 @@ app.use('/live', live);
 app.use('/play', play);
 app.use('/vote', vote);
 app.use('/ranks', ranks);
+app.use('/faq', faq);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);

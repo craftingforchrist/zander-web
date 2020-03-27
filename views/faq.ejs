@@ -1,0 +1,111 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<link rel="stylesheet" href="./assets/css/faq.css">
+
+<style media="screen">
+  .btn-link {
+    color: black;
+    text-decoration: none;
+  }
+</style>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3">Information & Guides</h1>
+      <p class="lead">Information you might be interested in!</p>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="intro-tab" data-toggle="tab" href="#intro" role="tab" aria-controls="intro" aria-selected="true">Introduction</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="false">General</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="shoprank-tab" data-toggle="tab" href="#shoprank" role="tab" aria-controls="shoprank" aria-selected="false">Shop / Rank</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+    <!--  -->
+    <!-- Introduction Tab -->
+    <!--  -->
+    <div class="tab-pane fade show active" id="intro" role="tabpanel" aria-labelledby="intro-tab">...</div>
+
+    <!--  -->
+    <!-- General Tab -->
+    <!--  -->
+    <div class="tab-pane fade" id="general" role="tabpanel" aria-labelledby="general-tab">
+      <div class="row">
+        <div class="col-3">
+          <div id="list-example" class="list-group">
+            <a class="list-group-item list-group-item-action" href="#list-item-1">How can I join the Server?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">I'm having issues connecting!</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">Who should I turn to for help?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">How can I report a player?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-5">I found a bug! How should I report it?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-6">Where can I apply for Staff?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-7">Can you add this feature?</a>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+            <h4 id="list-item-1">How can I join the Server?</h4>
+            <p>...</p>
+            <h4 id="list-item-2">I'm having issues connecting!</h4>
+            <p>...</p>
+            <h4 id="list-item-3">Who should I turn to for help?</h4>
+            <p>...</p>
+            <h4 id="list-item-4">How can I report a player?</h4>
+            <p>...</p>
+            <h4 id="list-item-5">I found a bug! How should I report it?</h4>
+            <p>...</p>
+            <h4 id="list-item-6">Where can I apply for Staff?</h4>
+            <p>...</p>
+            <h4 id="list-item-7">Can you add this feature?</h4>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  -->
+    <!-- Shop / Rank Tab -->
+    <!--  -->
+    <div class="tab-pane fade" id="shoprank" role="tabpanel" aria-labelledby="shoprank-tab">
+      <div class="row">
+        <div class="col-3">
+          <div id="list-example" class="list-group">
+            <a class="list-group-item list-group-item-action" href="#list-item-1">Where does my money go?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">What can I pay with?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">I didn't get my rank!</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">Can I transfer my rank to a different account?</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-5">I didn't get my rank in Discord!</a>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+            <h4 id="list-item-1">Where does my money go?</h4>
+            <p>...</p>
+            <h4 id="list-item-2">What can I pay with?</h4>
+            <p>...</p>
+            <h4 id="list-item-3">I didn't get my rank!</h4>
+            <p>...</p>
+            <h4 id="list-item-4">Can I transfer my rank to a different account?</h4>
+            <p>...</p>
+            <h4 id="list-item-5">I didn't get my rank in Discord!</h4>
+            <p>...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+</div>
+
+<% include partials/footer.ejs %>

@@ -14,12 +14,13 @@ CREATE TABLE playerdata (
   uuid VARCHAR(36),
   username VARCHAR(16),
   joined TIMESTAMP NOT NULL DEFAULT NOW(),
-  discord TEXT(),
-  twitter TEXT(),
-  youtube TEXT(),
-  mixer TEXT(),
-  instagram TEXT(),
-  facebook TEXT()
+  discord TEXT,
+  twitter TEXT,
+  youtube TEXT,
+  mixer TEXT,
+  instagram TEXT,
+  facebook TEXT,
+  snapchat TEXT
 );
 create index playerdata_username on playerdata (username);
 -- INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
@@ -98,16 +99,6 @@ INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzx
 --
 -- -- This allows the root account to have access to all parts of the admin panel
 -- INSERT INTO accountspermissions (account_id, admincontentcreator, adminevents, adminservers, adminaccounts, adminaccountspermissions) VALUES (0, true, true, true, true, true);
-
--- CREATE TABLE `ipbans` (
---   ip VARCHAR(20) NOT NULL,
---   time TIMESTAMP NOT NULL,
---   punisher VARCHAR(16) NOT NULL,
---   reason TEXT NOT NULL,
---   active TINYINT(4) NOT NULL,
---   deactivater VARCHAR(16) NOT NULL,
---   PRIMARY KEY (ip)
--- );
 
 CREATE TABLE events (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
