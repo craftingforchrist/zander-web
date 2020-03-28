@@ -3,8 +3,8 @@ const router = express.Router();
 const config = require('../config.json');
 
 router.get('/', (req, res, next) => {
-  res.render('ranks', {
-    "pagetitle": "Ranks"
+  res.render('guides', {
+    "pagetitle": "Guides"
   });
 });
 
