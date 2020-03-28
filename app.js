@@ -32,6 +32,7 @@ const config = require('./config.json');
 //       timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
 //   },
 // log = SimpleNodeLogger.createSimpleLogger(opts);
+
 //
 // Controllers
 //
@@ -93,7 +94,7 @@ app.use((req, res, next) => {
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
-  res.locals.platformpatreon = config.patreon;
+  res.locals.platformshop = config.shop;
   res.locals.platformtwitter = config.twitter;
   res.locals.platformfacebook = config.facebook;
   res.locals.platforminstagram = config.instagram;
@@ -133,6 +134,8 @@ var live = require('./routes/live');
 // var watch = require('./routes/watch');
 var play = require('./routes/play');
 var vote = require('./routes/vote');
+var ranks = require('./routes/ranks');
+var guides = require('./routes/guides');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -156,6 +159,7 @@ var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
 var forums = require('./routes/redirect/forums');
+var shop = require('./routes/redirect/shop');
 
 var login = require('./routes/session/login');
 var logout = require('./routes/session/logout');
@@ -189,6 +193,8 @@ app.use('/live', live);
 // app.use('/watch', watch);
 app.use('/play', play);
 app.use('/vote', vote);
+app.use('/ranks', ranks);
+app.use('/guides', guides);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
@@ -209,6 +215,7 @@ app.use('/discord', discord);
 app.use('/issues', issues);
 app.use('/support', support);
 app.use('/forums', forums);
+app.use('/shop', shop);
 
 app.use('/login', login);
 app.use('/logout',logout)
@@ -344,6 +351,8 @@ app.get('*', function(req, res) {
 });
 
 client.on("message", (message) => {
+  // console.log(message.content);
+
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
 
@@ -356,38 +365,6 @@ client.on("message", (message) => {
   let commandfile = client.commands.get(cmd.slice(prefix.length));
   if (commandfile) commandfile.run(client, message, args);
 });
-
-// client.on("voiceStateUpdate", (oldMember, newMember) => {
-//   let newUserChannel = newMember.voiceChannel
-//   let oldUserChannel = oldMember.voiceChannel
-//
-//   let voicechannelrole = newMember.roles.find(role => role.name === 'Voice');
-//   if (!voicechannelrole) {
-//     try {
-//       voicechannelrole = newMember.guild.createRole({
-//         name: 'Text',
-//         color: "#000000"
-//       })
-//     } catch (err) {
-//       console.log(err.stack);
-//     }
-//   };
-//
-//   let voicechannel = newMember.channels.find(channel => channel.name === 'voice');
-//   if (!voicechannel) {
-//     newMember.guild.createChannel('voice', { type: 'text' });
-//   }
-//
-//   if (oldUserChannel === undefined && newUserChannel !== undefined) {
-//     // User Joins a voice channel
-//     console.log('Someone joins voice channel.');
-//     newMember.addRole(voicechannelrole.id);
-//   } else if (newUserChannel === undefined) {
-//     // User leaves a voice channel
-//     console.log('Someone leaves voice channel.');
-//     newMember.removeRole(voicechannelrole.id);
-//   };
-// });
 
 //
 // Application Boot

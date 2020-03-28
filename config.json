@@ -12,7 +12,7 @@
 
   "website": "https://www.craftingforchrist.net/",
   "discordlink": "https://discordapp.com/invite/fGWNchS",
-  "patreonlink": "https://www.patreon.com/craftingforchrist",
+  "shoplink": "http://craftingforchrist.tebex.io/",
   "twitterlink": "https://twitter.com/craft4christmc",
   "facebooklink": "https://www.facebook.com/craft4christ/",
   "instagramlink": "https://instagram.com/craftingforchrist",
@@ -48,10 +48,9 @@
   "discordsend": true,
   "broadcastchannel": "general",
   "applicationschannel": "applications",
-  "eventschannel": "general",
+  "eventschannel": "announcements",
+  "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
-  "mailsend": true,
-  "contactform": true,
 
   "gameserverapp": false,
   "contentcreatorapp": true,

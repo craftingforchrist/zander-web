@@ -1,0 +1,51 @@
+<% include ../../partials/header.ejs %>
+<% include ../../partials/navigation.ejs %>
+
+<div class="container">
+<br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h1>Events</h1>
+      </div>
+      <div class="col-">
+        <a href="/admin/events/create"><button type="button" class="btn btn-primary btn-sm">Create an Event</button></a>
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Event Name</th>
+        <th scope="col">Date & Time</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% objdata.forEach(function (data) { %>
+        <tr>
+          <td><%= data.eventtitle %></td>
+          <td><%= data.eventdate %> @ <%= data.eventtime %></td>
+          <td style="max-width: 10px;">
+            <div class="btn-group" role="group" aria-label="eventgroup">
+              <form action="/admin/events/list" method="post">
+                <input type="hidden" name="action" value="eventedit">
+                <input type="hidden" name="id" value="<%= data.id %>">
+                <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+              </form>
+
+              <form action="/admin/events" method="post">
+                <input type="hidden" name="action" value="eventdelete">
+                <input type="hidden" name="id" value="<%= data.id %>">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<% include ../../partials/footer.ejs %>

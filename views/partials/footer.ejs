@@ -37,6 +37,7 @@
           <li><a href="/vote"><i class="fas fa-vote-yea"></i> Vote</a></li>
           <li><a href="/staff"><i class="fas fa-users"></i> Staff</a></li>
           <li><a href="/live"><i class="fab fa-twitch"></i> Live</a></li>
+          <li><a href="/ranks"><i class="fas fa-tag"></i> Ranks</a></li>
         </ul>
       </div>
 
@@ -45,10 +46,6 @@
         <ul class="list-unstyled">
           <% if (platformdiscord == true) { %>
           <li><a href="/discord"><i class="fab fa-discord"></i> Discord</a></li>
-          <% } %>
-
-          <% if (platformpatreon == true) { %>
-            <li><a href="/support"><i class="fab fa-patreon"></i> Patreon</a></li>
           <% } %>
 
           <% if (platformtwitch == true) { %>
@@ -74,6 +71,7 @@
           <% if (platformemail == true) { %>
             <li><a href="mailto:<%= contactemail %>"><i class="fas fa-envelope"></i> Email</a></li>
           <% } %>
+          <li><a href="/shop"><i class="fas fa-shopping-basket"></i> Shop</a></li>
         </ul>
       </div>
     </div>
