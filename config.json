@@ -19,9 +19,11 @@
   "redditlink": "https://www.reddit.com/myserver",
   "forumlink": "https://forums.craftingforchrist.net/",
   "twitchlink": "https://www.twitch.tv/craftingforchrist",
+  "shoplink": "http://craftingforchrist.tebex.io/",
 
   "email": true,
   "discord": true,
+  "shop": true,
   "twitter": true,
   "facebook": true,
   "instagram": true,
@@ -39,9 +41,9 @@
   "reportlink": "https://forms.gle/WeyFqBynSDhaiPjT7",
   "contentcreatorapplink": "https://forms.gle/cvTJkYYiGtRnZqxK8",
   "developerapplink": "https://forms.gle/mtTuYqp3oXVmCTpv6",
-  "juniorstaffapplink": "http://google.com.au/",
-  "socialmediaapplink": "http://google.com.au/",
-  "builderapplink": "http://google.com.au/",
+  "juniorstaffapplink": "https://forms.gle/n9R1dx4R5vdPqhRP9",
+  "socialmediaapplink": "https://forms.gle/HXNtQC1TZ3uDHbhN6",
+  "builderapplink": "https://forms.gle/Sz9RXaudP2FGpLbYA",
 
   "discordsend": true,
   "broadcastchannel": "general",
@@ -53,7 +55,7 @@
   "gameserverapp": false,
   "contentcreatorapp": true,
   "developerapp": true,
-  "juniorstaffapp": false,
-  "socialmediaapp": false,
-  "builderapp": false
+  "juniorstaffapp": true,
+  "socialmediaapp": true,
+  "builderapp": true
 }

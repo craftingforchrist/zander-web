@@ -1,6 +1,8 @@
 <% include partials/header.ejs %>
 <% include partials/navigation.ejs %>
 
+<script type="text/javascript" src="/assets/js/copytoclipboard.js"></script>
+
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
@@ -14,10 +16,11 @@
     <div class="row">
       <div class="col-sm">
         <% objdata.forEach(function (data) { %>
-          <div class="card" style="width: 20rem; height:17rem; display:inline-block; vertical-align: top;">
+          <div class="card" style="width: 21rem; height:20rem; display:inline-block; vertical-align: top;">
             <div class="card-body">
               <h4 class="card-title"><%= data.name %></h4>
-              <h5><%= data.ipaddress %></h5>
+              <h5 style="border-radius:5px; background-color:#aaaaaa; padding:5px;"><%= data.ipaddress %></h5>
+              <button type="button" class="btn btn-default btn-copy js-tooltip js-copy" data-toggle="tooltip" data-placement="bottom" data-copy="<%= data.ipaddress %>" title="Copy to clipboard"><i class="fas fa-clipboard"></i></button>
               <p style="font-size:10pt"><%= data.description %></p>
               <% if (data.disclaimer) { %>
                 <p class="text-muted" style="font-size:10pt"><%= data.disclaimer %></p>
