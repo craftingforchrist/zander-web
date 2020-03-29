@@ -30,6 +30,9 @@
       <a class="nav-link" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="false">General</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" id="survival-tab" data-toggle="tab" href="#survival" role="tab" aria-controls="survival" aria-selected="false">Survival</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" id="shoprank-tab" data-toggle="tab" href="#shoprank" role="tab" aria-controls="shoprank" aria-selected="false">Shop / Ranks</a>
     </li>
   </ul>
@@ -99,6 +102,87 @@
               <p>Go check out our <a href="/apply">apply page</a> for a list of positions that we are actively looking to fill.</p>
             <h4 id="list-item-7">Can you add this feature?</h4>
               <p>Currently we don't support any official platform for feature additions, but we always love a good idea. The best places to share your idea with us and the community is likely in the in-game chat, but most likely in <a href="/discord">our Discord server</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  -->
+    <!-- Survival Tab -->
+    <!--  -->
+    <div class="tab-pane fade" id="survival" role="tabpanel" aria-labelledby="survival-tab">
+      <div class="row">
+        <div class="col-3">
+          <div id="list-example" class="list-group">
+            <a class="list-group-item list-group-item-action" href="#list-item-1">What commands do I use to claim land?</a>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+            <h4 id="list-item-1">What commands do I use to claim land?</h4>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Command</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>/abandonclaim</td>
+                    <td>Deletes the claim you're standing in.	</td>
+                  </tr>
+                  <tr>
+                    <td>/claimexplosions</td>
+                    <td>Toggles if explosions are allowed in the claim.</td>
+                  </tr>
+                  <tr>
+                    <td>/trust</td>
+                    <td>Gives another player permission to edit in your claim.</td>
+                  </tr>
+                  <tr>
+                    <td>/untrust</td>
+                    <td>Revokes any permissions granted to a player in your claim.</td>
+                  </tr>
+                  <tr>
+                    <td>/accesstrust</td>
+                    <td>Gives a player permission to use your buttons, levers, and beds.</td>
+                  </tr>
+                  <tr>
+                    <td>/containertrust</td>
+                    <td>Gives a player permission to use your buttons, levers, beds, crafting gear, containers, and animals.</td>
+                  </tr>
+                  <tr>
+                    <td>/trustlist</td>
+                    <td>Lists the permissions for the claim you're standing in.</td>
+                  </tr>
+                  <tr>
+                    <td>/subdivideclaims</td>
+                    <td>Switches your shovel to subdivision mode, so you can subdivide your claims.</td>
+                  </tr>
+                  <tr>
+                    <td>/restrictsubclaim</td>
+                    <td>Restricts a subclaim, so that it inherits no permissions from the parent claim.</td>
+                  </tr>
+                  <tr>
+                    <td>/basicclaims</td>
+                    <td>Puts your shovel back in basic claims mode.</td>
+                  </tr>
+                  <tr>
+                    <td>/permissiontrust</td>
+                    <td>Grants a player permission to share his permission level with others.</td>
+                  </tr>
+                  <tr>
+                    <td>/untrust all</td>
+                    <td>Removes all permissions for all players in your claim.</td>
+                  </tr>
+                  <tr>
+                    <td>/abandonallclaims</td>
+                    <td>Deletes all of your claims.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <small>Adapted from <a href="https://github.com/TechFortress/GriefPrevention/wiki/Commands">GriefPrevention Wiki Commands</a>.</small>
           </div>
         </div>
       </div>
