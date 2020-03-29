@@ -1,0 +1,66 @@
+<% include partials/header.ejs %>
+<% include partials/navigation.ejs %>
+
+<style media="screen">
+  .heightsync {
+    height: 150px;
+  }
+</style>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3"><i class="fas fa-pen-fancy"></i> Appeal</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm">
+      <div class="card">
+        <div class="card-header">
+          Appeal via Discord
+        </div>
+        <div class="card-body heightsync">
+          <p>To appeal via Discord, join our <a href="/discord">Discord</a> and go to the <code>#support</code> channel.</p>
+          <p>In the channel, react to the Appeal button and it will open a new ticket.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="col-sm">
+        <div class="card">
+          <div class="card-header">
+            Appeal via Email
+          </div>
+          <div class="card-body heightsync">
+            <p>To appeal via Email, drop an email to <a href="mailto:<%= contactemail %>"><code><%= contactemail %></code></a> and a Staff Member will be in touch.</p>
+            <small>Typically this is the slowest system, the Discord system is recommended.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="card">
+    <div class="card-header">
+      In your Appeal, address the following:
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>Make sure the Subject line has your Minecraft IGN (In Game Name) in it so we know who you are.</li>
+        <li>Address your punishment reason and who punished you.</li>
+        <li>Admit whether youo are guilty or not of this punishement.</li>
+        <li>If you are not, state a defence.</li>
+      </ul>
+    </div>
+  </div>
+  <br>
+
+  <div class="alert alert-warning" role="alert">
+    These are the only options, do not attempt to appeal in any other ways than these. If you DM a Staff Member to start an appeal they will direct you here.
+  </div>
+  <br>
+</div>
+
+<% include partials/footer.ejs %>

@@ -136,6 +136,7 @@ var play = require('./routes/play');
 var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
 var guides = require('./routes/guides');
+var appeal = require('./routes/appeal');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -195,6 +196,7 @@ app.use('/play', play);
 app.use('/vote', vote);
 app.use('/ranks', ranks);
 app.use('/guides', guides);
+app.use('/appeal', appeal);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);
