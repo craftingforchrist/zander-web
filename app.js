@@ -219,6 +219,7 @@ app.use('/issues', issues);
 app.use('/support', support);
 app.use('/forums', forums);
 app.use('/shop', shop);
+app.use('/giveaway', giveaway);
 
 app.use('/login', login);
 app.use('/logout',logout)
