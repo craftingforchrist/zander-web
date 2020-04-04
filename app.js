@@ -146,6 +146,7 @@ var refund = require('./routes/policy/refund');
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
+var giveaway = require('./routes/redirect/giveaway');
 
 var apply = require('./routes/apply/apply');
 // var applygame = require('./routes/apply/apply-game')(client);

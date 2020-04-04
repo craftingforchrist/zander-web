@@ -31,6 +31,7 @@ CREATE TABLE gamesessions (
   sessionstart TIMESTAMP NOT NULL DEFAULT NOW(),
   sessionend TIMESTAMP NULL,
   ipaddress VARCHAR(45),
+  server VARCHAR(50),
   FOREIGN KEY (player_id) REFERENCES playerdata (id)
 );
 create index gamesessions_player_id on gamesessions (player_id);
