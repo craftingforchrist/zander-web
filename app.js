@@ -91,6 +91,7 @@ app.use((req, res, next) => {
   res.locals.reddit = config.redditlink;
   res.locals.twitch = config.twitchlink;
   res.locals.discord = config.discordlink;
+  res.locals.giveaway = config.giveawaylink;
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
