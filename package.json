@@ -39,7 +39,7 @@
     "minecraft-lib": "^1.1.5",
     "modern-rcon": "^1.0.3",
     "mojang-api": "0.0.2",
-    "mysql": "^2.17.1",
+    "mysql": "^2.18.1",
     "mysql-apostrophe": "^1.0.8",
     "node-yt": "^1.0.8",
     "nodemailer": "^6.3.0",
