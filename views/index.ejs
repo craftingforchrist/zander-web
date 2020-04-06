@@ -44,7 +44,7 @@
     <% include ./partials/micros/successalert.ejs %>
   <% } %>
 
-  <% if (!objdata) { %>
+  <% if (objdata != "[]") { %>
     <% include partials/micros/nowlive.ejs %>
   <% } %>
 

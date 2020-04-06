@@ -20,6 +20,7 @@
   "forumlink": "https://forums.craftingforchrist.net/",
   "twitchlink": "https://www.twitch.tv/craftingforchrist",
   "shoplink": "http://craftingforchrist.tebex.io/",
+  "youtubelink": "https://www.youtube.com/channel/UCeijz6MNnya85LprMjPmYag",
   "giveawaylink": "https://gleam.io/competitions/hgxXq-crafting-for-christ-minecraft-dungeons-standard-edition-giveaway",
 
   "email": true,
@@ -30,6 +31,7 @@
   "instagram": true,
   "reddit": false,
   "twitch": true,
+  "youtube": true,
 
   "rulesmd": "https://raw.githubusercontent.com/crafting-for-christ/Legal/master/rules.md",
   "termsmd": "https://raw.githubusercontent.com/crafting-for-christ/Legal/master/terms.md",

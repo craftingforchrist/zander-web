@@ -9,6 +9,7 @@ router.get('/', (req, res, next) => {
       res.redirect('/');
       throw error;
     } else {
+      console.log(results);
       res.render('index', {
         "pagetitle": "Home",
         objdata: results

@@ -41,7 +41,7 @@ const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database co
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 // const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
-const twitchtracker = require('./controllers/twitchtracker'); // Twtich Online Tracker controller
+const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich Online Tracker controller
 
 const uuid = require('./functions/uuid');
 
@@ -91,6 +91,7 @@ app.use((req, res, next) => {
   res.locals.reddit = config.redditlink;
   res.locals.twitch = config.twitchlink;
   res.locals.discord = config.discordlink;
+  res.locals.youtube = config.youtubelink;
   res.locals.giveaway = config.giveawaylink;
 
   res.locals.platformemail = config.email;
@@ -101,6 +102,7 @@ app.use((req, res, next) => {
   res.locals.platforminstagram = config.instagram;
   res.locals.platformreddit = config.reddit;
   res.locals.platformtwitch = config.twitch;
+  res.locals.platformyoutube = config.youtube;
 
   // res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
