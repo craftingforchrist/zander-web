@@ -29,7 +29,7 @@
   "facebook": true,
   "instagram": true,
   "reddit": false,
-  "twitch": false,
+  "twitch": true,
 
   "rulesmd": "https://raw.githubusercontent.com/crafting-for-christ/Legal/master/rules.md",
   "termsmd": "https://raw.githubusercontent.com/crafting-for-christ/Legal/master/terms.md",
