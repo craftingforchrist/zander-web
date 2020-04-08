@@ -34,7 +34,7 @@
     "fetch": "^1.1.0",
     "fs": "0.0.1-security",
     "hogan": "^1.0.2",
-    "inline-css": "^2.4.2",
+    "inline-css": "^2.6.3",
     "leo-profanity": "^1.2.6",
     "minecraft-lib": "^1.1.5",
     "modern-rcon": "^1.0.3",
