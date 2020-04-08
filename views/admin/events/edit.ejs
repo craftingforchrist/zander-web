@@ -1,7 +1,6 @@
 <% include ../../partials/header.ejs %>
 <% include ../../partials/navigation.ejs %>
 
-<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 <script type="text/javascript">
   setInterval(function eventPreviewFunction() {
     var eventtitle = document.getElementById("eventtitle").value;
@@ -25,34 +24,35 @@
   <br>
   <div class="row">
     <div class="col-sm-">
-      <h1>Event Creation</h1>
+      <h1>Event Editor</h1>
       <div>
-        <form method="post" action="/admin/events/create">
+        <form method="post" action="/admin/events/edit">
+          <input type="hidden" name="id" value="<%= objdata[0].id %>">
           <div class="form-group">
             <label for="name">Event Name</label>
-            <input type="text" class="form-control" id="eventtitle" name="name" value="" required>
+            <input type="text" class="form-control" id="eventtitle" name="name" value="<%= objdata[0].eventtitle %>" required>
           </div>
           <div class="form-group">
             <label for="icon">Event Icon</label>
-            <input type="text" class="form-control" id="eventicon" name="icon" value="" required>
+            <input type="text" class="form-control" id="eventicon" name="icon" value="<%= objdata[0].eventicon %>" required>
             <small class="form-text text-muted">This should be a .png file link from imgur. The event icon MUST be 250px x 250px.</small>
           </div>
           <div class="form-group">
             <label for="date">Event Date</label>
-            <input type="text" class="form-control" id="eventdate" name="date" value="" required>
+            <input type="text" class="form-control" id="eventdate" name="date" value="<%= objdata[0].eventdate %>" required>
             <!-- <input type="date" class="form-control" id="eventdate" name="date" value="" required pattern="\d{4}-\d{2}-\d{2}"> -->
           </div>
           <div class="form-group">
             <label for="time">Event Time</label>
-            <input type="time" class="form-control" id="eventtime" name="time" value="" required>
+            <input type="time" class="form-control" id="eventtime" name="time" value="<%= objdata[0].eventtime %>" required>
             <!-- <input type="text" class="form-control" id="eventtime" name="time" value="" required> -->
           </div>
           <div class="form-group">
             <label for="information">Event Information</label><br>
-            <textarea name="information" id="eventinformation" rows="8" cols="63" required></textarea>
+            <textarea name="information" id="eventinformation" rows="8" cols="63" required><%= objdata[0].eventinformation %></textarea>
             <small class="form-text text-muted">You can use HTML to format the information.</small>
           </div>
-          <button type="submit" class="btn btn-primary">Create Event</button>
+          <button type="submit" class="btn btn-primary">Edit Event</button>
           <!-- <button type="button" class="btn btn-info" onclick="eventPreviewFunction()">Preview</button> -->
         </form>
       </div>

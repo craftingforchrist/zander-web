@@ -29,12 +29,11 @@
           <td><%= data.eventdate %> @ <%= data.eventtime %></td>
           <td style="max-width: 10px;">
             <div class="btn-group" role="group" aria-label="eventgroup">
-              <form action="/admin/events/list" method="post">
+              <form action="/admin/events" method="post">
                 <input type="hidden" name="action" value="eventedit">
                 <input type="hidden" name="id" value="<%= data.id %>">
                 <button type="submit" class="btn btn-warning btn-sm">Edit</button>
               </form>
-
               <form action="/admin/events" method="post">
                 <input type="hidden" name="action" value="eventdelete">
                 <input type="hidden" name="id" value="<%= data.id %>">

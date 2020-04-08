@@ -41,6 +41,21 @@ router.post('/', function (req, res) {
         }
       });
     };
+
+    if (action === "eventedit") {
+      database.query(`SELECT * FROM events WHERE id=?;`, [id], function (error, results, fields) {
+        if (error) {
+          res.redirect('/');
+          throw error;
+        } else {
+          console.log(results);
+          res.render('admin/events/edit', {
+            "pagetitle": `Administration Panel - Event Editor - ${results[0].eventtitle}`,
+            objdata: results
+          });
+        }
+      });
+    };
   } else {
     res.render('session/login', {
       setValue: true,
