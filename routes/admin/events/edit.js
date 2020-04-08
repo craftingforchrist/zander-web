@@ -32,17 +32,17 @@ router.post('/', function (req, res) {
       } else {
         res.redirect('/admin/events');
 
-        // // Take event that was just created and announce it to Discord.
-        // let eventschannel = client.channels.find(c => c.name === `${config.eventschannel}`);
-        // if (!eventschannel) return console.log(`A #${config.eventschannel} channel does not exist.`);
-        //
-        // var embed = new Discord.RichEmbed()
-        //   .setTitle(name)
-        //   .setDescription(`**Date & Time: **${date} @ ${time}\n\n**Event Information: **${information}`)
-        //   .setThumbnail(icon)
-        //   .setColor('#99ddff')
-        // eventschannel.send(embed);
-        // console.log(`[CONSOLE] [DISCORD] The new Event has been broadcasted to Discord.`);
+        // Take event that was just created and announce it to Discord.
+        let eventschannel = client.channels.find(c => c.name === `${config.eventschannel}`);
+        if (!eventschannel) return console.log(`A #${config.eventschannel} channel does not exist.`);
+
+        var embed = new Discord.RichEmbed()
+          .setTitle(`Event Update`)
+          .setDescription(`The ${name} event information has been updated.\nGo to ${config.website}events to see mor information.`)
+          .setThumbnail(icon)
+          .setColor('#99ddff')
+        eventschannel.send(embed);
+        console.log(`[CONSOLE] [DISCORD] The new Event has been broadcasted to Discord.`);
       };
     });
   } else {
