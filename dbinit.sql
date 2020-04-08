@@ -123,8 +123,7 @@ CREATE TABLE servers (
 CREATE TABLE ccstreams (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   channelname TEXT,
-  streamtitle TEXT,
-  viewercount VARCHAR(3),
+  viewercount VARCHAR(10),
   status ENUM('ONLINE', 'OFFLINE')
 );
 

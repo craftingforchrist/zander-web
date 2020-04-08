@@ -100,7 +100,6 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col">Channel Name</th>
-                <th scope="col">Stream Title</th>
                 <th scope="col">Viewers</th>
                 <th scope="col"></th>
               </tr>
@@ -108,9 +107,8 @@
             <% ccstreamsdata.forEach(function (data) { %>
               <tbody>
                 <tr>
-                  <td><i class="fas fa-circle"></i></td>
+                  <td><i class="fas fa-circle" <% if (data.status == "ONLINE") { %> style="color:green"; <% } else { %> style="color:red"; <% } %>></i></td>
                   <td><%= data.channelname %></td>
-                  <td><%= data.streamtitle %></td>
                   <td><%= data.viewercount %></td>
                   <td>
                     <form action="contentcreator/delete" method="post">
@@ -135,7 +133,7 @@
                 <th scope="col"></th>
               </tr>
             </thead>
-            <% ccstreamsdata.forEach(function (data) { %>
+            <% ccvideosdata.forEach(function (data) { %>
               <tbody>
                 <tr>
                   <td><%= data.channelname %></td>

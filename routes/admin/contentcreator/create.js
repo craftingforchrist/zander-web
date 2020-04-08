@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../../../config.json');
 const database = require('../../../controllers/database.js');
+const TwitchOnlineTracker = require('../../../controllers/twitchtracker.js');
 
 router.post('/', function (req, res) {
   if (req.session.user) {
@@ -20,7 +21,7 @@ router.post('/', function (req, res) {
           };
         });
       } else if (type == 'channel') {
-        database.query(`INSERT INTO ccvideos (channelname, channellink) VALUES (?, ?, ?, ?)`, [channelname, channellink], function (error, results, fields) {
+        database.query(`INSERT INTO ccvideos (channelname, channellink) VALUES (?, ?)`, [channelname, channellink], function (error, results, fields) {
           if (error) {
             res.redirect('/');
             throw error;
