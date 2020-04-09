@@ -63,6 +63,8 @@ app.use(session({ cookie: { maxAge: 60000 },
                   secret: process.env.sessionsecret,
                   resave: true,
                   saveUninitialized: true}));
+// Seems to have a common erorr at the moment:
+// Warning: connect.session() MemoryStore is not designed for a production environment, as it will leak memory, and will not scale past a single process.
 
 //
 // Global Website Variables

@@ -38,10 +38,10 @@ module.exports = (client) => {
             //
             // Discord Notification Send
             //
-            let contentcreatorchannel = client.channels.find(c => c.name === `${config.contentcreatorchannel}`);
+            let contentcreatorchannel = client.channels.cache.find(c => c.name === `${config.contentcreatorchannel}`);
             if (!contentcreatorchannel) return console.log(`A #${config.contentcreatorchannel} channel does not exist.`);
 
-            var embed = new Discord.RichEmbed()
+            var embed = new Discord.MessageEmbed()
               .setTitle(`${streamData.user_name} is now LIVE!`)
               .setDescription(`${streamData.user_name} is now live with ${streamData.viewer_count} viewers. Come watch live at https://www.twitch.tv/${streamData.user_name}`)
               .setColor('#8510d8')
