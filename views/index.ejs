@@ -1,6 +1,5 @@
 <%- include("./partials/header.ejs") %>
-<% include ./partials/navigation.ejs %>
-
+<%- include("./partials/navigation.ejs") %>
 
 <div class="container">
   <div class="jumbotron jumbotron-video-header my-4 home-jumbo-header">
@@ -41,11 +40,11 @@
   </div>
 
   <% if (successalert == true) { %>
-    <% include ./partials/micros/successalert.ejs %>
+    <%- include("./partials/micros/successalert.ejs") %>
   <% } %>
 
   <% if (objdata[0].ccstreamslive > 1) { %>
-    <% include ./partials/micros/nowlive.ejs %>
+    <%- include("./partials/micros/nowlive.ejs") %>
   <% } %>
 
   <div class="alert alert-info">
@@ -99,4 +98,4 @@
   </div>
 </div>
 
-<% include ./partials/footer.ejs %>
+<%- include("./partials/footer.ejs") %>
