@@ -4,7 +4,7 @@ const chalk = require('chalk');
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You do not have permissions to run this command.')
@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
 
   // Checks if ammount is a number.
   if (isNaN(args[0])) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('What you have entered is not a number, please try again.')
@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args) => {
   // Discords API won't delete anything above 100 messages.
   // Checks if number is above 100.
   if (args[0] > 100) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You cannot delete more than 100 messages at one time. Please enter a number below 100.')
@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (args[0] < 1) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You must enter a number more than 1.')
@@ -43,7 +43,7 @@ module.exports.run = async (client, message, args) => {
   }
 
   message.channel.bulkDelete(args[0]).then(() => {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Messages Cleared!')
       .setColor('#ffd633')
       .setDescription(`${message.author.username} deleted ${args[0]} messages.`)
@@ -54,14 +54,14 @@ module.exports.run = async (client, message, args) => {
   let createdAtRaw = message.createdAt.toDateString();
   let createdAt = createdAtRaw.split(' ');
 
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
     .setTitle('Messages Purged!')
     .setColor('#ffd633')
     .setDescription(`${args} messages have been purged from ${message.channel} by ${message.author}`)
 
-  let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
+  let adminlogchannel = message.guild.channels.cache.find(c => c.name === 'admin-log');
   adminlogchannel.send(embed).catch(e => {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ffa366')
       .setDescription(`There is no #admin-log channel, can't display details.`)

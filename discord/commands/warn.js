@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
 
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You do not have permissions to run this command.')
@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args) => {
 
   // Checks if the user is in the Discord and exists.
   if (!mentioneduser) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('This user does not exist.')
@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
 
   // Checks if you can punish the user.
   if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You cannot punishment this user.')
@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
   // Check for a punishement reason.
   let reason = args.slice(1).join(' ');
   if (!reason) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('Please provide a valid reason for this punishment.')
@@ -53,16 +53,16 @@ module.exports.run = async (client, message, args) => {
     return;
   }
 
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
     .setTitle('User has been Warned')
     .setColor('#4d79ff')
     .addField('Kicked User:', `${mentioneduser}`)
     .addField('Kicked By:', `${punisheduser}`)
     .addField('Reason:', reason)
 
-  let adminlogchannel = message.guild.channels.find(c => c.name === `${config.punishmentchannel}`);
+  let adminlogchannel = message.guild.channels.cache.find(c => c.name === `${config.punishmentchannel}`);
   adminlogchannel.send(embed).catch(e => {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ffa366')
       .setDescription(`There is no #admin-log channel, can't display details.`)
@@ -70,14 +70,14 @@ module.exports.run = async (client, message, args) => {
   });
 
   // Send notification to the command issuing channel.
-  let notificationembed = new Discord.RichEmbed()
+  let notificationembed = new Discord.MessageEmbed()
     .setTitle('User has been Warned.')
     .setColor('#4d79ff')
     .setDescription(`${mentioneduser} has been warned by ${punisheduser} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
-  let usernotifyembed = new Discord.RichEmbed()
+  let usernotifyembed = new Discord.MessageEmbed()
     .setTitle('You have been warned.')
     .setColor('#ffa366')
     .setDescription(`Hello ${mentioneduser}, you have been warned by ${punisheduser} for ${reason}`)

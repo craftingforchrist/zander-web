@@ -2,11 +2,11 @@ const Discord = require('discord.js');
 const chalk = require('chalk');
 
 module.exports = (message) => {
-  let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
+  let adminlogchannel = message.guild.channels.cache.find(c => c.name === 'admin-log');
   if (!adminlogchannel) return;
   if (message.author.bot) return;
 
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
     .setTitle('Message Deleted')
     .setDescription(`Message has been deleted in #${message.channel.name} by ${message.author.username}: ${message.content}`)
     .setColor('#FFA500')

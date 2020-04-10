@@ -4,7 +4,7 @@ const config = require('../../config.json')
 
 module.exports.run = async (client, message, args) => {
   message.channel.createInvite().then((invite) => {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Invite Created!')
       .setColor('#ffa366')
       .setURL(`https://discord.gg/${invite.code}`)

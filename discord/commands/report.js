@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
     .setColor('#4d79ff')
     .setDescription(`${message.author} has reported ${user} for ${reason}`)
 
-  let reportschannel = message.guild.channels.find(c => c.name === 'reports');
+  let reportschannel = message.guild.channels.cache.find(c => c.name === 'reports');
   reportschannel.send(embed).catch(e => {
     let embed = new Discord.RichEmbed()
       .setTitle('Error!')

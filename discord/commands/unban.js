@@ -4,7 +4,7 @@ const chalk = require('chalk');
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You do not have permissions to run this command.')
@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
 
   let user = args[0];
   if (!user) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription(`This user does not exist.`)
@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
   };
 
   if (message.guild.members.get(user)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription(`This user is not banned.`)
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
 
   let reason = args.slice(1).join(' ');
   if (!reason) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription(`This user does not exist.`)
@@ -44,7 +44,7 @@ module.exports.run = async (client, message, args) => {
   let createdAtRaw = message.createdAt.toDateString();
   let createdAt = createdAtRaw.split(' ');
 
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
     .setTitle('User has been unbanned')
     .setColor('#ffff33')
     .addField('Unbanned User', `${user}`)
@@ -53,16 +53,16 @@ module.exports.run = async (client, message, args) => {
     .addField('Reason', reason);
 
     // Send notification to the command issuing channel.
-    let notificationembed = new Discord.RichEmbed()
+    let notificationembed = new Discord.MessageEmbed()
       .setTitle('User has been Unbanned.')
       .setColor('#4d79ff')
       .setDescription(`${user} has been unbanned by ${message.author} for ${reason}`)
     message.channel.send(notificationembed);
 
-  let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
+  let adminlogchannel = message.guild.channels.cache.find(c => c.name === 'admin-log');
 
   adminlogchannel.send(embed).catch(e => {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ffa366')
       .setDescription(`There is no #admin-log channel, can't display details.`)

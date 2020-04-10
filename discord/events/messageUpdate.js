@@ -4,10 +4,10 @@ const chalk = require('chalk');
 module.exports = (message) => {
   if (message.author.bot) return;
 
-  let adminlogchannel = message.guild.channels.find(c => c.name === 'admin-log');
+  let adminlogchannel = message.guild.channels.cache.find(c => c.name === 'admin-log');
   if (!adminlogchannel) return;
 
-  let embed = new Discord.RichEmbed()
+  let embed = new Discord.MessageEmbed()
     .setTitle('Message Edited')
     .setDescription(`Message has been edited in #${message.channel.name} by ${message.author.username}: ${message.content}`)
     .setColor('#e69500')
