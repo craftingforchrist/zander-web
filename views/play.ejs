@@ -1,5 +1,5 @@
-<% include partials/header.ejs %>
-<% include partials/navigation.ejs %>
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navigation.ejs") %>
 
 <script type="text/javascript" src="/assets/js/copytoclipboard.js"></script>
 
@@ -11,7 +11,7 @@
   </div>
 
   <% if (!objdata[0]) { %>
-    <% include partials/micros/noservers.ejs %>
+    <%- include("./partials/micros/noservers.ejs") %>
   <% } else { %>
     <div class="row">
       <div class="col-sm">
@@ -35,4 +35,4 @@
 
 </div>
 
-<% include partials/footer.ejs %>
+<%- include("./partials/footer.ejs") %>

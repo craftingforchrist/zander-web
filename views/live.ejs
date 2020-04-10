@@ -1,5 +1,5 @@
-<% include partials/header.ejs %>
-<% include partials/navigation.ejs %>
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navigation.ejs") %>
 
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
@@ -12,7 +12,7 @@
   <script src="https://embed.twitch.tv/embed/v1.js"></script>
 
   <% if (!objdata[0]) { %>
-    <% include partials/micros/nostreams.ejs %>
+    <%- include(".partials/micros/nostreams.ejs") %>
   <% } else { %>
     <% objdata.forEach(function (data) { %>
       <div class="card">
@@ -36,4 +36,4 @@
 
 </div>
 
-<% include partials/footer.ejs %>
+<%- include("./partials/footer.ejs") %>

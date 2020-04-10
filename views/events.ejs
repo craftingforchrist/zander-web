@@ -1,5 +1,5 @@
-<% include partials/header.ejs %>
-<% include partials/navigation.ejs %>
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navigation.ejs") %>
 
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
@@ -9,7 +9,7 @@
   </div>
 
   <% if (!objdata[0]) { %>
-    <% include partials/micros/noupcomingevents.ejs %>
+    <%- include("partials/micros/noupcomingevents.ejs") %>
   <% } else { %>
     <% objdata.forEach(function (data) { %>
       <div class="card">
@@ -47,4 +47,4 @@
   <br>
 </div>
 
-<% include partials/footer.ejs %>
+<%- include("./partials/footer.ejs") %>

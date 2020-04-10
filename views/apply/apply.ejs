@@ -1,5 +1,5 @@
-<% include ../partials/header.ejs %>
-<% include ../partials/navigation.ejs %>
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navigation.ejs") %>
 
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
@@ -9,11 +9,11 @@
   </div>
 
   <% if (successalert == true) { %>
-    <% include ../partials/micros/successalert.ejs %>
+    <%- include("../partials/micros/successalert.ejs") %>
   <% } %>
 
   <% if (erroralert == true) { %>
-    <% include ../partials/micros/erroralert.ejs %>
+    <%- include("../partials/micros/erroralert.ejs") %>
   <% } %>
 
   <div class="row text-center" style="justify-content:center">
@@ -45,7 +45,7 @@
         </div>
 
         <% if (juniorstaffapp == false) { %>
-          <% include ../partials/micros/appsnotaccepted.ejs %>
+          <%- include("../partials/micros/appsnotaccepted.ejs") %>
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/juniorstaff" class="btn btn-primary">Apply Now!</a>
@@ -80,7 +80,7 @@
         </div>
 
         <% if (contentcreatorapp == false) { %>
-          <% include ../partials/micros/appsnotaccepted.ejs %>
+          <%- include("../partials/micros/appsnotaccepted.ejs") %>
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/creator" class="btn btn-primary">Apply Now!</a>
@@ -115,7 +115,7 @@
         </div>
 
         <% if (developerapp == false) { %>
-          <% include ../partials/micros/appsnotaccepted.ejs %>
+          <%- include("../partials/micros/appsnotaccepted.ejs") %>
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/developer" class="btn btn-primary">Apply Now!</a>
@@ -134,7 +134,7 @@
         </div>
 
         <% if (builderapp == false) { %>
-          <% include ../partials/micros/appsnotaccepted.ejs %>
+          <%- include("../partials/micros/appsnotaccepted.ejs") %>
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/builder" class="btn btn-primary">Apply Now!</a>
@@ -153,7 +153,7 @@
         </div>
 
         <% if (socialmediaapp == false) { %>
-          <% include ../partials/micros/appsnotaccepted.ejs %>
+          <%- include("../partials/micros/appsnotaccepted.ejs") %>
         <% } else { %>
           <div class="card-footer">
             <a href="/apply/socialmedia" class="btn btn-primary">Apply Now!</a>
@@ -165,4 +165,4 @@
   </div>
 </div>
 
-<% include ../partials/footer.ejs %>
+<%- include("./partials/footer.ejs") %>
