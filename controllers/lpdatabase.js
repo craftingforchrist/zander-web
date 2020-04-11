@@ -2,19 +2,19 @@ const mysql = require('mysql');
 
 var connection = mysql.createConnection({
   host: process.env.dbhost,
-  user: process.env.abdbuser,
-  password: process.env.abdbpassword,
-  database: process.env.abdbname,
+  user: process.env.lpdbuser,
+  password: process.env.lpdbpassword,
+  database: process.env.lpdbname,
   multipleStatements: true
 });
 
-connection.connect(function (err) {
+connection.connect(function(err) {
   if (err) {
-    console.error(`[ERROR] [DB] [AB] There was an error connecting:\n ${err.stack}`);
+    console.error(`[ERROR] [DB] [LP] There was an error connecting:\n ${err.stack}`);
     connection.connect();
     return;
   }
-  console.log(`[CONSOLE] [DB] [AB] Database connection is successful. Your connection ID is ${connection.threadId}.`);
+  console.log(`[CONSOLE] [DB] [LP] Database connection is successful. Your connection ID is ${connection.threadId}.`);
 });
 
 module.exports = connection;
