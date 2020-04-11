@@ -7,7 +7,7 @@ const mojangapi = require('mojang-api');
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You do not have permissions to run this command.')
@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args) => {
       throw err;
     } else {
       if (!results.length) {
-        let embed = new Discord.RichEmbed()
+        let embed = new Discord.MessageEmbed()
            .setTitle('Error!')
            .setColor('#ff6666')
            .setDescription('This user does not exist.')
@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
         if (err) {
           throw err;
         } else {
-          let embed = new Discord.RichEmbed()
+          let embed = new Discord.MessageEmbed()
           .setTitle(`${args[0]}'s Connected Accounts`)
           .setColor('#4d79ff')
 

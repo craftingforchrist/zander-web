@@ -344,15 +344,27 @@ fs.readdir('./discord/commands', (err, files) => {
   if (err) console.log(err);
   let jsfile = files.filter(f => f.split(".").pop() === 'js')
   if (jsfile.length <= 0) {
-    console.log(chalk.red('Couldn\'t find commands.'));
+    console.log('Couldn\'t find commands.');
     return
   }
 
   jsfile.forEach((files, i) => {
     let props = require(`./discord/commands/${files}`);
-    console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + chalk.yellow(files) + ` has been loaded.`);
+    console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
     client.commands.set(props.help.name, props);
   })
+});
+
+app.get('*', function(req, res) {
+  if (res.status == 500) {
+    res.render('500', {
+      title:'500: Internal Server Error',
+      error: error
+    });
+  }
+  res.render('404', {
+    "pagetitle": "404: Page Not Found"
+  });
 });
 
 app.get('*', function(req, res) {
@@ -362,8 +374,6 @@ app.get('*', function(req, res) {
 });
 
 client.on("message", (message) => {
-  // console.log(message.content);
-
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
 
@@ -382,12 +392,12 @@ client.on("message", (message) => {
 //
 const port = process.env.PORT || 8080;
 app.listen(port, function() {
-  console.log(chalk.yellow(`\n// zander-web v.${package.version}\n`) + chalk.cyan(`GitHub Repository: ${package.homepage}\nCreated By: ${package.author}`));
+  console.log(`\n// zander-web v.${package.version}\nGitHub Repository: ${package.homepage}\nCreated By: ${package.author}`);
   console.log(chalk.yellow('[CONSOLE] ' ) + `Application is listening to the port ${port}`);
 
   client.login(process.env.discordapitoken);
 
   client.on("ready", () => {
-    console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + 'Launched Discord web-side.');
+    console.log('[CONSOLE] [DISCORD] Launched Discord web side.');
   });
 });

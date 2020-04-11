@@ -51,7 +51,7 @@
   "discordsend": true,
   "broadcastchannel": "general",
   "applicationschannel": "applications",
-  "eventschannel": "announcements",
+  "eventschannel": "general",
   "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
 

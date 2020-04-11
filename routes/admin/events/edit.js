@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const config = require('../../../config.json');
 const database = require('../../../controllers/database.js');
-const accounts = require('../../../functions/admin/accounts.js');
+const Discord = require('discord.js');
+const client = new Discord.Client({ disableEveryone: true });
 
 router.get('/', (req, res, next) => {
   if (req.session.user) {
@@ -32,11 +33,11 @@ router.post('/', function (req, res) {
       } else {
         res.redirect('/admin/events');
 
-        // Take event that was just created and announce it to Discord.
-        let eventschannel = client.channels.find(c => c.name === `${config.eventschannel}`);
+        // Take event that was edited and announce updates.
+        let eventschannel = client.channels.cache.find(c => c.name === `${config.eventschannel}`);
         if (!eventschannel) return console.log(`A #${config.eventschannel} channel does not exist.`);
 
-        var embed = new Discord.RichEmbed()
+        var embed = new Discord.MessageEmbed()
           .setTitle(`Event Update`)
           .setDescription(`The ${name} event information has been updated.\nGo to ${config.website}events to see mor information.`)
           .setThumbnail(icon)
