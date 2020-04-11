@@ -361,14 +361,6 @@ app.get('*', function(req, res) {
   });
 });
 
-app.error(function (error, req, res, next) {
-  res.render('500', {
-    "pagetitle": "404: Page Not Found",
-    error: error
-  });
-  console.log(error);
-});
-
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
