@@ -38,6 +38,7 @@ const config = require('./config.json');
 //
 const database = require('./controllers/database'); // zander Database controller
 const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
+const lpdatabase = require('./controllers/abdatabase'); // AdvancedBan Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 // const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
@@ -381,7 +382,7 @@ client.on("message", (message) => {
 const port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log(`\n// zander-web v.${package.version}\nGitHub Repository: ${package.homepage}\nCreated By: ${package.author}`);
-  console.log(chalk.yellow('[CONSOLE] ' ) + `Application is listening to the port ${port}`);
+  console.log(`[CONSOLE] Application is listening to the port ${port}`);
 
   client.login(process.env.discordapitoken);
 
