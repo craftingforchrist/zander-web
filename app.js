@@ -356,21 +356,17 @@ fs.readdir('./discord/commands', (err, files) => {
 });
 
 app.get('*', function(req, res) {
-  if (res.status == 500) {
-    res.render('500', {
-      title:'500: Internal Server Error',
-      error: error
-    });
-  }
   res.render('404', {
     "pagetitle": "404: Page Not Found"
   });
 });
 
-app.get('*', function(req, res) {
-  res.render('404', {
-    "pagetitle": "404"
+app.error(function (error, req, res, next) {
+  res.render('500', {
+    "pagetitle": "404: Page Not Found",
+    error: error
   });
+  console.log(error);
 });
 
 client.on("message", (message) => {
