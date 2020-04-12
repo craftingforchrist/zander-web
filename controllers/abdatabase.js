@@ -2,8 +2,8 @@ const mysql = require('mysql');
 
 var connection = mysql.createConnection({
   host: process.env.dbhost,
-  user: process.env.abdbuser,
-  password: process.env.abdbpassword,
+  user: process.env.dbuser,
+  password: process.env.dbpassword,
   database: process.env.abdbname,
   multipleStatements: true
 });

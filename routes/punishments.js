@@ -1,25 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../config.json');
-const database = require('../controllers/database.js');
+const abdatabase = require('../controllers/abdatabase.js');
 
 router.get('/', (req, res, next) => {
-  if(req.session.user){
-    res.locals.info = true;
-  }
-  else{
-    res.locals.info = false;
-  }
-  database.query (`select p.id as 'id', p.punishtimestamp as 'timestamp', punisher.username as 'punisher', punisher.uuid as 'punisheruuid', punished.username as 'punished', punished.uuid as 'punisheduuid', p.punishtype as 'punishtype', p.reason as 'reason' from gamepunishments p left join playerdata punished on punished.id = p.punisheduser_id left join playerdata punisher on punisher.id = p.punisher_id ORDER BY id DESC; SELECT * FROM discordpunishments;`, function (err, results) {
+  abdatabase.query (`SELECT * FROM advancedban.punishmenthistory order by id desc; SELECT username, uuid FROM zander.playerdata;`, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
     } else {
       res.render('punishments', {
         pagetitle: "Punishments",
-        gamepunishmentsdata: results[0],
-        discordpunishmentsdata: results[1]
+        gamepunishdata: results[0]
       });
+      console.log(results[1]);
     };
   });
 });
