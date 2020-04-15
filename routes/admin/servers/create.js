@@ -5,23 +5,22 @@ const database = require('../../../controllers/database.js');
 
 router.post('/', function (req, res) {
   if (req.session.user) {
-    const action = req.body.action;
     const name = req.body.name;
     const description = req.body.description;
     const disclaimer = req.body.disclaimer;
     const ipaddress = req.body.ipaddress;
     const position = req.body.position;
 
-    if (action == 'add') {
-      database.query(`INSERT INTO servers (name, description, disclaimer, ipaddress, position) VALUES (?, ?, ?, ?, ?)`, [name, description, disclaimer, ipaddress, position], function (error, results, fields) {
-        if (error) {
-          res.redirect('/');
-          throw error;
-        } else {
-          res.redirect('/admin/servers');
-        };
-      });
-    }
+    console.log(req.body);
+
+    database.query(`INSERT INTO servers (name, description, disclaimer, ipaddress, position) VALUES (?, ?, ?, ?, ?)`, [name, description, disclaimer, ipaddress, position], function (error, results, fields) {
+      if (error) {
+        res.redirect('/');
+        throw error;
+      } else {
+        res.redirect('/admin/servers');
+      };
+    });
   } else {
     res.render('session/login', {
       setValue: true,

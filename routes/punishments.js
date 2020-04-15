@@ -4,16 +4,15 @@ const config = require('../config.json');
 const abdatabase = require('../controllers/abdatabase.js');
 
 router.get('/', (req, res, next) => {
-  abdatabase.query (`SELECT * FROM advancedban.punishmenthistory order by id desc; SELECT username, uuid FROM zander.playerdata;`, function (err, results) {
+  abdatabase.query (`SELECT * FROM advancedban.punishmenthistory order by id desc;`, function (err, results) {
     if (err) {
       res.redirect('/');
       throw err;
     } else {
       res.render('punishments', {
         pagetitle: "Punishments",
-        gamepunishdata: results[0]
+        gamepunishdata: results
       });
-      console.log(results[1]);
     };
   });
 });

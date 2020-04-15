@@ -8,16 +8,14 @@ router.post('/', function (req, res) {
     const action = req.body.action;
     const id = req.body.id;
 
-    if (action == 'delete') {
-      database.query(`DELETE FROM servers WHERE id = ?`, [id], function (error, results, fields) {
-        if (error) {
-          res.redirect('/');
-          throw error;
-        } else {
-          res.redirect('/admin/servers');
-        };
-      });
-    }
+    database.query(`DELETE FROM servers WHERE id = ?`, [id], function (error, results, fields) {
+      if (error) {
+        res.redirect('/');
+        throw error;
+      } else {
+        res.redirect('/admin/servers');
+      };
+    });
   } else {
     res.render('session/login', {
       setValue: true,

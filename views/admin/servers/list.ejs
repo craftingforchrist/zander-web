@@ -29,25 +29,24 @@
             </div>
             <div class="modal-body">
               <form method="post" action="/admin/servers/create">
-                <input type="hidden" name="action" value="add">
                 <div class="form-group">
-                  <label for="servername">Name</label>
+                  <label for="name">Name</label>
                   <input type="text" class="form-control" name="name" value="" required>
                 </div>
                 <div class="form-group">
-                  <label for="serveraddress">Address</label>
+                  <label for="ipaddress">Address</label>
                   <input type="text" class="form-control" name="ipaddress" value="" required>
-                </div>
-                <div class="form-group">
-                  <label for="description">Disclaimer</label>
-                  <textarea name="description" rows="4" cols="63"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="description">Description</label>
                   <textarea name="description" rows="4" cols="63"></textarea>
                 </div>
                 <div class="form-group">
-                  <label for="serverposition">Position</label>
+                  <label for="disclaimer">Disclaimer</label>
+                  <textarea name="disclaimer" rows="4" cols="63"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="position">Position</label>
                   <input type="text" class="form-control" name="position" value="" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Server</button>
@@ -81,14 +80,12 @@
               <td><%= data.ipaddress %></td>
               <td>
                 <div class="btn-group" role="group" aria-label="serversgroup">
-                  <form action="servers" method="post">
-                    <input type="hidden" name="action" value="edit">
+                  <form action="/admin/servers/edit" method="post">
                     <input type="hidden" name="id" value="<%= data.id %>">
                     <button type="submit" class="btn btn-warning btn-sm" style="margin-right:5px;">Edit</button>
                   </form>
 
-                  <form action="servers/delete" method="post">
-                    <input type="hidden" name="action" value="delete">
+                  <form action="/admin/servers/delete" method="post">
                     <input type="hidden" name="id" value="<%= data.id %>">
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                   </form>
