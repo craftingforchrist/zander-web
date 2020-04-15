@@ -12,7 +12,7 @@
   <script src="https://embed.twitch.tv/embed/v1.js"></script>
 
   <% if (!objdata[0]) { %>
-    <%- include(".partials/micros/nostreams.ejs") %>
+    <%- include("./partials/micros/nostreams.ejs") %>
   <% } else { %>
     <% objdata.forEach(function (data) { %>
       <div class="card">
