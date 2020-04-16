@@ -53,7 +53,7 @@
   "eventschannel": "general",
   "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
-  "reportschannel": "reports",
+  "reportschannel": "staff",
 
   "gameserverapp": false,
   "contentcreatorapp": true,

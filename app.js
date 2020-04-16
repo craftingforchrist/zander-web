@@ -143,7 +143,7 @@ var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
 var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
-var report = require('./routes/report');
+var report = require('./routes/report')(client);
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
