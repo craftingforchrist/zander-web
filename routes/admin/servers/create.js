@@ -11,8 +11,6 @@ router.post('/', function (req, res) {
     const ipaddress = req.body.ipaddress;
     const position = req.body.position;
 
-    console.log(req.body);
-
     database.query(`INSERT INTO servers (name, description, disclaimer, ipaddress, position) VALUES (?, ?, ?, ?, ?)`, [name, description, disclaimer, ipaddress, position], function (error, results, fields) {
       if (error) {
         res.redirect('/');

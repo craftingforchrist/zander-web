@@ -31,7 +31,7 @@ router.post('/', function (req, res) {
     const action = req.body.action;
     const id = req.body.id;
 
-    if (action === "eventdelete") {
+    if (action === "delete") {
       database.query(`DELETE FROM events WHERE id=?;`, [id], function (error, results, fields) {
         if (error) {
           res.redirect('/');
@@ -42,7 +42,7 @@ router.post('/', function (req, res) {
       });
     };
 
-    if (action === "eventedit") {
+    if (action === "edit") {
       database.query(`SELECT * FROM events WHERE id=?;`, [id], function (error, results, fields) {
         if (error) {
           res.redirect('/');

@@ -4,13 +4,16 @@ const config = require('../../../config.json');
 const database = require('../../../controllers/database.js');
 
 router.get('/', (req, res, next) => {
-  if (!req.session.user) {
+  if (req.session.user) {
+
+  } else {
     res.render('session/login', {
       setValue: true,
       message: 'You cannot access this page unless you are logged in.',
       "pagetitle": "Login"
     });
-}});
+  }
+});
 
 router.post('/', function (req, res) {
   if (req.session.user) {
@@ -21,8 +24,6 @@ router.post('/', function (req, res) {
     const disclaimer = req.body.disclaimer;
     const ipaddress = req.body.ipaddress;
     const position = req.body.position;
-
-    console.log(req.body);
 
     database.query(`UPDATE servers SET name = ?, description = ?, disclaimer = '${disclaimer}', ipaddress = ?, position = ? WHERE id = ?;`, [name, description, ipaddress, position, id], function (error, results, fields) {
       if (error) {

@@ -80,12 +80,14 @@
               <td><%= data.ipaddress %></td>
               <td>
                 <div class="btn-group" role="group" aria-label="serversgroup">
-                  <form action="/admin/servers/edit" method="post">
+                  <form action="/admin/servers" method="post">
+                    <input type="hidden" name="action" value="edit">
                     <input type="hidden" name="id" value="<%= data.id %>">
                     <button type="submit" class="btn btn-warning btn-sm" style="margin-right:5px;">Edit</button>
                   </form>
 
                   <form action="/admin/servers/delete" method="post">
+                    <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" value="<%= data.id %>">
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                   </form>
