@@ -41,7 +41,6 @@
   "developersmd": "https://raw.githubusercontent.com/crafting-for-christ/Web-Various/master/developers.md",
   "githubissuetrackerlink": "https://github.com/benrobson/zander/issues/new",
 
-  "reportlink": "https://forms.gle/WeyFqBynSDhaiPjT7",
   "contentcreatorapplink": "https://forms.gle/cvTJkYYiGtRnZqxK8",
   "developerapplink": "https://forms.gle/mtTuYqp3oXVmCTpv6",
   "juniorstaffapplink": "https://forms.gle/n9R1dx4R5vdPqhRP9",
@@ -54,6 +53,7 @@
   "eventschannel": "general",
   "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
+  "reportschannel": "reports",
 
   "gameserverapp": false,
   "contentcreatorapp": true,

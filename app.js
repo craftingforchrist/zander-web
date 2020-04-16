@@ -143,6 +143,7 @@ var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
 var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
+var report = require('./routes/report');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -162,7 +163,6 @@ var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
 var applysocialmedia = require('./routes/apply/apply-socialmedia');
 var applybuilder = require('./routes/apply/apply-builder');
 
-var report = require('./routes/redirect/report');
 var discord = require('./routes/redirect/discord');
 var issues = require('./routes/redirect/issues');
 var support = require('./routes/redirect/support');
