@@ -4,7 +4,7 @@
 <div class="container">
   <br>
   <form action="/admin/servers/edit" method="post" style="margin: 0 auto; width: 500px; padding: 10px;">
-    <input type="hidden" name="id" value="<%= objdata[0].id %>">
+    <input type="hidden" name="id" value="<%= objdata.id %>">
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" name="name" value="<%= objdata.name %>" required>
