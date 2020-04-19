@@ -45,6 +45,7 @@ router.post('/', function (req, res) {
             "pagetitle": `Administration Panel - Server Instance Editing`,
             objdata: results[0]
           });
+          console.log(results);
         };
       });
     }
