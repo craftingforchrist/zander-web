@@ -6,7 +6,6 @@ module.exports.run = async (client, message, args) => {
     .setTitle(`Server Rules`)
     .setURL(`${config.website}rules`)
     .setDescription(`You can see the server rules here: ${config.website}rules`)
-    .setColor('#ffa366')
   message.channel.send(embed);
 };
 

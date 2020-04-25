@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const config = require('../../config.json');
-const chalk = require('chalk');
 const database = require('../../controllers/database'); // Database controller
 const punishment = require('../../functions/discord/punishment');
 

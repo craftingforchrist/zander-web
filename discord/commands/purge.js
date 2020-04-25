@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const chalk = require('chalk');
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
@@ -68,7 +67,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(embed);
   });
 
-  console.log(chalk.yellow('[CONSOLE] ' ) + chalk.blue('[DISCORD] ') + `${args} messages have been purged from ${message.channel.name} by ${message.author.username}`);
+  console.log(`[CONSOLE] [DISCORD] ${args} messages have been purged from ${message.channel.name} by ${message.author.username}`);
   return
 };
 

@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const config = require('../../config.json');
-const chalk = require('chalk');
 const database = require('../../controllers/database.js'); // Database controller
 const mojangapi = require('mojang-api');
 

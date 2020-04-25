@@ -6,7 +6,6 @@ module.exports.run = async (client, message, args) => {
     .setTitle(`Website`)
     .setURL(`${config.website}`)
     .setDescription(`You can our website here: ${config.website}`)
-    .setColor('#ffa366')
   message.channel.send(embed);
 };
 

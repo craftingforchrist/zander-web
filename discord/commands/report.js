@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const config = require('../../config.json');
-const chalk = require('chalk');
 const database = require('../../controllers/database.js'); // Database controller
 
 module.exports.run = async (client, message, args) => {
