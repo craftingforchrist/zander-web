@@ -37,18 +37,6 @@
         <a href="https://minecraft-mp.com/server-s247160" target="_blank"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 3</button></a>
       </div>
 
-      <div class="col text-center">
-        <h3>RLCraft</h3>
-        <h6>rlcraft.craftingforchrist.net</h6>
-        <br>
-        <!-- https://minecraft-server-list.com/server/447978/ -->
-        <a href="https://minecraft-server-list.com/server/447978/" target="_blank"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 1</button></a><br>
-        <!-- https://minecraftservers.org/server/573906 -->
-        <a href="https://minecraftservers.org/server/573906" target="_blank"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 2</button></a><br>
-        <!-- https://minecraft-mp.com/server-s236798 -->
-        <a href="https://minecraft-mp.com/server-s236798" target="_blank"><button type="button" class="btn btn-primary btn-sm btn-space">Vote Site 3</button></a>
-      </div>
-
     <div class="col">
       <h3 class="text-center">Top Voters</h3>
       <div class="alert alert-info" role="alert" style="font-size:10pt;">
@@ -62,7 +50,7 @@
           <% objdata.forEach(function (data) { %>
             <tr>
               <td><%= data.username %></td>
-              <td><%= data.votes %></td>
+              <td><code><%= data.votes %></code></td>
             </tr>
           <% }) %>
         </table>
