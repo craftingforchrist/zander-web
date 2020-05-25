@@ -11,7 +11,7 @@ module.exports.run = async (client, message, args) => {
         .setTitle(`Vote`)
         .setURL(`${config.website}vote`)
         .setColor('#ffa500')
-        .setDescription(`Help out Crafting For Christ by voting on Minecraft Server lists! Top Voter recieves excellent perks! You can vote and see the persk over at ${config.website}vote\n\n **${results[0].username}** currently holds the top spot at **${results[0].votes}**!`)
+        .setDescription(`Help out Crafting For Christ by voting on Minecraft Server lists! Top Voter recieves excellent perks! You can vote and see the persk over at ${config.website}vote\n\n **${results[0].username}** currently holds the top spot at **${results[0].votes}** votes!`)
       message.channel.send(embed);
     }
   });
