@@ -155,6 +155,22 @@
       <% }) %>
       <br>
   </div>
+
+  <div style="font-size:12pt;">
+    <hr>
+    <h5 style="margin-bottom:15px; line-height:-15pt;">Retired</h5>
+    <small>These are the people who have dedicated their time and effort to the Crafting For Christ Network. We thank them for their time and effort.</small><br><br>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.retired') { %>
+          <div class="staffitem" style="display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="staffimg" style="display: inline-block;" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="45px" draggable="false"> <%= data.username %>
+          </div>
+        <% } %>
+      <% }) %>
+      <br>
+  </div>
 </div>
 
 <%- include("./partials/footer.ejs") %>
