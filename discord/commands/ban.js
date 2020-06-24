@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
 
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.RichEmbed()
+    let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription(`You do not have permissions to run this command.`)
