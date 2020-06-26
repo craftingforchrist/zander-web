@@ -158,6 +158,22 @@
 
   <div style="font-size:12pt;">
     <hr>
+    <h5 style="margin-bottom:15px;">Event Staff</h5>
+      <% objdata.forEach(function (data) { %>
+        <% if (data.permission == 'group.eventstaff') { %>
+          <div class="staffitem" style="display:inline-block;">
+            <ul style="list-style-type:none;">
+              <li class="staffitem">
+                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
+                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+          </div>
+        <% } %>
+      <% }) %>
+      <br>
+  </div>
+
+  <div style="font-size:12pt;">
+    <hr>
     <h5 style="margin-bottom:15px; line-height:-15pt;">Retired</h5>
     <small>These are the people who have dedicated their time and effort to the Crafting For Christ Network. We thank them for their time and effort.</small><br><br>
       <% objdata.forEach(function (data) { %>
