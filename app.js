@@ -146,6 +146,8 @@ var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
 var report = require('./routes/report')(client);
 
+var churchduringcovid = require('./routes/churchduringcovid');
+
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
@@ -206,6 +208,8 @@ app.use('/vote', vote);
 app.use('/ranks', ranks);
 app.use('/guides', guides);
 app.use('/appeal', appeal);
+
+app.use('/churchduringcovid', churchduringcovid);
 
 app.use('/terms', terms);
 app.use('/privacy', privacy);

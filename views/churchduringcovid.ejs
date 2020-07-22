@@ -1,0 +1,52 @@
+<%- include("./partials/header.ejs") %>
+<%- include("./partials/navigation.ejs") %>
+
+<style media="screen">
+  .jumbotron-image-header {
+    background-image: url(./assets/img/churchduringcovid.jpg) !important;
+  }
+</style>
+
+<div class="container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+    <div class="container text-white">
+      <h1 class="display-3">Church During COVID</h1>
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Don't see your church here? Email us over at <a href="mailto:support@craftingforchrist.net">support@craftingforchrist.net</a> or join our <a href="/discord">Discord</a> and let us know!<br><small>To be eligable your church must be either livestreaming or releasing a video/audio podcast onto a platform e.g. YouTube, Spotify, etc.</small>
+  </div>
+
+  <p>During this difficult time it is hard and tricky to gather together as God's people. We have collated a list of churches in our community that stream their services and post their sermons online.<br>Use this as a oppertunity to continue to grow with God over this difficult time.</p>
+  <br>
+
+  <div class="row">
+    <div class="col-">
+      <img src="./assets/img/churchlogo/shellharbourcityanglican.jpg" height="200px">
+    </div>
+    <div class="col-sm">
+      <h1>Shellharbour City Anglican Church</h1>
+      <p>Livestreaming every on Facebook Sunday at 9AM and 6PM AEST</p>
+      <small>Sermons avaliable on Audio podcast platforms (Apple Podcast, Google Podcast and Spotify).</small>
+      <br>
+
+      <div class="row">
+        <div class="col-sm">
+          <h4>Livestream</h4>
+          <a href="https://www.facebook.com/shellharbourcityanglicanchurch/" target="_blank"><img src="./assets/img/icons/facebook.png" height="50px"></a>
+        </div>
+        <div class="col-sm">
+          <h4>Sermon Podcast</h4>
+          <a href="https://open.spotify.com/show/1fhDneyxygOFbMCC4UAQpJ" target="_blank"><img src="./assets/img/icons/spotify.png" height="50px"></a>
+          <a href="https://itunes.apple.com/au/podcast/shellharbour-city-anglican/id1401979107?mt=2" target="_blank"><img src="./assets/img/icons/applepodcast.png" height="50px"></a>
+          <a href="https://www.google.com/podcasts?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80YTM4YWYwL3BvZGNhc3QvcnNz" target="_blank"><img src="./assets/img/icons/googlepodcast.png" height="50px"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+</div>
+
+<%- include("./partials/footer.ejs") %>
