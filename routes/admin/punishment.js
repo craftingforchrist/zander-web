@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../../config.json');
 const database = require('../../controllers/database');
-const rcon = require('../../controllers/rcon');
+// const rcon = require('../../controllers/rcon');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 
