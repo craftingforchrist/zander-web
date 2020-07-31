@@ -42,7 +42,7 @@
     "mysql": "^2.18.1",
     "mysql-apostrophe": "^1.0.8",
     "node-yt": "^1.0.8",
-    "nodemailer": "^6.4.10",
+    "nodemailer": "^6.4.11",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemailer-juice": "^1.0.1",
     "passport": "^0.4.1",
