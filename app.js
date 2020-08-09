@@ -258,6 +258,12 @@ app.use('/admin/servers/create', serverscreate);
 app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
 
+app.get('*', function(req, res) {
+  res.render('404', {
+    "pagetitle": "404: Page Not Found"
+  });
+});
+
 //
 // Profiles
 //
@@ -359,12 +365,6 @@ fs.readdir('./discord/commands', (err, files) => {
     console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
     client.commands.set(props.help.name, props);
   })
-});
-
-app.get('*', function(req, res) {
-  res.render('404', {
-    "pagetitle": "404: Page Not Found"
-  });
 });
 
 client.on("message", (message) => {
