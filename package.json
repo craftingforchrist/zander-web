@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/benrobson/zander-web#readme",
   "dependencies": {
+    "acorn": ">=7.3.1",
     "bad-words": "^3.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -41,6 +42,7 @@
     "mojang-api": "0.0.2",
     "mysql": "^2.18.1",
     "mysql-apostrophe": "^1.0.8",
+    "node-cron": "^2.0.3",
     "node-yt": "^1.0.8",
     "nodemailer": "^6.4.10",
     "nodemailer-express-handlebars": "^4.0.0",
@@ -53,8 +55,7 @@
     "simple-node-logger": "^18.12.24",
     "superagent": "^5.3.1",
     "swearjar-extended": "^0.2.0",
-    "twitchonlinetracker": "^1.1.5",
-    "acorn": ">=7.3.1"
+    "twitchonlinetracker": "^1.1.5"
   },
   "devDependencies": {}
 }
