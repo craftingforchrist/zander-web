@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const config = require('../../config.json');
-const database = require('../../controllers/database'); // Database controller
-const punishment = require('../../functions/discord/punishment');
+const config = require('../../../config.json');
+const database = require('../../../controllers/database.js'); // Database controller
+const punishment = require('../../../functions/discord/punishment');
 
 module.exports.run = async (client, message, args) => {
   const mentioneduser = message.mentions.members.first();
@@ -9,37 +9,37 @@ module.exports.run = async (client, message, args) => {
   const punisheduserid = mentioneduser.user.id;
   const punisher = `${message.author.username}#${message.author.discriminator}`;
   const punisherid = message.author.id;
-  const punishtype = "KICK";
+  const punishtype = "BAN";
 
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription('You do not have permissions to run this command.')
+      .setDescription(`You do not have permissions to run this command.`)
     message.channel.send(embed);
     return;
-  }
+  };
 
   // Checks if the user is in the Discord and exists.
   if (!mentioneduser) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription('This user does not exist.')
+      .setDescription(`This user does not exist.`)
     message.channel.send(embed);
     return;
-  }
+  };
 
   // Checks if you can punish the user.
   if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription('You cannot punishment this user.')
+      .setDescription(`You cannot punish this user.`)
     message.channel.send(embed);
     return;
-  }
+  };
 
   // Check for a punishement reason.
   let reason = args.slice(1).join(' ');
@@ -47,17 +47,17 @@ module.exports.run = async (client, message, args) => {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor('#ff6666')
-      .setDescription('Please provide a valid reason for this punishment.')
+      .setDescription(`Please provide a valid reason for this punishment.`)
     message.channel.send(embed);
     return;
-  }
+  };
 
   let embed = new Discord.MessageEmbed()
-    .setTitle('User has been Kicked')
+    .setTitle('User has been Banned')
     .setColor('#4d79ff')
-    .addField('Kicked User:', `${mentioneduser}`)
-    .addField('Kicked By:', `${message.author}`)
-    .addField('Reason:', reason)
+    .addField('Banned User', `${punisheduser}`)
+    .addField('Banned By', `${punisher}`)
+    .addField('Reason', reason);
 
   let adminlogchannel = message.guild.channels.cache.find(c => c.name === `${config.punishmentchannel}`);
   adminlogchannel.send(embed).catch(e => {
@@ -70,26 +70,30 @@ module.exports.run = async (client, message, args) => {
 
   // Send notification to the command issuing channel.
   let notificationembed = new Discord.MessageEmbed()
-    .setTitle('User has been Kicked.')
+    .setTitle('User has been Banned.')
     .setColor('#4d79ff')
-    .setDescription(`${mentioneduser} has been kicked by ${message.author} for ${reason}`)
+    .setDescription(`${mentioneduser} has been banned by ${punisher} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.MessageEmbed()
-    .setTitle(`You have been kicked from ${message.guild}.`)
-    .setColor('#ffa366')
-    .setDescription(`Hello ${mentioneduser}, you have been kicked from ${message.guild}.\nYou were kicked by ${punisher} for ${reason}.\nPlease think about your actions, then rejoin the server.`)
+    .setTitle('You have been banned from the Server.')
+    .setColor('#ff6666')
+    .setDescription(`Hello ${mentioneduser}, you have been banned from the ${message.guild} server.\nYou were banned by ${punisher} for ${reason}.\n\nPlease contact us if you think this ban was unfair.\nSupport Email: ${config.contactemail}`)
   await mentioneduser.send(usernotifyembed).catch(e => { })
 
-  message.guild.member(mentioneduser).kick(reason);
+  message.guild.member(punisheduserid).ban({
+    days: 7,
+    reason: reason
+  });
+
   punishment.addpunishment(punisheduser, punisheduserid, punisher, punisherid, punishtype, reason);
   return;
 };
 
 module.exports.help = {
-  name: 'kick',
-  description: 'Kicks the user from the server with the reason provided.',
+  name: 'ban',
+  description: 'This will permanently bans a user from the guild with the reason provided.',
   permission: 'MANAGE_MESSAGES',
-  usage: 'kick [@user] [reason]'
+  usage: 'ban [@user] [reason]'
 };

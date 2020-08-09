@@ -108,7 +108,6 @@ app.use((req, res, next) => {
   res.locals.platformtwitch = config.twitch;
   res.locals.platformyoutube = config.youtube;
 
-  // res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
   res.locals.juniorstaffapp = config.juniorstaffapp;
@@ -159,7 +158,6 @@ var support = require('./routes/redirect/support');
 // var giveaway = require('./routes/redirect/giveaway');
 
 var apply = require('./routes/apply/apply');
-// var applygame = require('./routes/apply/apply-game')(client);
 var applycreator = require('./routes/apply/apply-creator')(client);
 var applydeveloper = require('./routes/apply/apply-developer')(client);
 var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
@@ -351,7 +349,7 @@ app.get('*', function(req, res) {
 //
 // Discord Commands & Integration
 //
-// Reads all commands & boot them in.
+// Reads all general commands in.
 fs.readdir('./discord/commands', (err, files) => {
   if (err) console.log(err);
   let jsfile = files.filter(f => f.split(".").pop() === 'js')
@@ -364,7 +362,23 @@ fs.readdir('./discord/commands', (err, files) => {
     let props = require(`./discord/commands/${files}`);
     console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
     client.commands.set(props.help.name, props);
-  })
+  });
+});
+
+// Reads all moderation commands in.
+fs.readdir('./discord/commands/moderation', (err, files) => {
+  if (err) console.log(err);
+  let jsfile = files.filter(f => f.split(".").pop() === 'js')
+  if (jsfile.length <= 0) {
+    console.log('Couldn\'t find commands.');
+    return
+  }
+
+  jsfile.forEach((files, i) => {
+    let props = require(`./discord/commands/moderation/${files}`);
+    console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
+    client.commands.set(props.help.name, props);
+  });
 });
 
 client.on("message", (message) => {

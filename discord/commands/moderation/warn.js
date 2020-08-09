@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const config = require('../../config.json');
-const chalk = require('chalk');
-const database = require('../../controllers/database.js'); // Database controller
-const punishment = require('../../functions/discord/punishment');
+const config = require('../../../config.json');
+const database = require('../../../controllers/database.js'); // Database controller
+const punishment = require('../../../functions/discord/punishment');
 
 module.exports.run = async (client, message, args) => {
   const mentioneduser = message.mentions.members.first();

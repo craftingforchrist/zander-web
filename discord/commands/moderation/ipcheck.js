@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const config = require('../../config.json');
-const database = require('../../controllers/database.js'); // Database controller
+const config = require('../../../config.json');
+const database = require('../../../controllers/database.js'); // Database controller
 const mojangapi = require('mojang-api');
 
 module.exports.run = async (client, message, args) => {
