@@ -3,8 +3,8 @@ const database = require('../controllers/database');
 
 // Cron Job
 // This will fire on the first of every month and will clear all votes from the votes table.
-cron.schedule('* 1 1 *', () => {
-  database.query (`DELETE * from votes`, function (err, results) {
+const task = cron.schedule("* * 1 * *", function() {
+  database.query (`truncate votes`, function (err, results) {
     if (err) {
       throw err;
     } else {
@@ -15,3 +15,5 @@ cron.schedule('* 1 1 *', () => {
    scheduled: true,
    timezone: "Australia/Sydney"
 });
+
+task.start();

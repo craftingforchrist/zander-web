@@ -47,6 +47,11 @@ const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich 
 const uuid = require('./functions/uuid');
 
 //
+// Cron Jobs
+//
+require('./cron/resetVotes.js');
+
+//
 // Constants
 //
 const app = express();

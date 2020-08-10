@@ -1,9 +1,0 @@
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("shadowolfyt", "MinecraftMP.com");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("lolxd123", "Minecraft.net");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("kycrafft", "MinecraftServers.org");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("Camemes", "MinecraftMP.com");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("Venny__", "Minecraft.net");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("GoogleHome", "MinecraftServers.org");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("Egore1990", "MinecraftMP.com");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("egglegxd", "Minecraft.net");
-INSERT INTO `zander`.`votes` (`username`, `service`) VALUES ("mynamejeff", "MinecraftServers.org");
