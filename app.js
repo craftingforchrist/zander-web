@@ -283,32 +283,6 @@ app.get('*', function(req, res) {
 // });
 
 //
-// Application View
-//
-// app.get('/admin/applications/view/:id', function (req, res) {
-//   if (req.session.user) {
-//     let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
-//     database.query (sql, function (err, results) {
-//       if (err) {
-//         res.redirect('/');
-//         throw err;
-//       } else {
-//         res.render('admin/view', {
-//           "pagetitle": `${results[0].username}'s Game Application`,
-//           objdata: results[0]
-//         });
-//       }
-//     });
-//   } else {
-//     res.render('session/login', {
-//       setValue: true,
-//       message: 'You cannot access this page unless you are logged in.',
-//       "pagetitle": "Login"
-//     });
-//   }
-// });
-
-//
 // GAME Punishment View
 //
 // app.get('/punishments/game/view/:id', function (req, res) {

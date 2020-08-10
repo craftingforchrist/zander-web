@@ -39,12 +39,11 @@ module.exports.run = async (client, message, args) => {
           throw err;
         } else {
           let embed = new Discord.MessageEmbed()
-          .setTitle(`${args[0]}'s Connected Accounts & IPs`)
-          .setColor('#ff4633')
-          .setFooter('This contains sensitive information, DO NOT send this to anyone.')
+          .setTitle(`${args[0]}'s Connected Accounts`)
+          .setColor('#4d79ff')
 
           results.forEach(function(playeripdata) {
-            embed.addField(`${playeripdata.username}`, `Last Login: ${moment(playeripdata.lastlogin).format("LLLL")}\nIP Address: ${playeripdata.ipaddress}`)
+            embed.addField(`${playeripdata.username}`, `Last Login: ${moment(playeripdata.lastlogin).format("LLLL")}`)
           })
           message.channel.send(embed);
         }
@@ -54,8 +53,8 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.help = {
-  name: 'ipcheck',
+  name: 'altcheck',
   description: 'Checks the accounts connected to the players name.',
-  permission: 'ADMINISTRATOR',
-  usage: 'ipcheck [username]'
+  permission: 'MANAGE_MESSAGES',
+  usage: 'altcheck [username]'
 };
