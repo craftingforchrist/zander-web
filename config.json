@@ -54,8 +54,9 @@
   "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
   "reportschannel": "staff",
+  "altcheckchannel": "staff",
+  "ipcheckchannel": "administration",
 
-  "gameserverapp": false,
   "contentcreatorapp": true,
   "developerapp": true,
   "juniorstaffapp": true,
