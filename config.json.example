@@ -11,7 +11,7 @@
   "webvideobackground": "./assets/img/rollingbackground.mp4",
   "description": "A Christian Minecraft Server.",
 
-  "tgmapiurl": "http://49.176.183.138:4694",
+  "tgmapiurl": "http://localhost:8080",
   "tgmapiid": "craftingforchrist",
 
   "website": "https://www.craftingforchrist.net/",
@@ -45,11 +45,11 @@
   "juniorstaffmd": "https://raw.githubusercontent.com/crafting-for-christ/Web-Various/master/juniorstaff.md",
   "githubissuetrackerlink": "https://github.com/benrobson/zander/issues/new",
 
-  "contentcreatorapplink": "https://forms.gle/cvTJkYYiGtRnZqxK8",
-  "developerapplink": "https://forms.gle/mtTuYqp3oXVmCTpv6",
-  "juniorstaffapplink": "https://forms.gle/n9R1dx4R5vdPqhRP9",
-  "socialmediaapplink": "https://forms.gle/HXNtQC1TZ3uDHbhN6",
-  "builderapplink": "https://forms.gle/Sz9RXaudP2FGpLbYA",
+  "contentcreatorapplink": "LINK",
+  "developerapplink": "LINK",
+  "juniorstaffapplink": "LINK",
+  "socialmediaapplink": "LINK",
+  "builderapplink": "LINK",
 
   "discordsend": true,
   "broadcastchannel": "general",
