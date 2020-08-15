@@ -11,15 +11,16 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
 const Discord = require('discord.js');
-const client = new Discord.Client({ disableEveryone: true });
-client.commands = new Discord.Collection();
-require('./discord/util/eventLoader.js')(client);
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
+
+const client = new Discord.Client({ disableEveryone: true });
+client.commands = new Discord.Collection();
+require('./discord/util/eventLoader.js')(client);
 
 //
 // File Constants
@@ -44,8 +45,6 @@ const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 require('./controllers/passport')(passport); // Passport controller
 const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich Online Tracker controller
 
-const uuid = require('./functions/uuid');
-
 //
 // Cron Jobs
 //
@@ -65,11 +64,13 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(session({ cookie: { maxAge: 60000 },
-                  secret: process.env.sessionsecret,
-                  resave: true,
-                  saveUninitialized: true}));
-// Seems to have a common erorr at the moment:
+app.use(session({
+  cookie: { maxAge: 60000 },
+  secret: process.env.sessionsecret,
+  resave: true,
+  saveUninitialized: true
+}));
+// Seems to have a common error at the moment:
 // Warning: connect.session() MemoryStore is not designed for a production environment, as it will leak memory, and will not scale past a single process.
 
 //
@@ -328,7 +329,10 @@ app.get('*', function(req, res) {
 //
 // Discord Commands & Integration
 //
-// Reads all general commands in.
+// Read all commands in.
+//
+// General
+//
 fs.readdir('./discord/commands', (err, files) => {
   if (err) console.log(err);
   let jsfile = files.filter(f => f.split(".").pop() === 'js')
@@ -344,7 +348,9 @@ fs.readdir('./discord/commands', (err, files) => {
   });
 });
 
-// Reads all moderation commands in.
+//
+// Moderation
+//
 fs.readdir('./discord/commands/moderation', (err, files) => {
   if (err) console.log(err);
   let jsfile = files.filter(f => f.split(".").pop() === 'js')
@@ -360,6 +366,27 @@ fs.readdir('./discord/commands/moderation', (err, files) => {
   });
 });
 
+//
+// Stats
+//
+fs.readdir('./discord/commands/stats', (err, files) => {
+  if (err) console.log(err);
+  let jsfile = files.filter(f => f.split(".").pop() === 'js')
+  if (jsfile.length <= 0) {
+    console.log('Couldn\'t find commands.');
+    return
+  }
+
+  jsfile.forEach((files, i) => {
+    let props = require(`./discord/commands/stats/${files}`);
+    console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
+    client.commands.set(props.help.name, props);
+  });
+});
+
+//
+// Message Handler
+//
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
@@ -379,7 +406,7 @@ client.on("message", (message) => {
 //
 const port = process.env.PORT || 8080;
 app.listen(port, function() {
-  console.log(`\n// zander-web v.${package.version}\nGitHub Repository: ${package.homepage}\nCreated By: ${package.author}`);
+  console.log(`\n// ${package.name} v.${package.version}\nGitHub Repository: ${package.homepage}\nCreated By: ${package.author}`);
   console.log(`[CONSOLE] Application is listening to the port ${port}`);
 
   client.login(process.env.discordapitoken);
