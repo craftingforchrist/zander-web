@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
 		].join('\n')
 	);
 
-  // if (message.author.roles.includes('administrator')) {
+  // if (message.member.roles.cache.has('Administrator')) {
   //   embed.addField(
   // 		'Discord Moderation Commands', [
   // 			`\`${prefix}deaths\`\nDisplay the last 4 deaths.`,
