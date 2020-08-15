@@ -1,5 +1,4 @@
 var { Client, MessageEmbed } = require('discord.js');
-var config = require('../../../config.json');
 var fetch = require('node-fetch');
 
 module.exports.run = async (client, message, args) => {
@@ -11,7 +10,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send(embed);
   };
 
-  let response = await fetch(`${config.tgmapiurl}/mc/player/${args[0].toLowerCase()}?simple=true`);
+  let response = await fetch(`${process.env.tgmapiurl}/mc/player/${args[0].toLowerCase()}?simple=true`);
   let body = await response.json();
   if (body['notFound']) {
     let embed = new MessageEmbed();
@@ -47,7 +46,7 @@ var stripColoursFromTags = tags => {
 };
 
 var getPlayerRanks = async playerName => {
-	let response = await fetch(config.apiUrl + `/mc/player/${playerName}/ranks`);
+	let response = await fetch(process.env.apiUrl + `/mc/player/${playerName}/ranks`);
 	let playerRankList = await response.json();
 	return playerRankList;
 };

@@ -11,9 +11,6 @@
   "webvideobackground": "./assets/img/rollingbackground.mp4",
   "description": "A Christian Minecraft Server.",
 
-  "tgmapiurl": "http://localhost:8080",
-  "tgmapiid": "craftingforchrist",
-
   "website": "https://www.craftingforchrist.net/",
   "discordlink": "https://discordapp.com/invite/fGWNchS",
   "shoplink": "https://crafting-for-christ.tebex.io",

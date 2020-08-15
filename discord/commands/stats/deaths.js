@@ -1,10 +1,9 @@
 var { Client, MessageEmbed } = require('discord.js');
-var config = require('../../../config.json');
 var fetch = require('node-fetch');
 
 module.exports.run = async (client, message, args) => {
   try {
-    let response = await fetch(config.apiUrl + '/mc/death/latest');
+    let response = await fetch(process.env.apiUrl + '/mc/death/latest');
     let deaths = await response.json();
     var deathmessage = [];
     deaths.forEach(death => {

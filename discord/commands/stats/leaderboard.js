@@ -1,5 +1,4 @@
 var { Client, MessageEmbed } = require('discord.js');
-var config = require('../../../config.json');
 var fetch = require('node-fetch');
 
 module.exports.run = async (client, message, args) => {
@@ -13,7 +12,7 @@ module.exports.run = async (client, message, args) => {
     };
 
 		if (args[0].toLowerCase() === 'xp' || args[0].toLowerCase() === 'level') {
-			let response = await fetch(config.tgmapiurl + '/mc/leaderboard/xp');
+			let response = await fetch(process.env.tgmapiurl + '/mc/leaderboard/xp');
 			let leaderboard = await response.json();
 			let leaderboardmessage = [];
 			var count = 0;
@@ -29,7 +28,7 @@ module.exports.run = async (client, message, args) => {
 			message.channel.send(embed);
 
 		} else if (args[0].toLowerCase() === 'kills' || args[0].toLowerCase() === 'kill') {
-			let response = await fetch(config.tgmapiurl + '/mc/leaderboard/kills');
+			let response = await fetch(process.env.tgmapiurl + '/mc/leaderboard/kills');
 			let leaderboard = await response.json();
 			let leaderboardmessage = [];
 			var count = 0;
@@ -45,7 +44,7 @@ module.exports.run = async (client, message, args) => {
 			message.channel.send(embed);
 
 		} else if (args[0].toLowerCase() === 'wins' || args[0].toLowerCase() === 'win') {
-			let response = await fetch(config.tgmapiurl + '/mc/leaderboard/wins');
+			let response = await fetch(process.env.tgmapiurl + '/mc/leaderboard/wins');
 			let leaderboard = await response.json();
 			let leaderboardmessage = [];
 			var count = 0;
@@ -61,7 +60,7 @@ module.exports.run = async (client, message, args) => {
 			message.channel.send(embed);
 
 		} else if (args[0].toLowerCase() === 'losses' || args[0].toLowerCase() === 'loss' || args[0].toLowerCase() === 'lose') {
-			let response = await fetch(config.tgmapiurl + '/mc/leaderboard/losses');
+			let response = await fetch(process.env.tgmapiurl + '/mc/leaderboard/losses');
 			let leaderboard = await response.json();
 			let leaderboardmessage = [];
 			var count = 0;
