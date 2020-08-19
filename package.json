@@ -53,6 +53,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "random-token": "0.0.8",
     "req-flash": "0.0.3",
     "request": "^2.88.2",
     "simple-node-logger": "^18.12.24",

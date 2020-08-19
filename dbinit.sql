@@ -13,17 +13,29 @@ CREATE TABLE playerdata (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   uuid VARCHAR(36),
   username VARCHAR(16),
-  joined TIMESTAMP NOT NULL DEFAULT NOW(),
-  discord TEXT,
-  twitter TEXT,
-  youtube TEXT,
-  mixer TEXT,
-  instagram TEXT,
-  facebook TEXT,
-  snapchat TEXT
+  joined TIMESTAMP NOT NULL DEFAULT NOW()
 );
 create index playerdata_username on playerdata (username);
 -- INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
+
+CREATE TABLE playersocials (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  player_id INT NOT NULL DEFAULT 0,
+  twitter TEXT,
+  youtube TEXT,
+  instagram TEXT,
+  facebook TEXT,
+  snapchat TEXT,
+  FOREIGN KEY (player_id) REFERENCES playerdata (id)
+);
+
+CREATE TABLE playerregistration (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  player_id INT NOT NULL DEFAULT 0,
+  registrationtoken VARCHAR(32),
+  registered BOOLEAN DEFAULT false,
+  FOREIGN KEY (player_id) REFERENCES playerdata (id)
+);
 
 CREATE TABLE gamesessions (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
