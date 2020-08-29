@@ -6,7 +6,11 @@
     <div class="container text-white">
       <img src="https://crafatar.com/avatars/<%= objdata[0].uuid %>?overlay" alt="<%= objdata[0].username %>'s Player Avatar Head" draggable="false">
       <h3 class="display-4"><%= objdata[0].username %></h3>
-      <p class="lead">Status: <%= objdata[0].status %></p>
+      <%if (objdata[0].status == 'online') { %>
+        <p class="lead">Currently Online on <%= objdata[0].server %></p>
+      <% } else { %>
+        <p class="lead">Last Online on <%= objdata[0].server %></p>
+      <% } %>
     </div>
   </div>
 
@@ -41,17 +45,29 @@
           <div class="card card-home">
             <table class="table">
               <tr>
-                <td>Joins</td>
+                <td>Kills</td>
                 <td>Deaths</td>
-                <td>Total Time Played</td>
-                <td>Last Seen</td>
+                <td>Wins</td>
+                <td>Losses</td>
+                <td>Level</td>
               </tr>
 
               <tr>
-                <td class="profilenumber"></td>
-                <td class="profilenumber"></td>
-                <td class="profilenumber"></td>
-                <td class="profilenumber"></td>
+                <td class="profilenumber"><%= tgmres.user.kills %></td>
+                <td class="profilenumber"><%= tgmres.user.deaths %></td>
+                <td class="profilenumber"><%= tgmres.user.wins %></td>
+                <td class="profilenumber"><%= tgmres.user.losses %></td>
+                <td class="profilenumber"><%= tgmres.user.level %></td>
+              </tr>
+
+              <tr>
+                <td>Matches Played</td>
+                <td>Wools Destroyed</td>
+              </tr>
+
+              <tr>
+                <td class="profilenumber"><%= tgmres.user.matches %></td>
+                <td class="profilenumber"><%= tgmres.user.wool_destroys %></td>
               </tr>
             </table>
           </div>

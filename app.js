@@ -6,7 +6,6 @@ const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
@@ -22,8 +21,8 @@ const passport = require('passport');
 const LocalStratagy = require('passport-local');
 
 const moment = require("moment");
+const fetch = require('node-fetch');
 const momentDurationFormatSetup = require("moment-duration-format");
-const mongoose = require('mongoose');
 
 //
 // File Constants
@@ -272,21 +271,28 @@ app.get('/profile/:username', function (req, res) {
           where gamesessions.sessionstart <= NOW()
           and gamesessions.sessionend is NULL
           and pd.username = 'shadowolfyt'
-          ), 'Online', 'Offline'))  as 'status'
+        ), 'online', 'offline'))  as 'status'
   from gamesessions, playerdata
   where player_id = playerdata.id
   and playerdata.username = 'shadowolfyt'
   order by sessionstart desc
   limit 1;`
 
-  database.query (sql, function (err, results) {
+  database.query (sql, async function (err, results) {
+    let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
+    let tgmbodyres = await response.json();
+    // if (tgmbodyres['notFound']) {
+    //   console.log('There is no player with this name.');
+    // }
+
     if (err) {
       res.redirect('/');
       throw err;
     } else {
       res.render('profile', {
         "pagetitle": `${req.params.username}'s Profile`,
-        objdata: results
+        objdata: results,
+        tgmres: tgmbodyres
       });
     }
   });
