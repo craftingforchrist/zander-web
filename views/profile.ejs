@@ -4,27 +4,40 @@
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
-      <img src="https://crafatar.com/avatars/<%= objdata[0][0].uuid %>?overlay" alt="Player Avatar Head" draggable="false">
-      <h3 class="display-4"><%= objdata[0][0].username %></h3>
-      <p class="lead">Status: <%= objdata[1][0].status %></p>
+      <img src="https://crafatar.com/avatars/<%= objdata[0].uuid %>?overlay" alt="<%= objdata[0].username %>'s Player Avatar Head" draggable="false">
+      <h3 class="display-4"><%= objdata[0].username %></h3>
+      <p class="lead">Status: <%= objdata[0].status %></p>
     </div>
+  </div>
+
+  <div class="alert alert-warning" role="alert">
+    Profiles are still a work in progress, if you see something working incorrectly report it to our Developers <a href="/issues">here</a>.
   </div>
 
   <div class="row">
     <div class="col-lg-8 col-md-6 mb-4">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="true">Statistics</a>
+          <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link " id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="true">Statistics</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" id="punishments-tab" data-toggle="tab" href="#punishments" role="tab" aria-controls="contact" aria-selected="false">Punishments</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+        <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
+          <div class="alert alert-primary" role="alert">
+            <b>Coming Soon!</b><br>Here you should be able to create your own about page and add things, your own creative space!
+          </div>
+          <p>This is where the users about custom information will go.</p>
+        </div>
+        <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+          <div class="alert alert-primary" role="alert">
+            <b>Coming Soon!</b><br>Here you will be able to see all of your statistics from the Mixed Server.
+          </div>
           <div class="card card-home">
             <table class="table">
               <tr>
@@ -43,17 +56,10 @@
             </table>
           </div>
         </div>
-        <!-- <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
-          <div class="alert alert-primary" role="alert">
-            Here you should be able to create your own about page and add things, your own creative space! Coming Soon.
-          </div>
-          <p>This is where the users about custom information will go.</p>
-        </div> -->
         <div class="tab-pane fade" id="punishments" role="tabpanel" aria-labelledby="punishments-tab">
           <div class="alert alert-primary" role="alert">
-            This section is surpose to display a users punishments that they have, but it is currently not working.
+            <b>Coming Soon!</b><br>This section is surpose to display <%= objdata[0].username %>'s punishments that they have, but it is currently not working.
           </div>
-
         </div>
       </div>
     </div>
@@ -61,13 +67,16 @@
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card card-home">
         <div class="card-body">
+          <div class="alert alert-primary" role="alert">
+            <b>Coming Soon!</b><br>Allow people to stay in contact with you by sharing your Social handles.
+          </div>
           <h4 class="card-title">Information</h4>
-            <p>Joined: <%= objdata[0][0].joined %></p>
-          <!-- <h4 class="card-title">Social</h4>
+            <p>Joined: <%= objdata[0].joined %></p>
+          <h4 class="card-title">Social</h4>
             <p><i class="fab fa-discord"></i>: shadowolf#9212</p>
             <p><i class="fab fa-instagram"></i>: @benrobson8</p>
             <p><i class="fab fa-youtube"></i>: /shadowolf</p>
-            <p><i class="fab fa-twitch"></i>: shadowolfyt</p> -->
+            <p><i class="fab fa-twitch"></i>: shadowolfyt</p>
         </div>
       </div>
     </div>

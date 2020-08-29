@@ -21,6 +21,10 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
 
+const moment = require("moment");
+const momentDurationFormatSetup = require("moment-duration-format");
+const mongoose = require('mongoose');
+
 //
 // File Constants
 //
@@ -133,7 +137,7 @@ app.use((req, res, next) => {
 // Site Routes
 //
 var index = require('./routes/index');
-// var players = require('./routes/players');
+var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 var staff = require('./routes/staff');
 var events = require('./routes/events');
@@ -157,7 +161,6 @@ var support = require('./routes/redirect/support');
 // var giveaway = require('./routes/redirect/giveaway');
 
 var apply = require('./routes/apply/apply');
-// var applygame = require('./routes/apply/apply-game')(client);
 var applycreator = require('./routes/apply/apply-creator')(client);
 var applydeveloper = require('./routes/apply/apply-developer')(client);
 var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
@@ -180,8 +183,6 @@ var accountspermissionslist = require('./routes/admin/accounts/permissions/list'
 var eventsadmin = require('./routes/admin/events/list');
 var eventsadmincreate = require('./routes/admin/events/create')(client);
 var eventsadminedit = require('./routes/admin/events/edit')(client);
-// var application = require('./routes/admin/application');
-// var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
 var punishment = require('./routes/admin/punishment');
 var contentcreator = require('./routes/admin/contentcreator/list');
@@ -195,7 +196,7 @@ var serverscreate = require('./routes/admin/servers/create');
 var serversdelete = require('./routes/admin/servers/delete');
 
 app.use('/', index);
-// app.use('/players', players);
+app.use('/players', players);
 app.use('/punishments', punishments);
 app.use('/staff', staff);
 app.use('/events', events);
@@ -257,22 +258,39 @@ app.use('/admin/servers/delete', serversdelete);
 //
 // Profiles
 //
-// app.get('/profile/:username', function (req, res) {
-//   let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; SELECT IF((SELECT gamesessions.id FROM gamesessions left join playerdata pd on pd.id = gamesessions.player_id WHERE gamesessions.sessionstart <= NOW() and gamesessions.sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; SELECT count(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id WHERE pd.username = '${req.params.username}';`;
-//   // SELECT p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' FROM (SELECT ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' FROM gamesessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id WHERE username = '${req.params.username}';
-//   // SELECT SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from gamesessions ses left join playerdata pd on pd.id = gamesessions.player_id WHERE pd.username = '${req.params.username}';
-//   database.query (sql, function (err, results) {
-//     if (err) {
-//       res.redirect('/');
-//       throw err;
-//     } else {
-//       res.render('profile', {
-//         "pagetitle": `${req.params.username}'s Profile`,
-//         objdata: results
-//       });
-//     }
-//   });
-// });
+app.get('/profile/:username', function (req, res) {
+  // let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}';
+  // SELECT count(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id WHERE pd.username = '${req.params.username}';`;
+  // SELECT p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' FROM (SELECT ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' FROM gamesessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id WHERE username = '${req.params.username}';
+  // SELECT SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from gamesessions ses left join playerdata pd on pd.id = gamesessions.player_id WHERE pd.username = '${req.params.username}';
+
+  let sql = `select sessionend, sessionstart, uuid, username, joined, server,
+  (IF(
+  		(select gamesessions.id
+  		from gamesessions
+  		left join playerdata pd on pd.id = gamesessions.player_id
+          where gamesessions.sessionstart <= NOW()
+          and gamesessions.sessionend is NULL
+          and pd.username = 'shadowolfyt'
+          ), 'Online', 'Offline'))  as 'status'
+  from gamesessions, playerdata
+  where player_id = playerdata.id
+  and playerdata.username = 'shadowolfyt'
+  order by sessionstart desc
+  limit 1;`
+
+  database.query (sql, function (err, results) {
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      res.render('profile', {
+        "pagetitle": `${req.params.username}'s Profile`,
+        objdata: results
+      });
+    }
+  });
+});
 
 //
 // Application View
