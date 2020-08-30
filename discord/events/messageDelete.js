@@ -1,17 +1,33 @@
 const Discord = require('discord.js');
-const chalk = require('chalk');
+const config = require('../../config.json')
 
-module.exports = (message) => {
-  let adminlogchannel = message.guild.channels.cache.find(c => c.name === 'admin-log');
+module.exports = async message => {
+  if (!message.guild) return;
+	const fetchedLogs = await message.guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MESSAGE_DELETE',
+	});
+  const deletionLog = fetchedLogs.entries.first();
+  if (!deletionLog) return console.log(`[CONSOLE] A message by ${message.author.tag} was deleted, but no relevant audit logs were found.`);
+
+  const { executor, target } = deletionLog;
+  let adminlogchannel = message.guild.channels.cache.find(c => c.name === config.punishmentchannel);
   if (!adminlogchannel) return;
-  if (message.author.bot) return;
 
-  let embed = new Discord.MessageEmbed()
-    .setTitle('Message Deleted')
-    .setDescription(`Message has been deleted in #${message.channel.name} by ${message.author.username}: ${message.content}`)
-    .setColor('#FFA500')
-  adminlogchannel.send(embed);
-
-  console.log(chalk.yellow(`A message has been deleted in #${message.channel.name} by ${message.author.username}: ${message.content}`));
+  if (target.id === message.author.id) {
+    let embed = new Discord.MessageEmbed()
+      .setTitle('Message Deleted')
+      .setDescription(`${message.content}`)
+      .setColor('#ff1a1a')
+      .setFooter(`Message Author: ${message.author.username}\nDeleted Channel: #${message.channel.name}\nDeleted By: ${executor.username}`)
+    adminlogchannel.send(embed);
+	}	else {
+    let embed = new Discord.MessageEmbed()
+      .setTitle('Message Deleted')
+      .setDescription(`${message.content}`)
+      .setColor('#ff1a1a')
+      .setFooter(`Message Author: ${message.author.username}\nDeleted Channel: #${message.channel.name}\nDeleted By: ${message.author.username}`)
+    adminlogchannel.send(embed);
+	}
   return
 }

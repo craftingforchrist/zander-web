@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
-const config = require('../../config.json');
-const database = require('../../controllers/database.js'); // Database controller
+const config = require('../../../config.json');
+const database = require('../../../controllers/database.js'); // Database controller
 const mojangapi = require('mojang-api');
+const moment = require('moment');
+moment().format();
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
@@ -37,11 +39,12 @@ module.exports.run = async (client, message, args) => {
           throw err;
         } else {
           let embed = new Discord.MessageEmbed()
-          .setTitle(`${args[0]}'s Connected Accounts`)
-          .setColor('#4d79ff')
+          .setTitle(`${args[0]}'s Connected Accounts & IPs`)
+          .setColor('#ff4633')
+          .setFooter('This contains sensitive information, DO NOT send this to anyone.')
 
           results.forEach(function(playeripdata) {
-            embed.addField(`${playeripdata.username}`, `Last Login: ${playeripdata.lastlogin}`)
+            embed.addField(`${playeripdata.username}`, `Last Login: ${moment(playeripdata.lastlogin).format("LLLL")}\nIP Address: ${playeripdata.ipaddress}`)
           })
           message.channel.send(embed);
         }
@@ -53,6 +56,6 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'ipcheck',
   description: 'Checks the accounts connected to the players name.',
-  permission: 'MANAGE_MESSAGES',
+  permission: 'ADMINISTRATOR',
   usage: 'ipcheck [username]'
 };

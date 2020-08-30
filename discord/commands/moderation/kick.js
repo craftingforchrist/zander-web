@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
-const config = require('../../config.json');
-const chalk = require('chalk');
-const database = require('../../controllers/database.js'); // Database controller
-const punishment = require('../../functions/discord/punishment');
+const config = require('../../../config.json');
+const database = require('../../../controllers/database'); // Database controller
+const punishment = require('../../../functions/discord/punishment');
 
 module.exports.run = async (client, message, args) => {
   const mentioneduser = message.mentions.members.first();
@@ -10,7 +9,7 @@ module.exports.run = async (client, message, args) => {
   const punisheduserid = mentioneduser.user.id;
   const punisher = `${message.author.username}#${message.author.discriminator}`;
   const punisherid = message.author.id;
-  const punishtype = "WARN";
+  const punishtype = "KICK";
 
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
@@ -54,10 +53,10 @@ module.exports.run = async (client, message, args) => {
   }
 
   let embed = new Discord.MessageEmbed()
-    .setTitle('User has been Warned')
+    .setTitle('User has been Kicked')
     .setColor('#4d79ff')
     .addField('Kicked User:', `${mentioneduser}`)
-    .addField('Kicked By:', `${punisheduser}`)
+    .addField('Kicked By:', `${message.author}`)
     .addField('Reason:', reason)
 
   let adminlogchannel = message.guild.channels.cache.find(c => c.name === `${config.punishmentchannel}`);
@@ -71,25 +70,26 @@ module.exports.run = async (client, message, args) => {
 
   // Send notification to the command issuing channel.
   let notificationembed = new Discord.MessageEmbed()
-    .setTitle('User has been Warned.')
+    .setTitle('User has been Kicked.')
     .setColor('#4d79ff')
-    .setDescription(`${mentioneduser} has been warned by ${punisheduser} for ${reason}`)
+    .setDescription(`${mentioneduser} has been kicked by ${message.author} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.MessageEmbed()
-    .setTitle('You have been warned.')
+    .setTitle(`You have been kicked from ${message.guild}.`)
     .setColor('#ffa366')
-    .setDescription(`Hello ${mentioneduser}, you have been warned by ${punisheduser} for ${reason}`)
+    .setDescription(`Hello ${mentioneduser}, you have been kicked from ${message.guild}.\nYou were kicked by ${punisher} for ${reason}.\nPlease think about your actions, then rejoin the server.`)
   await mentioneduser.send(usernotifyembed).catch(e => { })
 
+  message.guild.member(mentioneduser).kick(reason);
   punishment.addpunishment(punisheduser, punisheduserid, punisher, punisherid, punishtype, reason);
   return;
 };
 
 module.exports.help = {
-  name: 'warn',
-  description: 'Warn the user, with the reason provided.',
+  name: 'kick',
+  description: 'Kicks the user from the server with the reason provided.',
   permission: 'MANAGE_MESSAGES',
-  usage: 'warn [@user] [reason]'
+  usage: 'kick [@user] [reason]'
 };

@@ -18,8 +18,13 @@
     height:100px;
   }
 
-  .rankperks p {
+  .rankperks {
     font-size:10pt;
+  }
+
+  .ranksectiontitle {
+    font-size:12pt;
+    text-align:left;
   }
 </style>
 
@@ -31,9 +36,7 @@
   </div>
 
   <div class="row">
-    <!--
-      Iron
-     -->
+    <!-- Iron -->
       <div class="col text-center">
         <h3 class="ranktitle" style="background-color: rgba(203, 205, 205, 0.7);"><img src="./assets/img/rank-icons/iron.png" alt=""><br>Iron</h3>
         <div class="text-muted">
@@ -43,17 +46,34 @@
 
         <div class="rankperks">
           <p><span class="badge badge-pill badge-secondary">Iron</span> on our Server, Forums and Discord</p>
-          <p>Access to exclusive Donator channels on Discord.</p>
           <p>Ability to join full games during Events.</p>
+
+          <p class="ranksectiontitle">Discord</p>
+          <hr>
+          <p>Access to exclusive Donator channels on Discord.</p>
+          <p>Access to using the Discord Music Bot.</p>
+
+          <p class="ranksectiontitle">Hub</p>
+          <hr>
+          <p>A player statue in the Hall of Patrons.</p>
           <p>Access to /fly in the Hub.</p>
-          <p>Access to /sethome, maximum of 2 on the Survial Server.</p>
-          <!-- <p>A player statue in the Hall of Patrons.</p> -->
+
+          <p class="ranksectiontitle">Survival</p>
+          <hr>
+          <p>Access to /sethome, maximum of 2.</p>
+        </div>
+
+        <div class="alert alert-info rankperks" role="alert">
+          <p>Current <span class="badge badge-pill badge-secondary">Iron</span> Members</p>
+          <% objdata.forEach(function (data) { %>
+            <% if (data.permission == 'group.iron') { %>
+              <img class="staffimg" style="display: inline-block;" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="20px" draggable="false"> <%= data.username %>
+            <% } %>
+          <% }) %>
         </div>
       </div>
 
-      <!--
-        Gold
-       -->
+      <!-- Gold -->
       <div class="col text-center">
         <h3 class="ranktitle" style="background-color: rgba(243, 204, 0, 0.7);"><img src="./assets/img/rank-icons/gold.png" alt=""><br>Gold</h3>
         <div class="text-muted">
@@ -64,15 +84,27 @@
         <div class="rankperks">
           <p><span class="badge badge-pill badge-warning">Gold</span> on our Server, Forums and Discord</p>
           <p>Inherit all perks from <span class="badge badge-pill badge-secondary">Iron</span></p>
-          <p>Access to using colours in your chat messages.</p>
-          <p>Access to /hat, wear the block that you’re holding on the Survival server.</p>
-          <p>Access to /sethome, maximum of 3 on the Survial Server.</p>
+          <!-- <p class="ranksectiontitle">Server</p>
+          <hr>
+          <p>Access to using colours in your chat messages.</p> -->
+          <p class="ranksectiontitle">Survival</p>
+          <hr>
+          <p>Access to /hat, wear the block that you’re holding.</p>
+          <p>Ability to customise armour stands using <a href="https://www.youtube.com/watch?v=A25hSBnM7dM">armour statues</a>.</p>
+          <p>Access to /sethome, maximum of 3.</p>
+        </div>
+
+        <div class="alert alert-info rankperks" role="alert">
+          <p>Current <span class="badge badge-pill badge-warning">Gold</span> Members</p>
+          <% objdata.forEach(function (data) { %>
+            <% if (data.permission == 'group.gold') { %>
+              <img class="staffimg" style="display: inline-block;" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="20px" draggable="false"> <%= data.username %>
+            <% } %>
+          <% }) %>
         </div>
       </div>
 
-      <!--
-        Diamond
-       -->
+      <!-- Diamond -->
       <div class="col text-center">
         <h3 class="ranktitle" style="background-color: rgba(0, 165, 218, 0.9);"><img src="./assets/img/rank-icons/diamond.png" alt=""><br>Diamond</h3>
         <div class="text-muted">
@@ -83,16 +115,28 @@
         <div class="rankperks">
           <p><span class="badge badge-pill badge-primary">Diamond</span> on our Server, Forums and Discord</p>
           <p>Inherit all perks from <span class="badge badge-pill badge-secondary">Iron</span> and <span class="badge badge-pill badge-warning">Gold</span></p>
+          <p class="ranksectiontitle">Server</p>
+          <hr>
           <p>Access to the exclusive donator Creative Server.</p>
-          <p>Use an alternate account for a Camera account on the Survival Server.</p>
-          <!-- <p>Natural Fortune (a chance to give you an additional ore from a mining) on the Survival server.</p> -->
-          <p>Access to /sethome, maximum of 4 on the Survival server.</p>
+
+          <p class="ranksectiontitle">Survival</p>
+          <hr>
+          <p>Use an alternate account for a Camera account.</p>
+          <p>Ability to put <a href="https://www.youtube.com/watch?v=mZ1KdfzdgBE">images on maps</a>.</p>
+          <p>Access to /sethome, maximum of 4.</p>
+        </div>
+
+        <div class="alert alert-info rankperks" role="alert">
+          <p>Current <span class="badge badge-pill badge-primary">Diamond</span> Members</p>
+          <% objdata.forEach(function (data) { %>
+            <% if (data.permission == 'group.diamond') { %>
+              <img class="staffimg" style="display: inline-block;" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="20px" draggable="false"> <%= data.username %>
+            <% } %>
+          <% }) %>
         </div>
       </div>
 
-      <!--
-        Emerald
-       -->
+      <!-- Emerald -->
       <!-- <div class="col text-center">
         <h3 class="ranktitle" style="background-color: rgba(0, 151, 97, 0.9);"><img src="./assets/img/rank-icons/emerald.png" alt=""><br>Emerald</h3>
         <div class="text-muted">
@@ -110,7 +154,7 @@
   <br>
 
   <div class="alert alert-info" role="alert">
-    Visit the Shop to buy any of our ranks to support our Server and operations :) <a href="/shop">Click me to be directed to the shop.</a>
+    Visit the Shop to buy any of our ranks to support our Server and operations <a href="/shop">click me to be directed to the shop.</a>
   </div>
   <div class="alert alert-info" role="alert">
     Looking for answers to questions in regards to the Shop? You can find them on our <a href="/guides">Guides</a> page.

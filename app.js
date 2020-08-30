@@ -10,16 +10,12 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
 const Discord = require('discord.js');
-const client = new Discord.Client({ disableEveryone: true });
-client.commands = new Discord.Collection();
-require('./discord/util/eventLoader.js')(client);
 const nodemailer = require('nodemailer');
 const inlinecss = require('nodemailer-juice');
 const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
-
 const moment = require("moment");
 const fetch = require('node-fetch');
 const momentDurationFormatSetup = require("moment-duration-format");
@@ -47,7 +43,10 @@ const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 require('./controllers/passport')(passport); // Passport controller
 const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich Online Tracker controller
 
-const uuid = require('./functions/uuid');
+//
+// Cron Jobs
+//
+require('./cron/resetVotes.js');
 
 //
 // Constants
@@ -63,11 +62,13 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(session({ cookie: { maxAge: 60000 },
-                  secret: process.env.sessionsecret,
-                  resave: true,
-                  saveUninitialized: true}));
-// Seems to have a common erorr at the moment:
+app.use(session({
+  cookie: { maxAge: 60000 },
+  secret: process.env.sessionsecret,
+  resave: true,
+  saveUninitialized: true
+}));
+// Seems to have a common error at the moment:
 // Warning: connect.session() MemoryStore is not designed for a production environment, as it will leak memory, and will not scale past a single process.
 
 //
@@ -111,7 +112,6 @@ app.use((req, res, next) => {
   res.locals.platformtwitch = config.twitch;
   res.locals.platformyoutube = config.youtube;
 
-  // res.locals.gameserverapp = config.gameserverapp;
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
   res.locals.juniorstaffapp = config.juniorstaffapp;
@@ -148,6 +148,8 @@ var ranks = require('./routes/ranks');
 var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
 var report = require('./routes/report')(client);
+
+var churchduringcovid = require('./routes/churchduringcovid');
 
 var terms = require('./routes/policy/terms');
 var privacy = require('./routes/policy/privacy');
@@ -207,6 +209,8 @@ app.use('/ranks', ranks);
 app.use('/guides', guides);
 app.use('/appeal', appeal);
 
+app.use('/churchduringcovid', churchduringcovid);
+
 app.use('/terms', terms);
 app.use('/privacy', privacy);
 app.use('/rules', rules);
@@ -254,6 +258,12 @@ app.use('/admin/servers/delete', serversdelete);
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+app.get('*', function(req, res) {
+  res.render('404', {
+    "pagetitle": "404: Page Not Found"
+  });
+});
 
 //
 // Profiles
@@ -339,32 +349,6 @@ app.get('/profile/:username', function (req, res) {
 });
 
 //
-// Application View
-//
-// app.get('/admin/applications/view/:id', function (req, res) {
-//   if (req.session.user) {
-//     let sql = `SELECT * FROM gameapplications WHERE id='${req.params.id}';`;
-//     database.query (sql, function (err, results) {
-//       if (err) {
-//         res.redirect('/');
-//         throw err;
-//       } else {
-//         res.render('admin/view', {
-//           "pagetitle": `${results[0].username}'s Game Application`,
-//           objdata: results[0]
-//         });
-//       }
-//     });
-//   } else {
-//     res.render('session/login', {
-//       setValue: true,
-//       message: 'You cannot access this page unless you are logged in.',
-//       "pagetitle": "Login"
-//     });
-//   }
-// });
-
-//
 // GAME Punishment View
 //
 // app.get('/punishments/game/view/:id', function (req, res) {
@@ -405,7 +389,10 @@ app.get('/profile/:username', function (req, res) {
 //
 // Discord Commands & Integration
 //
-// Reads all commands & boot them in.
+// Read all commands in.
+//
+// General
+//
 fs.readdir('./discord/commands', (err, files) => {
   if (err) console.log(err);
   let jsfile = files.filter(f => f.split(".").pop() === 'js')
@@ -418,15 +405,48 @@ fs.readdir('./discord/commands', (err, files) => {
     let props = require(`./discord/commands/${files}`);
     console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
     client.commands.set(props.help.name, props);
-  })
-});
-
-app.get('*', function(req, res) {
-  res.render('404', {
-    "pagetitle": "404: Page Not Found"
   });
 });
 
+//
+// Moderation
+//
+fs.readdir('./discord/commands/moderation', (err, files) => {
+  if (err) console.log(err);
+  let jsfile = files.filter(f => f.split(".").pop() === 'js')
+  if (jsfile.length <= 0) {
+    console.log('Couldn\'t find commands.');
+    return
+  }
+
+  jsfile.forEach((files, i) => {
+    let props = require(`./discord/commands/moderation/${files}`);
+    console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
+    client.commands.set(props.help.name, props);
+  });
+});
+
+//
+// Stats
+//
+fs.readdir('./discord/commands/stats', (err, files) => {
+  if (err) console.log(err);
+  let jsfile = files.filter(f => f.split(".").pop() === 'js')
+  if (jsfile.length <= 0) {
+    console.log('Couldn\'t find commands.');
+    return
+  }
+
+  jsfile.forEach((files, i) => {
+    let props = require(`./discord/commands/stats/${files}`);
+    console.log(`[CONSOLE] [DISCORD] ${files} has been loaded.`);
+    client.commands.set(props.help.name, props);
+  });
+});
+
+//
+// Message Handler
+//
 client.on("message", (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return;
@@ -446,7 +466,7 @@ client.on("message", (message) => {
 //
 const port = process.env.PORT || 8080;
 app.listen(port, function() {
-  console.log(`\n// zander-web v.${package.version}\nGitHub Repository: ${package.homepage}\nCreated By: ${package.author}`);
+  console.log(`\n// ${package.name} v.${package.version}\nGitHub Repository: ${package.homepage}\nCreated By: ${package.author}`);
   console.log(`[CONSOLE] Application is listening to the port ${port}`);
 
   client.login(process.env.discordapitoken);

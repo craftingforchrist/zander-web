@@ -1,18 +1,20 @@
 const Discord = require('discord.js');
 const chalk = require('chalk');
 
-module.exports = (message) => {
-  if (message.author.bot) return;
+module.exports = async (oldMessage, newMessage) => {
+  if (oldMessage.author.bot) return;
+  if (oldMessage.content == newMessage.content) return;
 
-  let adminlogchannel = message.guild.channels.cache.find(c => c.name === 'admin-log');
+  let adminlogchannel = oldMessage.guild.channels.cache.find(c => c.name === 'admin-log');
   if (!adminlogchannel) return;
 
   let embed = new Discord.MessageEmbed()
     .setTitle('Message Edited')
-    .setDescription(`Message has been edited in #${message.channel.name} by ${message.author.username}: ${message.content}`)
+    .setDescription(`*Original Message*\n${oldMessage.content}\n\n*Edited Message*\n${newMessage.content}`)
     .setColor('#e69500')
+    .setFooter(`Message Author: ${oldMessage.author.username}\nEdited Channel: #${oldMessage.channel.name}`)
   adminlogchannel.send(embed);
 
-  console.log(chalk.yellow(`A message has been edited in #${message.channel.name} by ${message.author.username}: ${message.content}`));
+  console.log(`A message has been edited in #${oldMessage.channel.name} by ${oldMessage.author.username}: ${oldMessage.content}`);
   return
 }

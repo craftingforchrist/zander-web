@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const chalk = require('chalk');
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
