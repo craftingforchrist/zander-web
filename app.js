@@ -6,7 +6,6 @@ const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const chalk = require('chalk');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
@@ -17,10 +16,9 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
-
-const client = new Discord.Client({ disableEveryone: true });
-client.commands = new Discord.Collection();
-require('./discord/util/eventLoader.js')(client);
+const moment = require("moment");
+const fetch = require('node-fetch');
+const momentDurationFormatSetup = require("moment-duration-format");
 
 //
 // File Constants
@@ -186,8 +184,6 @@ var accountspermissionslist = require('./routes/admin/accounts/permissions/list'
 var eventsadmin = require('./routes/admin/events/list');
 var eventsadmincreate = require('./routes/admin/events/create')(client);
 var eventsadminedit = require('./routes/admin/events/edit')(client);
-// var application = require('./routes/admin/application');
-// var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
 var punishment = require('./routes/admin/punishment');
 var contentcreator = require('./routes/admin/contentcreator/list');
@@ -221,7 +217,6 @@ app.use('/rules', rules);
 app.use('/refund', refund);
 
 app.use('/apply', apply);
-// app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
 app.use('/apply/juniorstaff', applyjuniorstaff);
@@ -248,8 +243,6 @@ app.use('/admin/accounts/permissions', accountspermissionslist);
 app.use('/admin/events', eventsadmin);
 app.use('/admin/events/create', eventsadmincreate);
 app.use('/admin/events/edit', eventsadminedit);
-// app.use('/admin/application', application);
-// app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);
 app.use('/admin/punishment', punishment);
 app.use('/admin/contentcreator', contentcreator);
@@ -262,6 +255,10 @@ app.use('/admin/servers/create', serverscreate);
 app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 app.get('*', function(req, res) {
   res.render('404', {
     "pagetitle": "404: Page Not Found"
@@ -271,22 +268,85 @@ app.get('*', function(req, res) {
 //
 // Profiles
 //
-// app.get('/profile/:username', function (req, res) {
-//   let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; SELECT IF((SELECT gamesessions.id FROM gamesessions left join playerdata pd on pd.id = gamesessions.player_id WHERE gamesessions.sessionstart <= NOW() and gamesessions.sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; SELECT count(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id WHERE pd.username = '${req.params.username}';`;
-//   // SELECT p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' FROM (SELECT ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' FROM gamesessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id WHERE username = '${req.params.username}';
-//   // SELECT SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from gamesessions ses left join playerdata pd on pd.id = gamesessions.player_id WHERE pd.username = '${req.params.username}';
-//   database.query (sql, function (err, results) {
-//     if (err) {
-//       res.redirect('/');
-//       throw err;
-//     } else {
-//       res.render('profile', {
-//         "pagetitle": `${req.params.username}'s Profile`,
-//         objdata: results
-//       });
-//     }
-//   });
-// });
+app.get('/profile/:username', function (req, res) {
+  // Query the database for the players data and online status.
+  let sql = `select sessionend, sessionstart, uuid, username, joined, server,
+  (IF(
+  		(select gamesessions.id
+  		from gamesessions
+  		left join playerdata pd on pd.id = gamesessions.player_id
+          where gamesessions.sessionstart <= NOW()
+          and gamesessions.sessionend is NULL
+          and pd.username = '${req.params.username}'
+        ), 'online', 'offline'))  as 'status'
+  from gamesessions, playerdata
+  where player_id = playerdata.id
+  and playerdata.username = '${req.params.username}'
+  order by sessionstart desc
+  limit 1;`
+
+  database.query (sql, async function (err, zanderplayerresults) {
+    // Get the players Mixed TGM statistics to display.
+    let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
+    let tgmbodyres = await response.json();
+    if (tgmbodyres['notFound']) {
+      tgmresbool = false;
+    } else {
+      tgmresbool = true;
+    }
+
+    const killdeathratio = tgmbodyres.user.kills !== 0 && tgmbodyres.user.deaths !== 0 ? (tgmbodyres.user.kills / tgmbodyres.user.deaths).toFixed(2) : 'None';
+    const winlossratio = (tgmbodyres.user.wins / tgmbodyres.user.losses).toFixed(2);
+
+    // If there is no player of that username, send them the Player Not Found screen.
+    if (typeof(zanderplayerresults[0]) == "undefined") {
+      res.render('playernotfound', {
+        "pagetitle": "Player Not Found"
+      });
+    }
+
+    if (zanderplayerresults[0].username.includes("*")) {
+      bedrockuser = true;
+    } else {
+      bedrockuser = false;
+    }
+
+    // Formatting the initial join date and putting it into template.
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const initjoin = zanderplayerresults[0].joined;
+    const initjoindate = `${initjoin.getDay()} ${months[initjoin.getMonth()]} ${initjoin.getFullYear()}`;
+
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      const reqplayeruuid = zanderplayerresults[0].uuid.replace(/-/g, '');
+
+      // Query the database for the players data and online status.
+      let sql = `select id, name, reason, operator, punishmentType from punishmenthistory where uuid = '${reqplayeruuid}';`
+
+      abdatabase.query (sql, async function (err, punishmentresults) {
+        if (err) {
+          res.redirect('/');
+          throw err;
+        } else {
+          res.render('profile', {
+            "pagetitle": `${req.params.username}'s Profile`,
+            zanderplayerobjdata: zanderplayerresults,
+            punishmentobjdata: punishmentresults,
+            tgmres: tgmbodyres,
+            tgmresboolean: tgmresbool,
+            bedrockuser: bedrockuser,
+            currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
+            initjoindate: initjoindate,
+            killdeathratio: killdeathratio,
+            winlossratio: winlossratio
+          });
+        }
+      });
+    }
+  });
+});
 
 //
 // GAME Punishment View

@@ -2,72 +2,172 @@
 <%- include("./partials/navigation.ejs") %>
 
 <div class="container">
-  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
+  <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container" style="height:340px; padding:25px;">
     <div class="container text-white">
-      <img src="https://crafatar.com/avatars/<%= objdata[0][0].uuid %>?overlay" alt="Player Avatar Head" draggable="false">
-      <h3 class="display-4"><%= objdata[0][0].username %></h3>
-      <p class="lead">Status: <%= objdata[1][0].status %></p>
+      <img src="https://crafatar.com/avatars/<%= zanderplayerobjdata[0].uuid %>?overlay" height="150px" alt="<%= zanderplayerobjdata[0].username %>'s Player Avatar Head" draggable="false">
+      <h3 class="display-4"><%= zanderplayerobjdata[0].username %></h3>
+      <%if (zanderplayerobjdata[0].status == 'online') { %>
+        <p class="lead"><i class="fas fa-circle" style="color:green"></i>  Currently Online on <%= currentserver %></p>
+      <% } else { %>
+        <p class="lead"><i class="fas fa-circle" style="color:red"></i>  Last Online on <%= currentserver %></p>
+      <% } %>
+
+      <%if (bedrockuser == true) { %>
+        <p><span class="badge badge-secondary">Bedrock</span></p>
+      <% } %>
     </div>
+  </div>
+
+  <div class="alert alert-warning" role="alert">
+    Profiles are still a work in progress, if you see something working incorrectly report it to our Developers <a href="/issues">here</a>.
   </div>
 
   <div class="row">
     <div class="col-lg-8 col-md-6 mb-4">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <!-- <li class="nav-item">
+          <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link active" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="true">Statistics</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
-        </li> -->
         <li class="nav-item">
           <a class="nav-link" id="punishments-tab" data-toggle="tab" href="#punishments" role="tab" aria-controls="contact" aria-selected="false">Punishments</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-          <div class="card card-home">
-            <table class="table">
-              <tr>
-                <td>Joins</td>
-                <td>Deaths</td>
-                <td>Total Time Played</td>
-                <td>Last Seen</td>
-              </tr>
-
-              <tr>
-                <td class="profilenumber"></td>
-                <td class="profilenumber"></td>
-                <td class="profilenumber"></td>
-                <td class="profilenumber"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <!-- <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+        <!--
+          About Tab
+        -->
+        <!-- <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="about-tab">
           <div class="alert alert-primary" role="alert">
-            Here you should be able to create your own about page and add things, your own creative space! Coming Soon.
+            <b>Coming Soon <i class="fas fa-trademark"></i></b><br>Here you should be able to create your own about page and add things, your own creative space!
           </div>
           <p>This is where the users about custom information will go.</p>
         </div> -->
-        <div class="tab-pane fade" id="punishments" role="tabpanel" aria-labelledby="punishments-tab">
-          <div class="alert alert-primary" role="alert">
-            This section is surpose to display a users punishments that they have, but it is currently not working.
-          </div>
 
+        <!--
+          Statistics Tab
+        -->
+        <div class="tab-pane fade show active" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+          <% if (tgmresboolean == true) { %>
+            <div class="card card-home">
+              <table class="table table-borderless">
+                <tr>
+                  <td>Kills</td>
+                  <td>Deaths</td>
+                  <td>Wins</td>
+                  <td>Losses</td>
+                </tr>
+
+                <tr>
+                  <td class="profilenumber"><%= tgmres.user.kills %></td>
+                  <td class="profilenumber"><%= tgmres.user.deaths %></td>
+                  <td class="profilenumber"><%= tgmres.user.wins %></td>
+                  <td class="profilenumber"><%= tgmres.user.losses %></td>
+                </tr>
+
+                <tr>
+                  <td>Matches Played</td>
+                  <td>Wools Destroyed</td>
+                  <td>Level</td>
+                  <td>W/L</td>
+                  <td>K/D</td>
+                </tr>
+
+                <tr>
+                  <td class="profilenumber"><%= tgmres.user.matches %></td>
+                  <td class="profilenumber"><%= tgmres.user.wool_destroys %></td>
+                  <td class="profilenumber"><%= tgmres.user.level %></td>
+                  <td class="profilenumber"><%= winlossratio %></td>
+                  <td class="profilenumber"><%= killdeathratio %></td>
+                </tr>
+
+                <!-- <tr>
+                  <td colspan="4">Level</td>
+                </tr>
+
+                <tr>
+                  <td colspan="4">
+                    <div class="row">
+                      <div class="col- profilenumber" style="padding-left:15px;">
+                        <%= tgmres.user.level %>
+                      </div>
+                      <div class="col-sm" style="padding-top:10px;">
+                        <progress value="<%= tgmres.user.xp %>" max="10000" style="margin 0 auto; min-width:100%; height:30px;">0%</progress>
+                      </div>
+                    </div>
+                  </td>
+                </tr> -->
+              </table>
+            </div>
+          <% } else { %>
+            <div class="alert alert-warning" role="alert">
+              <%= zanderplayerobjdata[0].username %> has not played on Mixed, can't display their statistics.
+            </div>
+          <% } %>
+        </div>
+
+        <!--
+          Punishments Tab
+        -->
+        <div class="tab-pane fade" id="punishments" role="tabpanel" aria-labelledby="punishments-tab">
+          <% if (punishmentobjdata.length > 0) { %>
+            <div class="card card-home">
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Punished</th>
+                    <th scope="col">Punisher</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Type</th>
+                  </tr>
+                </thead>
+              <% punishmentobjdata.forEach(function (data) { %>
+                <tbody>
+                  <tr>
+                    <td><%= data.id %></td>
+                    <td><a href="<%= data.username %>"><%= data.name %></a></td>
+                    <td><a href="<%= data.operator %>"><%= data.operator %></a></td>
+                    <td><%= data.reason %></td>
+                    <td><%= data.punishmentType %></td>
+                  </tr>
+                </tbody>
+              <% }) %>
+            </table>
+          </div>
+          <% } else { %>
+            <div class="alert alert-warning" role="alert">
+              <%= zanderplayerobjdata[0].username %> has no punishments on record.
+            </div>
+          <% } %>
         </div>
       </div>
     </div>
 
+    <!--
+      Information Sidebar
+    -->
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card card-home">
         <div class="card-body">
           <h4 class="card-title">Information</h4>
-            <p>Joined: <%= objdata[0][0].joined %></p>
-          <!-- <h4 class="card-title">Social</h4>
-            <p><i class="fab fa-discord"></i>: shadowolf#9212</p>
-            <p><i class="fab fa-instagram"></i>: @benrobson8</p>
-            <p><i class="fab fa-youtube"></i>: /shadowolf</p>
-            <p><i class="fab fa-twitch"></i>: shadowolfyt</p> -->
+            <p>Joined: <%= initjoindate %></p>
+
+          <div class="alert alert-primary" role="alert">
+            <b>Coming Soon <i class="fas fa-trademark"></i></b><br>Allow people to stay in contact with you by sharing your Social handles.
+          </div>
+
+          <!--
+            Social Media Handles Sidebar Aspect
+            Currently static but will be dynamic later.
+          -->
+          <h4 class="card-title">Social</h4>
+            <p><i class="fab fa-discord"></i> shadowolf#9212</p>
+            <p><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/benrobson8/">@benrobson8</a></p>
+            <p><i class="fab fa-youtube"></i> <a href="https://www.youtube.com/channel/UC53F4RZCQMcRxu2dskj16Yw">My Channel</a></p>
+            <p><i class="fab fa-twitch"></i> <a href="https://www.twitch.tv/shadowolfyt">shadowolfyt</a></p>
         </div>
       </div>
     </div>
