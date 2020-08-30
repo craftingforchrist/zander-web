@@ -4,12 +4,12 @@
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
-      <img src="https://crafatar.com/avatars/<%= objdata[0].uuid %>?overlay" alt="<%= objdata[0].username %>'s Player Avatar Head" draggable="false">
+      <img src="https://crafatar.com/avatars/<%= objdata[0].uuid %>?overlay" height="150px" alt="<%= objdata[0].username %>'s Player Avatar Head" draggable="false">
       <h3 class="display-4"><%= objdata[0].username %></h3>
       <%if (objdata[0].status == 'online') { %>
-        <p class="lead">Currently Online on <%= objdata[0].server %></p>
+        <p class="lead"><i class="fas fa-circle" style="color:green"></i>  Currently Online on <%= currentserver %></p>
       <% } else { %>
-        <p class="lead">Last Online on <%= objdata[0].server %></p>
+        <p class="lead"><i class="fas fa-circle" style="color:red"></i>  Last Online on <%= currentserver %></p>
       <% } %>
     </div>
   </div>
@@ -42,35 +42,42 @@
           <div class="alert alert-primary" role="alert">
             <b>Coming Soon!</b><br>Here you will be able to see all of your statistics from the Mixed Server.
           </div>
-          <div class="card card-home">
-            <table class="table">
-              <tr>
-                <td>Kills</td>
-                <td>Deaths</td>
-                <td>Wins</td>
-                <td>Losses</td>
-                <td>Level</td>
-              </tr>
 
-              <tr>
-                <td class="profilenumber"><%= tgmres.user.kills %></td>
-                <td class="profilenumber"><%= tgmres.user.deaths %></td>
-                <td class="profilenumber"><%= tgmres.user.wins %></td>
-                <td class="profilenumber"><%= tgmres.user.losses %></td>
-                <td class="profilenumber"><%= tgmres.user.level %></td>
-              </tr>
+          <%if (tgmresboolean == true) { %>
+            <div class="card card-home">
+              <table class="table table-borderless">
+                <tr>
+                  <td>Kills</td>
+                  <td>Deaths</td>
+                  <td>Wins</td>
+                  <td>Losses</td>
+                  <td>Level</td>
+                </tr>
 
-              <tr>
-                <td>Matches Played</td>
-                <td>Wools Destroyed</td>
-              </tr>
+                <tr>
+                  <td class="profilenumber"><%= tgmres.user.kills %></td>
+                  <td class="profilenumber"><%= tgmres.user.deaths %></td>
+                  <td class="profilenumber"><%= tgmres.user.wins %></td>
+                  <td class="profilenumber"><%= tgmres.user.losses %></td>
+                  <td class="profilenumber"><%= tgmres.user.level %></td>
+                </tr>
 
-              <tr>
-                <td class="profilenumber"><%= tgmres.user.matches %></td>
-                <td class="profilenumber"><%= tgmres.user.wool_destroys %></td>
-              </tr>
-            </table>
-          </div>
+                <tr>
+                  <td>Matches Played</td>
+                  <td>Wools Destroyed</td>
+                </tr>
+
+                <tr>
+                  <td class="profilenumber"><%= tgmres.user.matches %></td>
+                  <td class="profilenumber"><%= tgmres.user.wool_destroys %></td>
+                </tr>
+              </table>
+            </div>
+          <% } else { %>
+            <div class="alert alert-warning" role="alert">
+              <%= objdata[0].username %> has not played on Mixed yet so we can't display their statistics yet!
+            </div>
+          <% } %>
         </div>
         <div class="tab-pane fade" id="punishments" role="tabpanel" aria-labelledby="punishments-tab">
           <div class="alert alert-primary" role="alert">
@@ -90,9 +97,9 @@
             <p>Joined: <%= objdata[0].joined %></p>
           <h4 class="card-title">Social</h4>
             <p><i class="fab fa-discord"></i>: shadowolf#9212</p>
-            <p><i class="fab fa-instagram"></i>: @benrobson8</p>
-            <p><i class="fab fa-youtube"></i>: /shadowolf</p>
-            <p><i class="fab fa-twitch"></i>: shadowolfyt</p>
+            <p><i class="fab fa-instagram"></i>: <a href="https://www.instagram.com/benrobson8/">@benrobson8</a></p>
+            <p><i class="fab fa-youtube"></i>: <a href="https://www.youtube.com/channel/UC53F4RZCQMcRxu2dskj16Yw">My Channel</a></p>
+            <p><i class="fab fa-twitch"></i>: <a href="https://www.twitch.tv/shadowolfyt">shadowolfyt</a></p>
         </div>
       </div>
     </div>

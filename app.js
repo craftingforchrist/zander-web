@@ -270,20 +270,22 @@ app.get('/profile/:username', function (req, res) {
   		left join playerdata pd on pd.id = gamesessions.player_id
           where gamesessions.sessionstart <= NOW()
           and gamesessions.sessionend is NULL
-          and pd.username = 'shadowolfyt'
+          and pd.username = '${req.params.username}'
         ), 'online', 'offline'))  as 'status'
   from gamesessions, playerdata
   where player_id = playerdata.id
-  and playerdata.username = 'shadowolfyt'
+  and playerdata.username = '${req.params.username}'
   order by sessionstart desc
   limit 1;`
 
   database.query (sql, async function (err, results) {
     let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
     let tgmbodyres = await response.json();
-    // if (tgmbodyres['notFound']) {
-    //   console.log('There is no player with this name.');
-    // }
+    if (tgmbodyres['notFound']) {
+      tgmresbool = false;
+    } else {
+      tgmresbool = true;
+    }
 
     if (err) {
       res.redirect('/');
@@ -292,11 +294,17 @@ app.get('/profile/:username', function (req, res) {
       res.render('profile', {
         "pagetitle": `${req.params.username}'s Profile`,
         objdata: results,
-        tgmres: tgmbodyres
+        tgmres: tgmbodyres,
+        tgmresboolean: tgmresbool,
+        currentserver: capitalizeFirstLetter(results[0].server)
       });
     }
   });
 });
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 //
 // Application View
