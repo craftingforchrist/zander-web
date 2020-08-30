@@ -20,6 +20,11 @@ const moment = require("moment");
 const fetch = require('node-fetch');
 const momentDurationFormatSetup = require("moment-duration-format");
 
+const client = new Discord.Client({ disableEveryone: true });
+client.commands = new Discord.Collection();
+require('./discord/util/eventLoader.js')(client);
+
+
 //
 // File Constants
 //
