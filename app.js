@@ -263,12 +263,6 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-app.get('*', function(req, res) {
-  res.render('404', {
-    "pagetitle": "404: Page Not Found"
-  });
-});
-
 //
 // Profiles
 //
@@ -290,6 +284,20 @@ app.get('/profile/:username', function (req, res) {
   limit 1;`
 
   database.query (sql, async function (err, zanderplayerresults) {
+    // If there is no player of that username, send them the Player Not Found screen.
+    if (typeof(zanderplayerresults[0]) == "undefined") {
+      res.render('playernotfound', {
+        "pagetitle": "Player Not Found"
+      });
+      return
+    } else {
+      if (zanderplayerresults[0].username.includes("*")) {
+        bedrockuser = true;
+      } else {
+        bedrockuser = false;
+      };
+    }
+    
     // Get the players Mixed TGM statistics to display.
     let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
     let tgmbodyres = await response.json();
@@ -301,19 +309,6 @@ app.get('/profile/:username', function (req, res) {
 
     const killdeathratio = tgmbodyres.user.kills !== 0 && tgmbodyres.user.deaths !== 0 ? (tgmbodyres.user.kills / tgmbodyres.user.deaths).toFixed(2) : 'None';
     const winlossratio = (tgmbodyres.user.wins / tgmbodyres.user.losses).toFixed(2);
-
-    // If there is no player of that username, send them the Player Not Found screen.
-    if (typeof(zanderplayerresults[0]) == "undefined") {
-      res.render('playernotfound', {
-        "pagetitle": "Player Not Found"
-      });
-    }
-
-    if (zanderplayerresults[0].username.includes("*")) {
-      bedrockuser = true;
-    } else {
-      bedrockuser = false;
-    }
 
     // Formatting the initial join date and putting it into template.
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -349,6 +344,13 @@ app.get('/profile/:username', function (req, res) {
         }
       });
     }
+  });
+});
+
+// Ensure this is the final route on app.js or this will overwrite every route.
+app.get('*', function(req, res) {
+  res.render('404', {
+    "pagetitle": "404: Page Not Found"
   });
 });
 

@@ -6,13 +6,13 @@
     <div class="container text-white">
       <img src="https://crafatar.com/avatars/<%= zanderplayerobjdata[0].uuid %>?overlay" height="150px" alt="<%= zanderplayerobjdata[0].username %>'s Player Avatar Head" draggable="false">
       <h3 class="display-4"><%= zanderplayerobjdata[0].username %></h3>
-      <%if (zanderplayerobjdata[0].status == 'online') { %>
-        <p class="lead"><i class="fas fa-circle" style="color:green"></i>  Currently Online on <%= currentserver %></p>
+      <% if (zanderplayerobjdata[0].status == 'online') { %>
+        <p class="lead"><i class="fas fa-circle" style="color:green;"></i>  Currently Online on <%= currentserver %></p>
       <% } else { %>
-        <p class="lead"><i class="fas fa-circle" style="color:red"></i>  Last Online on <%= currentserver %></p>
+        <p class="lead"><i class="fas fa-circle" style="color:red; height:40px;"></i>  Last Online on <%= currentserver %></p>
       <% } %>
 
-      <%if (bedrockuser == true) { %>
+      <% if (bedrockuser == true) { %>
         <p><span class="badge badge-secondary">Bedrock</span></p>
       <% } %>
     </div>
