@@ -285,6 +285,10 @@ app.get('/profile/:username', function (req, res) {
       tgmresbool = true;
     }
 
+    const killdeathratio = tgmbodyres.user.kills !== 0 && tgmbodyres.user.deaths !== 0 ? (tgmbodyres.user.kills / tgmbodyres.user.deaths).toFixed(2) : 'None';
+    const winlossratio = (tgmbodyres.user.wins / tgmbodyres.user.losses).toFixed(2);
+
+    // If there is no player of that username, send them the Player Not Found screen.
     if (typeof(zanderplayerresults[0]) == "undefined") {
       res.render('playernotfound', {
         "pagetitle": "Player Not Found"
@@ -324,7 +328,9 @@ app.get('/profile/:username', function (req, res) {
             tgmresboolean: tgmresbool,
             bedrockuser: bedrockuser,
             currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
-            initjoindate: initjoindate
+            initjoindate: initjoindate,
+            killdeathratio: killdeathratio,
+            winlossratio: winlossratio
           });
         }
       });

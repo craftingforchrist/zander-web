@@ -71,14 +71,16 @@
                   <td>Matches Played</td>
                   <td>Wools Destroyed</td>
                   <td>Level</td>
-                  <td></td>
+                  <td>W/L</td>
+                  <td>K/D</td>
                 </tr>
 
                 <tr>
                   <td class="profilenumber"><%= tgmres.user.matches %></td>
                   <td class="profilenumber"><%= tgmres.user.wool_destroys %></td>
                   <td class="profilenumber"><%= tgmres.user.level %></td>
-                  <td class="profilenumber"></td>
+                  <td class="profilenumber"><%= winlossratio %></td>
+                  <td class="profilenumber"><%= killdeathratio %></td>
                 </tr>
 
                 <!-- <tr>
@@ -137,7 +139,7 @@
           </div>
           <% } else { %>
             <div class="alert alert-warning" role="alert">
-              <%= zanderplayerobjdata[0].username %> has no punishments on record, yet..
+              <%= zanderplayerobjdata[0].username %> has no punishments on record.
             </div>
           <% } %>
         </div>
