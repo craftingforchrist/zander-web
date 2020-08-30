@@ -13,7 +13,6 @@ router.get('/', (req, res, next) => {
         "pagetitle": "Players",
         objdata: results
       });
-      console.log(results);
     }
   });
 });

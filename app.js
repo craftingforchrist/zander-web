@@ -136,7 +136,7 @@ app.use((req, res, next) => {
 // Site Routes
 //
 var index = require('./routes/index');
-var players = require('./routes/players');
+// var players = require('./routes/players');
 var punishments = require('./routes/punishments');
 var staff = require('./routes/staff');
 var events = require('./routes/events');
@@ -195,7 +195,7 @@ var serverscreate = require('./routes/admin/servers/create');
 var serversdelete = require('./routes/admin/servers/delete');
 
 app.use('/', index);
-app.use('/players', players);
+// app.use('/players', players);
 app.use('/punishments', punishments);
 app.use('/staff', staff);
 app.use('/events', events);
@@ -213,7 +213,6 @@ app.use('/rules', rules);
 app.use('/refund', refund);
 
 app.use('/apply', apply);
-// app.use('/apply/game', applygame);
 app.use('/apply/creator', applycreator);
 app.use('/apply/developer', applydeveloper);
 app.use('/apply/juniorstaff', applyjuniorstaff);
@@ -240,8 +239,6 @@ app.use('/admin/accounts/permissions', accountspermissionslist);
 app.use('/admin/events', eventsadmin);
 app.use('/admin/events/create', eventsadmincreate);
 app.use('/admin/events/edit', eventsadminedit);
-// app.use('/admin/application', application);
-// app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);
 app.use('/admin/punishment', punishment);
 app.use('/admin/contentcreator', contentcreator);
@@ -254,15 +251,15 @@ app.use('/admin/servers/create', serverscreate);
 app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 //
 // Profiles
 //
 app.get('/profile/:username', function (req, res) {
-  // let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}';
-  // SELECT count(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id WHERE pd.username = '${req.params.username}';`;
-  // SELECT p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' FROM (SELECT ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' FROM gamesessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id WHERE username = '${req.params.username}';
-  // SELECT SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from gamesessions ses left join playerdata pd on pd.id = gamesessions.player_id WHERE pd.username = '${req.params.username}';
-
+  // Query the database for the players data and online status.
   let sql = `select sessionend, sessionstart, uuid, username, joined, server,
   (IF(
   		(select gamesessions.id
@@ -278,7 +275,8 @@ app.get('/profile/:username', function (req, res) {
   order by sessionstart desc
   limit 1;`
 
-  database.query (sql, async function (err, results) {
+  database.query (sql, async function (err, zanderplayerresults) {
+    // Get the players Mixed TGM statistics to display.
     let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
     let tgmbodyres = await response.json();
     if (tgmbodyres['notFound']) {
@@ -287,24 +285,52 @@ app.get('/profile/:username', function (req, res) {
       tgmresbool = true;
     }
 
+    if (typeof(zanderplayerresults[0]) == "undefined") {
+      res.render('playernotfound', {
+        "pagetitle": "Player Not Found"
+      });
+    }
+
+    if (zanderplayerresults[0].username.includes("*")) {
+      bedrockuser = true;
+    } else {
+      bedrockuser = false;
+    }
+
+    // Formatting the initial join date and putting it into template.
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const initjoin = zanderplayerresults[0].joined;
+    const initjoindate = `${initjoin.getDay()} ${months[initjoin.getMonth()]} ${initjoin.getFullYear()}`;
+
     if (err) {
       res.redirect('/');
       throw err;
     } else {
-      res.render('profile', {
-        "pagetitle": `${req.params.username}'s Profile`,
-        objdata: results,
-        tgmres: tgmbodyres,
-        tgmresboolean: tgmresbool,
-        currentserver: capitalizeFirstLetter(results[0].server)
+      const reqplayeruuid = zanderplayerresults[0].uuid.replace(/-/g, '');
+
+      // Query the database for the players data and online status.
+      let sql = `select id, name, reason, operator, punishmentType from punishmenthistory where uuid = '${reqplayeruuid}';`
+
+      abdatabase.query (sql, async function (err, punishmentresults) {
+        if (err) {
+          res.redirect('/');
+          throw err;
+        } else {
+          res.render('profile', {
+            "pagetitle": `${req.params.username}'s Profile`,
+            zanderplayerobjdata: zanderplayerresults,
+            punishmentobjdata: punishmentresults,
+            tgmres: tgmbodyres,
+            tgmresboolean: tgmresbool,
+            bedrockuser: bedrockuser,
+            currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
+            initjoindate: initjoindate
+          });
+        }
       });
     }
   });
 });
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
 
 //
 // Application View
