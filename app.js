@@ -24,6 +24,10 @@ const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
 require('./discord/util/eventLoader.js')(client);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e6b65d154b106fc60938a3ac02e6e5fd24de2c8c
 //
 // File Constants
 //
