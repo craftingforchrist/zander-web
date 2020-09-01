@@ -56,7 +56,7 @@
     "req-flash": "0.0.3",
     "request": "^2.88.2",
     "simple-node-logger": "^18.12.24",
-    "superagent": "^6.0.0",
+    "superagent": "^6.1.0",
     "swearjar-extended": "^0.2.0",
     "twitchonlinetracker": "^1.1.5"
   },
