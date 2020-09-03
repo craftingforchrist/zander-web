@@ -145,6 +145,13 @@ app.use(platformRoutes);
 const policyRoutes = require('./routes/policyRoutes');
 app.use(policyRoutes);
 
+const applicationRoutes = require('./routes/applicationRoutes');
+app.use(applicationRoutes);
+
+// Profiles
+const playerprofile = require('./routes/playerprofile');
+app.use(playerprofile);
+
 //
 // Site Routes
 //
@@ -163,13 +170,6 @@ var report = require('./routes/report')(client);
 
 var churchduringcovid = require('./routes/churchduringcovid');
 // var giveaway = require('./routes/giveaway');
-
-var apply = require('./routes/apply/apply');
-var applycreator = require('./routes/apply/apply-creator')(client);
-var applydeveloper = require('./routes/apply/apply-developer')(client);
-var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
-var applysocialmedia = require('./routes/apply/apply-socialmedia');
-var applybuilder = require('./routes/apply/apply-builder');
 
 // var login = require('./routes/session/login');
 // var logout = require('./routes/session/logout');
@@ -207,13 +207,6 @@ app.use('/appeal', appeal);
 
 app.use('/churchduringcovid', churchduringcovid);
 
-app.use('/apply', apply);
-app.use('/apply/creator', applycreator);
-app.use('/apply/developer', applydeveloper);
-app.use('/apply/juniorstaff', applyjuniorstaff);
-app.use('/apply/socialmedia', applysocialmedia);
-app.use('/apply/builder', applybuilder);
-
 app.use('/report', report);
 // app.use('/giveaway', giveaway);
 
@@ -239,94 +232,6 @@ app.use('/admin/servers', serverslist);
 app.use('/admin/servers/create', serverscreate);
 app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-//
-// Profiles
-//
-app.get('/profile/:username', function (req, res) {
-  // Query the database for the players data and online status.
-  let sql = `select sessionend, sessionstart, uuid, username, joined, server,
-  (IF(
-  		(select gamesessions.id
-  		from gamesessions
-  		left join playerdata pd on pd.id = gamesessions.player_id
-          where gamesessions.sessionstart <= NOW()
-          and gamesessions.sessionend is NULL
-          and pd.username = '${req.params.username}'
-        ), 'online', 'offline'))  as 'status'
-  from gamesessions, playerdata
-  where player_id = playerdata.id
-  and playerdata.username = '${req.params.username}'
-  order by sessionstart desc
-  limit 1;`
-
-  database.query (sql, async function (err, zanderplayerresults) {
-    // If there is no player of that username, send them the Player Not Found screen.
-    if (typeof(zanderplayerresults[0]) == "undefined") {
-      res.render('playernotfound', {
-        "pagetitle": "Player Not Found"
-      });
-      return
-    } else {
-      if (zanderplayerresults[0].username.includes("*")) {
-        bedrockuser = true;
-      } else {
-        bedrockuser = false;
-      };
-    }
-
-    // Get the players Mixed TGM statistics to display.
-    let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
-    let tgmbodyres = await response.json();
-    if (tgmbodyres['notFound']) {
-      tgmresbool = false;
-    } else {
-      tgmresbool = true;
-    }
-
-    const killdeathratio = tgmbodyres.user.kills !== 0 && tgmbodyres.user.deaths !== 0 ? (tgmbodyres.user.kills / tgmbodyres.user.deaths).toFixed(2) : 'None';
-    const winlossratio = (tgmbodyres.user.wins / tgmbodyres.user.losses).toFixed(2);
-
-    // Formatting the initial join date and putting it into template.
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const initjoin = zanderplayerresults[0].joined;
-    const initjoindate = `${initjoin.getDay()} ${months[initjoin.getMonth()]} ${initjoin.getFullYear()}`;
-
-    if (err) {
-      res.redirect('/');
-      throw err;
-    } else {
-      const reqplayeruuid = zanderplayerresults[0].uuid.replace(/-/g, '');
-
-      // Query the database for the players data and online status.
-      let sql = `select id, name, reason, operator, punishmentType from punishmenthistory where uuid = '${reqplayeruuid}';`
-
-      abdatabase.query (sql, async function (err, punishmentresults) {
-        if (err) {
-          res.redirect('/');
-          throw err;
-        } else {
-          res.render('profile', {
-            "pagetitle": `${req.params.username}'s Profile`,
-            zanderplayerobjdata: zanderplayerresults,
-            punishmentobjdata: punishmentresults,
-            tgmres: tgmbodyres,
-            tgmresboolean: tgmresbool,
-            bedrockuser: bedrockuser,
-            currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
-            initjoindate: initjoindate,
-            killdeathratio: killdeathratio,
-            winlossratio: winlossratio
-          });
-        }
-      });
-    }
-  });
-});
 
 // Ensure this is the final route on app.js or this will overwrite every route.
 app.get('*', function(req, res) {
