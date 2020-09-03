@@ -38,10 +38,13 @@ module.exports.signup_post = (req, res) => {
 
     if (password === passwordconfirm) {
       console.log('These match');
-
     } else {
-
-    }
+      res.render('session/register', {
+        "pagetitle": "Register",
+        "error": true,
+        "errormsg": "This is the error message."
+      });
+    };
 
 
     // const sql = ``;
@@ -60,6 +63,4 @@ module.exports.signup_post = (req, res) => {
   } catch (err) {
 
   }
-
-  res.send('new sign up');
 };
