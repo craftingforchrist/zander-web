@@ -18,7 +18,7 @@ CREATE TABLE playerdata (
 create index playerdata_username on playerdata (username);
 -- INSERT INTO playerdata (uuid, username) VALUES ('f78a4d8d-d51b-4b39-98a3-230f2de0c670', 'CONSOLE');
 
-CREATE TABLE playersocials (
+CREATE TABLE playerprofile (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   player_id INT NOT NULL DEFAULT 0,
   twitter TEXT,
@@ -26,6 +26,8 @@ CREATE TABLE playersocials (
   instagram TEXT,
   facebook TEXT,
   snapchat TEXT,
+  aboutpage TEXT,
+  profilephotocover TEXT,
   FOREIGN KEY (player_id) REFERENCES playerdata (id)
 );
 
@@ -34,6 +36,7 @@ CREATE TABLE playerregistration (
   player_id INT NOT NULL DEFAULT 0,
   registrationtoken VARCHAR(32),
   registered BOOLEAN DEFAULT false,
+  registereddiscordid VARCHAR(18),
   FOREIGN KEY (player_id) REFERENCES playerdata (id)
 );
 
@@ -54,9 +57,9 @@ create index gamesessions_sessionend on gamesessions (sessionend);
 --   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
 --   punisheduser_id INT NOT NULL DEFAULT 0,
 --   punisher_id INT NOT NULL DEFAULT 0,
---   punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN', 'IP BAN'),
+--   punishtype ENUM('KICK', 'BAN', 'TEMP_BAN', 'MUTE', 'WARN', 'IP_BAN'),
 --   reason TEXT,
---   appealed ENUM('true', 'false'),
+--   appealed BOOLEAN,
 --   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
 --   FOREIGN KEY (punisheduser_id) REFERENCES playerdata (id),
 --   FOREIGN KEY (punisher_id) REFERENCES playerdata (id)
@@ -70,7 +73,7 @@ CREATE TABLE discordpunishments (
   punisherid TEXT,
   punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
   reason TEXT,
-  appealed ENUM('true', 'false'),
+  appealed BOOLEAN,
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -89,7 +92,6 @@ CREATE TABLE discordpunishments (
 CREATE TABLE webaccounts (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   player_id INT NOT NULL DEFAULT 0,
-  username VARCHAR(16),
   password TEXT,
   status ENUM('ACTIVE', 'DISABLED'),
   FOREIGN KEY (player_id) REFERENCES playerdata (id)
@@ -119,7 +121,7 @@ CREATE TABLE events (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   eventtitle TEXT,
   eventicon TEXT,
-  eventdate TEXT,
+  eventdatetime TEXT,
   eventtime TEXT,
   eventinformation TEXT
 );
@@ -130,8 +132,7 @@ CREATE TABLE servers (
   description TEXT,
   disclaimer TEXT,
   ipaddress TEXT,
-  position VARCHAR(2),
-  playersonline TEXT
+  position VARCHAR(2)
 );
 
 CREATE TABLE ccstreams (

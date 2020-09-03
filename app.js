@@ -18,6 +18,7 @@ const LocalStratagy = require('passport-local');
 const moment = require("moment");
 const fetch = require('node-fetch');
 const momentDurationFormatSetup = require("moment-duration-format");
+const bodyParser = require('body-parser');
 
 const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
@@ -36,7 +37,6 @@ const database = require('./controllers/database'); // zander Database controlle
 // const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const abdatabase = require('./controllers/abdatabase'); // AdvancedBan Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
-// const rcon = require('./controllers/rcon'); // RCON controller
 require('./controllers/passport')(passport); // Passport controller
 const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich Online Tracker controller
 
@@ -52,6 +52,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(flash());
 // app.use(cookieParser());

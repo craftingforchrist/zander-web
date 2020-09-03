@@ -9,13 +9,6 @@
     </div>
   </div>
 
-  <% if (setValue) { %>
-    <div class="alert alert-danger alert-dismissible">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <strong>Error!</strong> <%- JSON.stringify(message) %>
-    </div>
-  <% } %>
-
   <% if (warningalert == true) { %>
     <%- include("../partials/micros/warningalert.ejs") %>
   <% } %>
@@ -35,6 +28,8 @@
       </div>
     </form>
     <br>
+    <small class="text-muted">Don't have an account? You can <a href="/register">register here</a>.</small>
+    <br><br>
   </div>
 </div>
 
