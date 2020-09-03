@@ -135,9 +135,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Authentication Routes
+// Routes
 const authenticationRoutes = require('./routes/authenticationRoutes');
 app.use(authenticationRoutes);
+
+const platformRoutes = require('./routes/platformRoutes');
+app.use(platformRoutes);
+
 
 //
 // Site Routes
@@ -163,10 +167,11 @@ var privacy = require('./routes/policy/privacy');
 var rules = require('./routes/policy/rules');
 var refund = require('./routes/policy/refund');
 
-var discord = require('./routes/redirect/discord');
-var issues = require('./routes/redirect/issues');
-var support = require('./routes/redirect/support');
-// var giveaway = require('./routes/redirect/giveaway');
+// var discord = require('./routes/redirect/discord');
+// var issues = require('./routes/redirect/issues');
+// var support = require('./routes/redirect/support');
+
+// var giveaway = require('./routes/giveaway');
 
 var apply = require('./routes/apply/apply');
 var applycreator = require('./routes/apply/apply-creator')(client);
@@ -174,12 +179,6 @@ var applydeveloper = require('./routes/apply/apply-developer')(client);
 var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
 var applysocialmedia = require('./routes/apply/apply-socialmedia');
 var applybuilder = require('./routes/apply/apply-builder');
-
-var discord = require('./routes/redirect/discord');
-var issues = require('./routes/redirect/issues');
-var support = require('./routes/redirect/support');
-var forums = require('./routes/redirect/forums');
-var shop = require('./routes/redirect/shop');
 
 // var login = require('./routes/session/login');
 // var logout = require('./routes/session/logout');
@@ -232,11 +231,6 @@ app.use('/apply/builder', applybuilder);
 
 app.use('/report', report);
 
-app.use('/discord', discord);
-app.use('/issues', issues);
-app.use('/support', support);
-app.use('/forums', forums);
-app.use('/shop', shop);
 // app.use('/giveaway', giveaway);
 
 // app.use('/login', login);
