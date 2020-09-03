@@ -86,11 +86,13 @@ CREATE TABLE discordpunishments (
 --   submissiontimestamp TIMESTAMP NOT NULL DEFAULT NOW()
 -- );
 
-CREATE TABLE accounts (
+CREATE TABLE webaccounts (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  player_id INT NOT NULL DEFAULT 0,
   username VARCHAR(16),
   password TEXT,
-  status ENUM('ACTIVE', 'DISABLED')
+  status ENUM('ACTIVE', 'DISABLED'),
+  FOREIGN KEY (player_id) REFERENCES playerdata (id)
 );
 
 -- This account should be removed immediately after setting up your own account.

@@ -5,8 +5,7 @@ const express = require('express');
 const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
-const bodyParser = require('body-parser');
-const chalk = require('chalk');
+// const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
@@ -17,6 +16,9 @@ const flash = require('express-flash');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const LocalStratagy = require('passport-local');
+const moment = require("moment");
+const fetch = require('node-fetch');
+const momentDurationFormatSetup = require("moment-duration-format");
 
 const client = new Discord.Client({ disableEveryone: true });
 client.commands = new Discord.Collection();
@@ -57,8 +59,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(flash());
 // app.use(cookieParser());
 app.use(passport.initialize());
@@ -72,7 +73,6 @@ app.use(session({
 }));
 // Seems to have a common error at the moment:
 // Warning: connect.session() MemoryStore is not designed for a production environment, as it will leak memory, and will not scale past a single process.
-
 //
 // Global Website Variables
 //
@@ -134,6 +134,23 @@ app.use((req, res, next) => {
   next();
 });
 
+// Routes
+const authenticationRoutes = require('./routes/authenticationRoutes');
+app.use(authenticationRoutes);
+
+const platformRoutes = require('./routes/platformRoutes');
+app.use(platformRoutes);
+
+const policyRoutes = require('./routes/policyRoutes');
+app.use(policyRoutes);
+
+const applicationRoutes = require('./routes/applicationRoutes');
+app.use(applicationRoutes);
+
+// Profiles
+const playerprofile = require('./routes/playerprofile');
+app.use(playerprofile);
+
 //
 // Site Routes
 //
@@ -147,38 +164,15 @@ var live = require('./routes/live');
 var play = require('./routes/play');
 var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
-var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
 var maps = require('./routes/maps');
 var report = require('./routes/report')(client);
 
 var churchduringcovid = require('./routes/churchduringcovid');
+// var giveaway = require('./routes/giveaway');
 
-var terms = require('./routes/policy/terms');
-var privacy = require('./routes/policy/privacy');
-var rules = require('./routes/policy/rules');
-var refund = require('./routes/policy/refund');
-
-var discord = require('./routes/redirect/discord');
-var issues = require('./routes/redirect/issues');
-var support = require('./routes/redirect/support');
-// var giveaway = require('./routes/redirect/giveaway');
-
-var apply = require('./routes/apply/apply');
-var applycreator = require('./routes/apply/apply-creator')(client);
-var applydeveloper = require('./routes/apply/apply-developer')(client);
-var applyjuniorstaff = require('./routes/apply/apply-juniorstaff');
-var applysocialmedia = require('./routes/apply/apply-socialmedia');
-var applybuilder = require('./routes/apply/apply-builder');
-
-var discord = require('./routes/redirect/discord');
-var issues = require('./routes/redirect/issues');
-var support = require('./routes/redirect/support');
-var forums = require('./routes/redirect/forums');
-var shop = require('./routes/redirect/shop');
-
-var login = require('./routes/session/login');
-var logout = require('./routes/session/logout');
+// var login = require('./routes/session/login');
+// var logout = require('./routes/session/logout');
 
 var dashboard = require('./routes/admin/dashboard');
 var accounts = require('./routes/admin/accounts/list');
@@ -187,8 +181,6 @@ var accountspermissionslist = require('./routes/admin/accounts/permissions/list'
 var eventsadmin = require('./routes/admin/events/list');
 var eventsadmincreate = require('./routes/admin/events/create')(client);
 var eventsadminedit = require('./routes/admin/events/edit')(client);
-// var application = require('./routes/admin/application');
-// var whitelist = require('./routes/admin/whitelist');
 var broadcast = require('./routes/admin/broadcast');
 var punishment = require('./routes/admin/punishment');
 var contentcreator = require('./routes/admin/contentcreator/list');
@@ -211,36 +203,16 @@ app.use('/live', live);
 app.use('/play', play);
 app.use('/vote', vote);
 app.use('/ranks', ranks);
-app.use('/guides', guides);
 app.use('/appeal', appeal);
 app.use('/maps', maps);
 
 app.use('/churchduringcovid', churchduringcovid);
 
-app.use('/terms', terms);
-app.use('/privacy', privacy);
-app.use('/rules', rules);
-app.use('/refund', refund);
-
-app.use('/apply', apply);
-// app.use('/apply/game', applygame);
-app.use('/apply/creator', applycreator);
-app.use('/apply/developer', applydeveloper);
-app.use('/apply/juniorstaff', applyjuniorstaff);
-app.use('/apply/socialmedia', applysocialmedia);
-app.use('/apply/builder', applybuilder);
-
 app.use('/report', report);
-
-app.use('/discord', discord);
-app.use('/issues', issues);
-app.use('/support', support);
-app.use('/forums', forums);
-app.use('/shop', shop);
 // app.use('/giveaway', giveaway);
 
-app.use('/login', login);
-app.use('/logout',logout)
+// app.use('/login', login);
+// app.use('/logout',logout)
 
 app.use('/admin/dashboard', dashboard);
 app.use('/admin', dashboard);
@@ -250,8 +222,6 @@ app.use('/admin/accounts/permissions', accountspermissionslist);
 app.use('/admin/events', eventsadmin);
 app.use('/admin/events/create', eventsadmincreate);
 app.use('/admin/events/edit', eventsadminedit);
-// app.use('/admin/application', application);
-// app.use('/admin/whitelist', whitelist);
 app.use('/admin/broadcast', broadcast);
 app.use('/admin/punishment', punishment);
 app.use('/admin/contentcreator', contentcreator);
@@ -264,31 +234,12 @@ app.use('/admin/servers/create', serverscreate);
 app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
 
+// Ensure this is the final route on app.js or this will overwrite every route.
 app.get('*', function(req, res) {
   res.render('404', {
     "pagetitle": "404: Page Not Found"
   });
 });
-
-//
-// Profiles
-//
-// app.get('/profile/:username', function (req, res) {
-//   let sql = `SELECT * FROM playerdata WHERE username='${req.params.username}'; SELECT IF((SELECT gamesessions.id FROM gamesessions left join playerdata pd on pd.id = gamesessions.player_id WHERE gamesessions.sessionstart <= NOW() and gamesessions.sessionend is NULL and pd.username = '${req.params.username}'), 'Online', 'Offline') as 'status'; SELECT count(ses.id) as 'joins' FROM gamesessions ses left join playerdata pd on pd.id = ses.player_id WHERE pd.username = '${req.params.username}';`;
-//   // SELECT p.username, timediff(lp.lp_timestamp, NOW()) as 'lastseen' FROM (SELECT ses.player_id, greatest(max(gamesessions.sessionend), max(gamesessions.sessionstart)) as 'lp_timestamp' FROM gamesessions ses group by ses.player_id) as lp left join playerdata p on p.id = lp.player_id WHERE username = '${req.params.username}';
-//   // SELECT SEC_TO_TIME(sum(TIME_TO_SEC(timediff(gamesessions.sessionend, gamesessions.sessionstart)))) as 'timeplayed' from gamesessions ses left join playerdata pd on pd.id = gamesessions.player_id WHERE pd.username = '${req.params.username}';
-//   database.query (sql, function (err, results) {
-//     if (err) {
-//       res.redirect('/');
-//       throw err;
-//     } else {
-//       res.render('profile', {
-//         "pagetitle": `${req.params.username}'s Profile`,
-//         objdata: results
-//       });
-//     }
-//   });
-// });
 
 //
 // GAME Punishment View
@@ -330,7 +281,6 @@ app.get('*', function(req, res) {
 
 //
 // Discord Commands & Integration
-//
 // Read all commands in.
 //
 // General
