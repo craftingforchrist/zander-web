@@ -158,21 +158,10 @@ var live = require('./routes/live');
 var play = require('./routes/play');
 var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
-var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
 var report = require('./routes/report')(client);
 
 var churchduringcovid = require('./routes/churchduringcovid');
-
-var terms = require('./routes/policy/terms');
-var privacy = require('./routes/policy/privacy');
-var rules = require('./routes/policy/rules');
-var refund = require('./routes/policy/refund');
-
-// var discord = require('./routes/redirect/discord');
-// var issues = require('./routes/redirect/issues');
-// var support = require('./routes/redirect/support');
-
 // var giveaway = require('./routes/giveaway');
 
 var apply = require('./routes/apply/apply');
@@ -214,15 +203,9 @@ app.use('/live', live);
 app.use('/play', play);
 app.use('/vote', vote);
 app.use('/ranks', ranks);
-app.use('/guides', guides);
 app.use('/appeal', appeal);
 
 app.use('/churchduringcovid', churchduringcovid);
-
-app.use('/terms', terms);
-app.use('/privacy', privacy);
-app.use('/rules', rules);
-app.use('/refund', refund);
 
 app.use('/apply', apply);
 app.use('/apply/creator', applycreator);
