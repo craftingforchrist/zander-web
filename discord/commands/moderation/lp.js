@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const config = require('../../../config.json');
+const hexcolour = require('../../../hexcolour.json');
 const database = require('../../../controllers/database'); // Database controller
 const lpdatabase = require('../../../controllers/lpdatabase'); // LP Database controller
 const MojangAPI = require('mojang-api');
@@ -9,7 +10,7 @@ module.exports.run = async (client, message, args) => {
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(hexcolour.red)
       .setDescription('You do not have the suffient permissions to run this command.')
     message.channel.send(embed);
     return;
@@ -18,7 +19,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[0]) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(hexcolour.yellow)
       .setDescription('lp promote [user] [role]\nlp demote [user] [role]\nlp ranks [user]')
     message.channel.send(embed);
   }
@@ -28,12 +29,12 @@ module.exports.run = async (client, message, args) => {
       if (!args[1]) {
         let embed = new Discord.MessageEmbed()
           .setTitle('Error!')
-          .setColor('#ff6666')
+          .setColor(hexcolour.yellow)
           .setDescription('Need to specify the UUID of the player you would like to promote.')
         message.channel.send(embed);
       }
 
-      
+
 
 
 
@@ -56,7 +57,7 @@ module.exports.run = async (client, message, args) => {
       if (!args[1]) {
         let embed = new Discord.MessageEmbed()
           .setTitle('Error!')
-          .setColor('#ff6666')
+          .setColor(hexcolour.red)
           .setDescription('The UUID that you have entered does not exist, please try again.')
         message.channel.send(embed);
         return;
@@ -68,7 +69,7 @@ module.exports.run = async (client, message, args) => {
       //   } else {
       //     var embed = new Discord.MessageEmbed()
       //       .setTitle(`Ranks for ${args[1]}`)
-      //       .setColor('#ffa500')
+      //       .setColor(hexcolour.blue)
       //       for (var i = 0; i < results.length; i++) {
       //         let permission = results[i].permission
       //         // console.log(results[i].permission);

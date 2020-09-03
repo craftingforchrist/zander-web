@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const config = require('../../config.json')
+const hexcolour = require('../../hexcolour.json')
 
 module.exports = async message => {
   if (!message.guild) return;
@@ -19,14 +20,14 @@ module.exports = async message => {
     let embed = new Discord.MessageEmbed()
       .setTitle('Message Deleted')
       .setDescription(`${message.content}`)
-      .setColor('#ff1a1a')
+      .setColor(hexcolour.yellow)
       .setFooter(`Message Author: ${message.author.username}\nDeleted Channel: #${message.channel.name}\nDeleted By: ${executor.username}`)
     adminlogchannel.send(embed);
 	}	else {
     let embed = new Discord.MessageEmbed()
       .setTitle('Message Deleted')
       .setDescription(`${message.content}`)
-      .setColor('#ff1a1a')
+      .setColor(hexcolour.yellow)
       .setFooter(`Message Author: ${message.author.username}\nDeleted Channel: #${message.channel.name}\nDeleted By: ${message.author.username}`)
     adminlogchannel.send(embed);
 	}

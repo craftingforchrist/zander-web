@@ -1,4 +1,5 @@
 const config = require('../config.json');
+const hexcolour = require('../hexcolour.json');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
 
@@ -12,7 +13,7 @@ function discord(message) {
   var embed = new Discord.RichEmbed()
     .setTitle('Platform Broadcast')
     .setDescription(`${message}`)
-    .setColor('#FFA500')
+    .setColor(hexcolour.orange)
   broadcastchannel.send(embed);
 };
 
