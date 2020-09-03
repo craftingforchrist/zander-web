@@ -5,7 +5,6 @@ const express = require('express');
 const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
-// const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
@@ -29,12 +28,6 @@ require('./discord/util/eventLoader.js')(client);
 //
 const package = require('./package.json');
 const config = require('./config.json');
-// const SimpleNodeLogger = require('simple-node-logger'),
-//   opts = {
-//       logFilePath:'mylogfile.log',
-//       timestampFormat:'YYYY-MM-DD HH:mm:ss.SSS'
-//   },
-// log = SimpleNodeLogger.createSimpleLogger(opts);
 
 //
 // Controllers

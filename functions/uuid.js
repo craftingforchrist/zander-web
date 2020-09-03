@@ -1,5 +1,4 @@
 // uuid.js
-const mojangapi = require('mojang-api');
 const fetchUrl = require("fetch").fetchUrl;
 
 //

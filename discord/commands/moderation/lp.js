@@ -3,7 +3,6 @@ const config = require('../../../config.json');
 const hexcolour = require('../../../hexcolour.json');
 const database = require('../../../controllers/database'); // Database controller
 const lpdatabase = require('../../../controllers/lpdatabase'); // LP Database controller
-const MojangAPI = require('mojang-api');
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
