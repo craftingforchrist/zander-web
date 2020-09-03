@@ -6,9 +6,9 @@
   "notificationemail": "support@craftingforchrist.net",
   "serverwebsite": "https://www.craftingforchrist.net/",
 
-  "webfavicon": "/assets/img/favicon.ico",
-  "weblogo": "/assets/img/server-icon.png",
-  "webvideobackground": "./assets/img/rollingbackground.mp4",
+  "webfavicon": "/img/favicon.ico",
+  "weblogo": "/img/server-icon.png",
+  "webvideobackground": "./img/rollingbackground.mp4",
   "description": "A Christian Minecraft Server.",
 
   "website": "https://www.craftingforchrist.net/",
