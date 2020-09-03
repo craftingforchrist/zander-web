@@ -3,6 +3,7 @@ const config = require('../../config.json')
 
 module.exports = async message => {
   if (!message.guild) return;
+  if (message.author.bot) return;
 	const fetchedLogs = await message.guild.fetchAuditLogs({
 		limit: 1,
 		type: 'MESSAGE_DELETE',

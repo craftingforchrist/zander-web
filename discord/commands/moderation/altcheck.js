@@ -55,7 +55,7 @@ module.exports.run = async (client, message, args) => {
       .setTitle('Error!')
       .setColor('#ff6666')
       .setDescription('You cannot execute this command here.')
-    message.channel.send(embed).then(msg => {msg.delete(3000)});
+    message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
     return;
   }
 };
