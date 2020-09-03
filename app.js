@@ -5,7 +5,7 @@ const express = require('express');
 const session = require('express-session');
 require ('dotenv').config();
 const fs = require('fs');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const request = require('request');
@@ -59,8 +59,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(flash());
 // app.use(cookieParser());
 app.use(passport.initialize());
@@ -280,7 +279,6 @@ app.get('*', function(req, res) {
 
 //
 // Discord Commands & Integration
-//
 // Read all commands in.
 //
 // General
