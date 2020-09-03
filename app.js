@@ -74,7 +74,6 @@ app.use(session({
 }));
 // Seems to have a common error at the moment:
 // Warning: connect.session() MemoryStore is not designed for a production environment, as it will leak memory, and will not scale past a single process.
-
 //
 // Global Website Variables
 //
@@ -136,6 +135,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// Authentication Routes
+const authenticationRoutes = require('./routes/authenticationRoutes');
+app.use(authenticationRoutes);
+
 //
 // Site Routes
 //
@@ -178,8 +181,8 @@ var support = require('./routes/redirect/support');
 var forums = require('./routes/redirect/forums');
 var shop = require('./routes/redirect/shop');
 
-var login = require('./routes/session/login');
-var logout = require('./routes/session/logout');
+// var login = require('./routes/session/login');
+// var logout = require('./routes/session/logout');
 
 var dashboard = require('./routes/admin/dashboard');
 var accounts = require('./routes/admin/accounts/list');
@@ -236,8 +239,8 @@ app.use('/forums', forums);
 app.use('/shop', shop);
 // app.use('/giveaway', giveaway);
 
-app.use('/login', login);
-app.use('/logout',logout)
+// app.use('/login', login);
+// app.use('/logout',logout)
 
 app.use('/admin/dashboard', dashboard);
 app.use('/admin', dashboard);
@@ -297,7 +300,7 @@ app.get('/profile/:username', function (req, res) {
         bedrockuser = false;
       };
     }
-    
+
     // Get the players Mixed TGM statistics to display.
     let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
     let tgmbodyres = await response.json();
