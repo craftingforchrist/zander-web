@@ -142,6 +142,8 @@ app.use(authenticationRoutes);
 const platformRoutes = require('./routes/platformRoutes');
 app.use(platformRoutes);
 
+const policyRoutes = require('./routes/policyRoutes');
+app.use(policyRoutes);
 
 //
 // Site Routes
@@ -230,7 +232,6 @@ app.use('/apply/socialmedia', applysocialmedia);
 app.use('/apply/builder', applybuilder);
 
 app.use('/report', report);
-
 // app.use('/giveaway', giveaway);
 
 // app.use('/login', login);
