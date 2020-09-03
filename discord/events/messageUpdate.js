@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const chalk = require('chalk');
+const hexcolour = require('../../hexcolour.json')
 
 module.exports = async (oldMessage, newMessage) => {
   if (oldMessage.author.bot) return;
@@ -11,7 +11,7 @@ module.exports = async (oldMessage, newMessage) => {
   let embed = new Discord.MessageEmbed()
     .setTitle('Message Edited')
     .setDescription(`*Original Message*\n${oldMessage.content}\n\n*Edited Message*\n${newMessage.content}`)
-    .setColor('#e69500')
+    .setColor(hexcolour.yellow)
     .setFooter(`Message Author: ${oldMessage.author.username}\nEdited Channel: #${oldMessage.channel.name}`)
   adminlogchannel.send(embed);
 

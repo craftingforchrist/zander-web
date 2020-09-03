@@ -55,7 +55,7 @@ module.exports.run = async (client, message, args) => {
 
   let embed = new Discord.MessageEmbed()
     .setTitle('User has been Warned')
-    .setColor('#4d79ff')
+    .setColor(hexcolour.yellow)
     .addField('Warned User:', `${mentioneduser}`)
     .addField('Warned By:', `${punisheduser}`)
     .addField('Reason:', reason)
@@ -72,7 +72,7 @@ module.exports.run = async (client, message, args) => {
   // Send notification to the command issuing channel.
   let notificationembed = new Discord.MessageEmbed()
     .setTitle('User has been Warned.')
-    .setColor('#4d79ff')
+    .setColor(hexcolour.yellow)
     .setDescription(`${mentioneduser} has been warned by ${punisheduser} for ${reason}`)
   message.channel.send(notificationembed);
 
