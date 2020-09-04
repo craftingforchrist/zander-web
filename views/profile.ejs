@@ -1,11 +1,71 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/navigation.ejs") %>
 
+<style media="screen">
+  span {
+    position: relative;
+    display: inline-block;
+  }
+</style>
+
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container" style="height:340px; padding:25px;">
     <div class="container text-white">
       <img src="https://crafatar.com/avatars/<%= zanderplayerobjdata[0].uuid %>?overlay" height="150px" alt="<%= zanderplayerobjdata[0].username %>'s Player Avatar Head" draggable="false">
       <h3 class="display-4"><%= zanderplayerobjdata[0].username %></h3>
+
+       <% playerrankresults.forEach(function (data) { %>
+         <tr style="font-size:20pt">
+           <% if (data.permission.includes('group.administrator')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.administrator %>">Administrator</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.seniorstaff')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.seniorstaff %>">Senior Staff</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.developer')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.developer %>">Developer</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.juniordeveloper')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.juniordeveloper %>">Junior Developer</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.staff')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.staff %>">Staff</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.juniorstaff')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.juniorstaff %>">Junior Staff</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.builder')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.builder %>">Builder</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.eventstaff')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.eventstaff %>">Event Staff</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.retired')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.retired %>">Retired</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.iron')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.iron %>">Iron</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.gold')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.gold %>">Gold</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.diamond')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.diamond %>">Diamond</span></th>
+           <% } %>
+         </tr>
+       <% }); %>
+
       <% if (zanderplayerobjdata[0].status == 'online') { %>
         <p class="lead"><i class="fas fa-circle" style="color:green;"></i>  Currently Online on <%= currentserver %></p>
       <% } else { %>

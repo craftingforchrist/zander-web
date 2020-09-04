@@ -29,12 +29,13 @@ require('./discord/util/eventLoader.js')(client);
 //
 const package = require('./package.json');
 const config = require('./config.json');
+const hexcolour = require('./HexColour.json');
 
 //
 // Controllers
 //
 const database = require('./controllers/database'); // zander Database controller
-// const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
+const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const abdatabase = require('./controllers/abdatabase'); // AdvancedBan Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 require('./controllers/passport')(passport); // Passport controller
@@ -114,6 +115,12 @@ app.use((req, res, next) => {
   res.locals.juniorstaffapp = config.juniorstaffapp;
   res.locals.socialmediaapp = config.socialmediaapp;
   res.locals.builderapp = config.builderapp;
+
+  // Static Error Image Paths
+  // Allows images to be called from anywhere and not to be unknown.
+  res.locals.erreggs = './img/errimages/erreggs.png';
+  res.locals.srvinterr = '../img/errimages/srvinterr.png';
+  res.locals.playernotfound = '../img/errimages/playernotfound.png';
 
   res.locals.successalert = null;
   res.locals.erroralert = null;
@@ -229,9 +236,118 @@ app.use('/admin/servers/create', serverscreate);
 app.use('/admin/servers/edit', serversedit);
 app.use('/admin/servers/delete', serversdelete);
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+//
+// Profiles
+//
+app.get('/profile/:username', function (req, res) {
+  // Query the database for the players data and online status.
+  let sql = `select sessionend, sessionstart, uuid, username, joined, server,
+  (IF(
+  		(select gamesessions.id
+  		from gamesessions
+  		left join playerdata pd on pd.id = gamesessions.player_id
+          where gamesessions.sessionstart <= NOW()
+          and gamesessions.sessionend is NULL
+          and pd.username = '${req.params.username}'
+        ), 'online', 'offline'))  as 'status'
+  from gamesessions, playerdata
+  where player_id = playerdata.id
+  and playerdata.username = '${req.params.username}'
+  order by sessionstart desc
+  limit 1;`
+
+  database.query (sql, async function (err, zanderplayerresults) {
+    // If there is no player of that username, send them the Player Not Found screen.
+    if (typeof(zanderplayerresults[0]) == "undefined") {
+      res.render('errorviews/playernotfound', {
+        "pagetitle": "Player Not Found"
+      });
+      return
+    } else {
+      if (zanderplayerresults[0].username.includes("*")) {
+        bedrockuser = true;
+      } else {
+        bedrockuser = false;
+      };
+    }
+
+    // Get the players Mixed TGM statistics to display.
+    let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
+    let tgmbodyres = await response.json();
+    if (tgmbodyres['notFound']) {
+      tgmresbool = false;
+
+      res.render('errorviews/500', {
+        "pagetitle": "500: Internal Server Error"
+      });
+      return
+    } else {
+      tgmresbool = true;
+    }
+
+    const killdeathratio = tgmbodyres.user.kills !== 0 && tgmbodyres.user.deaths !== 0 ? (tgmbodyres.user.kills / tgmbodyres.user.deaths).toFixed(2) : 'None';
+    const winlossratio = (tgmbodyres.user.wins / tgmbodyres.user.losses).toFixed(2);
+
+    // Formatting the initial join date and putting it into template.
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const initjoin = zanderplayerresults[0].joined;
+    const initjoindate = `${initjoin.getDay()} ${months[initjoin.getMonth()]} ${initjoin.getFullYear()}`;
+
+    if (err) {
+      res.redirect('/');
+      throw err;
+    } else {
+      const reqplayeruuid = zanderplayerresults[0].uuid.replace(/-/g, '');
+
+      // Query the database for the players data and online status.
+      let sql = `select id, name, reason, operator, punishmentType from punishmenthistory where uuid = '${reqplayeruuid}';`
+
+      abdatabase.query (sql, async function (err, punishmentresults) {
+        if (err) {
+          res.redirect('/');
+          throw err;
+        } else {
+          // Query the database for the players data and online status.
+          let sql = `select permission from luckperms_user_permissions where uuid = '${zanderplayerresults[0].uuid}';`
+
+          lpdatabase.query (sql, async function (err, playerrankresults) {
+            if (err) {
+              res.redirect('/');
+              throw err;
+            } else {
+              playerrankresults.forEach(function (data) {
+                console.log(data.permission);
+              });
+
+              res.render('profile', {
+                "pagetitle": `${zanderplayerresults[0].username}'s Profile`,
+                zanderplayerobjdata: zanderplayerresults,
+                punishmentobjdata: punishmentresults,
+                playerrankresults: playerrankresults,
+                hexcolour: hexcolour,
+                tgmres: tgmbodyres,
+                tgmresboolean: tgmresbool,
+                bedrockuser: bedrockuser,
+                currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
+                initjoindate: initjoindate,
+                killdeathratio: killdeathratio,
+                winlossratio: winlossratio
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
 // Ensure this is the final route on app.js or this will overwrite every route.
 app.get('*', function(req, res) {
-  res.render('404', {
+  res.render('errorviews/404', {
     "pagetitle": "404: Page Not Found"
   });
 });
