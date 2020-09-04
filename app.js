@@ -123,6 +123,12 @@ app.use((req, res, next) => {
   res.locals.socialmediaapp = config.socialmediaapp;
   res.locals.builderapp = config.builderapp;
 
+  // Static Error Image Paths
+  // Allows images to be called from anywhere and not to be unknown.
+  res.locals.erreggs = './img/errimages/erreggs.png';
+  res.locals.srvinterr = '../img/errimages/srvinterr.png';
+  res.locals.playernotfound = '../img/errimages/playernotfound.png';
+
   res.locals.successalert = null;
   res.locals.erroralert = null;
   res.locals.warningalert = null;
@@ -287,7 +293,7 @@ app.get('/profile/:username', function (req, res) {
   database.query (sql, async function (err, zanderplayerresults) {
     // If there is no player of that username, send them the Player Not Found screen.
     if (typeof(zanderplayerresults[0]) == "undefined") {
-      res.render('playernotfound', {
+      res.render('errorviews/playernotfound', {
         "pagetitle": "Player Not Found"
       });
       return
@@ -304,6 +310,11 @@ app.get('/profile/:username', function (req, res) {
     let tgmbodyres = await response.json();
     if (tgmbodyres['notFound']) {
       tgmresbool = false;
+
+      res.render('errorviews/500', {
+        "pagetitle": "500: Internal Server Error"
+      });
+      return
     } else {
       tgmresbool = true;
     }
@@ -366,7 +377,7 @@ app.get('/profile/:username', function (req, res) {
 
 // Ensure this is the final route on app.js or this will overwrite every route.
 app.get('*', function(req, res) {
-  res.render('404', {
+  res.render('errorviews/404', {
     "pagetitle": "404: Page Not Found"
   });
 });

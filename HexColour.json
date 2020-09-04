@@ -17,7 +17,7 @@
   "eventstaff": "#1eb6a7",
   "retired": "#676767",
 
-  "iron": "#676767",
-  "gold": "#676767",
-  "diamond": "#676767"
+  "iron": "#808080",
+  "gold": "#ffd700",
+  "diamond": "#40e0d0"
 }
