@@ -29,6 +29,7 @@ require('./discord/util/eventLoader.js')(client);
 //
 const package = require('./package.json');
 const config = require('./config.json');
+const hexcolour = require('./HexColour.json');
 // const SimpleNodeLogger = require('simple-node-logger'),
 //   opts = {
 //       logFilePath:'mylogfile.log',
@@ -40,7 +41,7 @@ const config = require('./config.json');
 // Controllers
 //
 const database = require('./controllers/database'); // zander Database controller
-// const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
+const lpdatabase = require('./controllers/lpdatabase'); // LuckPerms Database controller
 const abdatabase = require('./controllers/abdatabase'); // AdvancedBan Database controller
 const transporter = require('./controllers/mail'); // Nodemailer Mail controller
 // const rcon = require('./controllers/rcon'); // RCON controller
@@ -297,7 +298,7 @@ app.get('/profile/:username', function (req, res) {
         bedrockuser = false;
       };
     }
-    
+
     // Get the players Mixed TGM statistics to display.
     let response = await fetch(`${process.env.tgmapiurl}/mc/player/${req.params.username}?simple=true`);
     let tgmbodyres = await response.json();
@@ -329,17 +330,33 @@ app.get('/profile/:username', function (req, res) {
           res.redirect('/');
           throw err;
         } else {
-          res.render('profile', {
-            "pagetitle": `${req.params.username}'s Profile`,
-            zanderplayerobjdata: zanderplayerresults,
-            punishmentobjdata: punishmentresults,
-            tgmres: tgmbodyres,
-            tgmresboolean: tgmresbool,
-            bedrockuser: bedrockuser,
-            currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
-            initjoindate: initjoindate,
-            killdeathratio: killdeathratio,
-            winlossratio: winlossratio
+          // Query the database for the players data and online status.
+          let sql = `select permission from luckperms_user_permissions where uuid = '${zanderplayerresults[0].uuid}';`
+
+          lpdatabase.query (sql, async function (err, playerrankresults) {
+            if (err) {
+              res.redirect('/');
+              throw err;
+            } else {
+              playerrankresults.forEach(function (data) {
+                console.log(data.permission);
+              });
+
+              res.render('profile', {
+                "pagetitle": `${zanderplayerresults[0].username}'s Profile`,
+                zanderplayerobjdata: zanderplayerresults,
+                punishmentobjdata: punishmentresults,
+                playerrankresults: playerrankresults,
+                hexcolour: hexcolour,
+                tgmres: tgmbodyres,
+                tgmresboolean: tgmresbool,
+                bedrockuser: bedrockuser,
+                currentserver: capitalizeFirstLetter(zanderplayerresults[0].server),
+                initjoindate: initjoindate,
+                killdeathratio: killdeathratio,
+                winlossratio: winlossratio
+              });
+            }
           });
         }
       });
