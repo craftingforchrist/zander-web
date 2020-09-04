@@ -10,50 +10,17 @@
 
   <p>Meet the Network Staff Team! These are the people to look for when you have problems, questions, etc. They work hard to ensure you you have the best experience possible during your stay.<br>People on here are <b>100% volunteers</b>. They set apart time to ensure that you get the best quality experience.</p>
   <small>If you think any of these people are engaging in behavior that is unacceptable, please send an e-mail to our <a href="mailto:<%= contactemail %>">Support Team</a>.</small>
-
-  <% if (info) { %>
-    <!-- Staff Title Modal -->
-    <div class="container text-white">
-      <div class="modal fade" id="stafftitlemodal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog colourblack" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">Edit a Staff Title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form method="post" action="/admin/staff/editstafftitle">
-                <input type="hidden" name="action" value="edit">
-                <input type="hidden" name="username" value="edit">
-                <div class="form-group">
-                  <label for="channelname">Staff Title</label>
-                  <input type="text" class="form-control" name="stafftitle" value="" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Edit Staff Title</button>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-  <% } %>
-
+  
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Administrator</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.administrator') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -63,13 +30,13 @@
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Senior Staff</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.seniorstaff') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -79,13 +46,13 @@
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Developer</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.developer') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -95,29 +62,35 @@
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Junior Developer</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.juniordeveloper') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
+        <% } else { %>
+          <% jrdevs = false %>
         <% } %>
       <% }) %>
+
+      <% if (jrdevs == false) { %>
+        <%- include("./partials/micros/lookingtoapply.ejs") %>
+      <% } %>
       <br>
   </div>
 
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Staff</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.staff') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -127,13 +100,13 @@
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Junior Staff</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.juniorstaff') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -143,13 +116,13 @@
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Builder</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.builder') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -159,13 +132,13 @@
   <div style="font-size:12pt;">
     <hr>
     <h5 style="margin-bottom:15px;">Event Staff</h5>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.eventstaff') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"><br>
-                <p class="staffname" style="margin-top:5px;"><%= data.username %><br><small style="line-height:0pt;"><%= data.title %></small></p>
+                <a href="/profile/<%= data.username %>"><img class="staffimg" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="120px" draggable="false"></a><br>
+                <p class="staffname" style="margin-top:5px;"><a style="color:black; text-decoration:none;" href="/profile/<%= data.username %>"><%= data.username %></a><br><small style="line-height:0pt;"><%= data.title %></small></p>
           </div>
         <% } %>
       <% }) %>
@@ -176,12 +149,12 @@
     <hr>
     <h5 style="margin-bottom:15px; line-height:-15pt;">Retired</h5>
     <small>These are the people who have dedicated their time and effort to the Crafting For Christ Network. We thank them for their time and effort.</small><br><br>
-      <% objdata.forEach(function (data) { %>
+      <% lpresults.forEach(function (data) { %>
         <% if (data.permission == 'group.retired') { %>
           <div class="staffitem" style="display:inline-block;">
             <ul style="list-style-type:none;">
               <li class="staffitem">
-                <img class="staffimg" style="display: inline-block;" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="45px" draggable="false"> <%= data.username %>
+                <a href="/profile/<%= data.username %>" style="color:black; text-decoration:none;"><img class="staffimg" style="display: inline-block;" src="https://crafatar.com/avatars/<%= data.uuid %>?helm" height="45px" draggable="false"> <%= data.username %></a>
           </div>
         <% } %>
       <% }) %>
