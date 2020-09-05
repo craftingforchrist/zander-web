@@ -10,6 +10,7 @@ module.exports.run = async (client, message, args) => {
 		'General Commands', [
 			`\`${prefix}help\`\nDisplay this panel.`,
 			`\`${prefix}status\`\nDisplay all instances of the Network with the current player count.`,
+			`\`${prefix}uptime\`\nDisplay the uptime of the website and Discord bot.`,
 			`\`${prefix}staff\`\nPing all online staff **abusing this will result in punishment**.`,
 			`\`${prefix}website\`\nDisplays a link to the Network website.`,
 			`\`${prefix}guides\`\nDisplays link to the guides site.`,

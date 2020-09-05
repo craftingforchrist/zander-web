@@ -7,13 +7,22 @@ module.exports.run = async (client, message, args) => {
     if (err) {
       throw err;
     } else {
-      var embed = new Discord.MessageEmbed()
-        .setTitle(`Vote`)
-        .setURL(`${config.website}vote`)
-        .setColor('#ffa500')
-        .setDescription(`Help out Crafting For Christ by voting on Minecraft Server lists! Top Voter recieves excellent perks! You can vote and see the perks over at ${config.website}vote\n\n **${results[0].username}** currently holds the top spot at **${results[0].votes}** votes!`)
-      message.channel.send(embed);
-    }
+      if (!results[0]) {
+        var embed = new Discord.MessageEmbed()
+          .setTitle(`Vote`)
+          .setURL(`${config.website}vote`)
+          .setColor('#ff4d4d')
+          .setDescription(`**There are no votes recorded yet! You can be the first!**\nHelp out Crafting For Christ by voting on Minecraft Server lists! Top Voter recieves excellent perks! You can vote and see the perks over at ${config.website}vote.`)
+        message.channel.send(embed);
+      } else {
+        var embed = new Discord.MessageEmbed()
+          .setTitle(`Vote`)
+          .setURL(`${config.website}vote`)
+          .setColor('#ffa500')
+          .setDescription(`Help out Crafting For Christ by voting on Minecraft Server lists! Top Voter recieves excellent perks! You can vote and see the perks over at ${config.website}vote\n\n **${results[0].username}** currently holds the top spot at **${results[0].votes}** votes!`)
+        message.channel.send(embed);
+      };
+    };
   });
 };
 

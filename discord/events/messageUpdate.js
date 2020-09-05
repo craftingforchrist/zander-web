@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const chalk = require('chalk');
 
 module.exports = async (oldMessage, newMessage) => {
   if (oldMessage.author.bot) return;

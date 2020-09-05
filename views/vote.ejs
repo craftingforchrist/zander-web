@@ -49,8 +49,8 @@
         All votes get reset on the 1st of every month.
       </div>
 
-      <% if (!objdata) { %>
-        <%- include("./partials/micros/noupcomingevents.ejs") %>
+      <% if (!objdata[0]) { %>
+        <%- include("./partials/micros/novotes.ejs") %>
       <% } else { %>
         <table class="table" style="line-height:13px;">
           <% objdata.forEach(function (data) { %>

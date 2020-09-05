@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
-const chalk = require('chalk');
 const ejs = require('ejs');
 const path = require('path');
 const transporter = require('../../controllers/mail.js');

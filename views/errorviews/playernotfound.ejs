@@ -1,0 +1,21 @@
+<%- include("../partials/header.ejs") %>
+<%- include("../partials/navigation.ejs") %>
+
+<div class="container" style="min-height:500px">
+  <br><br><br><br>
+  <div class="row">
+    <div class="col">
+      <h1>Player not Found</h1>
+      <p>Oops, the player that you've tried to look for doesn't exist.</p>
+      <p>Head back to the Home page for safe passage</p>
+      <a href="/"><button type="button" class="btn btn-primary">Return To Home</button></a>
+
+    </div>
+    <div class="col">
+      <img class="floating" src="<%= playernotfound %>" alt="Venny on a Llama" height="350px">
+    </div>
+  </div>
+  <br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+
+<%- include("../partials/footer.ejs") %>

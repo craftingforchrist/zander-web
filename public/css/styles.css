@@ -1,0 +1,180 @@
+.jumbotron-image-header {
+  position: relative;
+  overflow: hidden;
+  background-image: url(../img/background.png);
+}
+
+.credential-container {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.card-home {
+  height: 100%;
+}
+
+.markdown-style {
+  padding: 20px;
+}
+
+.tab-pane {
+  padding: 10px;
+}
+
+.mobstatdisplay {
+  padding: 10px;
+  line-height: 35px;
+}
+
+footer .card {
+  background: rgba(0,0,0,0);
+  border: none;
+  color: white;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+nav #navCollapse {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.colourblack {
+  color: black;
+}
+
+.profilenumber {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.applyicons {
+  font-size: 64pt;
+}
+
+.disablecard {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+.confirmpolicy {
+  max-height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#bg-video {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: inherit;
+}
+.jumbovidtext {
+    z-index: 1;
+    position: absolute;
+}
+
+.jumbotron-video-header {
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+footer li {
+  font-size: 10pt;
+  line-height: 20pt;
+}
+
+.errorpage {
+  min-height: 600px;
+  padding: 40px;
+}
+
+.errorbox {
+  background-color: #d6d6c2;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Staff */
+.staffitem {
+  display: block;
+  text-align: center;
+  width: 12rem;
+  vertical-align: top;
+}
+
+.staffname {
+  text-decoration:none;
+  border-bottom:1px;
+}
+
+.staffimg {
+  text-decoration:none;
+  border-radius: 10px;
+}
+
+.voteservers h5 {
+  line-height: 15pt;
+}
+
+.btn-space {
+  margin-bottom: 10px;
+}
+
+/* Bounce in 404 */
+@keyframes bouncing {
+  from, 20%, 53%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transform: translate3d(0,0,0);
+  }
+
+  40%, 43% {
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    transform: translate3d(0,-4px,0);
+  }
+}
+
+.bouncing {
+  position: absolute;
+  animation-duration: 2s;
+  animation-name: bouncing;
+  animation-iteration-count: infinite;
+  font-size: 2em;
+}
+
+/* Floating in Player Not Found */
+.floating {
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+@keyframes floating {
+    from { transform: translate(0,  0px); }
+    65%  { transform: translate(0, 15px); }
+    to   { transform: translate(0, -0px); }
+}

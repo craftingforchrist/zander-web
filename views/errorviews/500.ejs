@@ -1,0 +1,21 @@
+<%- include("../partials/header.ejs") %>
+<%- include("../partials/navigation.ejs") %>
+
+<div class="container" style="min-height:500px">
+  <br><br><br><br>
+  <div class="row">
+    <div class="col">
+      <h1>500: Internal Server Error</h1>
+      <p>There must be some issue here somewhere.. I will find it!<br>You can help me by reporting this issue <a href="/issues">here</a> or on our <a href="/discord">Discord</a>!</p>
+      <p>Head back before the bugs bite!</p>
+      <a href="/"><button type="button" class="btn btn-primary">Return To Home</button></a>
+
+    </div>
+    <div class="col">
+      <img class="floating" src="<%= srvinterr %>" alt="shadowolf sitting at a computer fixing a 500 error." height="300px">
+    </div>
+  </div>
+  <br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+
+<%- include("../partials/footer.ejs") %>
