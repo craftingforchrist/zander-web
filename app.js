@@ -158,6 +158,7 @@ var vote = require('./routes/vote');
 var ranks = require('./routes/ranks');
 var guides = require('./routes/guides');
 var appeal = require('./routes/appeal');
+var maps = require('./routes/maps');
 var report = require('./routes/report')(client);
 
 var churchduringcovid = require('./routes/churchduringcovid');
@@ -219,6 +220,7 @@ app.use('/vote', vote);
 app.use('/ranks', ranks);
 app.use('/guides', guides);
 app.use('/appeal', appeal);
+app.use('/maps', maps);
 
 app.use('/churchduringcovid', churchduringcovid);
 
