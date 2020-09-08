@@ -9,9 +9,9 @@ router.get('/login', authenticationController.login_get);
 router.post('/login', authenticationController.login_post);
 
 // Register GET
-router.get('/register', authenticationController.signup_get);
+router.get('/register', authenticationController.register_get);
 
 // Register POST
-router.post('/register', authenticationController.signup_post);
+router.post('/register', authenticationController.register_post);
 
 module.exports = router;
