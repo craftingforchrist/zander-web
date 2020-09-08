@@ -20,85 +20,73 @@ create index playerdata_username on playerdata (username);
 
 CREATE TABLE playerprofile (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  player_id INT NOT NULL DEFAULT 0,
-  twitter TEXT,
+  playerid INT NOT NULL DEFAULT 0,
+  twitter VARCHAR(15),
   youtube TEXT,
-  instagram TEXT,
-  facebook TEXT,
-  snapchat TEXT,
+  instagram VARCHAR(30),
+  facebook VARCHAR(50),
+  snapchat VARCHAR(30),
   aboutpage TEXT,
   profilephotocover TEXT,
-  FOREIGN KEY (player_id) REFERENCES playerdata (id)
+  FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
 CREATE TABLE playerregistration (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  player_id INT NOT NULL DEFAULT 0,
+  playerid INT NOT NULL DEFAULT 0,
   registrationtoken VARCHAR(32),
   registered BOOLEAN DEFAULT false,
   registereddiscordid VARCHAR(18),
-  FOREIGN KEY (player_id) REFERENCES playerdata (id)
+  FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
 CREATE TABLE gamesessions (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  player_id INT NOT NULL DEFAULT 0,
+  playerid INT NOT NULL DEFAULT 0,
   sessionstart TIMESTAMP NOT NULL DEFAULT NOW(),
   sessionend TIMESTAMP NULL,
   ipaddress VARCHAR(45),
   server VARCHAR(50),
-  FOREIGN KEY (player_id) REFERENCES playerdata (id)
+  FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
-create index gamesessions_player_id on gamesessions (player_id);
+create index gamesessions_playerid on gamesessions (playerid);
 create index gamesessions_sessionstart on gamesessions (sessionstart);
 create index gamesessions_sessionend on gamesessions (sessionend);
 
--- CREATE TABLE gamepunishments (
---   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
---   punisheduser_id INT NOT NULL DEFAULT 0,
---   punisher_id INT NOT NULL DEFAULT 0,
---   punishtype ENUM('KICK', 'BAN', 'TEMP_BAN', 'MUTE', 'WARN', 'IP_BAN'),
---   reason TEXT,
---   appealed BOOLEAN,
---   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
---   FOREIGN KEY (punisheduser_id) REFERENCES playerdata (id),
---   FOREIGN KEY (punisher_id) REFERENCES playerdata (id)
--- );
+CREATE TABLE gamepunishments (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  punisheduserid INT NOT NULL DEFAULT 0,
+  punisherid INT NOT NULL DEFAULT 0,
+  type VARCHAR(8),
+  reason VARCHAR(50),
+  appealed BOOLEAN,
+  punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
+  appealpunishtimestamp TIMESTAMP NOT NULL,
+  FOREIGN KEY (punisheduserid) REFERENCES playerdata (id),
+  FOREIGN KEY (punisherid) REFERENCES playerdata (id)
+);
 
 CREATE TABLE discordpunishments (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  punisheduser TEXT,
-  punisheduserid TEXT,
-  punisher TEXT,
-  punisherid TEXT,
-  punishtype ENUM('KICK', 'BAN', 'TEMP BAN', 'MUTE', 'WARN'),
-  reason TEXT,
+  punishedid VARCHAR(18),
+  punisherid VARCHAR(18),
+  punishtype VARCHAR(8),
+  reason VARCHAR(50),
   appealed BOOLEAN,
-  punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW()
+  punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
+  appealpunishtimestamp TIMESTAMP NOT NULL
 );
-
--- CREATE TABLE gameapplications (
---   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
---   uuid VARCHAR(32),
---   username VARCHAR(16),
---   email TEXT,
---   discordtag TEXT,
---   howdidyouhearaboutus TEXT,
---   otherinformation TEXT,
---   appstatus ENUM('ACCEPTED', 'DENIED', 'PROCESSING'),
---   submissiontimestamp TIMESTAMP NOT NULL DEFAULT NOW()
--- );
 
 CREATE TABLE webaccounts (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  player_id INT NOT NULL DEFAULT 0,
+  playerid INT NOT NULL DEFAULT 0,
   password TEXT,
   status ENUM('ACTIVE', 'DISABLED'),
-  FOREIGN KEY (player_id) REFERENCES playerdata (id)
+  FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
 -- This account should be removed immediately after setting up your own account.
-INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE");
+-- INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE");
 
 -- CREATE TABLE accountspermissions (
 --   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -119,16 +107,15 @@ INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzx
 
 CREATE TABLE events (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  eventtitle TEXT,
+  eventtitle VARCHAR(100),
   eventicon TEXT,
-  eventdatetime TEXT,
-  eventtime TEXT,
+  eventdatetime DATETIME,
   eventinformation TEXT
 );
 
 CREATE TABLE servers (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  name TEXT,
+  name VARCHAR(60),
   description TEXT,
   disclaimer TEXT,
   ipaddress TEXT,
@@ -137,19 +124,23 @@ CREATE TABLE servers (
 
 CREATE TABLE ccstreams (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  playerid INT NOT NULL DEFAULT 0,
   channelname TEXT,
   viewercount VARCHAR(10),
-  status ENUM('ONLINE', 'OFFLINE')
+  status BOOLEAN,
+  FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
 CREATE TABLE ccvideos (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  channelid TEXT
+  playerid INT NOT NULL DEFAULT 0,
+  channelid TEXT,
+  FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
 CREATE TABLE votes (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   username VARCHAR(16),
   service TEXT,
-  time TIMESTAMP NOT NULL
+  time TIMESTAMP NOT NULL DEFAULT NOW()
 );
