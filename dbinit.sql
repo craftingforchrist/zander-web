@@ -2,12 +2,12 @@ DROP DATABASE IF EXISTS zander;
 CREATE DATABASE IF NOT EXISTS zander;
 USE zander;
 
-CREATE USER 'zander'@'%' IDENTIFIED WITH mysql_native_password BY 'Paswordzander321';
-FLUSH PRIVILEGES;
-GRANT SELECT ON zander.* TO zander@'%';
-GRANT INSERT ON zander.* TO zander@'%';
-GRANT UPDATE ON zander.* TO zander@'%';
-GRANT DELETE ON zander.* TO zander@'%';
+-- CREATE USER 'zander'@'%' IDENTIFIED WITH mysql_native_password BY 'Passwordzander321';
+-- FLUSH PRIVILEGES;
+-- GRANT SELECT ON zander.* TO zander@'%';
+-- GRANT INSERT ON zander.* TO zander@'%';
+-- GRANT UPDATE ON zander.* TO zander@'%';
+-- GRANT DELETE ON zander.* TO zander@'%';
 
 CREATE TABLE playerdata (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -21,6 +21,7 @@ create index playerdata_username on playerdata (username);
 CREATE TABLE playerprofile (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   playerid INT NOT NULL DEFAULT 0,
+  discordid VARCHAR(18),
   twitter VARCHAR(15),
   youtube TEXT,
   instagram VARCHAR(30),
@@ -28,15 +29,6 @@ CREATE TABLE playerprofile (
   snapchat VARCHAR(30),
   aboutpage TEXT,
   profilephotocover TEXT,
-  FOREIGN KEY (playerid) REFERENCES playerdata (id)
-);
-
-CREATE TABLE playerregistration (
-  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  playerid INT NOT NULL DEFAULT 0,
-  registrationtoken VARCHAR(32),
-  registered BOOLEAN DEFAULT false,
-  registereddiscordid VARCHAR(18),
   FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
@@ -61,7 +53,7 @@ CREATE TABLE gamepunishments (
   reason VARCHAR(50),
   appealed BOOLEAN,
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-  appealpunishtimestamp TIMESTAMP NOT NULL,
+  appealpunishtimestamp DATETIME,
   FOREIGN KEY (punisheduserid) REFERENCES playerdata (id),
   FOREIGN KEY (punisherid) REFERENCES playerdata (id)
 );
@@ -74,14 +66,17 @@ CREATE TABLE discordpunishments (
   reason VARCHAR(50),
   appealed BOOLEAN,
   punishtimestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-  appealpunishtimestamp TIMESTAMP NOT NULL
+  appealpunishtimestamp DATETIME
 );
 
 CREATE TABLE webaccounts (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   playerid INT NOT NULL DEFAULT 0,
-  password TEXT,
-  status ENUM('ACTIVE', 'DISABLED'),
+  email VARCHAR(200),
+  password VARCHAR(16),
+  registrationtoken VARCHAR(32),
+  registered BOOLEAN DEFAULT 0,
+  status BOOLEAN DEFAULT 0,
   FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
@@ -91,19 +86,19 @@ CREATE TABLE webaccounts (
 -- CREATE TABLE accountspermissions (
 --   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
 --   account_id INT NOT NULL DEFAULT 0,
---   admincontentcreator BOOLEAN DEFAULT false,
---   adminevents BOOLEAN DEFAULT false,
---   adminservers BOOLEAN DEFAULT false,
---   adminaccounts BOOLEAN DEFAULT false,
---   adminaccountscreate BOOLEAN DEFAULT false
---   adminaccountsdelete BOOLEAN DEFAULT false
---   adminaccountsdisable BOOLEAN DEFAULT false
---   adminaccountsreenable BOOLEAN DEFAULT false
---   adminstafftitle BOOLEAN DEFAULT false
+--   admincontentcreator BOOLEAN DEFAULT 0,
+--   adminevents BOOLEAN DEFAULT 0,
+--   adminservers BOOLEAN DEFAULT 0,
+--   adminaccounts BOOLEAN DEFAULT 0,
+--   adminaccountscreate BOOLEAN DEFAULT 0
+--   adminaccountsdelete BOOLEAN DEFAULT 0
+--   adminaccountsdisable BOOLEAN DEFAULT 0
+--   adminaccountsreenable BOOLEAN DEFAULT 0
+--   adminstafftitle BOOLEAN DEFAULT 0
 -- );
 --
 -- -- This allows the root account to have access to all parts of the admin panel
--- INSERT INTO accountspermissions (account_id, admincontentcreator, adminevents, adminservers, adminaccounts, adminaccountspermissions) VALUES (0, true, true, true, true, true);
+-- INSERT INTO accountspermissions (account_id, admincontentcreator, adminevents, adminservers, adminaccounts, adminaccountspermissions) VALUES (0, 1, 1, 1, 1, 1);
 
 CREATE TABLE events (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,

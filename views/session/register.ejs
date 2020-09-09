@@ -43,12 +43,19 @@
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" required>
-          <small class="form-text text-muted">Please ensure that your password is safe and secure, something that only you would know.</small>
+          <input type="password" class="form-control" name="password" minlength="8" maxlength="16" required>
+          <small class="form-text text-muted">
+            Password Requirements:<br>
+            <ul>
+              <li>More than 8 characters.</li>
+              <li>Less than 16 characters.</li>
+              <li>Make sure it is unique.</li>
+            </ul>
+          </small>
         </div>
         <div class="form-group">
           <label for="passwordconfirm">Confirm Password</label>
-          <input type="password" class="form-control" name="passwordconfirm" required>
+          <input type="password" class="form-control" name="passwordconfirm" maxlength="16" required>
           <small class="form-text text-muted">Ensure that your password matches!</small>
         </div>
         <div class="text-center">
