@@ -21,14 +21,16 @@ create index playerdata_username on playerdata (username);
 CREATE TABLE playerprofile (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   playerid INT NOT NULL DEFAULT 0,
-  discordid VARCHAR(18),
   twitter VARCHAR(15),
   youtube TEXT,
   instagram VARCHAR(30),
+  steam VARCHAR(32),
+  github VARCHAR(40),
   facebook VARCHAR(50),
   snapchat VARCHAR(30),
-  aboutpage TEXT,
-  profilephotocover TEXT,
+  discord TEXT,
+  aboutpage VARCHAR(16777215),
+  coverart VARCHAR(64),
   FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
