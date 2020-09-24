@@ -52,6 +52,7 @@ const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich 
 // Cron Jobs
 //
 require('./cron/resetVotes.js');
+require('./cron/clearOldEvents.js');
 
 //
 // Constants
@@ -193,7 +194,7 @@ var dashboard = require('./routes/admin/dashboard');
 var accounts = require('./routes/admin/accounts/list');
 var accountscreate = require('./routes/admin/accounts/create');
 var accountspermissionslist = require('./routes/admin/accounts/permissions/list');
-var eventsadmin = require('./routes/admin/events/list');
+var eventsadmin = require('./routes/admin/events/list')(client);
 var eventsadmincreate = require('./routes/admin/events/create')(client);
 var eventsadminedit = require('./routes/admin/events/edit')(client);
 var broadcast = require('./routes/admin/broadcast');

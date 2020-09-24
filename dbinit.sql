@@ -81,9 +81,6 @@ CREATE TABLE accounts (
   status ENUM('ACTIVE', 'DISABLED')
 );
 
--- This account should be removed immediately after setting up your own account.
-INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE");
-
 -- CREATE TABLE accountspermissions (
 --   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
 --   account_id INT NOT NULL DEFAULT 0,
@@ -103,11 +100,10 @@ INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzx
 
 CREATE TABLE events (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  eventtitle TEXT,
-  eventicon TEXT,
-  eventdate TEXT,
-  eventtime TEXT,
-  eventinformation TEXT
+  title TEXT,
+  icon TEXT,
+  eventdatetime DATETIME,
+  information TEXT
 );
 
 CREATE TABLE servers (

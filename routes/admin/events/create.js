@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../../../config.json');
+const HexColour = require('../../../HexColour.json');
 const database = require('../../../controllers/database.js');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
+const moment = require('moment');
 
 module.exports = (client) => {
   router.get('/', function (req, res, next) {
     if (req.session.user) {
       res.render('admin/events/create', {
-        "pagetitle": "Administration Panel - Create Event"
+        "pagetitle": "Administration Panel - Create Event",
+        moment: moment
       });
     } else {
       res.render('session/login', {
@@ -22,13 +25,12 @@ module.exports = (client) => {
 
   router.post('/', function (req, res) {
     if (req.session.user) {
-      const name = req.body.name;
+      const title = req.body.title;
       const icon = req.body.icon;
-      const date = req.body.date;
-      const time = req.body.time;
+      const datetime = req.body.eventdatetime;
       const information = req.body.information;
 
-      database.query(`INSERT INTO events (eventtitle, eventicon, eventdate, eventtime, eventinformation) VALUES (?, ?, ?, ?, ?)`, [name, icon, date, time, information], function (error, results, fields) {
+      database.query(`INSERT INTO events (title, icon, eventdatetime, information) VALUES (?, ?, ?, ?)`, [title, icon, datetime, information], function (error, results, fields) {
         if (error) {
           res.redirect('/');
           throw error;
@@ -40,10 +42,10 @@ module.exports = (client) => {
           if (!eventschannel) return console.log(`A #${config.eventschannel} channel does not exist.`);
 
           var embed = new Discord.MessageEmbed()
-            .setTitle(name)
-            .setDescription(`**Date & Time: **${date} @ ${time}\n\n**Event Information: **${information}`)
+            .setTitle(title)
+            .setDescription(`${moment(datetime).format('LLLL')}\n\n${information}`)
             .setThumbnail(icon)
-            .setColor('#99ddff')
+            .setColor(HexColour.evententry)
           eventschannel.send(embed);
           console.log(`[CONSOLE] [DISCORD] The new Event has been broadcasted to Discord.`);
         };

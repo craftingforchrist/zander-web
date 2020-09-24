@@ -37,6 +37,7 @@
     "fs": "0.0.1-security",
     "github": "^14.0.0",
     "hogan": "^1.0.2",
+    "humanize": "0.0.9",
     "inline-css": "^2.6.3",
     "leo-profanity": "^1.2.6",
     "minecraft-lib": "^1.1.6",
