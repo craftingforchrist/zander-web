@@ -7,6 +7,10 @@
   "lightblue": "#4d79ff",
   "purple": "#b300b3",
 
+  "evententry": "#03c6fc",
+  "eventedited": "#e9f549",
+  "eventcancelled": "#f2463a",
+
   "administrator": "#e8e800",
   "seniorstaff": "#ffa500",
   "developer": "#b400b4",

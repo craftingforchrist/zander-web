@@ -4,19 +4,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 <script type="text/javascript">
   setInterval(function eventPreviewFunction() {
-    var eventtitle = document.getElementById("eventtitle").value;
+    var eventtitle = document.getElementById("title").value;
     document.getElementById("eventtitlespan").textContent=eventtitle;
 
-    var eventicon = document.getElementById("eventicon").value;
+    var eventicon = document.getElementById("icon").value;
     document.getElementById("eventiconspan").src=eventicon;
 
-    var eventdate = document.getElementById("eventdate").value;
-    document.getElementById("eventdatespan").textContent=eventdate;
+    var eventdatetime = document.getElementById("eventdatetime").value;
+    document.getElementById("eventdatetimespan").textContent=eventdatetime;
 
-    var eventtime = document.getElementById("eventtime").value;
-    document.getElementById("eventtimespan").textContent=eventtime;
-
-    var eventinformation = document.getElementById("eventinformation").value;
+    var eventinformation = document.getElementById("information").value;
     document.getElementById("eventinformationspan").textContent=eventinformation;
   }, 0 * 1000);
 </script>
@@ -29,34 +26,32 @@
       <div>
         <form method="post" action="/admin/events/create">
           <div class="form-group">
-            <label for="name">Event Name</label>
-            <input type="text" class="form-control" id="eventtitle" name="name" value="" required>
+            <label for="title">Event Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="" required>
           </div>
+
           <div class="form-group">
             <label for="icon">Event Icon</label>
-            <input type="text" class="form-control" id="eventicon" name="icon" value="" required>
+            <input type="text" class="form-control" id="icon" name="icon" value="" required>
             <small class="form-text text-muted">This should be a .png file link from imgur. The event icon MUST be 250px x 250px.</small>
           </div>
+
           <div class="form-group">
-            <label for="date">Event Date</label>
-            <input type="text" class="form-control" id="eventdate" name="date" value="" required>
-            <!-- <input type="date" class="form-control" id="eventdate" name="date" value="" required pattern="\d{4}-\d{2}-\d{2}"> -->
+            <label for="date">Event Date & Time</label>
+            <input type="datetime-local" id="eventdatetime" name="eventdatetime">
           </div>
-          <div class="form-group">
-            <label for="time">Event Time</label>
-            <input type="time" class="form-control" id="eventtime" name="time" value="" required>
-            <!-- <input type="text" class="form-control" id="eventtime" name="time" value="" required> -->
-          </div>
+
           <div class="form-group">
             <label for="information">Event Information</label><br>
-            <textarea name="information" id="eventinformation" rows="8" cols="63" required></textarea>
+            <textarea name="information" id="information" rows="8" cols="63" required></textarea>
             <small class="form-text text-muted">You can use HTML to format the information.</small>
           </div>
           <button type="submit" class="btn btn-primary">Create Event</button>
-          <!-- <button type="button" class="btn btn-info" onclick="eventPreviewFunction()">Preview</button> -->
         </form>
       </div>
     </div>
+
+    <!-- Event Preview Window -->
     <div class="col-sm">
       <h1>Event Preview</h1>
       <div class="card">
@@ -65,12 +60,11 @@
             <div class="col-sm-">
               <span id="eventiconspan"></span>
               <img src="https://i.imgur.com/vjcLEdO.png" id="eventiconspan" width="250px" height="250px" draggable="false">
-
             </div>
             <div class="col">
               <a href="#eventtitle" style="color:black; text-decoration:none;"><h3><span id="eventtitlespan">Event Title</span> <a href="#" style="color:black; font-size:14pt;"><i class="fas fa-link"></i></a></h3></a>
-              <h6><span id="eventdatespan">00th of Month</span> @ <span id="eventtimespan">00:00am/pm AEST</span></h6>
-              <div class="">
+              <h6><span id="eventdatetimespan">Date & Time</span></h6>
+              <div>
                 <p><span id="eventinformationspan">Information for the event is to be filled in here.</span></p>
               </div>
             </div>
