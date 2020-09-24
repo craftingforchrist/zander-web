@@ -4,10 +4,11 @@
   "contactemail": "support@craftingforchrist.net",
   "serverip": "play.craftingforchrist.net",
   "notificationemail": "support@craftingforchrist.net",
+  "serverwebsite": "https://www.craftingforchrist.net/",
 
-  "webfavicon": "/assets/img/favicon.ico",
-  "weblogo": "/assets/img/server-icon.png",
-  "webvideobackground": "./assets/img/rollingbackground.mp4",
+  "webfavicon": "/img/favicon.ico",
+  "weblogo": "/img/server-icon.png",
+  "webvideobackground": "./img/rollingbackground.mp4",
   "description": "A Christian Minecraft Server.",
 
   "website": "https://www.craftingforchrist.net/",
@@ -20,7 +21,7 @@
   "forumlink": "https://forums.craftingforchrist.net/",
   "twitchlink": "https://www.twitch.tv/craftingforchrist",
   "youtubelink": "https://www.youtube.com/channel/UCeijz6MNnya85LprMjPmYag",
-  "giveawaylink": "https://gleam.io/competitions/hgxXq-crafting-for-christ-minecraft-dungeons-standard-edition-giveaway",
+  "giveawaylink": "LINK",
 
   "email": true,
   "discord": true,
@@ -40,6 +41,7 @@
   "developersmd": "https://raw.githubusercontent.com/crafting-for-christ/Web-Various/master/developers.md",
   "juniorstaffmd": "https://raw.githubusercontent.com/crafting-for-christ/Web-Various/master/juniorstaff.md",
   "githubissuetrackerlink": "https://github.com/benrobson/zander/issues/new",
+  "mapsrepository": "https://github.com/crafting-for-christ/Maps",
 
   "contentcreatorapplink": "https://forms.gle/cvTJkYYiGtRnZqxK8",
   "developerapplink": "https://forms.gle/mtTuYqp3oXVmCTpv6",

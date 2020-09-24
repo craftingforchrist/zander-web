@@ -1,0 +1,25 @@
+{
+  "red": "#ff4d4d",
+  "yellow": "#ffff9a",
+  "green": "#00cd00",
+  "orange": "#ffc04d",
+  "blue": "#4d4dff",
+  "lightblue": "#4d79ff",
+  "purple": "#b300b3",
+
+  "administrator": "#e8e800",
+  "seniorstaff": "#ffa500",
+  "developer": "#b400b4",
+  "juniordeveloper": "#cd00cd",
+  "staff": "#ff3333",
+  "juniorstaff": "#b400b4",
+  "builder": "#0080ff",
+  "eventstaff": "#1eb6a7",
+  "socialmedia": "#32cd32",
+  "contentcreator": "#228b22",
+  "retired": "#676767",
+
+  "iron": "#808080",
+  "gold": "#ffd700",
+  "diamond": "#40e0d0"
+}

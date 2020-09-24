@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
   multipleStatements: true
 });
 
-connection.connect(function(err) {
+connection.connect(function (err) {
   if (err) {
     console.error(`[ERROR] [DB] [LP] There was an error connecting:\n ${err.stack}`);
     connection.connect();
