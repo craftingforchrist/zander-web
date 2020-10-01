@@ -10,11 +10,12 @@
   </div>
 
   <div class="row">
-    <div class="text-left">
-      <img class="floating" style="" src="../img/elytraadmins.png" alt="The 3 Admins in Elytras." height="400px" draggable="false">
+    <div class="col-sm">
+      <div class="text-center">
+        <img class="floating" style="margin-top:50px;" src="../img/elytraadmins.png" alt="The 3 Admins in Elytras." height="400px" draggable="false">
+      </div>
     </div>
-
-    <div>
+    <div class="col-sm" style="margin-right:100px;">
       <% if (error == true) { %>
         <div class="alert alert-danger" role="alert">
           <small><%= errormsg %></small>
@@ -55,7 +56,7 @@
         </div>
         <div class="form-group">
           <label for="passwordconfirm">Confirm Password</label>
-          <input type="password" class="form-control" name="passwordconfirm" maxlength="16" required>
+          <input type="password" class="form-control" name="passwordconfirm" max="16" min="8" required>
           <small class="form-text text-muted">Ensure that your password matches!</small>
         </div>
         <div class="text-center">
