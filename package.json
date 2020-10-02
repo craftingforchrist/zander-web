@@ -50,7 +50,7 @@
     "mysql-apostrophe": "^1.0.8",
     "node-cron": "^2.0.3",
     "node-yt": "^1.0.8",
-    "nodemailer": "^6.4.11",
+    "nodemailer": "^6.4.12",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemailer-juice": "^1.0.1",
     "passport": "^0.4.1",
