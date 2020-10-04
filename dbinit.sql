@@ -78,7 +78,7 @@ CREATE TABLE webaccounts (
   password VARCHAR(16),
   registrationtoken VARCHAR(32),
   registered BOOLEAN DEFAULT 0,
-  status BOOLEAN DEFAULT 0,
+  disabled BOOLEAN DEFAULT 0,
   FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
