@@ -109,10 +109,12 @@ CREATE TABLE events (
 CREATE TABLE servers (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name TEXT,
+  icon VARCHAR(100),
   description TEXT,
   disclaimer TEXT,
   ipaddress TEXT,
   position VARCHAR(2),
+  visable BOOLEAN DEFAULT 1,
   playersonline TEXT
 );
 

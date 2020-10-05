@@ -206,16 +206,8 @@ footer li {
 .serverconnectcta {
   font-family: 'MinecraftRegular';
   font-size: 20px;
-  padding: 80px;
+  padding: 60px;
   background-image: url(../img/dirtmc-backing.png);
   color: white;
   text-align: center;
-}
-
-.serverconnectcta input {
-  width: 275px;
-  padding: 5px;
-  color: white;
-  background-color: black;
-  border-color: gray;
 }

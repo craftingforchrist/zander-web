@@ -1,6 +1,8 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/navigation.ejs") %>
 
+<script type="text/javascript" src="/js/copytoclipboard.js"></script>
+
 <div class="container">
   <%- include("./partials/micros/indexbanner.ejs") %>
   <br>
@@ -22,7 +24,7 @@
     <strong>Notice:</strong> Our website is currently in development stages and may be a little buggy and broken!<br>Please report any issues you see to the <a href="/issues">issue tracker</a>.
   </div>
 
-  <% if (objdata[1][0]) { %>
+  <% if (event) { %>
     <%- include("./partials/micros/upcomingevent.ejs") %>
   <% } %>
 
@@ -72,12 +74,25 @@
   </div>
 
   <div class="serverconnectcta">
-    <div style="margin: 40px auto 30px; width:500px;">
-      <p>Open Minecraft and connect with:</p>
-      <form style="text-align:left; margin: 0 auto; width: 300px;" action="index.html" method="post">
-        <label for="serverip" style="color: #C0C0C0">Server Address</label><br>
-        <input type="text" name="serverip" value="<%= serverip %>" disabled>
-      </form>
+    <div style="margin: 20px auto 30px;">
+      <p>Open Minecraft and connect with one of our Servers!</p>
+
+      <% if (!servers) { %>
+        <%- include("./partials/micros/noservers.ejs") %>
+      <% } else { %>
+        <div class="row">
+          <% servers.forEach(function (data) { %>
+          <div style="width:320px;">
+            <img src="../img/servericon/<%= data.icon %>" alt="<%= data.name %> server logo." height="80px" draggable="false"><br>
+            <h2><%= data.name %></h2>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" id="inlineFormInputGroup" value="<%= data.ipaddress %>" disabled style="color:black; text-align:center;">
+            </div>
+            <p style="font-size:12pt;"><%= data.description %></p>
+          </div>
+          <% }) %>
+        </div>
+      <% } %>
     </div>
   </div>
 </div>
