@@ -20,7 +20,6 @@
   </div>
 
   <div class="alert alert-warning alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Notice:</strong> Our website is currently in development stages and may be a little buggy and broken!<br>Please report any issues you see to the <a href="/issues">issue tracker</a>.
   </div>
 
@@ -75,13 +74,13 @@
 </div>
 
 <div class="serverconnectcta">
-  <div style="margin: 20px auto 30px;">
+  <div style="margin: 20px auto 30px; width: 1300px;">
     <p>Open Minecraft and connect with one of our Servers!</p>
 
     <% if (!servers) { %>
       <%- include("./partials/micros/noservers.ejs") %>
     <% } else { %>
-      <div class="row">
+      <div class="row"">
         <% servers.forEach(function (data) { %>
         <div style="margin:auto 20 20; width:420px;">
           <img src="../img/servericon/<%= data.icon %>" alt="<%= data.name %> server logo." height="80px" draggable="false"><br>
