@@ -29,7 +29,7 @@ CREATE TABLE playerprofile (
   facebook VARCHAR(50),
   snapchat VARCHAR(30),
   discord TEXT,
-  aboutpage VARCHAR(16777215),
+  aboutpage TEXT,
   coverart VARCHAR(64),
   FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
@@ -78,7 +78,7 @@ CREATE TABLE webaccounts (
   password VARCHAR(16),
   registrationtoken VARCHAR(32),
   registered BOOLEAN DEFAULT 0,
-  status BOOLEAN DEFAULT 0,
+  disabled BOOLEAN DEFAULT 0,
   FOREIGN KEY (playerid) REFERENCES playerdata (id)
 );
 
