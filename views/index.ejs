@@ -67,7 +67,19 @@
     </div>
   </div>
 
-  <a class="twitter-timeline" href="https://twitter.com/craft4christmc?ref_src=twsrc%5Etfw" data-tweet-limit="1">Latest Tweet by craft4christmc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div style="margin:0 auto; width:900px;">
+    <a class="twitter-timeline" href="https://twitter.com/craft4christmc?ref_src=twsrc%5Etfw" data-tweet-limit="1">Latest Tweet by craft4christmc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  <div class="serverconnectcta">
+    <div style="margin: 40px auto 30px; width:500px;">
+      <p>Open Minecraft and connect with:</p>
+      <form style="text-align:left; margin: 0 auto; width: 300px;" action="index.html" method="post">
+        <label for="serverip" style="color: #C0C0C0">Server Address</label><br>
+        <input type="text" name="serverip" value="<%= serverip %>" disabled>
+      </form>
+    </div>
+  </div>
 </div>
 
 <%- include("./partials/footer.ejs") %>
