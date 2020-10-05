@@ -1,3 +1,9 @@
+/* Import Minecraft Font */
+@font-face {
+  font-family: 'MinecraftRegular';
+  src:  url(../css/MinecraftRegular.woff) format('woff');
+}
+
 .jumbotron-image-header {
   position: relative;
   overflow: hidden;
@@ -177,4 +183,22 @@ footer li {
     from { transform: translate(0,  0px); }
     65%  { transform: translate(0, 15px); }
     to   { transform: translate(0, -0px); }
+}
+
+/* Server IP Call To Action */
+.serverconnectcta {
+  font-family: 'MinecraftRegular';
+  font-size: 20px;
+  padding: 80px;
+  background-image: url(../img/dirtmc-backing.png);
+  color: white;
+  text-align: center;
+}
+
+.serverconnectcta input {
+  width: 275px;
+  padding: 5px;
+  color: white;
+  background-color: black;
+  border-color: gray;
 }
