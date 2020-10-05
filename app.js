@@ -52,7 +52,7 @@ const twitchtracker = require('./controllers/twitchtracker')(client); // Twtich 
 // Cron Jobs
 //
 require('./cron/daily.js');
-require('./cron/monthly.js');
+require('./cron/monthly.js')(client);
 
 //
 // Constants
