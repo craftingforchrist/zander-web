@@ -75,7 +75,7 @@ CREATE TABLE webaccounts (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
   playerid INT NOT NULL DEFAULT 0,
   email VARCHAR(200),
-  password VARCHAR(16),
+  password TEXT,
   registrationtoken VARCHAR(32),
   registered BOOLEAN DEFAULT 0,
   disabled BOOLEAN DEFAULT 0,

@@ -43,48 +43,49 @@ module.exports.register_get = (req, res) => {
 module.exports.register_post = (req, res) => {
   const { username, email, password, passwordconfirm } = req.body;
 
+  console.log(req.body);
+
   // Check if the player has logged into the Network.
-  let sql = `select username from playerdata where username = ? limit 1;`
-  database.query (sql, [`${username}`], async function (err, results) {
-    if (typeof(results[0]) == "undefined") {
-      res.render('session/register', {
-        "pagetitle": "Register",
-        "success": null,
-        "error": true,
-        "errormsg": `This player has not logged into the Network, please login and try again.`
-      });
-      return;
-    }
+  let sql = `select * from playerdata where username = ? limit 1; select * from webaccounts where playerid = (select id from playerdata where username = ?) limit 1;`
+  database.query (sql, [`${username}`, `${username}`], async function (err, results) {
 
     console.log(results);
 
+
     // Check if the user has already started registering.
-    if (results[0].username) {
+    if (results[0] = "[]") {
       res.render('session/register', {
         "pagetitle": "Register",
         "success": null,
         "error": true,
-        "errormsg": "You are already registered or have started registration."
+        "errormsg": `You have not logged into the Network, please login and try again.`
       });
-    } else {
-      // Check if the passwords match.
-      if (password != passwordconfirm) {
+    } else if (results[1].length < 0) {
         res.render('session/register', {
           "pagetitle": "Register",
           "success": null,
           "error": true,
-          "errormsg": "The password you have entered does not match, please try again."
+          "errormsg": "You are already registered or have started registration."
         });
         return;
-      } else {
+    } else if (password != passwordconfirm) {
+      // Check if the passwords match.
+      res.render('session/register', {
+        "pagetitle": "Register",
+        "success": null,
+        "error": true,
+        "errormsg": "The password you have entered does not match, please try again."
+      });
+      return;
+    } else {
         // Hash the password
         const salt = await bcrypt.genSalt();
-        req.body.password = await bcrypt.hash(password, salt);
+        hashpassword = await bcrypt.hash(password, salt);
         // Generate a verifation token
         const token = randomToken(32);
 
         // Start the registration linking process and put token into table.
-        database.query (`insert into webaccounts (playerid, email, password, registrationtoken) values ((select id from playerdata where username = ?), ?, ?, ?);`, [`${username}`, `${email}`, `${password}`, `${token}`], function (err, results) {
+        database.query (`insert into webaccounts (playerid, email, password, registrationtoken) values ((select id from playerdata where username = ?), ?, ?, ?);`, [`${username}`, `${email}`, `${hashpassword}`, `${token}`], function (err, results) {
           if (err) {
             throw err;
           } else {
@@ -116,6 +117,7 @@ module.exports.register_post = (req, res) => {
                         "error": false,
                         "successmsg": `An email is now heading your way with instructions of what to do next!`
                       });
+                      return;
                     }
                 });
               }
@@ -123,8 +125,6 @@ module.exports.register_post = (req, res) => {
           }
         });
         return;
-
       };
-    };
   });
 };

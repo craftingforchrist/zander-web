@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const config = require('../../../config.json');
-const HexColour = require('../../../HexColour.json');
-const database = require('../../../controllers/database.js'); // Database controller
+const config = require('../../config.json');
+const HexColour = require('../../HexColour.json');
+const database = require('../../controllers/database.js'); // Database controller
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user is in the Discord and exists.
