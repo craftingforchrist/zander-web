@@ -1,7 +1,30 @@
+/* Import Minecraft Font */
+@font-face {
+  font-family: 'MinecraftRegular';
+  src:  url(../css/MinecraftRegular.woff) format('woff');
+}
+
 .jumbotron-image-header {
   position: relative;
   overflow: hidden;
   background-image: url(../img/background.png);
+}
+
+#carouselCaptions img {
+  -webkit-filter: brightness(50%);
+  background: rgba(0,0,0,0.6);
+  opacity: 1;
+  width: 100%
+}
+
+.banner-caption {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.carousel-item img {
+  height: 450px;
+  width: 200px;
 }
 
 .credential-container {
@@ -177,4 +200,14 @@ footer li {
     from { transform: translate(0,  0px); }
     65%  { transform: translate(0, 15px); }
     to   { transform: translate(0, -0px); }
+}
+
+/* Server IP Call To Action */
+.serverconnectcta {
+  font-family: 'MinecraftRegular';
+  font-size: 20px;
+  padding: 60px;
+  background-image: url(../img/dirtmc-backing.png);
+  color: white;
+  text-align: center;
 }

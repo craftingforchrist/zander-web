@@ -1,17 +1,11 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/navigation.ejs") %>
 
+<script type="text/javascript" src="/js/copytoclipboard.js"></script>
+
 <div class="container">
-  <div class="jumbotron jumbotron-video-header my-4 home-jumbo-header">
-    <video id="bg-video" autoplay="true" loop="loop" preload="metadata" muted="muted">
-        <source src="<%= webvideobackground %>" type="video/mp4" />
-    </video>
-    <div class="center jumbovidtext text-white">
-      <h1 class="display-3"><%= servername %></h1>
-      <p class="lead"><%= description %></p>
-      <a href="/play"><button type="button" class="btn btn-primary"><i class="fas fa-angle-double-right"></i> Play</button></a>
-    </div>
-  </div>
+  <%- include("./partials/micros/indexbanner.ejs") %>
+  <br>
 
   <% if (successalert == true) { %>
     <%- include("./partials/micros/successalert.ejs") %>
@@ -26,11 +20,10 @@
   </div>
 
   <div class="alert alert-warning alert-dismissible">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>Notice:</strong> Our website is currently in development stages and may be a little buggy and broken!<br>Please report any issues you see to the <a href="/issues">issue tracker</a>.
   </div>
 
-  <% if (objdata[1][0]) { %>
+  <% if (event) { %>
     <%- include("./partials/micros/upcomingevent.ejs") %>
   <% } %>
 
@@ -75,7 +68,31 @@
     </div>
   </div>
 
-  <a class="twitter-timeline" href="https://twitter.com/craft4christmc?ref_src=twsrc%5Etfw" data-tweet-limit="1">Latest Tweet by craft4christmc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div style="margin:0 auto; width:900px;">
+    <a class="twitter-timeline" href="https://twitter.com/craft4christmc?ref_src=twsrc%5Etfw" data-tweet-limit="1">Latest Tweet by craft4christmc</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+</div>
+
+<div class="serverconnectcta">
+  <div style="margin: 20px auto 30px; width: 1300px;">
+    <p>Open Minecraft and connect with one of our Servers!</p>
+
+    <% if (!servers) { %>
+      <%- include("./partials/micros/noservers.ejs") %>
+    <% } else { %>
+      <div class="row"">
+        <% servers.forEach(function (data) { %>
+        <div style="margin:auto 20 20; width:420px;">
+          <img src="../img/servericon/<%= data.icon %>" alt="<%= data.name %> server logo." height="80px" draggable="false"><br>
+          <h2><%= data.name %></h2>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" id="inlineFormInputGroup" value="<%= data.ipaddress %>" disabled style="margin:0 auto; max-width:350px; font-size:15pt; border-color:gray; color:white; background-color:black; text-align:center;">
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
 </div>
 
 <%- include("./partials/footer.ejs") %>
