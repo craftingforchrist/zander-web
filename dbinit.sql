@@ -104,19 +104,22 @@ CREATE TABLE webaccounts (
 
 CREATE TABLE events (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  eventtitle VARCHAR(100),
-  eventicon TEXT,
+  title TEXT,
+  icon TEXT,
   eventdatetime DATETIME,
-  eventinformation TEXT
+  information TEXT
 );
 
 CREATE TABLE servers (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  name VARCHAR(60),
+  name TEXT,
+  icon VARCHAR(100),
   description TEXT,
   disclaimer TEXT,
   ipaddress TEXT,
-  position VARCHAR(2)
+  position VARCHAR(2),
+  visable BOOLEAN DEFAULT 1,
+  playersonline TEXT
 );
 
 CREATE TABLE ccstreams (

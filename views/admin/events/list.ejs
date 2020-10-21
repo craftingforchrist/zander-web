@@ -17,7 +17,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Event Name</th>
+        <th scope="col">Event Title</th>
         <th scope="col">Date & Time</th>
         <th scope="col">Action</th>
       </tr>
@@ -25,8 +25,8 @@
     <tbody>
       <% objdata.forEach(function (data) { %>
         <tr>
-          <td><%= data.eventtitle %></td>
-          <td><%= data.eventdate %> @ <%= data.eventtime %></td>
+          <td><%= data.title %></td>
+          <td><%= moment(data.eventdatetime).format('LLLL') %></td>
           <td style="max-width: 10px;">
             <div class="btn-group" role="group" aria-label="eventgroup">
               <form action="/admin/events" method="post">

@@ -1,0 +1,16 @@
+<a style="color: black; text-decoration:none; margin-bottom: 200px;" href="/events"><h2><i class="fas fa-calendar-week"></i> Upcoming Event</h2></a>
+<hr>
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="<%= event.icon %>" class="card-img" alt="<%= event.title %> icon">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= event.title %></h5>
+        <h6><%= moment(event.eventdatetime).format('LLLL') %></h6>
+        <p class="card-text"><%= event.information %></p>
+      </div>
+    </div>
+  </div>
+</div>

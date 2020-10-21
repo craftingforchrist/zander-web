@@ -48,6 +48,14 @@
              <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.eventstaff %>">Event Staff</span></th>
            <% } %>
 
+           <% if (data.permission.includes('group.socialmedia')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.socialmedia %>">Social Media</span></th>
+           <% } %>
+
+           <% if (data.permission.includes('group.contentcreator')) { %>
+             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.contentcreator %>">Content Creator</span></th>
+           <% } %>
+
            <% if (data.permission.includes('group.retired')) { %>
              <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.retired %>">Retired</span></th>
            <% } %>

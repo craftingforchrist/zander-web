@@ -16,11 +16,11 @@
     <div class="row">
       <div class="col-sm">
         <% objdata.forEach(function (data) { %>
-          <div class="card" style="width: 22.9rem; height:21rem; display:inline-block; vertical-align: top;">
+          <div class="card" style="width: 22.9rem; height:24rem; display:inline-block; vertical-align: top;">
             <div class="card-body">
+              <img src="../img/servericon/<%= data.icon %>" alt="<%= data.name %> server logo." height="80px" draggable="false"><br>
               <h4 class="card-title"><%= data.name %></h4>
-              <h5 style="border-radius:5px; background-color:#aaaaaa; padding:5px;"><%= data.ipaddress %></h5>
-              <button type="button" class="btn btn-default btn-copy js-tooltip js-copy" data-toggle="tooltip" data-placement="bottom" data-copy="<%= data.ipaddress %>" title="Copy to clipboard"><i class="fas fa-clipboard"></i></button>
+              <input type="text" class="form-control" id="inlineFormInputGroup" value="<%= data.ipaddress %>" disabled style="font-family:'MinecraftRegular'; margin:0 auto; font-size:12pt; border-color:gray; color:white; background-color:black; text-align:center;"><br>
               <p style="font-size:10pt"><%= data.description %></p>
               <% if (data.disclaimer) { %>
                 <p class="text-muted" style="font-size:10pt"><%= data.disclaimer %></p>

@@ -51,9 +51,9 @@
   "builderapplink": "https://forms.gle/Sz9RXaudP2FGpLbYA",
 
   "discordsend": true,
-  "broadcastchannel": "general",
+  "broadcastchannel": "announcements",
   "applicationschannel": "applications",
-  "eventschannel": "announcements",
+  "eventschannel": "events",
   "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
   "reportschannel": "staff",

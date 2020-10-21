@@ -1,6 +1,7 @@
 <%- include("./partials/header.ejs") %>
 <%- include("./partials/navigation.ejs") %>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js" integrity="sha512-Izh34nqeeR7/nwthfeE0SI3c8uhFSnqxV0sI9TvTcXiFJkMd6fB644O64BRq2P/LA/+7eRvCw4GmLsXksyTHBg==" crossorigin="anonymous"></script>
 <div class="container">
   <div class="jumbotron jumbotron-image-header my-4 home-jumbo-header" id="video-container">
     <div class="container text-white">
@@ -8,21 +9,21 @@
     </div>
   </div>
 
-  <% if (!objdata[0]) { %>
+  <% if (!results[0]) { %>
     <%- include("partials/micros/noupcomingevents.ejs") %>
   <% } else { %>
-    <% objdata.forEach(function (data) { %>
+    <% results.forEach(function (data) { %>
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-sm-">
-              <img src="<%= data.eventicon %>" width="250px" height="250px">
+              <img src="<%= data.icon %>" width="250px" height="250px">
             </div>
             <div class="col">
-              <a href="#<%= data.eventtitle %>" style="color:black; text-decoration:none;"><h3><%= data.eventtitle %> <a href="#" style="color:black; font-size:14pt;"><i class="fas fa-link"></i></a></h3></a>
-              <h6><%= data.eventdate %> @ <%= data.eventtime %></h6>
-              <div class="">
-                <p><%= data.eventinformation %></p>
+              <a href="#<%= data.title %>" style="color:black; text-decoration:none;"><h3><%= data.title %> <a href="#<%= data.title %>" style="color:black; font-size:14pt;"><i class="fas fa-link"></i></a></h3></a>
+              <h6><%= moment(data.eventdatetime).format('LLLL') %></h6>
+              <div>
+                <p><%= data.information %></p>
               </div>
             </div>
           </div>
