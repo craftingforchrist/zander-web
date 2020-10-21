@@ -80,7 +80,7 @@
     <% if (!servers) { %>
       <%- include("./partials/micros/noservers.ejs") %>
     <% } else { %>
-      <div class="row"">
+      <div class="row">
         <% servers.forEach(function (data) { %>
         <div style="margin:auto 20 20; width:420px;">
           <img src="../img/servericon/<%= data.icon %>" alt="<%= data.name %> server logo." height="80px" draggable="false"><br>
