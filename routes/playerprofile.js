@@ -55,8 +55,11 @@ router.get('/profile/:username', function (req, res) {
     const initjoindate = `${initjoin.getDay()} ${months[initjoin.getMonth()]} ${initjoin.getFullYear()}`;
 
     if (err) {
-      res.redirect('/');
       throw err;
+      res.render('errorviews/500', {
+        "pagetitle": "500"
+      });
+      return;
     } else {
       const reqplayeruuid = zanderplayerresults[0].uuid.replace(/-/g, '');
 
@@ -65,8 +68,11 @@ router.get('/profile/:username', function (req, res) {
 
       abdatabase.query (sql, async function (err, punishmentresults) {
         if (err) {
-          res.redirect('/');
           throw err;
+          res.render('errorviews/500', {
+            "pagetitle": "500"
+          });
+          return;
         } else {
           res.render('profile', {
             "pagetitle": `${req.params.username}'s Profile`,

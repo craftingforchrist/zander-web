@@ -30,7 +30,10 @@ module.exports = (client) => {
       .setFooter(`Please contact the reporter ${reporter} at ${discordtag} for more information.`)
       .setColor('#99ddff')
     reportschannel.send(embed);
-    res.redirect('/');
+    res.render('errorviews/500', {
+      "pagetitle": "500"
+    });
+    return;
   });
 
   return router;

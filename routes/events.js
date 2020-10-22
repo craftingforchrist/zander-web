@@ -7,8 +7,11 @@ const database = require('../controllers/database.js');
 router.get('/', (req, res, next) => {
   database.query (`SELECT * FROM events ORDER BY eventdatetime DESC;`, function (error, results, fields) {
     if (error) {
-      res.redirect('/');
       throw error;
+      res.render('errorviews/500', {
+        "pagetitle": "500"
+      });
+      return;
     } else {
       res.render('events', {
         "pagetitle": "Events",

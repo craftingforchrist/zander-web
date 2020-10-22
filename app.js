@@ -299,7 +299,10 @@ app.get('/profile/:username', function (req, res) {
     const initjoindate = `${initjoin.getDay()} ${months[initjoin.getMonth()]} ${initjoin.getFullYear()}`;
 
     if (err) {
-      res.redirect('/');
+      res.render('errorviews/500', {
+        "pagetitle": "500"
+      });
+      return;
       throw err;
     } else {
       const reqplayeruuid = zanderplayerresults[0].uuid.replace(/-/g, '');
@@ -309,7 +312,10 @@ app.get('/profile/:username', function (req, res) {
 
       abdatabase.query (sql, async function (err, punishmentresults) {
         if (err) {
-          res.redirect('/');
+          res.render('errorviews/500', {
+            "pagetitle": "500"
+          });
+          return;
           throw err;
         } else {
           // Query the database for the players data and online status.
@@ -317,7 +323,10 @@ app.get('/profile/:username', function (req, res) {
 
           lpdatabase.query (sql, async function (err, playerrankresults) {
             if (err) {
-              res.redirect('/');
+              res.render('errorviews/500', {
+                "pagetitle": "500"
+              });
+              return;
               throw err;
             } else {
               playerrankresults.forEach(function (data) {

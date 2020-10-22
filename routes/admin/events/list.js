@@ -14,8 +14,11 @@ module.exports = (client) => {
     if (req.session.user) {
       database.query(`SELECT * FROM events ORDER BY eventdatetime DESC;`, function (error, results, fields) {
         if (error) {
-          res.redirect('/');
           throw error;
+          res.render('errorviews/500', {
+            "pagetitle": "500"
+          });
+          return;
         } else {
           res.render('admin/events/list', {
             "pagetitle": "Administration Panel - Events",
@@ -41,8 +44,11 @@ module.exports = (client) => {
       if (action === "delete") {
         database.query(`SELECT * FROM events WHERE id=?;`, [id], function (error, results, fields) {
           if (error) {
-            res.redirect('/');
             throw error;
+            res.render('errorviews/500', {
+              "pagetitle": "500"
+            });
+            return;
           } else {
             const title = results[0].title;
             const icon = results[0].icon;
@@ -63,8 +69,11 @@ module.exports = (client) => {
             const id = req.body.id;
             database.query(`DELETE FROM events WHERE id=?;`, [id], function (error, results, fields) {
               if (error) {
-                res.redirect('/');
                 throw error;
+                res.render('errorviews/500', {
+                  "pagetitle": "500"
+                });
+                return;
               } else {
                 res.redirect('/admin/events');
               }
@@ -76,8 +85,11 @@ module.exports = (client) => {
       if (action === "edit") {
         database.query(`SELECT * FROM events WHERE id=?;`, [id], function (error, results, fields) {
           if (error) {
-            res.redirect('/');
             throw error;
+            res.render('errorviews/500', {
+              "pagetitle": "500"
+            });
+            return;
           } else {
             res.render('admin/events/edit', {
               "pagetitle": `Administration Panel - Event Editor - ${results[0].title}`,

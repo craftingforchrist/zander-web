@@ -46,14 +46,23 @@ module.exports.register_post = (req, res) => {
   console.log(req.body);
 
   // Check if the player has logged into the Network.
-  let sql = `select * from playerdata where username = ? limit 1; select * from webaccounts where playerid = (select id from playerdata where username = ?) limit 1;`
+  let sql = `select * from playerdata where username = ? limit 1;
+  select * from webaccounts where playerid = (select id from playerdata where username = ?) limit 1;`
   database.query (sql, [`${username}`, `${username}`], async function (err, results) {
 
     console.log(results);
 
-
     // Check if the user has already started registering.
-    if (results[0] = "[]") {
+    if (password != passwordconfirm) {
+      // Check if the passwords match.
+      res.render('session/register', {
+        "pagetitle": "Register",
+        "success": null,
+        "error": true,
+        "errormsg": "The password you have entered does not match, please try again."
+      });
+      return;
+    } else if (!results[0]) {
       res.render('session/register', {
         "pagetitle": "Register",
         "success": null,
@@ -68,15 +77,6 @@ module.exports.register_post = (req, res) => {
           "errormsg": "You are already registered or have started registration."
         });
         return;
-    } else if (password != passwordconfirm) {
-      // Check if the passwords match.
-      res.render('session/register', {
-        "pagetitle": "Register",
-        "success": null,
-        "error": true,
-        "errormsg": "The password you have entered does not match, please try again."
-      });
-      return;
     } else {
         // Hash the password
         const salt = await bcrypt.genSalt();
@@ -88,6 +88,10 @@ module.exports.register_post = (req, res) => {
         database.query (`insert into webaccounts (playerid, email, password, registrationtoken) values ((select id from playerdata where username = ?), ?, ?, ?);`, [`${username}`, `${email}`, `${hashpassword}`, `${token}`], function (err, results) {
           if (err) {
             throw err;
+            res.render('errorviews/500', {
+              "pagetitle": "500"
+            });
+            return;
           } else {
             // Registration email is sent to the user with their link code.
             ejs.renderFile(path.join(__dirname, "../views/email/session/registerconfirmtoken.ejs"), {
@@ -97,6 +101,10 @@ module.exports.register_post = (req, res) => {
             }, function (err, data) {
               if (err) {
                 console.log(err);
+                res.render('errorviews/500', {
+                  "pagetitle": "500"
+                });
+                return;
               } else {
                 var mainOptions = {
                   from: process.env.serviceauthuser,
@@ -108,15 +116,19 @@ module.exports.register_post = (req, res) => {
                 transporter.sendMail(mainOptions, function (err, info) {
                     if (err) {
                       console.log(err);
+                      res.render('errorviews/500', {
+                        "pagetitle": "500"
+                      });
+                      return;
                     } else {
                       console.log('Message sent: ' + info.response);
-
                       res.render('session/register', {
                         "pagetitle": "Register",
                         "success": true,
                         "error": false,
                         "successmsg": `An email is now heading your way with instructions of what to do next!`
                       });
+                      transport.close();
                       return;
                     }
                 });
