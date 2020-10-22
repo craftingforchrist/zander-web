@@ -89,7 +89,7 @@ module.exports.register_post = (req, res) => {
           if (err) {
             throw err;
             res.render('errorviews/500', {
-              "pagetitle": "500"
+              "pagetitle": "500: Internal Server Error"
             });
             return;
           } else {
@@ -97,12 +97,15 @@ module.exports.register_post = (req, res) => {
             ejs.renderFile(path.join(__dirname, "../views/email/session/registerconfirmtoken.ejs"), {
               username: username,
               token: token,
-              serverip: config.serverip
+              serverip: config.serverip,
+              discordlink: config.discordlink,
+              contactemail: config.contactemail,
+              githubissuetrackerlink: config.githubissuetrackerlink,
             }, function (err, data) {
               if (err) {
                 console.log(err);
                 res.render('errorviews/500', {
-                  "pagetitle": "500"
+                  "pagetitle": "500: Internal Server Error"
                 });
                 return;
               } else {
@@ -117,7 +120,7 @@ module.exports.register_post = (req, res) => {
                     if (err) {
                       console.log(err);
                       res.render('errorviews/500', {
-                        "pagetitle": "500"
+                        "pagetitle": "500: Internal Server Error"
                       });
                       return;
                     } else {

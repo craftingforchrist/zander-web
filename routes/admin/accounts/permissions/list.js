@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
     database.query(`SELECT * FROM accounts;`, function (error, results, fields) {
       if (error) {
         res.render('errorviews/500', {
-          "pagetitle": "500"
+          "pagetitle": "500: Internal Server Error"
         });
         return;
         throw error;

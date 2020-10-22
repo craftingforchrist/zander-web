@@ -31,7 +31,7 @@ module.exports = (client) => {
         if (error) {
           throw error;
           res.render('errorviews/500', {
-            "pagetitle": "500"
+            "pagetitle": "500: Internal Server Error"
           });
           return;
         } else {

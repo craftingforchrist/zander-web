@@ -57,7 +57,7 @@ router.get('/profile/:username', function (req, res) {
     if (err) {
       throw err;
       res.render('errorviews/500', {
-        "pagetitle": "500"
+        "pagetitle": "500: Internal Server Error"
       });
       return;
     } else {
@@ -70,7 +70,7 @@ router.get('/profile/:username', function (req, res) {
         if (err) {
           throw err;
           res.render('errorviews/500', {
-            "pagetitle": "500"
+            "pagetitle": "500: Internal Server Error"
           });
           return;
         } else {

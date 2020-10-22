@@ -15,7 +15,7 @@ router.post('/', function (req, res) {
         database.query(`INSERT INTO ccstreams (channelname, streamtitle, status) VALUES (?, ?, ?)`, [channelname, "Not Yet Updated", "OFFLINE"], function (error, results, fields) {
           if (error) {
             res.render('errorviews/500', {
-              "pagetitle": "500"
+              "pagetitle": "500: Internal Server Error"
             });
             return;
             throw error;
@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
         database.query(`INSERT INTO ccvideos (channelname, channellink) VALUES (?, ?)`, [channelname, channellink], function (error, results, fields) {
           if (error) {
             res.render('errorviews/500', {
-              "pagetitle": "500"
+              "pagetitle": "500: Internal Server Error"
             });
             return;
             throw error;

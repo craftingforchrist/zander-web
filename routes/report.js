@@ -31,7 +31,7 @@ module.exports = (client) => {
       .setColor('#99ddff')
     reportschannel.send(embed);
     res.render('errorviews/500', {
-      "pagetitle": "500"
+      "pagetitle": "500: Internal Server Error"
     });
     return;
   });

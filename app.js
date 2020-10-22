@@ -300,7 +300,7 @@ app.get('/profile/:username', function (req, res) {
 
     if (err) {
       res.render('errorviews/500', {
-        "pagetitle": "500"
+        "pagetitle": "500: Internal Server Error"
       });
       return;
       throw err;
@@ -313,7 +313,7 @@ app.get('/profile/:username', function (req, res) {
       abdatabase.query (sql, async function (err, punishmentresults) {
         if (err) {
           res.render('errorviews/500', {
-            "pagetitle": "500"
+            "pagetitle": "500: Internal Server Error"
           });
           return;
           throw err;
@@ -324,7 +324,7 @@ app.get('/profile/:username', function (req, res) {
           lpdatabase.query (sql, async function (err, playerrankresults) {
             if (err) {
               res.render('errorviews/500', {
-                "pagetitle": "500"
+                "pagetitle": "500: Internal Server Error"
               });
               return;
               throw err;

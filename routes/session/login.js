@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
     });
   } else {
     res.render('errorviews/500', {
-      "pagetitle": "500"
+      "pagetitle": "500: Internal Server Error"
     });
     return;
   };

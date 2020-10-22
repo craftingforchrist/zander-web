@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
   abdatabase.query (`SELECT * FROM advancedban.punishmenthistory order by id desc;`, function (err, results) {
     if (err) {
       res.render('errorviews/500', {
-        "pagetitle": "500"
+        "pagetitle": "500: Internal Server Error"
       });
       return;
       throw err;
