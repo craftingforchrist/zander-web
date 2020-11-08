@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
         return;
       }
 
-      let sql = `select max(gs.sessionstart) as 'lastlogin', pd.username as 'username', gs.ipaddress as 'ipaddress' from gamesessions gs, playerdata pd where gs.player_id = pd.id and gs.ipaddress in (select distinct gs1.ipaddress from gamesessions gs1, playerdata pd1 where pd1.id = gs1.player_id and pd1.username like '${args[0]}') group by pd.username, gs.ipaddress order by max(gs.sessionstart) asc;`;
+      let sql = `select max(gs.sessionstart) as 'lastlogin', pd.username as 'username', gs.ipaddress as 'ipaddress' from gamesessions gs, playerdata pd where gs.playerid = pd.id and gs.ipaddress in (select distinct gs1.ipaddress from gamesessions gs1, playerdata pd1 where pd1.id = gs1.playerid and pd1.username like '${args[0]}') group by pd.username, gs.ipaddress order by max(gs.sessionstart) asc;`;
       database.query (sql, function (err, results) {
         if (err) {
           throw err;
