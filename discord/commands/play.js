@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args) => {
         console.log(results);
 
         let embed = new Discord.MessageEmbed()
-        .setTitle(`${args[0]}'s Connected Accounts`)
+        .setTitle(`Network Servers`)
         .setColor(HexColour.yellow)
 
         results.forEach(function(serverdata) {
