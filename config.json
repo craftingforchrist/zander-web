@@ -57,7 +57,7 @@
   "punishmentchannel": "admin-log",
   "reportschannel": "staff",
   "altcheckchannel": "staff",
-  "ipcheckchannel": "administration",
+  "ipcheckchannel": "administrators",
 
   "contentcreatorapp": true,
   "developerapp": true,

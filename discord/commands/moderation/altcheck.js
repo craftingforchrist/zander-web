@@ -5,7 +5,14 @@ const moment = require('moment');
 moment().format();
 
 module.exports.run = async (client, message, args) => {
-  if (message.channel.name == config.altcheckchannel) {
+  if (message.channel.name != config.altcheckchannel) {
+    let embed = new Discord.MessageEmbed()
+      .setTitle('Error!')
+      .setColor('#ff6666')
+      .setDescription('You can not execute this command here.')
+    message.channel.send(embed);
+    return;
+  } else {
     // Checks if the user has permissions to run the command.
     if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
       let embed = new Discord.MessageEmbed()
@@ -33,7 +40,7 @@ module.exports.run = async (client, message, args) => {
           return;
         }
 
-        let sql = `select max(gs.sessionstart) as 'lastlogin', pd.username as 'username', gs.ipaddress as 'ipaddress' from gamesessions gs, playerdata pd where gs.player_id = pd.id and gs.ipaddress in (select distinct gs1.ipaddress from gamesessions gs1, playerdata pd1 where pd1.id = gs1.player_id and pd1.username like '${args[0]}') group by pd.username, gs.ipaddress order by max(gs.sessionstart) asc;`;
+        let sql = `select max(gs.sessionstart) as 'lastlogin', pd.username as 'username', gs.ipaddress as 'ipaddress' from gamesessions gs, playerdata pd where gs.playerid = pd.id and gs.ipaddress in (select distinct gs1.ipaddress from gamesessions gs1, playerdata pd1 where pd1.id = gs1.playerid and pd1.username like '${args[0]}') group by pd.username, gs.ipaddress order by max(gs.sessionstart) asc;`;
         database.query (sql, function (err, results) {
           if (err) {
             throw err;
@@ -50,13 +57,6 @@ module.exports.run = async (client, message, args) => {
         });
       }
     })
-  } else {
-    let embed = new Discord.MessageEmbed()
-      .setTitle('Error!')
-      .setColor('#ff6666')
-      .setDescription('You cannot execute this command here.')
-    message.channel.send(embed).then(msg => {msg.delete(3000)});
-    return;
   }
 };
 
