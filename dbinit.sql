@@ -2,12 +2,12 @@ DROP DATABASE IF EXISTS zander;
 CREATE DATABASE IF NOT EXISTS zander;
 USE zander;
 
-CREATE USER 'zander'@'%' IDENTIFIED WITH mysql_native_password BY 'Paswordzander321';
-FLUSH PRIVILEGES;
-GRANT SELECT ON zander.* TO zander@'%';
-GRANT INSERT ON zander.* TO zander@'%';
-GRANT UPDATE ON zander.* TO zander@'%';
-GRANT DELETE ON zander.* TO zander@'%';
+-- CREATE USER 'zander'@'%' IDENTIFIED WITH mysql_native_password BY 'Paswordzander321';
+-- FLUSH PRIVILEGES;
+-- GRANT SELECT ON zander.* TO zander@'%';
+-- GRANT INSERT ON zander.* TO zander@'%';
+-- GRANT UPDATE ON zander.* TO zander@'%';
+-- GRANT DELETE ON zander.* TO zander@'%';
 
 CREATE TABLE playerdata (
   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -80,6 +80,8 @@ CREATE TABLE accounts (
   password TEXT,
   status ENUM('ACTIVE', 'DISABLED')
 );
+
+INSERT INTO accounts (username, password, status) VALUES ("root", "$2y$10$lM.dzxCibg5lbeh6wNRKk.DVfkUOQ0ZsPqnbUstgQ0GDbsBFo7JQa", "ACTIVE");
 
 -- CREATE TABLE accountspermissions (
 --   id int AUTO_INCREMENT PRIMARY KEY NOT NULL,

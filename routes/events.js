@@ -5,7 +5,7 @@ const config = require('../config.json');
 const database = require('../controllers/database.js');
 
 router.get('/', (req, res, next) => {
-  database.query (`SELECT * FROM events ORDER BY eventdatetime DESC;`, function (error, results, fields) {
+  database.query (`SELECT * FROM events ORDER BY eventdatetime ASC;`, function (error, results, fields) {
     if (error) {
       res.redirect('/');
       throw error;
