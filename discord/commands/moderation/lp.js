@@ -183,10 +183,10 @@ module.exports.run = async (client, message, args) => {
           break;
 
         default:
+        break;
       }
-    });
-  });
-  return;
+    })
+  })
 };
 
 function capitalizeFirstLetter(string) {

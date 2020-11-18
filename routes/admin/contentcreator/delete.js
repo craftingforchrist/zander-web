@@ -14,7 +14,10 @@ router.post('/', function (req, res) {
       if (type == 'streamer') {
         database.query(`DELETE FROM ccstreams WHERE id = ?`, [id], function (error, results, fields) {
           if (error) {
-            res.redirect('/');
+            res.render('errorviews/500', {
+              "pagetitle": "500: Internal Server Error"
+            });
+            return;
             throw error;
           } else {
             res.redirect('/admin/contentcreator');
@@ -23,7 +26,10 @@ router.post('/', function (req, res) {
       } else if (type == 'channel') {
         database.query(`DELETE FROM ccvideos WHERE id = ?`, [id], function (error, results, fields) {
           if (error) {
-            res.redirect('/');
+            res.render('errorviews/500', {
+              "pagetitle": "500: Internal Server Error"
+            });
+            return;
             throw error;
           } else {
             res.redirect('/admin/contentcreator');

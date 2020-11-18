@@ -7,12 +7,18 @@ const database = require('../controllers/database.js');
 router.get('/', (req, res, next) => {
   database.query (`select uuid, username from playerdata;`, function (error, zanderresults, fields) {
     if (error) {
-      res.redirect('/');
+      res.render('errorviews/500', {
+        "pagetitle": "500: Internal Server Error"
+      });
+      return;
       throw error;
     } else {
       lpdatabase.query (`SELECT uuid, (SELECT username FROM luckperms_players WHERE luckperms_players.uuid = luckperms_user_permissions.uuid) as username, permission, title FROM luckperms_user_permissions WHERE permission LIKE 'group.%';`, function (error, lpresults, fields) {
         if (error) {
-          res.redirect('/');
+          res.render('errorviews/500', {
+            "pagetitle": "500: Internal Server Error"
+          });
+          return;
           throw error;
         } else {
           res.render('staff', {

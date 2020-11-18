@@ -22,8 +22,11 @@ router.post('/', function (req, res) {
 
     lpdatabase.query(`UPDATE luckperms_user_permissions SET title = ? WHERE uuid = ? AND permission = ?;`, [newtitle, uuid, permission], function (error, results, fields) {
       if (error) {
-        res.redirect('/');
         throw error;
+        res.render('errorviews/500', {
+          "pagetitle": "500: Internal Server Error"
+        });
+        return;
       } else {
         res.redirect('/admin/staff/title');
       }

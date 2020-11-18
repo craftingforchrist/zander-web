@@ -7,7 +7,10 @@ router.get('/', (req, res, next) => {
   if (req.session.user) {
     database.query(`SELECT * FROM accounts;`, function (error, results, fields) {
       if (error) {
-        res.redirect('/');
+        res.render('errorviews/500', {
+          "pagetitle": "500: Internal Server Error"
+        });
+        return;
         throw error;
       } else {
         res.render('admin/accounts/permissions', {

@@ -29,8 +29,11 @@ module.exports = (client) => {
 
       database.query(`UPDATE events SET title=?, icon=?, eventdatetime=?, information=? WHERE id=?`, [title, icon, datetime, information, id], function (error, results, fields) {
         if (error) {
-          res.redirect('/');
           throw error;
+          res.render('errorviews/500', {
+            "pagetitle": "500: Internal Server Error"
+          });
+          return;
         } else {
           res.redirect('/admin/events');
 

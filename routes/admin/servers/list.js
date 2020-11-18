@@ -7,8 +7,11 @@ router.get('/', (req, res, next) => {
   if (req.session.user) {
     database.query(`SELECT * FROM servers ORDER BY position ASC;`, function (error, results, fields) {
       if (error) {
-        res.redirect('/');
         throw error;
+        res.render('errorviews/500', {
+          "pagetitle": "500: Internal Server Error"
+        });
+        return;
       } else {
         res.render('admin/servers/list', {
           "pagetitle": "Administration Panel - Servers",
@@ -38,8 +41,11 @@ router.post('/', function (req, res) {
     if (action == 'edit') {
       database.query(`SELECT * FROM servers WHERE id = ?`, [id], function (error, results, fields) {
         if (error) {
-          res.redirect('/');
           throw error;
+          res.render('errorviews/500', {
+            "pagetitle": "500: Internal Server Error"
+          });
+          return;
         } else {
           res.render('admin/servers/edit', {
             "pagetitle": `Administration Panel - Server Instance Editing`,

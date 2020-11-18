@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config.json');
 const database = require('../controllers/database.js');
-const yt = require('node-yt');
-var ypi = require('youtube-channel-videos');
 
 router.get('/', (req, res, next) => {
   // database.query (`SELECT * FROM events ORDER BY id DESC;`, function (error, results, fields) {

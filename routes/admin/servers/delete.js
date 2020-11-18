@@ -10,8 +10,11 @@ router.post('/', function (req, res) {
 
     database.query(`DELETE FROM servers WHERE id = ?`, [id], function (error, results, fields) {
       if (error) {
-        res.redirect('/');
         throw error;
+        res.render('errorviews/500', {
+          "pagetitle": "500: Internal Server Error"
+        });
+        return;
       } else {
         res.redirect('/admin/servers');
       };
