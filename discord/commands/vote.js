@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const config = require('../../config.json');
-const hexcolour = require('../../hexcolour.json');
+const HexColour = require('../../HexColour.json');
 const database = require('../../controllers/database.js');
 
 module.exports.run = async (client, message, args) => {
