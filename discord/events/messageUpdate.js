@@ -17,4 +17,4 @@ module.exports = async (oldMessage, newMessage) => {
 
   console.log(`A message has been edited in #${oldMessage.channel.name} by ${oldMessage.author.username}: ${oldMessage.content}`);
   return
-}
+};

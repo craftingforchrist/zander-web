@@ -32,4 +32,4 @@ module.exports = async message => {
     adminlogchannel.send(embed);
 	}
   return
-}
+};
