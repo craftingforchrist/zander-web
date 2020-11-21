@@ -29,7 +29,7 @@ require('./discord/util/eventLoader.js')(client);
 //
 const package = require('./package.json');
 const config = require('./config.json');
-const hexcolour = require('./HexColour.json');
+const HexColour = require('./HexColour.json');
 
 //
 // Controllers
@@ -338,7 +338,7 @@ app.get('/profile/:username', function (req, res) {
                 zanderplayerobjdata: zanderplayerresults,
                 punishmentobjdata: punishmentresults,
                 playerrankresults: playerrankresults,
-                hexcolour: hexcolour,
+                HexColour: HexColour,
                 tgmres: tgmbodyres,
                 tgmresboolean: tgmresbool,
                 bedrockuser: bedrockuser,
