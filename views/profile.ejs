@@ -17,59 +17,59 @@
        <% playerrankresults.forEach(function (data) { %>
          <tr style="font-size:20pt">
            <% if (data.permission.includes('group.administrator')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.administrator %>">Administrator</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.administrator %>">Administrator</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.seniorstaff')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.seniorstaff %>">Senior Staff</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.seniorstaff %>">Senior Staff</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.developer')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.developer %>">Developer</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.developer %>">Developer</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.juniordeveloper')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.juniordeveloper %>">Junior Developer</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.juniordeveloper %>">Junior Developer</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.staff')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.staff %>">Staff</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.staff %>">Staff</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.juniorstaff')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.juniorstaff %>">Junior Staff</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.juniorstaff %>">Junior Staff</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.builder')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.builder %>">Builder</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.builder %>">Builder</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.eventstaff')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.eventstaff %>">Event Staff</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.eventstaff %>">Event Staff</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.socialmedia')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.socialmedia %>">Social Media</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.socialmedia %>">Social Media</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.contentcreator')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.contentcreator %>">Content Creator</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.contentcreator %>">Content Creator</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.retired')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.retired %>">Retired</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.retired %>">Retired</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.iron')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.iron %>">Iron</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.iron %>">Iron</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.gold')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.gold %>">Gold</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.gold %>">Gold</span></th>
            <% } %>
 
            <% if (data.permission.includes('group.diamond')) { %>
-             <th><span class="badge badge-secondary" style="background-color:<%= hexcolour.diamond %>">Diamond</span></th>
+             <th><span class="badge badge-secondary" style="background-color:<%= HexColour.diamond %>">Diamond</span></th>
            <% } %>
          </tr>
        <% }); %>

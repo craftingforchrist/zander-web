@@ -6,5 +6,5 @@ module.exports = async message => {
   if (msgcontent.toLowerCase().includes("hello there")) {
     message.channel.send('General Kenobi');
     return;
-  }
-}
+  };
+};

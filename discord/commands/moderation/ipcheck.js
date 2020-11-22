@@ -63,10 +63,11 @@ module.exports.run = async (client, message, args) => {
   } else {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor(hexcolour.red)
+      .setColor(HexColour.red)
       .setDescription('You cannot execute this command here.')
     message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
     return;
+  }
   }
 };
 
