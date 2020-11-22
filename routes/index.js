@@ -11,8 +11,11 @@ router.get('/', (req, res, next) => {
 
   database.query (sql, function (error, results, fields) {
     if (error) {
-      res.redirect('/');
       throw error;
+      res.render('errorviews/500', {
+        "pagetitle": "500: Internal Server Error"
+      });
+      return;
     } else {
       res.render('index', {
         "pagetitle": "Home",

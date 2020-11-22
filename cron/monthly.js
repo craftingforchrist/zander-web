@@ -8,11 +8,10 @@ const client = new Discord.Client({ disableEveryone: true });
 module.exports = (client) => {
   // MONTHLY Cron Job
   const task = cron.schedule("0 7 1 * *", function() {
-
     // This will fire on the first of every month at 7:00am and will clear all votes from the votes table.
-    database.query (`truncate votes`, function (err, results) {
-      if (err) {
-        throw err;
+    database.query (`SELECT username, count(*) as votes FROM votes GROUP BY username ORDER BY votes DESC LIMIT 1;`, function (error, results, fields) {
+      if (error) {
+        throw error;
       } else {
         //
         // Discord Notification Send
@@ -21,11 +20,18 @@ module.exports = (client) => {
         if (!broadcastchannel) return console.log(`A #${config.broadcastchannel} channel does not exist.`);
 
         var embed = new Discord.MessageEmbed()
-          .setTitle(`Vote now cleared`)
-          .setDescription(`Votes are now cleared, vote again.`)
+          .setTitle(`:ballot_box: Voting Winner :ballot_box:`)
+          .setDescription(`The votes are in! ${results.username} has gained Top Voter for this month with ${results.votes}.\nThe votes have started again! Go to ${config.serverwebsite}/vote to get started!`)
           .setColor(HexColour.yellow)
         broadcastchannel.send(embed);
-        console.log(`[CONSOLE] [CRON] Votes table has been cleared and message broadcasted.`);
+
+        database.query (`truncate votes`, function (err, results) {
+          if (err) {
+            throw err;
+          } else {
+            console.log(`[CONSOLE] [CRON] Votes table has been cleared and message broadcasted.`);
+          }
+        });
       }
     });
   }, {

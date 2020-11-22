@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const config = require('../../config.json');
+const HexColour = require('../../HexColour.json');
 const database = require('../../controllers/database.js'); // Database controller
 
 module.exports.run = async (client, message, args) => {
@@ -8,7 +9,7 @@ module.exports.run = async (client, message, args) => {
   if (!user) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.yellow)
       .setDescription('This user either does not exist or you did not mention a user.')
     message.channel.send(embed);
     return;
@@ -19,7 +20,7 @@ module.exports.run = async (client, message, args) => {
   if (!reason) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.yellow)
       .setDescription('Please provide a reason for your report.')
     message.channel.send(embed);
     return;
@@ -30,14 +31,14 @@ module.exports.run = async (client, message, args) => {
 
   let embed = new Discord.MessageEmbed()
     .setTitle('Incoming Discord Report')
-    .setColor('#4d79ff')
+    .setColor(HexColour.yellow)
     .setDescription(`${message.author} has reported ${user} for ${reason}`)
 
   let reportschannel = message.guild.channels.cache.find(c => c.name === 'reports');
   reportschannel.send(embed).catch(e => {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ffa366')
+      .setColor(HexColour.red)
       .setDescription(`There is no #reports channel, can't display details.`)
     message.channel.send(embed);
     return;
@@ -46,7 +47,7 @@ module.exports.run = async (client, message, args) => {
 
   let confirmembed = new Discord.MessageEmbed()
     .setTitle('Error!')
-    .setColor('#7CFC00')
+    .setColor(HexColour.yellow)
     .setDescription('Your report has been sent to the Server Staff.')
   message.channel.send(confirmembed).then(msg => {msg.delete({ timeout: 3000 });});
 

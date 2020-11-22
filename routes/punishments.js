@@ -6,7 +6,10 @@ const abdatabase = require('../controllers/abdatabase.js');
 router.get('/', (req, res, next) => {
   abdatabase.query (`SELECT * FROM advancedban.punishmenthistory order by id desc;`, function (err, results) {
     if (err) {
-      res.redirect('/');
+      res.render('errorviews/500', {
+        "pagetitle": "500: Internal Server Error"
+      });
+      return;
       throw err;
     } else {
       res.render('punishments', {

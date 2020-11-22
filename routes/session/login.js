@@ -13,7 +13,10 @@ router.get('/', function(req, res, next) {
       "pagetitle": "Login"
     });
   } else {
-    res.redirect('/');
+    res.render('errorviews/500', {
+      "pagetitle": "500: Internal Server Error"
+    });
+    return;
   };
 });
 

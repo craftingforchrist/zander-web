@@ -1,11 +1,12 @@
 const Discord = require('discord.js');
+const HexColour = require('../../../HexColour.json');
 
 module.exports.run = async (client, message, args) => {
   // Checks if the user has permissions to run the command.
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.red)
       .setDescription('You do not have permissions to run this command.')
     message.channel.send(embed);
     return;
@@ -15,7 +16,7 @@ module.exports.run = async (client, message, args) => {
   if (!user) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.red)
       .setDescription(`This user does not exist.`)
     message.channel.send(embed);
     return;
@@ -24,7 +25,7 @@ module.exports.run = async (client, message, args) => {
   if (message.guild.members.get(user)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.yellow)
       .setDescription(`This user is not banned.`)
     message.channel.send(embed);
     return;
@@ -34,7 +35,7 @@ module.exports.run = async (client, message, args) => {
   if (!reason) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.yellow)
       .setDescription(`This user does not exist.`)
     message.channel.send(embed);
     return;
@@ -45,7 +46,7 @@ module.exports.run = async (client, message, args) => {
 
   let embed = new Discord.MessageEmbed()
     .setTitle('User has been unbanned')
-    .setColor('#ffff33')
+    .setColor(HexColour.yellow)
     .addField('Unbanned User', `${user}`)
     .addField('Unbanned By', `${message.author}`)
     .addField('Time', `${createdAt[0]} ${createdAt[2]} ${createdAt[1]} ${createdAt[3]}`)
@@ -54,7 +55,7 @@ module.exports.run = async (client, message, args) => {
     // Send notification to the command issuing channel.
     let notificationembed = new Discord.MessageEmbed()
       .setTitle('User has been Unbanned.')
-      .setColor('#4d79ff')
+      .setColor(HexColour.yellow)
       .setDescription(`${user} has been unbanned by ${message.author} for ${reason}`)
     message.channel.send(notificationembed);
 
@@ -63,7 +64,7 @@ module.exports.run = async (client, message, args) => {
   adminlogchannel.send(embed).catch(e => {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ffa366')
+      .setColor(HexColour.red)
       .setDescription(`There is no #admin-log channel, can't display details.`)
     message.channel.send(embed);
   });

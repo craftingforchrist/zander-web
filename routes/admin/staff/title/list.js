@@ -7,8 +7,11 @@ router.get('/', (req, res, next) => {
   if (req.session.user) {
     lpdatabase.query(`SELECT uuid, (SELECT username FROM luckperms_players WHERE luckperms_players.uuid = luckperms_user_permissions.uuid) as username, permission, title FROM luckperms_user_permissions WHERE permission LIKE 'group.%' AND permission != 'group.default'`, function (error, results, fields) {
       if (error) {
-        res.redirect('/');
         throw error;
+        res.render('errorviews/500', {
+          "pagetitle": "500: Internal Server Error"
+        });
+        return;
       } else {
         res.render('admin/staff/title/list', {
           "pagetitle": "Administration Panel - Staff Title",
@@ -46,8 +49,11 @@ router.post('/', function (req, res) {
     if (action == 'remove') {
       lpdatabase.query(`UPDATE luckperms_user_permissions SET title = ? WHERE uuid = ? AND permission = ?;`, ["", uuid, permission], function (error, results, fields) {
         if (error) {
-          res.redirect('/');
           throw error;
+          res.render('errorviews/500', {
+            "pagetitle": "500: Internal Server Error"
+          });
+          return;
         } else {
           res.redirect('/admin/staff/title');
         }

@@ -5,7 +5,10 @@ const session = require('express-session');
 router.get('/', function(req, res, next) {
   req.flash('successmsg', 'You have been logged out.');
   req.session.destroy();
-  res.redirect('/');
+  res.render('errorviews/500', {
+    "pagetitle": "500: Internal Server Error"
+  });
+  return;
 
   // res.render('index', {
   //   "pagetitle": "Home",

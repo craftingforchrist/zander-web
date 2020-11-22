@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const config = require('../../../config.json');
+const HexColour = require('../../../HexColour.json');
 const database = require('../../../controllers/database.js'); // Database controller
 const punishment = require('../../../functions/discord/punishment');
 
@@ -15,7 +16,7 @@ module.exports.run = async (client, message, args) => {
   if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.red)
       .setDescription(`You do not have permissions to run this command.`)
     message.channel.send(embed);
     return;
@@ -25,7 +26,7 @@ module.exports.run = async (client, message, args) => {
   if (!mentioneduser) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.red)
       .setDescription(`This user does not exist.`)
     message.channel.send(embed);
     return;
@@ -35,7 +36,7 @@ module.exports.run = async (client, message, args) => {
   if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.red)
       .setDescription(`You cannot punish this user.`)
     message.channel.send(embed);
     return;
@@ -46,7 +47,7 @@ module.exports.run = async (client, message, args) => {
   if (!reason) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ff6666')
+      .setColor(HexColour.yellow)
       .setDescription(`Please provide a valid reason for this punishment.`)
     message.channel.send(embed);
     return;
@@ -54,7 +55,7 @@ module.exports.run = async (client, message, args) => {
 
   let embed = new Discord.MessageEmbed()
     .setTitle('User has been Banned')
-    .setColor('#4d79ff')
+    .setColor(HexColour.yellow)
     .addField('Banned User', `${punisheduser}`)
     .addField('Banned By', `${punisher}`)
     .addField('Reason', reason);
@@ -63,7 +64,7 @@ module.exports.run = async (client, message, args) => {
   adminlogchannel.send(embed).catch(e => {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor('#ffa366')
+      .setColor(HexColour.red)
       .setDescription(`There is no #admin-log channel, can't display details.`)
     message.channel.send(embed);
   });
@@ -71,14 +72,14 @@ module.exports.run = async (client, message, args) => {
   // Send notification to the command issuing channel.
   let notificationembed = new Discord.MessageEmbed()
     .setTitle('User has been Banned.')
-    .setColor('#4d79ff')
+    .setColor(HexColour.yellow)
     .setDescription(`${mentioneduser} has been banned by ${punisher} for ${reason}`)
   message.channel.send(notificationembed);
 
   // Direct message the punished user after being punished.
   let usernotifyembed = new Discord.MessageEmbed()
     .setTitle('You have been banned from the Server.')
-    .setColor('#ff6666')
+    .setColor(HexColour.red)
     .setDescription(`Hello ${mentioneduser}, you have been banned from the ${message.guild} server.\nYou were banned by ${punisher} for ${reason}.\n\nPlease contact us if you think this ban was unfair.\nSupport Email: ${config.contactemail}`)
   await mentioneduser.send(usernotifyembed).catch(e => { })
 

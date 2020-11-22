@@ -34,14 +34,17 @@
             <a class="nav-link" href="/events"><i class="fas fa-calendar"></i> Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/vote"><i class="fas fa-vote-yea"></i> Vote</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/apply"><i class="fas fa-edit"></i> Apply</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="/shop"><i class="fas fa-shopping-basket"></i> Shop</a>
           </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
+              <a class="dropdown-item" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+            </div>
+          </li>
+
           <% if (info) { %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog"></i> Administration</a>

@@ -3,6 +3,7 @@ const database = require('../controllers/database.js');
 const config = require('../config.json');
 const Discord = require('discord.js');
 const client = new Discord.Client({ disableEveryone: true });
+const HexColour = require('../HexColour.json');
 
 module.exports = (client) => {
   database.query (`SELECT * FROM ccstreams;`, function (error, results, fields) {
@@ -44,7 +45,7 @@ module.exports = (client) => {
             // var embed = new Discord.MessageEmbed()
             //   .setTitle(`${streamData.user_name} is now LIVE!`)
             //   .setDescription(`${streamData.user_name} is now live with ${streamData.viewer_count} viewers. Come watch live at https://www.twitch.tv/${streamData.user_name}`)
-            //   .setColor('#8510d8')
+            //   .setColor(HexColour.purple)
             //   .setThumbnail(`https://www.stickpng.com/assets/images/580b57fcd9996e24bc43c540.png`)
             // contentcreatorchannel.send(embed);
             // console.log(`[CONSOLE] [DISCORD] Broadcasting ${streamData.user_name}'s stream to #${config.contentcreatorchannel}`);

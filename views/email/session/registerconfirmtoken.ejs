@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<style media="screen">
+  * {
+    font-family: Calibri;
+    font-size: 13pt;
+  }
+</style>
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-5">Registration Confirmation</h1>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <p>Hey <b><%= username %></b>,</p>
+      <p>Thanks for registering! We are keen to see you apart of our community! But, before you jump in, you need to do 1 more thing for us... you will need to confirm your Minecraft Account with our Services, read on to see how to do it!</p>
+
+      <p>To complete your registration, join our Network (<code><%= serverip %></code>) and type the following command: <code>/link <%= token %></code><br>Once this is done, you should recieve a message saying that registration has been completed!</p>
+
+      <div class="alert alert-warning" role="alert">
+        <p>This is a new system so there are bound to be issues. Please report them GitHub <a href="<%= githubissuetrackerlink %>">here</a>, talk to us on our Discord <a href="<%= discordlink %>">here</a> or contact our Support team at <a href="mailto:<%= contactemail %>"><%= contactemail %></a></p>
+      </div>
+    </div>
+  </div>
+</div>
