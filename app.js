@@ -138,8 +138,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
-const authenticationRoutes = require('./routes/authenticationRoutes');
-app.use(authenticationRoutes);
+// const authenticationRoutes = require('./routes/authenticationRoutes');
+// app.use(authenticationRoutes);
 
 const platformRoutes = require('./routes/platformRoutes');
 app.use(platformRoutes);
@@ -174,7 +174,7 @@ var report = require('./routes/report')(client);
 var churchduringcovid = require('./routes/churchduringcovid');
 // var giveaway = require('./routes/giveaway');
 
-// var login = require('./routes/session/login');
+var login = require('./routes/session/login');
 // var logout = require('./routes/session/logout');
 
 var dashboard = require('./routes/admin/dashboard');
@@ -214,7 +214,7 @@ app.use('/churchduringcovid', churchduringcovid);
 app.use('/report', report);
 // app.use('/giveaway', giveaway);
 
-// app.use('/login', login);
+app.use('/login', login);
 // app.use('/logout',logout)
 
 app.use('/admin/dashboard', dashboard);
