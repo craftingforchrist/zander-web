@@ -22,6 +22,8 @@
   "forumlink": "https://forums.craftingforchrist.net/",
   "twitchlink": "https://www.twitch.tv/craftingforchrist",
   "youtubelink": "https://www.youtube.com/channel/UCeijz6MNnya85LprMjPmYag",
+  "linkedinlink": "https://www.linkedin.com/company/68885022/",
+  "tiktoklink": "https://www.tiktok.com/@craftingforchrist",
   "giveawaylink": "LINK",
 
   "email": true,
@@ -33,6 +35,8 @@
   "reddit": false,
   "twitch": true,
   "youtube": true,
+  "linkedin": true,
+  "tiktok": true,
 
   "rulesmd": "https://raw.githubusercontent.com/crafting-for-christ/Legal/master/rules.md",
   "termsmd": "https://raw.githubusercontent.com/crafting-for-christ/Legal/master/terms.md",

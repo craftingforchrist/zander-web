@@ -99,6 +99,8 @@ app.use((req, res, next) => {
   res.locals.twitch = config.twitchlink;
   res.locals.discord = config.discordlink;
   res.locals.youtube = config.youtubelink;
+  res.locals.linkedin = config.linkedinlink;
+  res.locals.tiktok = config.tiktoklink;
   res.locals.giveaway = config.giveawaylink;
 
   res.locals.platformemail = config.email;
@@ -110,6 +112,8 @@ app.use((req, res, next) => {
   res.locals.platformreddit = config.reddit;
   res.locals.platformtwitch = config.twitch;
   res.locals.platformyoutube = config.youtube;
+  res.locals.platformlinkedin = config.linkedin;
+  res.locals.platformtiktok = config.tiktok;
 
   res.locals.contentcreatorapp = config.contentcreatorapp;
   res.locals.developerapp = config.developerapp;
