@@ -27,5 +27,9 @@ router.get('/guides', (req, res, next) => {
   res.redirect(`${config.guideslink}`);
 });
 
+// Feedback
+router.get('/feedback', (req, res, next) => {
+  res.redirect(`${config.feedbacklink}`);
+});
 
 module.exports = router;

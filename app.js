@@ -102,6 +102,7 @@ app.use((req, res, next) => {
   res.locals.linkedin = config.linkedinlink;
   res.locals.tiktok = config.tiktoklink;
   res.locals.giveaway = config.giveawaylink;
+  res.locals.feedback = config.feedbacklink;
 
   res.locals.platformemail = config.email;
   res.locals.platformdiscord = config.discord;
