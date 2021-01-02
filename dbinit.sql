@@ -144,3 +144,24 @@ CREATE TABLE votes (
   service TEXT,
   time TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE indexslides (
+  id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  title VARCHAR(100),
+  bannerimage VARCHAR(100),
+  bannerimagealttext VARCHAR(100),
+  description VARCHAR(200),
+  buttontext VARCHAR(50),
+  buttonstyle VARCHAR(50),
+  linkreference VARCHAR(200),
+  position VARCHAR(2),
+  visable BOOLEAN DEFAULT 1
+);
+
+INSERT INTO indexslides (title, bannerimage, bannerimagealttext, description, buttontext, buttonstyle, linkreference, position, visable) VALUES
+  ("Welcome!", "./img/bannerimg/bannerimg01.png", "A wheat field with a windmill.", "Crafting For Christ is a Christian Minecraft Server, offering a place to play Minecraft with a awesome community!", "Play!", "btn-primary", "/play", 1, 1),
+  ("Church During COVID", "./img/bannerimg/bannerimg02.png", "The inside of a church.", "During this difficult time it is hard and tricky to gather together as God's people. We have collated a list of churches in our community that stream their services and post their sermons online.", "Watch & Listen", "btn-primary", "/churchduringcovid", 2, 1),
+  ("Community Events", "./img/bannerimg/bannerimg03.png", "The layout of a map used in community events.", "From PvP, to Survival, to various other events, we host community events to get everyone involved!", "What's On?", "btn-primary", "/events", 3, 1),
+  ("Community Discord", "./img/bannerimg/bannerimg04.png", "A blurred background of the Community Discord.", "Chat and get to know the community by joining the community Discord! Be notified about Network announcements and events.", "Join Discord", "btn-primary", "/discord", 4, 1),
+  ("Voting", "./img/bannerimg/bannerimg05.png", "An image of the Top Voter in the Hall of Patrons.", "Help the Server grow and the community by considering to vote for the Server, Top Voter of each month gets cool perks!", "Vote", "btn-primary", "/vote", 5, 1),
+  ("Forums", "./img/bannerimg/bannerimg06.png", "A blurred background of the Community Forums.", "Chat with the community and post your creations on our Forums!", "Visit", "btn-primary", "/forums", 6, 1);
