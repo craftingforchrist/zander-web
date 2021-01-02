@@ -56,6 +56,7 @@
   "builderapplink": "https://forms.gle/Sz9RXaudP2FGpLbYA",
 
   "discordsend": true,
+  "welcomechannel": "general",
   "broadcastchannel": "announcements",
   "applicationschannel": "applications",
   "eventschannel": "events",

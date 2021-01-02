@@ -54,6 +54,7 @@
   "builderapplink": "LINK",
 
   "discordsend": true,
+  "welcomechannel": "general",
   "broadcastchannel": "general",
   "applicationschannel": "applications",
   "eventschannel": "announcements",
