@@ -2,18 +2,28 @@ const Discord = require('discord.js');
 const HexColour = require('../../../HexColour.json');
 
 module.exports.run = async (client, message, args) => {
-  // Checks if the user has permissions to run the command.
-  if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
+  const user = message.guild.member(message.author); // Get the command user.
+  const roles = user.roles.cache; // Get the users roles.
+  const userRolesArr = [];
+  // Put all roles into an array.
+  roles.forEach(function (data) {
+    userRolesArr.push(data.name);
+  });
+
+  // Check if the user has role access to this command.
+  if (userRolesArr.some(role => config.administrationroles.includes(role))) {
+    // console.log("You have access.");
+  } else {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor(HexColour.red)
-      .setDescription('You do not have permissions to run this command.')
-    message.channel.send(embed);
+      .setColor('#ff6666')
+      .setDescription('You do not have permission to execute this command.')
+    message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
     return;
-  }
+  };
 
-  let user = args[0];
-  if (!user) {
+  let unbanUser = args[0];
+  if (!unbanUser) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor(HexColour.red)
@@ -22,7 +32,7 @@ module.exports.run = async (client, message, args) => {
     return;
   };
 
-  if (message.guild.members.get(user)) {
+  if (message.guild.members.get(unbanUser)) {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
       .setColor(HexColour.yellow)

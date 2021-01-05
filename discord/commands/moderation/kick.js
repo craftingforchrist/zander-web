@@ -12,15 +12,25 @@ module.exports.run = async (client, message, args) => {
   const punisherid = message.author.id;
   const punishtype = "KICK";
 
-  // Checks if the user has permissions to run the command.
-  if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
+  const user = message.guild.member(message.author); // Get the command user.
+  const roles = user.roles.cache; // Get the users roles.
+  const userRolesArr = [];
+  // Put all roles into an array.
+  roles.forEach(function (data) {
+    userRolesArr.push(data.name);
+  });
+
+  // Check if the user has role access to this command.
+  if (userRolesArr.some(role => config.staffroles.includes(role))) {
+    // console.log("You have access.");
+  } else {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor(HexColour.red)
-      .setDescription('You do not have permissions to run this command.')
-    message.channel.send(embed);
+      .setColor('#ff6666')
+      .setDescription('You do not have permission to execute this command.')
+    message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
     return;
-  }
+  };
 
   // Checks if the user is in the Discord and exists.
   if (!mentioneduser) {
@@ -33,14 +43,14 @@ module.exports.run = async (client, message, args) => {
   }
 
   // Checks if you can punish the user.
-  if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
-    let embed = new Discord.MessageEmbed()
-      .setTitle('Error!')
-      .setColor(HexColour.red)
-      .setDescription('You cannot punishment this user.')
-    message.channel.send(embed);
-    return;
-  }
+  // if (mentioneduser.hasPermission(`${module.exports.help.permission}`)) {
+  //   let embed = new Discord.MessageEmbed()
+  //     .setTitle('Error!')
+  //     .setColor(HexColour.red)
+  //     .setDescription('You cannot punish this user.')
+  //   message.channel.send(embed);
+  //   return;
+  // }
 
   // Check for a punishement reason.
   let reason = args.slice(1).join(' ');
@@ -91,6 +101,5 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'kick',
   description: 'Kicks the user from the server with the reason provided.',
-  permission: 'MANAGE_MESSAGES',
   usage: 'kick [@user] [reason]'
 };
