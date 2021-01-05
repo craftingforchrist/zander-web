@@ -56,7 +56,7 @@
   "builderapplink": "https://forms.gle/Sz9RXaudP2FGpLbYA",
 
   "staffroles": ["Administrator", "Senior Staff", "Staff", "Junior Staff"],
-  "staffcommandchannels": ["staff"],
+  "staffcommandchannels": ["staff", "administrators", "admin-bot-cmd", "senior-staff"],
   "administrationroles": ["Administrator", "Senior Staff"],
   "administrationcommandchannels": ["administrators", "admin-bot-cmd", "senior-staff"],
 
