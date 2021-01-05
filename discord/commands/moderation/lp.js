@@ -5,15 +5,25 @@ const database = require('../../../controllers/database'); // Database controlle
 const lpdatabase = require('../../../controllers/lpdatabase'); // LP Database controller
 
 module.exports.run = async (client, message, args) => {
-  // Checks if the user has permissions to run the command.
-  if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
+  const user = message.guild.member(message.author); // Get the command user.
+  const roles = user.roles.cache; // Get the users roles.
+  const userRolesArr = [];
+  // Put all roles into an array.
+  roles.forEach(function (data) {
+    userRolesArr.push(data.name);
+  });
+
+  // Check if the user has role access to this command.
+  if (userRolesArr.some(role => config.administrationroles.includes(role))) {
+    // console.log("You have access.");
+  } else {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor(HexColour.red)
-      .setDescription('You do not have the suffient permissions to run this command.')
-    message.channel.send(embed);
+      .setColor('#ff6666')
+      .setDescription('You do not have permission to execute this command.')
+    message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
     return;
-  }
+  };
 
   if (typeof(args[0]) == "undefined") {
     let embed = new Discord.MessageEmbed()
@@ -196,6 +206,5 @@ function capitalizeFirstLetter(string) {
 module.exports.help = {
   name: 'lp',
   description: 'Promote and demote users.',
-  permission: 'ADMINISTRATOR',
-  usage: 'lp []player] [promote/demote/ranks] [rank]'
+  usage: 'lp [player] [promote/demote/ranks] [rank]'
 };

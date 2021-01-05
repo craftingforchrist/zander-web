@@ -2,15 +2,25 @@ const Discord = require('discord.js');
 const HexColour = require('../../../HexColour.json');
 
 module.exports.run = async (client, message, args) => {
-  // Checks if the user has permissions to run the command.
-  if (!message.member.hasPermission(`${module.exports.help.permission}`)) {
+  const user = message.guild.member(message.author); // Get the command user.
+  const roles = user.roles.cache; // Get the users roles.
+  const userRolesArr = [];
+  // Put all roles into an array.
+  roles.forEach(function (data) {
+    userRolesArr.push(data.name);
+  });
+
+  // Check if the user has role access to this command.
+  if (userRolesArr.some(role => config.staffroles.includes(role))) {
+    // console.log("You have access.");
+  } else {
     let embed = new Discord.MessageEmbed()
       .setTitle('Error!')
-      .setColor(HexColour.red)
-      .setDescription('You do not have permissions to run this command.')
-    message.channel.send(embed);
+      .setColor('#ff6666')
+      .setDescription('You do not have permission to execute this command.')
+    message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
     return;
-  }
+  };
 
   // Checks if ammount is a number.
   if (isNaN(args[0])) {
@@ -75,6 +85,5 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
   name: 'purge',
   description: 'This allows messages to be deleted from a channel.',
-  permission: 'MANAGE_MESSAGES',
   usage: 'purge [number of messages [max 100]]'
 };

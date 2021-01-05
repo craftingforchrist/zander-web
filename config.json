@@ -55,7 +55,11 @@
   "socialmediaapplink": "https://forms.gle/HXNtQC1TZ3uDHbhN6",
   "builderapplink": "https://forms.gle/Sz9RXaudP2FGpLbYA",
 
-  "discordsend": true,
+  "staffroles": ["Administrator", "Senior Staff", "Staff", "Junior Staff"],
+  "staffcommandchannels": ["staff"],
+  "administrationroles": ["Administrator", "Senior Staff"],
+  "administrationcommandchannels": ["administrators", "admin-bot-cmd", "senior-staff"],
+
   "welcomechannel": "general",
   "broadcastchannel": "announcements",
   "applicationschannel": "applications",
@@ -63,8 +67,6 @@
   "contentcreatorchannel": "content",
   "punishmentchannel": "admin-log",
   "reportschannel": "staff",
-  "altcheckchannel": "staff",
-  "ipcheckchannel": "administrators",
 
   "contentcreatorapp": true,
   "developerapp": true,
