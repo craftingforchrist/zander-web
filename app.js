@@ -87,6 +87,7 @@ app.use((req, res, next) => {
   res.locals.contentcreatorsmd = config.contentcreatorsmd;
   res.locals.developersmd = config.developersmd;
   res.locals.juniorstaffmd = config.juniorstaffmd;
+  res.locals.buildersmd = config.buildersmd;
   res.locals.termsmd = config.termsmd;
   res.locals.privacymd = config.privacymd;
   res.locals.rulesmd = config.rulesmd;

@@ -146,7 +146,23 @@
         <div class="card-body">
           <h4 class="card-title applyicons"><i class="fas fa-hard-hat"></i></h4>
           <h2 class="card-title">Builder</h2>
-          <p class="card-text">Have you got the stuff and know the craft in how to Build hubs and other various things? Then we encourage you to apply for Builder on the Network.</p>
+          <p class="card-text">Have you got the stuff and know the craft in how to Build hubs and other various things? Then we encourage you to apply for Builder on the Network. There is some criteria to meet which you can see <a href="#" data-toggle="modal" data-target="#buildermdmodal">here</a>.</p>
+        </div>
+
+        <div class="modal fade" id="buildermdmodal" tabindex="-1" role="dialog" aria-labelledby="buildermdmodal" aria-hidden="true">
+          <div class="modal-dialog modal-lg text-left" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="builderTitle">Builder Requirements</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <zero-md src="<%= buildersmd %>"></zero-md>
+              </div>
+            </div>
+          </div>
         </div>
 
         <% if (builderapp == false) { %>
