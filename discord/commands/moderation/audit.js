@@ -6,6 +6,11 @@ const moment = require('moment');
 moment().format();
 
 module.exports.run = async (client, message, args) => {
+  const auditUsername = args[0];
+  const auditDiscordID = args[1];
+  const auditDiscordUser = client.users.cache.get(auditDiscordID);
+  const auditDiscordUserLastMessage = auditDiscordUser.lastMessage;
+
   const user = message.guild.member(message.author); // Get the command user.
   const roles = user.roles.cache; // Get the users roles.
   const userRolesArr = [];
@@ -44,39 +49,35 @@ module.exports.run = async (client, message, args) => {
   // Database Entry
   //
   let sql = `select playerdata.username, (select server from gamesessions where playerid = (select id from playerdata where username=?) order by sessionend asc limit 1) as 'server', (select sessionend from gamesessions where playerid = (select id from playerdata where username=?) order by sessionend asc limit 1) as 'lastlogintime', TIME_TO_SEC(timediff(NOW(), lp.lp_timestamp)) as 'lastplayed' from (select gamesessions.playerid, max(if(gamesessions.sessionend, gamesessions.sessionend, NOW())) as 'lp_timestamp' from gamesessions group by gamesessions.playerid) as lp left join playerdata on playerdata.id = lp.playerid where username=?;`;
-  database.query (sql, [args[0], args[0], args[0]], function (err, results) {
+  database.query (sql, [auditUsername, auditUsername, auditUsername], function (err, auditResults) {
     if (err) {
       throw err;
     } else {
-      if (!results.length) {
+      if (!auditResults.length) {
         let embed = new Discord.MessageEmbed()
            .setTitle('Error!')
            .setColor(HexColour.red)
            .setDescription('This user does not exist.')
         message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
         return;
-      }
+      };
 
-      
-
+      console.log(auditDiscordUserLastMessage);
 
       let embed = new Discord.MessageEmbed()
-          .setTitle(`${results[0].username}'s Audit Profile`)
+          .setTitle(`${auditResults[0].username}'s Audit Profile`)
           .setColor(HexColour.orange)
-          .addField("Last Logged in", `${moment(results[0].lastlogintime).fromNow()} on ${results[0].server}`)
-
-
-          // embed.addField(`${r.username}`, `Last Login: ${moment(playeripdata.lastlogin).format("LLLL")}\nIP Address: ${playeripdata.ipaddress}`)
+          .addField("Last Logged in", `${moment(auditResults[0].lastlogintime).fromNow()} on ${auditResults[0].server}`)
+          .addField("Last Discord Message sent", "Message: `" + auditDiscordUserLastMessage.content + "`\nChannel: `" + auditDiscordUserLastMessage.channel.name + "`\nDate & Time: " + auditDiscordUserLastMessage.createdTimestamp)
 
           message.channel.send(embed);
       return;
-
     }
   });
 };
 
 module.exports.help = {
   name: 'audit',
-  description: 'Check for activity.',
+  description: 'Check the in-game and Discord activity of a user.',
   usage: 'audit [username] [discord id]'
 };
