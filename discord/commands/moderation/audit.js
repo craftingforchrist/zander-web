@@ -66,9 +66,9 @@ module.exports.run = async (client, message, args) => {
 
       let embed = new Discord.MessageEmbed()
           .setTitle(`${auditResults[0].username}'s Audit Profile`)
-          .setColor(HexColour.orange)
+          .setColor(HexColour.purple)
           .addField("Last Logged in", `${moment(auditResults[0].lastlogintime).fromNow()} on ${auditResults[0].server}`)
-          .addField("Last Discord Message sent", "Message: `" + auditDiscordUserLastMessage.content + "`\nChannel: `" + auditDiscordUserLastMessage.channel.name + "`\nDate & Time: " + auditDiscordUserLastMessage.createdTimestamp)
+          .addField("Last Discord Message sent", "Message: `" + auditDiscordUserLastMessage.content + "`\nChannel: `" + auditDiscordUserLastMessage.channel.name + "`\nDate & Time: " + moment(auditDiscordUserLastMessage.createdTimestamp).calendar())
 
           message.channel.send(embed);
       return;
