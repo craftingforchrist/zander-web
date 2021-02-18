@@ -11,6 +11,8 @@ module.exports.run = async (client, message, args) => {
   const auditDiscordUser = client.users.cache.get(auditDiscordID);
   const auditDiscordUserLastMessage = auditDiscordUser.lastMessage;
 
+  console.log(auditDiscordUser);
+
   const user = message.guild.member(message.author); // Get the command user.
   const roles = user.roles.cache; // Get the users roles.
   const userRolesArr = [];
@@ -61,8 +63,6 @@ module.exports.run = async (client, message, args) => {
         message.channel.send(embed).then(msg => msg.delete({ timeout: 3000 }));
         return;
       };
-
-      console.log(auditDiscordUserLastMessage.content);
 
       let embed = new Discord.MessageEmbed()
           .setTitle(`${auditResults[0].username}'s Audit Profile`)
