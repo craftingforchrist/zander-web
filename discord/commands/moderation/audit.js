@@ -63,12 +63,16 @@ module.exports.run = async (client, message, args) => {
       };
 
       console.log(auditDiscordUserLastMessage);
+      const auditDiscordUserLastMessageContent = auditDiscordUserLastMessage.content;
+      if (auditDiscordUserLastMessage.content == null) {
+        auditDiscordUserLastMessageContent = "Message Content is Nullified."
+      }
 
       let embed = new Discord.MessageEmbed()
           .setTitle(`${auditResults[0].username}'s Audit Profile`)
           .setColor(HexColour.purple)
           .addField("Last Logged in", `${moment(auditResults[0].lastlogintime).fromNow()} on ${auditResults[0].server}`)
-          .addField("Last Discord Message sent", "Message: `" + auditDiscordUserLastMessage.content + "`\nChannel: `" + auditDiscordUserLastMessage.channel.name + "`\nDate & Time: " + moment(auditDiscordUserLastMessage.createdTimestamp).calendar())
+          .addField("Last Discord Message sent", "Message: `" + auditDiscordUserLastMessageContent + "`\nChannel: `" + auditDiscordUserLastMessage.channel.name + "`\nDate & Time: " + moment(auditDiscordUserLastMessage.createdTimestamp).calendar())
 
           message.channel.send(embed);
       return;
