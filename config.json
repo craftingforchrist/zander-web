@@ -61,7 +61,7 @@
   "administrationroles": ["Administrator", "Senior Staff"],
   "administrationcommandchannels": ["administrators", "admin-bot-cmd", "senior-staff"],
 
-  "welcomechannel": "general",
+  "welcomechannel": "verify",
   "broadcastchannel": "announcements",
   "applicationschannel": "applications",
   "eventschannel": "events",
