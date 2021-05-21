@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "19:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: email-templates
+    versions:
+    - "> 7.1.0"
+  - dependency-name: leo-profanity
+    versions:
+    - "> 1.2.6"
+  - dependency-name: discord.js
+    versions:
+    - 12.5.1
+    - 12.5.2
