@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/benrobson/zander-web#readme",
   "dependencies": {
-    "acorn": ">=8.2.4",
+    "acorn": ">=8.3.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
