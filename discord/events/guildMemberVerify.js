@@ -2,11 +2,14 @@ const Discord = require('discord.js');
 const config = require('../../config.json')
 const joinmessages = require('../../joinmessages.json');
 
-module.exports = async member => {
-  if (!member.guild) return;
+module.exports = async (oldMember, newMember) => {
+  if (!newMember.guild) return;
   // if (member.author.bot) return;
 
-  let welcomechannel = member.guild.channels.cache.find(c => c.name === config.welcomechannel);
+  const oldRole = oldMember.roles.cache.find(role => role.name === 'Verified');
+  const newRole = newMember.roles.cache.find(role => role.name === 'Verified');
+
+  let welcomechannel = newMember.guild.channels.cache.find(c => c.name === config.welcomechannel);
   if (!welcomechannel) return;
 
   // Grab random letters and numbers to get a HEX Colour.
@@ -15,9 +18,11 @@ module.exports = async member => {
   // Select a random join message from joinmessages.json
   const randomJoinMessage = joinmessages[Math.floor(Math.random() * joinmessages.length)];
 
-  let embed = new Discord.MessageEmbed()
-    .setTitle(randomJoinMessage.replace("%USERNAME%", member.user.username))
+  if (!oldRole && newRole) {
+    let embed = new Discord.MessageEmbed()
+    .setTitle(randomJoinMessage.replace("%USERNAME%", newMember.user.username))
     .setColor(`#${randomColor}`)
-  welcomechannel.send(embed);
+    welcomechannel.send(embed);
+  } 
   return;
 };
