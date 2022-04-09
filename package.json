@@ -41,7 +41,7 @@
     "minecraft-lib": "^1.1.6",
     "modern-rcon": "^1.0.3",
     "mojang-api": "0.0.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "moment-duration-format": "^2.3.2",
     "mysql": "^2.18.1",
     "node-cron": "^3.0.0",
