@@ -47,7 +47,7 @@
     "node-cron": "^3.0.0",
     "nodemailer": "^6.6.0",
     "nodemailer-juice": "^1.0.1",
-    "passport": "^0.4.1",
+    "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "random-token": "0.0.8",
